@@ -6,7 +6,20 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jaudioscrobbler</name>
 	<description>This project is based on last.fm API bindings for Java &amp; MusicBrainz our goal is create a complete stand alone that keep a good Metadata Quality &amp; Music Taste Analyzer. </description>
-  <repositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>2.1</version>
+		        <configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<repositories>
   	<repository>
   		<id>jaudiotagger repo</id>
   		<url>http://download.java.net/maven/2/</url>
