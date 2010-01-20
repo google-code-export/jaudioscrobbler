@@ -17,7 +17,7 @@ public abstract class Metadata {
 	
 	public Metadata() throws FileNotFoundException, IOException {
 		Properties properties = new Properties();
-		properties.load(new FileInputStream(new File("resources/log4j.properties")));
+		properties.load(new FileInputStream(new File("src/main/resources/log4j.properties")));
 		PropertyConfigurator.configure(properties);
 		
 		turnOffLogMessages();

@@ -18,10 +18,12 @@ import org.lastfm.gui.MainWindow;
 
 public class ScrobblerController {
 	private final MainWindow mainWindow;
+	private final HelperScrobbler helperScrobbler;
 	private List<Metadata> metadataList;
 	
 
-	public ScrobblerController(MainWindow mainWindow) {
+	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow) {
+		this.helperScrobbler = helperScrobbler;
 		this.mainWindow = mainWindow;
 		this.mainWindow.addOpenListener(new OpenListener());
 		this.mainWindow.addSendListener(new SendListener());
@@ -60,13 +62,12 @@ public class ScrobblerController {
 	}
 	
 	class SendListener implements ActionListener{
-		private HelperScrobbler scrobbler;
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 			mainWindow.getProgressBar().setVisible(true);
-			scrobbler = new HelperScrobbler();
+			
 			
 			SwingWorker swingWorker = new SwingWorker<Boolean, Integer>(){
 
@@ -76,7 +77,7 @@ public class ScrobblerController {
 						if(metadataList!=null){
 							for(Metadata metadata: metadataList){
 								updateStatus(metadataList.indexOf(metadata));
-								scrobbler.send(metadata);
+								helperScrobbler.send(metadata);
 							}
 						}
 					} catch (InterruptedException e1) {
