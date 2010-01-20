@@ -21,7 +21,6 @@ public class MainWindow {
 	private JFrame frame;
 	private JPanel panel;
 	private JButton openButton;
-	private JFileChooser fileChooser;
 	private JTextField textField;
 	private JTable table;
 	private JPanel bottomPanel;
@@ -46,7 +45,6 @@ public class MainWindow {
 		table = new DescriptionTable();
 		ApplicationState.setDescriptionTable(table);
 		label = new JLabel("Status");
-		fileChooser = new JFileChooser();
 		textField = new JTextField(20);
 		openButton = new JButton("Open");
 		sendButton = new JButton("Send");
