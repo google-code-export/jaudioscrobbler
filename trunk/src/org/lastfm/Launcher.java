@@ -6,7 +6,7 @@ import org.lastfm.gui.MainWindow;
 public class Launcher {
 	public static void main(String[] args) {
 		new ApplicationState();
-		new MainWindow();
+		new ScrobblerController(new MainWindow());
 		new Login();
 	}
 }

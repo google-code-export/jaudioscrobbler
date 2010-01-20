@@ -1,6 +1,7 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -8,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
+import javax.swing.text.JTextComponent;
 
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -41,89 +44,14 @@ public class MainWindow {
 	private JPanel bottomPanel;
 	private JButton sendButton;
 	
-	private List<Metadata> metadataList;
+	
 	private JProgressBar progressBar;
 	private JLabel label;
 	
-	
 	public MainWindow() {
 		doLayout();
-		openButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				int selection = fileChooser.showOpenDialog(panel);
-				if(selection == JFileChooser.APPROVE_OPTION){
-					File file = fileChooser.getSelectedFile();
-					textField.setText(file.getAbsolutePath());
-					try {
-						showFiles(file);
-					} catch (CannotReadException e1) {
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					} catch (TagException e1) {
-						e1.printStackTrace();
-					} catch (ReadOnlyFileException e1) {
-						e1.printStackTrace();
-					} catch (InvalidAudioFrameException e1) {
-						e1.printStackTrace();
-					} catch (InvalidId3VersionException e1) {
-						e1.printStackTrace();
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-
-			private void showFiles(File root) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, InterruptedException {
-				metadataList = new FileUtils().getFileList(root);
-			}
-		});
-		
-		sendButton.addActionListener(new ActionListener() {
-			private HelperScrobbler scrobbler;
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				progressBar.setVisible(true);
-				scrobbler = new HelperScrobbler();
-				
-				SwingWorker swingWorker = new SwingWorker<Boolean, Integer>(){
-					int i=1;
-					@Override
-					protected Boolean doInBackground() throws Exception {
-						try {
-							if(metadataList!=null){
-								for(Metadata metadata: metadataList){
-									updateStatus(i);
-									scrobbler.send(metadata);
-									i++;
-								}
-							}
-						} catch (InterruptedException e1) {
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
-						return true;
-					}
-				};
-				swingWorker.execute();
-				label.setText("Done");
-			}
-		});
 	}
 	
-	void updateStatus(final int i) {
-        Runnable doSetProgressBarValue = new Runnable() {
-            public void run() {
-                progressBar.setValue(i * 100 / metadataList.size());
-            }
-        };
-        SwingUtilities.invokeLater(doSetProgressBarValue);
-    }
-
 	private void doLayout() {
 		frame = new JFrame("JAudioScrobbler");
 		panel = new JPanel();
@@ -155,5 +83,29 @@ public class MainWindow {
 		frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+
+	public JPanel getPanel() {
+		return panel;
+	}
+
+	public JTextField getDirectoryField() {
+		return textField;
+	}
+
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+	
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void addOpenListener(ActionListener openListener) {
+		openButton.addActionListener(openListener);
+	}
+	
+	public void addSendListener(ActionListener sendListener){
+		sendButton.addActionListener(sendListener);
 	}
 }
