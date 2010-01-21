@@ -19,11 +19,15 @@ public class MainWindow {
 	private static final int WINDOW_HEIGHT = 500;
 	private JFrame frame;
 	private JPanel panel;
+	
 	private JButton openButton;
+	private JButton sendButton;
+	private JButton completeMetadataButton;
+	
+	
 	private JTextField textField;
 	private JTable table;
 	private JPanel bottomPanel;
-	private JButton sendButton;
 	
 	
 	private JProgressBar progressBar;
@@ -38,6 +42,10 @@ public class MainWindow {
 		panel = new JPanel();
 		bottomPanel = new JPanel();
 		
+		openButton = new JButton("Open");
+		sendButton = new JButton("Send");
+		completeMetadataButton = new JButton("Complete");
+		
 		progressBar = new JProgressBar();
 		progressBar.setVisible(false);
 		
@@ -45,18 +53,19 @@ public class MainWindow {
 		ApplicationState.setDescriptionTable(table);
 		label = new JLabel("Status");
 		textField = new JTextField(20);
-		openButton = new JButton("Open");
-		sendButton = new JButton("Send");
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		
 		panel.setLayout(new BorderLayout());
 		panel.add(scrollPane, BorderLayout.NORTH);
-		bottomPanel.add(label, BorderLayout.EAST);
-		bottomPanel.add(progressBar, BorderLayout.EAST);
-		bottomPanel.add(textField,BorderLayout.EAST);
-		bottomPanel.add(openButton,BorderLayout.WEST);
-		bottomPanel.add(sendButton,BorderLayout.WEST);
+		bottomPanel.add(label);
+		bottomPanel.add(textField);
+		bottomPanel.add(progressBar);
+		
+		bottomPanel.add(openButton);
+		bottomPanel.add(sendButton);
+		bottomPanel.add(completeMetadataButton);
+
 		panel.add(bottomPanel);
 		
 		frame.add(panel);
@@ -80,6 +89,10 @@ public class MainWindow {
 	public JLabel getLabel() {
 		return label;
 	}
+	
+	public JTable getTable() {
+		return table;
+	}
 
 	public void addOpenListener(ActionListener openListener) {
 		openButton.addActionListener(openListener);
@@ -87,5 +100,9 @@ public class MainWindow {
 	
 	public void addSendListener(ActionListener sendListener){
 		sendButton.addActionListener(sendListener);
+	}
+	
+	public void addCompleteListener(ActionListener completeListener){
+		completeMetadataButton.addActionListener(completeListener);
 	}
 }
