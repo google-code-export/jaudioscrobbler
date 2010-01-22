@@ -32,6 +32,7 @@ public class MetadataMp4 extends Metadata {
 
 	@Override
 	public String getArtist() {
+		System.out.println(tag.getFirst(FieldKey.ARTIST + " - " + tag.getFirst(FieldKey.MUSICBRAINZ_ARTISTID)));
 		return tag.getFirst(FieldKey.ARTIST);
 	}
 
