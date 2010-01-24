@@ -35,4 +35,15 @@ public class TestMusicBrainzService {
 		service.setTrackService(trackService);
 		assertEquals("Some Kind Of Blue", service.getArtist(artistName, trackName));
 	}
+	
+	@Test
+	public void shouldReturnTrackNumber() throws Exception {
+		String artistName = "Above & Beyond";
+		String trackName = "Anjunabeach";
+		
+		MusicBrainzService service = new MusicBrainzService();
+		
+		String album = service.getArtist(artistName, trackName);
+		assertEquals(12, service.getTrackNumber(album));
+	}
 }

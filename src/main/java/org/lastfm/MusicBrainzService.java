@@ -25,5 +25,9 @@ public class MusicBrainzService {
 		this.trackService = trackService;
 	}
 
+	public int getTrackNumber(String album) {
+		return trackService.getTrackNumber(album);
+	}
+
 
 }
