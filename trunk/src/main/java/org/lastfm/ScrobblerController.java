@@ -119,31 +119,16 @@ public class ScrobblerController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			List<Track> trackList;
-			List<Release> release;
+			MusicBrainzService service = new MusicBrainzService();
 			for (int i = 0; i < mainWindow.getTable().getRowCount(); i++) {
 				String albumName = mainWindow.getTable().getModel().getValueAt(i,2).toString();
 				if(StringUtils.isEmpty(albumName)){
 					String artistName = mainWindow.getTable().getModel().getValueAt(i, 0).toString();
 					String trackName = mainWindow.getTable().getModel().getValueAt(i, 1).toString();
 					try {
-						System.out.println("-------------------------------------------");
-						trackList = Track.findByTitle(trackName);
-						if(!trackList.isEmpty()){
-							System.out.println(trackName);
-							for (Track track : trackList) {
-								if(artistName.equals(track.getArtist().getName())){
-									System.out.println(track.getArtist().getName());
-									release = track.getReleases().getReleases();
-									for (Release rel : release) {
-										System.out.println(rel.getTitle());
-									}
-								}
-							}
-						}
+						System.out.println(service.getArtist(artistName, trackName));
 					} catch (ServerUnavailableException sue) {
 						sue.printStackTrace();
-						return;
 					}
 				}
 			}
