@@ -11,6 +11,8 @@ public class ApplicationState {
 	
 	public static String userName;
 	public static String password;
+	public static int OK = 0;
+	public static int FAILURE = 2;
 
 	public static void setDescriptionTable(JTable table) {
 		descriptionTable = (DescriptionTable) table;

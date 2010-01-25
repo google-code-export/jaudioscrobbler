@@ -15,6 +15,11 @@ import javax.swing.JTextField;
 import org.lastfm.ApplicationState;
 
 public class MainWindow {
+	private static final String SEND_SCROBBLINGS = "Send";
+	private static final String LOAD_FILES = "Open";
+	private static final String APPLY_METADATA = "Complete";
+	private static final String APPLICATION_NAME = "JAudioScrobbler";
+	private static final String LOG_OUT = "logged out";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
 	private JFrame frame;
@@ -32,19 +37,25 @@ public class MainWindow {
 	
 	private JProgressBar progressBar;
 	private JLabel label;
+	private JLabel loginLabel;
+	private JPanel topPanel;
 	
 	public MainWindow() {
 		doLayout();
 	}
 	
 	private void doLayout() {
-		frame = new JFrame("JAudioScrobbler");
+		frame = new JFrame(APPLICATION_NAME);
 		panel = new JPanel();
 		bottomPanel = new JPanel();
+		topPanel = new JPanel();
 		
-		openButton = new JButton("Open");
-		sendButton = new JButton("Send");
-		completeMetadataButton = new JButton("Complete");
+		loginLabel = new JLabel(LOG_OUT);
+		topPanel.add(loginLabel);
+		
+		openButton = new JButton(LOAD_FILES);
+		sendButton = new JButton(SEND_SCROBBLINGS);
+		completeMetadataButton = new JButton(APPLY_METADATA);
 		
 		progressBar = new JProgressBar();
 		progressBar.setVisible(false);
@@ -57,7 +68,9 @@ public class MainWindow {
 		JScrollPane scrollPane = new JScrollPane(table);
 		
 		panel.setLayout(new BorderLayout());
-		panel.add(scrollPane, BorderLayout.NORTH);
+		
+		panel.add(topPanel, BorderLayout.NORTH);
+		panel.add(scrollPane, BorderLayout.CENTER);
 		bottomPanel.add(label);
 		bottomPanel.add(textField);
 		bottomPanel.add(progressBar);
@@ -66,7 +79,7 @@ public class MainWindow {
 		bottomPanel.add(sendButton);
 		bottomPanel.add(completeMetadataButton);
 
-		panel.add(bottomPanel);
+		panel.add(bottomPanel, BorderLayout.SOUTH);
 		
 		frame.add(panel);
 		frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
