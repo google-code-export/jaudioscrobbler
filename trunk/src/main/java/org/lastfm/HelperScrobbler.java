@@ -26,33 +26,40 @@ public class HelperScrobbler {
 	Map<Metadata, Long> metadataMap;
 
 	private List<File> fileList;
+	private ScrobblerFactory factory;
 
 	private Logger log = Logger.getLogger("org.lastfm");
 
 	public HelperScrobbler() {
 		metadataMap = new HashMap<Metadata, Long>();
+		factory = new ScrobblerFactory();
 	}
 	
 	private int scrobbling(Metadata metadata) throws IOException,
 			InterruptedException {
-		Scrobbler scrobbler = Scrobbler.newScrobbler("tst", "1.0", ApplicationState.userName);
+		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", ApplicationState.userName);
 		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
-
-		// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
-		Thread.sleep(200);
-
-		status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(),
-				metadata.getAlbum(), metadata.getLength(), metadata
-						.getTrackNumber(), Source.USER, metadataMap.get(
-						metadata).longValue());
-		if (!status.ok()) {
-			log.error("Submitting track " + metadata.getTitle()
-					+ " to Last.fm failed: " + status.getStatus());
+		
+		if(status.getStatus() == ResponseStatus.OK){
+			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
+			Thread.sleep(200);
+			
+			status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(),
+					metadata.getAlbum(), metadata.getLength(), metadata
+					.getTrackNumber(), Source.USER, metadataMap.get(
+							metadata).longValue());
+			if (!status.ok()) {
+				log.error("Submitting track " + metadata.getTitle()
+						+ " to Last.fm failed: " + status.getStatus());
+			} else {
+				log.error(metadata.getArtist() + " - " + metadata.getTitle()
+						+ " scrobbling to Last.fm was Successful");
+			}
+			return ApplicationState.OK;
 		} else {
-			log.error(metadata.getArtist() + " - " + metadata.getTitle()
-					+ " scrobbling to Last.fm was Successful");
+			System.err.println("Invalid Password");
+			return ApplicationState.FAILURE;
 		}
-		return status.getStatus();
 	}
 
 	public List<Metadata> getMetadataList(List<File> fileList)
