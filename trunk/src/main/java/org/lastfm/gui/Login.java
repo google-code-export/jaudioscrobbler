@@ -3,6 +3,7 @@ package org.lastfm.gui;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import net.roarsoftware.lastfm.scrobble.ResponseStatus;
+
 import org.lastfm.ApplicationState;
+import org.lastfm.LoginController;
 
 public class Login {
 	JButton sendButton;
@@ -24,9 +28,22 @@ public class Login {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ApplicationState.userName = userName.getText();
-				ApplicationState.password = password.getText();
-				frame.dispose();
+				int result = -1;
+				String usernm = userName.getText();
+				String passwd = password.getText();
+				
+				LoginController controller = new LoginController();
+				try {
+					result = controller.login(usernm, passwd);
+					if(result == ApplicationState.OK){
+						ApplicationState.userName = userName.getText();
+						ApplicationState.password = password.getText();
+						frame.dispose();
+					}
+				} catch (IOException ioe) {
+					ioe.printStackTrace();
+				}
+				
 			}
 		});
 		
@@ -48,9 +65,6 @@ public class Login {
 		
 		frame.add(panel);
 		frame.setVisible(true);
-	}
-	public static void main(String[] args) {
-		new Login();
 	}
 
 }
