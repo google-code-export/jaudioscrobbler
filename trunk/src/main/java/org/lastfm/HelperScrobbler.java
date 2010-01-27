@@ -25,6 +25,7 @@ public class HelperScrobbler {
 
 	Map<Metadata, Long> metadataMap;
 
+	@SuppressWarnings("unused")
 	private List<File> fileList;
 	private ScrobblerFactory factory;
 

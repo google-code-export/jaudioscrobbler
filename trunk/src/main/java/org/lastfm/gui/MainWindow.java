@@ -11,6 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.text.JTextComponent;
 
 import org.lastfm.ApplicationState;
 
@@ -101,6 +102,10 @@ public class MainWindow {
 	
 	public JLabel getLabel() {
 		return label;
+	}
+	
+	public JLabel getLoginLabel() {
+		return loginLabel;
 	}
 	
 	public JTable getTable() {
