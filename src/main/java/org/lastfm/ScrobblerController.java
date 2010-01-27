@@ -15,24 +15,26 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
-import com.slychief.javamusicbrainz.entities.Release;
-import com.slychief.javamusicbrainz.entities.Track;
 
 public class ScrobblerController {
 	private final MainWindow mainWindow;
 	private final HelperScrobbler helperScrobbler;
 	private List<Metadata> metadataList;
+	private LoginWindow loginWindow;
 
 	public ScrobblerController(HelperScrobbler helperScrobbler,
-			MainWindow mainWindow) {
+			MainWindow mainWindow, LoginWindow loginWindow) {
 		this.helperScrobbler = helperScrobbler;
 		this.mainWindow = mainWindow;
+		this.loginWindow = loginWindow;
 		this.mainWindow.addOpenListener(new OpenListener());
 		this.mainWindow.addSendListener(new SendListener());
 		this.mainWindow.addCompleteListener(new CompleteListener());
+		this.loginWindow.addLoginListener(new LoginListener());
 	}
 
 	class OpenListener implements ActionListener {
@@ -90,7 +92,7 @@ public class ScrobblerController {
 		public void actionPerformed(ActionEvent e) {
 			mainWindow.getProgressBar().setVisible(true);
 
-			SwingWorker swingWorker = new SwingWorker<Boolean, Integer>() {
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
@@ -133,6 +135,35 @@ public class ScrobblerController {
 				}
 			}
 		}
+	}
+	
+	class LoginListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int result = -1;
+			String username = loginWindow.getUsername().getText();
+			String password = loginWindow.getPassword().getText();
+			
+			LoginController controller = new LoginController();
+			try {
+				result = controller.login(username, password);
+				if(result == ApplicationState.OK){
+					ApplicationState.userName = username;
+					ApplicationState.password = password;
+					loginWindow.getFrame().dispose();
+					mainWindow.getLoginLabel().setText("Logged as : " + username);
+				} else {
+					mainWindow.getLoginLabel().setText("Login fail");
+				}
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+	}
+
+	public void setLogin(LoginWindow login) {
+		this.loginWindow = login;
 	}
 
 }
