@@ -24,6 +24,13 @@ public class MetadataMp4 extends Metadata {
 		tag = (Mp4Tag)audioFile.getTag();	
 		header = audioFile.getAudioHeader();
 	}
+	
+	// For Mocking proposes
+	public MetadataMp4(File file, AudioFile audioFile) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
+		this.file = file;
+		tag = (Mp4Tag)audioFile.getTag();	
+		header = audioFile.getAudioHeader();
+	}
 
 	@Override
 	public String getAlbum() {
@@ -32,7 +39,6 @@ public class MetadataMp4 extends Metadata {
 
 	@Override
 	public String getArtist() {
-		System.out.println(tag.getFirst(FieldKey.ARTIST + " - " + tag.getFirst(FieldKey.MUSICBRAINZ_ARTISTID)));
 		return tag.getFirst(FieldKey.ARTIST);
 	}
 
