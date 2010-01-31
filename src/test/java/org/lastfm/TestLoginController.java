@@ -6,8 +6,6 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
-import org.lastfm.LoginController;
 import org.mockito.Mockito;
 
 public class TestLoginController {
@@ -15,7 +13,7 @@ public class TestLoginController {
 	ScrobblerFactory factory = Mockito.mock(ScrobblerFactory.class);
 	ResponseStatus status;
 	LoginController controller;
-	String username = "josdem";
+	
 	int result;
 	
 	@Before
@@ -26,6 +24,7 @@ public class TestLoginController {
 	
 	@Test
 	public void shouldLogin() throws Exception {
+		String username = "josdem";
 		String password = "validPassword";
 		
 		status = new ResponseStatus(0);
@@ -38,7 +37,38 @@ public class TestLoginController {
 	}
 	
 	@Test
+	public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
+		String username = "";
+		String password = "";
+		
+		result = controller.login(username, password);
+		
+		assertEquals(ApplicationState.ERROR, result);
+	}
+	
+	@Test
+	public void shouldFailAtLoginIfNoUsername() throws Exception {
+		String username = "";
+		String password = "somePassword";
+		
+		result = controller.login(username, password);
+		
+		assertEquals(ApplicationState.ERROR, result);
+	}
+	
+	@Test
+	public void shouldFailAtLoginIfNoPassword() throws Exception {
+		String username = "someUsername";
+		String password = "";
+		
+		result = controller.login(username, password);
+		
+		assertEquals(ApplicationState.ERROR, result);
+	}
+	
+	@Test
 	public void shouldFailAtLogin() throws Exception {
+		String username = "josdem";
 		String password = "invalidPassword";
 		
 		status = new ResponseStatus(2);
