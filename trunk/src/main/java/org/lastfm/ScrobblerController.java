@@ -24,6 +24,7 @@ public class ScrobblerController {
 	private final MainWindow mainWindow;
 	private final HelperScrobbler helperScrobbler;
 	private List<Metadata> metadataList;
+	private List<File> fileList;
 	private LoginWindow loginWindow;
 
 	public ScrobblerController(HelperScrobbler helperScrobbler,
@@ -44,7 +45,9 @@ public class ScrobblerController {
 				IOException, CannotReadException, TagException,
 				ReadOnlyFileException, InvalidAudioFrameException,
 				InvalidId3VersionException {
-			metadataList = new FileUtils().getFileList(root);
+			fileList = new FileUtils().getFileList(root);
+			HelperScrobbler scrobbler = new HelperScrobbler();
+			metadataList = scrobbler.getMetadataList(fileList);
 		}
 
 		@Override
