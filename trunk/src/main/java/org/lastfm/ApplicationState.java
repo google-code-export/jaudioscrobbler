@@ -11,6 +11,7 @@ public class ApplicationState {
 	
 	public static String userName;
 	public static String password;
+	public static int ERROR = -1;
 	public static int OK = 0;
 	public static int FAILURE = 2;
 
