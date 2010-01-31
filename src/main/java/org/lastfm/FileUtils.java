@@ -11,15 +11,12 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 
 public class FileUtils {
-	private HelperScrobbler scrobbler;
 	private List<File> fileList;
 
-	public List<Metadata> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+	public List<File> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
 		fileList = new ArrayList<File>();
-		scrobbler = new HelperScrobbler();
-
 		scan(root);
-		return scrobbler.getMetadataList(fileList);
+		return fileList;
 	}
 	
 	private void scan(File root) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
