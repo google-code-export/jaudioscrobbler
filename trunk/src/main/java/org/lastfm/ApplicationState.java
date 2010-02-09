@@ -14,6 +14,9 @@ public class ApplicationState {
 	public static int ERROR = -1;
 	public static int OK = 0;
 	public static int FAILURE = 2;
+	
+	public static final String LOGIN_FAIL = "Login fail";
+	public static final String LOGGED_AS = "Logged as : ";
 
 	public static void setDescriptionTable(JTable table) {
 		descriptionTable = (DescriptionTable) table;

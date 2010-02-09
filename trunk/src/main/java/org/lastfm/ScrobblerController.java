@@ -25,7 +25,8 @@ public class ScrobblerController {
 	private final HelperScrobbler helperScrobbler;
 	private List<Metadata> metadataList;
 	private List<File> fileList;
-	private LoginWindow loginWindow;
+	LoginWindow loginWindow;
+	LoginController loginController;
 
 	public ScrobblerController(HelperScrobbler helperScrobbler,
 			MainWindow mainWindow, LoginWindow loginWindow) {
@@ -140,33 +141,29 @@ public class ScrobblerController {
 		}
 	}
 	
-	class LoginListener implements ActionListener {
-
+	public class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = -1;
 			String username = loginWindow.getUsername().getText();
 			String password = loginWindow.getPassword().getText();
 			
-			LoginController controller = new LoginController();
+			if(loginController == null){
+				loginController = new LoginController();
+			}
 			try {
-				result = controller.login(username, password);
+				result = loginController.login(username, password);
 				if(result == ApplicationState.OK){
 					ApplicationState.userName = username;
 					ApplicationState.password = password;
 					loginWindow.getFrame().dispose();
-					mainWindow.getLoginLabel().setText("Logged as : " + username);
+					mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
 				} else {
-					mainWindow.getLoginLabel().setText("Login fail");
+					mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 				}
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
 		}
 	}
-
-	public void setLogin(LoginWindow login) {
-		this.loginWindow = login;
-	}
-
 }
