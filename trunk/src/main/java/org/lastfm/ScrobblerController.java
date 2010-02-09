@@ -27,6 +27,7 @@ public class ScrobblerController {
 	private List<File> fileList;
 	LoginWindow loginWindow;
 	LoginController loginController;
+	MusicBrainzService service;
 
 	public ScrobblerController(HelperScrobbler helperScrobbler,
 			MainWindow mainWindow, LoginWindow loginWindow) {
@@ -123,9 +124,13 @@ public class ScrobblerController {
 
 	class CompleteListener implements ActionListener {
 
+		
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			MusicBrainzService service = new MusicBrainzService();
+			if(service==null){
+				service = new MusicBrainzService();
+			}
 			for (int i = 0; i < mainWindow.getTable().getRowCount(); i++) {
 				String albumName = mainWindow.getTable().getModel().getValueAt(i,2).toString();
 				if(StringUtils.isEmpty(albumName)){

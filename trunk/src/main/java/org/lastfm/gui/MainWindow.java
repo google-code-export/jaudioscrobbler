@@ -28,12 +28,12 @@ public class MainWindow {
 	
 	private JButton openButton;
 	private JButton sendButton;
-	private JButton completeMetadataButton;
+	public JButton completeMetadataButton;
 	
 	
 	private JTextField textField;
-	private JTable table;
 	private JPanel bottomPanel;
+	public JTable table;
 	
 	
 	private JProgressBar progressBar;
