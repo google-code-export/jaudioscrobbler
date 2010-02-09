@@ -10,9 +10,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 public class LoginWindow {
-	JButton sendButton;
-	JTextField userName;
-	JTextField password;
+	public JButton sendButton;
+	public JTextField userName;
+	public JTextField password;
 	JFrame frame;
 	
 	public LoginWindow() {
