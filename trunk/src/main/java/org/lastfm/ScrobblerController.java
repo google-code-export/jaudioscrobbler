@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.swing.JFileChooser;
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import org.apache.commons.lang.StringUtils;
@@ -22,15 +21,16 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 public class ScrobblerController {
 	private final MainWindow mainWindow;
-	private final HelperScrobbler helperScrobbler;
-	private List<Metadata> metadataList;
+	private HelperScrobbler helperScrobbler;
 	private List<File> fileList;
+	List<Metadata> metadataList;
 	LoginWindow loginWindow;
 	LoginController loginController;
+	JFileChooser fileChooser;
+	FileUtils fileUtils;
 	MusicBrainzService service;
 
-	public ScrobblerController(HelperScrobbler helperScrobbler,
-			MainWindow mainWindow, LoginWindow loginWindow) {
+	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
 		this.helperScrobbler = helperScrobbler;
 		this.mainWindow = mainWindow;
 		this.loginWindow = loginWindow;
@@ -41,22 +41,25 @@ public class ScrobblerController {
 	}
 
 	class OpenListener implements ActionListener {
-		private JFileChooser fileChooser;
+		
 
-		private void showFiles(File root) throws InterruptedException,
-				IOException, CannotReadException, TagException,
-				ReadOnlyFileException, InvalidAudioFrameException,
-				InvalidId3VersionException {
-			fileList = new FileUtils().getFileList(root);
-			HelperScrobbler scrobbler = new HelperScrobbler();
-			metadataList = scrobbler.getMetadataList(fileList);
+		
+
+		private void showFiles(File root) throws InterruptedException, IOException, CannotReadException, TagException,
+				ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+			if(fileUtils==null){
+				fileUtils = new FileUtils();
+			}
+			fileList = fileUtils.getFileList(root);
+			metadataList = helperScrobbler.getMetadataList(fileList);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			fileChooser = new JFileChooser();
-			fileChooser
-					.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			if(fileChooser==null){
+				fileChooser = new JFileChooser();
+			}
+			fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			int selection = fileChooser.showOpenDialog(mainWindow.getPanel());
 			if (selection == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
@@ -84,14 +87,8 @@ public class ScrobblerController {
 
 	class SendListener implements ActionListener {
 		private void updateStatus(final int i) {
-			Runnable doSetProgressBarValue = new Runnable() {
-				public void run() {
-					mainWindow.getProgressBar().setValue(
-							i * 100 / metadataList.size());
-				}
-			};
-			SwingUtilities.invokeLater(doSetProgressBarValue);
-		}
+			mainWindow.getProgressBar().setValue(((i + 1) * 100) / metadataList.size());
+		};
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -118,22 +115,20 @@ public class ScrobblerController {
 
 			};
 			swingWorker.execute();
-			mainWindow.getLabel().setText("Done");
+			mainWindow.getLabel().setText(ApplicationState.DONE);
 		}
 	}
 
 	class CompleteListener implements ActionListener {
 
-		
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(service==null){
+			if (service == null) {
 				service = new MusicBrainzService();
 			}
 			for (int i = 0; i < mainWindow.getTable().getRowCount(); i++) {
-				String albumName = mainWindow.getTable().getModel().getValueAt(i,2).toString();
-				if(StringUtils.isEmpty(albumName)){
+				String albumName = mainWindow.getTable().getModel().getValueAt(i, 2).toString();
+				if (StringUtils.isEmpty(albumName)) {
 					String artistName = mainWindow.getTable().getModel().getValueAt(i, 0).toString();
 					String trackName = mainWindow.getTable().getModel().getValueAt(i, 1).toString();
 					try {
@@ -145,20 +140,20 @@ public class ScrobblerController {
 			}
 		}
 	}
-	
+
 	public class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int result = -1;
 			String username = loginWindow.getUsername().getText();
 			String password = loginWindow.getPassword().getText();
-			
-			if(loginController == null){
+
+			if (loginController == null) {
 				loginController = new LoginController();
 			}
 			try {
 				result = loginController.login(username, password);
-				if(result == ApplicationState.OK){
+				if (result == ApplicationState.OK) {
 					ApplicationState.userName = username;
 					ApplicationState.password = password;
 					loginWindow.getFrame().dispose();

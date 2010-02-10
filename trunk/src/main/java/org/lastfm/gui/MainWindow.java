@@ -26,8 +26,8 @@ public class MainWindow {
 	private JFrame frame;
 	private JPanel panel;
 	
-	private JButton openButton;
-	private JButton sendButton;
+	public JButton openButton;
+	public JButton sendButton;
 	public JButton completeMetadataButton;
 	
 	
