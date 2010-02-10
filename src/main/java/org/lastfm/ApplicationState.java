@@ -17,6 +17,7 @@ public class ApplicationState {
 	
 	public static final String LOGIN_FAIL = "Login fail";
 	public static final String LOGGED_AS = "Logged as : ";
+	public static final String DONE = "Done";
 
 	public static void setDescriptionTable(JTable table) {
 		descriptionTable = (DescriptionTable) table;

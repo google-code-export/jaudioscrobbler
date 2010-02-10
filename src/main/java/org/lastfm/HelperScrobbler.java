@@ -53,7 +53,7 @@ public class HelperScrobbler {
 				log.error("Submitting track " + metadata.getTitle()
 						+ " to Last.fm failed: " + status.getStatus());
 			} else {
-				log.error(metadata.getArtist() + " - " + metadata.getTitle()
+				log.debug(metadata.getArtist() + " - " + metadata.getTitle()
 						+ " scrobbling to Last.fm was Successful");
 			}
 			return ApplicationState.OK;
@@ -104,21 +104,8 @@ public class HelperScrobbler {
 				&& metadata.getLength() > 240) {
 			long startTime = time - (pendingFiles * DELTA);
 			metadataMap.put(metadata, startTime);
-			//printValues(metadata);
 			scrobbling(metadata);
 			pendingFiles--;
 		}
-	}
-
-	private void printValues(Metadata metadata) {
-		System.out.println("------------------------------------------------");
-		System.out.println(metadata.getArtist());
-		System.out.println(metadata.getTitle());
-		System.out.println(metadata.getAlbum());
-		System.out.println(metadata.getLength());
-		System.out.println(metadata.getTrackNumber());
-		System.out.println(metadataMap.get(metadata));
-		System.out.println("");
-
 	}
 }
