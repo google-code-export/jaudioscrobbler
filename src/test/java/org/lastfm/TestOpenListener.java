@@ -1,6 +1,5 @@
 package org.lastfm;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
 import java.io.File;

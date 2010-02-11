@@ -27,7 +27,7 @@ public class HelperScrobbler {
 
 	@SuppressWarnings("unused")
 	private List<File> fileList;
-	private ScrobblerFactory factory;
+	ScrobblerFactory factory;
 
 	private Logger log = Logger.getLogger("org.lastfm");
 
@@ -35,37 +35,32 @@ public class HelperScrobbler {
 		metadataMap = new HashMap<Metadata, Long>();
 		factory = new ScrobblerFactory();
 	}
-	
-	private int scrobbling(Metadata metadata) throws IOException,
-			InterruptedException {
+
+	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", ApplicationState.userName);
 		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
-		
-		if(status.getStatus() == ResponseStatus.OK){
+
+		if (status.getStatus() == ResponseStatus.OK) {
 			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
 			Thread.sleep(200);
-			
-			status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(),
-					metadata.getAlbum(), metadata.getLength(), metadata
-					.getTrackNumber(), Source.USER, metadataMap.get(
-							metadata).longValue());
-			if (!status.ok()) {
-				log.error("Submitting track " + metadata.getTitle()
-						+ " to Last.fm failed: " + status.getStatus());
+
+			status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(), metadata.getAlbum(), metadata
+					.getLength(), metadata.getTrackNumber(), Source.USER, metadataMap.get(metadata).longValue());
+			if (status.getStatus() == ResponseStatus.OK) {
+				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
+				return ApplicationState.OK;
 			} else {
-				log.debug(metadata.getArtist() + " - " + metadata.getTitle()
-						+ " scrobbling to Last.fm was Successful");
+				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + status.getStatus());
+				return ApplicationState.FAILURE;
 			}
-			return ApplicationState.OK;
 		} else {
-			System.err.println("Invalid Password");
+			log.error(ApplicationState.HAND_SHAKE_FAIL);
 			return ApplicationState.FAILURE;
 		}
 	}
 
-	public List<Metadata> getMetadataList(List<File> fileList)
-			throws InterruptedException, IOException, CannotReadException,
-			TagException, ReadOnlyFileException, InvalidAudioFrameException,
+	public List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException,
+			CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
 			InvalidId3VersionException {
 		this.fileList = fileList;
 		List<Metadata> metadataList;
@@ -80,11 +75,8 @@ public class HelperScrobbler {
 			}
 
 			if (metadata == null) {
-				log
-						.error(file.getAbsoluteFile()
-								+ " is not a valid Audio File");
-			} else if (StringUtils.isNotEmpty(metadata.getArtist())
-					&& StringUtils.isNotEmpty(metadata.getTitle())) {
+				log.error(file.getAbsoluteFile() + " is not a valid Audio File");
+			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 				ApplicationState.update(metadata);
 			}
@@ -93,19 +85,18 @@ public class HelperScrobbler {
 		return metadataList;
 	}
 
-	public void send(Metadata metadata) throws IOException,
-			InterruptedException {
-		
+	public int send(Metadata metadata) throws IOException, InterruptedException {
+		int result = ApplicationState.FAILURE;
 		long time = (System.currentTimeMillis() / 1000);
 
 		// According to Submission rules http://www.last.fm/api/submissions
-		if (StringUtils.isNotEmpty(metadata.getArtist())
-				&& StringUtils.isNotEmpty(metadata.getTitle())
+		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())
 				&& metadata.getLength() > 240) {
 			long startTime = time - (pendingFiles * DELTA);
 			metadataMap.put(metadata, startTime);
-			scrobbling(metadata);
+			result = scrobbling(metadata);
 			pendingFiles--;
 		}
+		return result;
 	}
 }
