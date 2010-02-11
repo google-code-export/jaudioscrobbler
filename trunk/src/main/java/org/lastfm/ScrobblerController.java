@@ -41,9 +41,6 @@ public class ScrobblerController {
 	}
 
 	class OpenListener implements ActionListener {
-		
-
-		
 
 		private void showFiles(File root) throws InterruptedException, IOException, CannotReadException, TagException,
 				ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
