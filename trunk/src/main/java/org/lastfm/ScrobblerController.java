@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -22,13 +24,13 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 public class ScrobblerController {
 	private final MainWindow mainWindow;
 	private HelperScrobbler helperScrobbler;
-	private List<File> fileList;
 	List<Metadata> metadataList;
 	LoginWindow loginWindow;
 	LoginController loginController;
 	JFileChooser fileChooser;
 	FileUtils fileUtils;
 	MusicBrainzService service;
+	private Logger log = Logger.getLogger(this.getClass());
 
 	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
 		this.helperScrobbler = helperScrobbler;
@@ -41,19 +43,45 @@ public class ScrobblerController {
 	}
 
 	class OpenListener implements ActionListener {
+		private List<File> fileList;
+
+		public List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException,
+				CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
+				InvalidId3VersionException {
+			this.fileList = fileList;
+
+			Metadata metadata = null;
+			metadataList = new ArrayList<Metadata>();
+
+			for (File file : fileList) {
+				if (file.getPath().endsWith("mp3")) {
+					metadata = new MetadataMp3(file);
+				} else if (file.getPath().endsWith("m4a")) {
+					metadata = new MetadataMp4(file);
+				}
+
+				if (metadata == null) {
+					log.error(file.getAbsoluteFile() + " is not a valid Audio File");
+				} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
+					metadataList.add(metadata);
+					ApplicationState.update(metadata);
+				}
+			}
+			return metadataList;
+		}
 
 		private void showFiles(File root) throws InterruptedException, IOException, CannotReadException, TagException,
 				ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
-			if(fileUtils==null){
+			if (fileUtils == null) {
 				fileUtils = new FileUtils();
 			}
 			fileList = fileUtils.getFileList(root);
-			metadataList = helperScrobbler.getMetadataList(fileList);
+			metadataList = getMetadataList(fileList);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(fileChooser==null){
+			if (fileChooser == null) {
 				fileChooser = new JFileChooser();
 			}
 			fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -162,5 +190,9 @@ public class ScrobblerController {
 				ioe.printStackTrace();
 			}
 		}
+	}
+
+	public List<Metadata> getMetadataList() {
+		return metadataList;
 	}
 }

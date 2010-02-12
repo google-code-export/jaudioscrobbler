@@ -16,7 +16,6 @@ import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 public class TestHelperScrobbler {
 	Metadata metadata = mock(Metadata.class);
@@ -56,17 +55,6 @@ public class TestHelperScrobbler {
 
 		helperScrobbler.send(metadata);
 		assertEquals(0, helperScrobbler.metadataMap.size());
-	}
-
-	@Test
-	public void shouldNotAddAScrobblingIfIsNotAaudioFile() throws Exception {
-		List<File> fileList = new ArrayList<File>();
-
-		File file = new File("resources/log4j.properties");
-		fileList.add(file);
-
-		List<Metadata> metadataList = helperScrobbler.getMetadataList(fileList);
-		assertEquals(0, metadataList.size());
 	}
 
 	@Test
