@@ -19,6 +19,7 @@ public class ApplicationState {
 	public static final String LOGGED_AS = "Logged as : ";
 	public static final String DONE = "Done";
 	public static final Object HAND_SHAKE_FAIL = "Handshake failed";
+	public static final String NETWORK_ERROR = "Internet Connection Error";
 
 	public static void setDescriptionTable(JTable table) {
 		descriptionTable = (DescriptionTable) table;

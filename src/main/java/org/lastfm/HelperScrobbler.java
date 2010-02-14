@@ -2,6 +2,8 @@ package org.lastfm;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,14 +39,23 @@ public class HelperScrobbler {
 			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
 			Thread.sleep(200);
 
-			status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(), metadata.getAlbum(), metadata
-					.getLength(), metadata.getTrackNumber(), Source.USER, metadataMap.get(metadata).longValue());
-			if (status.getStatus() == ResponseStatus.OK) {
-				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
-				return ApplicationState.OK;
-			} else {
-				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + status.getStatus());
-				return ApplicationState.FAILURE;
+			try{
+				status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(), metadata.getAlbum(), metadata
+						.getLength(), metadata.getTrackNumber(), Source.USER, metadataMap.get(metadata).longValue());
+				System.err.println(status.getStatus());
+				if (status.getStatus() == ResponseStatus.OK) {
+					log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
+					return ApplicationState.OK;
+				} else {
+					log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + status.getStatus());
+					return ApplicationState.FAILURE;
+				}
+			} catch (UnknownHostException uhe){
+				log.error(uhe, uhe);
+				return ApplicationState.ERROR;
+			} catch (ConnectException coe){
+				log.error(coe, coe);
+				return ApplicationState.ERROR;
 			}
 		} else {
 			log.error(ApplicationState.HAND_SHAKE_FAIL);
@@ -62,6 +73,9 @@ public class HelperScrobbler {
 			long startTime = time - (metadataMap.size() * DELTA);
 			metadataMap.put(metadata, startTime);
 			result = scrobbling(metadata);
+			if(result == ApplicationState.ERROR){
+				return result;
+			}
 		}
 		return result;
 	}
