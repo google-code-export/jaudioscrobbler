@@ -127,7 +127,10 @@ public class ScrobblerController {
 						if (metadataList != null) {
 							for (Metadata metadata : metadataList) {
 								updateStatus(metadataList.indexOf(metadata));
-								helperScrobbler.send(metadata);
+								int result = helperScrobbler.send(metadata);
+								if(result == ApplicationState.ERROR){
+									mainWindow.getLabel().setText(ApplicationState.NETWORK_ERROR);
+								}
 							}
 						}
 					} catch (InterruptedException e1) {
