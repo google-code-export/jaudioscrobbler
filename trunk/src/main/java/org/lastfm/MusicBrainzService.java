@@ -13,7 +13,7 @@ public class MusicBrainzService {
 		trackService = new TrackService();
 	}
 	
-	public String getArtist(String artistName, String trackName) throws ServerUnavailableException {
+	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {
 		if(StringUtils.isEmpty(artistName) || StringUtils.isEmpty(trackName)){
 			return "";
 		} else {

@@ -160,9 +160,10 @@ public class ScrobblerController {
 					String artistName = mainWindow.getTable().getModel().getValueAt(i, 0).toString();
 					String trackName = mainWindow.getTable().getModel().getValueAt(i, 1).toString();
 					try {
-						System.out.println(service.getArtist(artistName, trackName));
+						String artist = service.getAlbum(artistName, trackName);
+						mainWindow.getTable().getModel().setValueAt(artist, i, 2);
 					} catch (ServerUnavailableException sue) {
-						sue.printStackTrace();
+						log.error(sue, sue);
 					}
 				}
 			}

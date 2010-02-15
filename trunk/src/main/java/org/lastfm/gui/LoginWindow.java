@@ -25,7 +25,7 @@ public class LoginWindow {
 		password = new JPasswordField();
 		sendButton = new JButton("Login");
 		
-		frame.setBounds(300, 300, 300, 105);
+		frame.setBounds(300, 300, 300, 122);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel(new BorderLayout());

@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
@@ -14,6 +13,8 @@ import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mockito;
+
+import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 public class TestCompleteListener {
 	private HelperScrobbler helperScrobbler;
@@ -38,7 +39,7 @@ public class TestCompleteListener {
 		
 		String expectedArtist = "Paul Van Dyk";
 		
-		when(service.getArtist(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedArtist);
+		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedArtist);
 		
 		controller.service = service;
 
@@ -50,7 +51,30 @@ public class TestCompleteListener {
 		
 		mainWindow.completeMetadataButton.doClick();
 		
-		assertEquals(expectedArtist,service.getArtist(Mockito.anyString(), Mockito.anyString()));
+		assertEquals(expectedArtist,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
+		verify(mainWindow.getTable().getModel()).setValueAt(expectedArtist, 0, 2);
 		
+	}
+	
+	@Test
+	public void shouldCatchServerUnavailableExceptionWheSearchByArtistAndTrackName() throws Exception {
+		MusicBrainzService service = mock(MusicBrainzService.class);
+		JTable table = Mockito.mock(JTable.class);
+		TableModel model = Mockito.mock(TableModel.class);
+		
+		when(table.getModel()).thenReturn(model);
+		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
+		when(table.getRowCount()).thenReturn(1);
+
+		mainWindow.table = table;
+		
+		Exception serverUnavailableException = new ServerUnavailableException();
+		
+		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenThrow(serverUnavailableException );
+		
+		controller.service = service;
+		
+		mainWindow.completeMetadataButton.doClick();
+		verify(mainWindow.getTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt());
 	}
 }
