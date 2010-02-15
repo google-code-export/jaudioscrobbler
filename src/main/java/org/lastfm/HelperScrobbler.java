@@ -42,7 +42,6 @@ public class HelperScrobbler {
 			try{
 				status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(), metadata.getAlbum(), metadata
 						.getLength(), metadata.getTrackNumber(), Source.USER, metadataMap.get(metadata).longValue());
-				System.err.println(status.getStatus());
 				if (status.getStatus() == ResponseStatus.OK) {
 					log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
 					return ApplicationState.OK;

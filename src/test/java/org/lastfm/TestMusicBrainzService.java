@@ -12,14 +12,14 @@ public class TestMusicBrainzService {
 		String artistName = "";
 		String trackName = "";
 		MusicBrainzService service = new MusicBrainzService();
-		assertEquals("", service.getArtist(artistName, trackName));
+		assertEquals("", service.getAlbum(artistName, trackName));
 		
 		artistName = "Tiesto";
-		assertEquals("", service.getArtist(artistName, trackName));
+		assertEquals("", service.getAlbum(artistName, trackName));
 		
 		artistName = "";
 		trackName = "Here on Earth";
-		assertEquals("", service.getArtist(artistName, trackName));
+		assertEquals("", service.getAlbum(artistName, trackName));
 	}
 	
 	@Test
@@ -33,7 +33,7 @@ public class TestMusicBrainzService {
 		Mockito.when(trackService.getAlbum(artistName, trackName)).thenReturn("Some Kind Of Blue");
 		
 		service.setTrackService(trackService);
-		assertEquals("Some Kind Of Blue", service.getArtist(artistName, trackName));
+		assertEquals("Some Kind Of Blue", service.getAlbum(artistName, trackName));
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class TestMusicBrainzService {
 		
 		MusicBrainzService service = new MusicBrainzService();
 		
-		String album = service.getArtist(artistName, trackName);
+		String album = service.getAlbum(artistName, trackName);
 		assertEquals(12, service.getTrackNumber(album));
 	}
 }
