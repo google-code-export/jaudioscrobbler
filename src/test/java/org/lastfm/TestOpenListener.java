@@ -20,6 +20,12 @@ import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mockito;
 
+/**
+ * 
+ * @author Theodor Grip
+ *
+ */
+
 public class TestOpenListener {
 	private static final String MY_ROOT_PATH = "MyRootPath";
 	private HelperScrobbler helperScrobbler;
@@ -30,6 +36,7 @@ public class TestOpenListener {
 	private FileUtils fileUtils;
 	private JFileChooser fileChooser;
 	private List<File> fileList;
+	private ArrayList<Metadata> metadataList;
 
 	@Before
 	public void initialize() {
@@ -70,6 +77,114 @@ public class TestOpenListener {
 		mainWindow.openButton.doClick();
 		List<Metadata> metadataList = controller.getMetadataList();
 		assertEquals(0, metadataList.size());
+	}
+	
+	@Test 
+	public void shouldHandleCannotReadExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable ioException = new IOException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(ioException);
+
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+	
+	@Test 
+	public void shouldHandleTagExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable tagException = new TagException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(tagException);
+
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+	
+	@Test 
+	public void shouldHandleReadOnlyFileExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable readOnlyFileException = new ReadOnlyFileException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(readOnlyFileException);
+
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+	
+	@Test 
+	public void shouldHandleInvalidAudioFrameExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable invalidAudioFileException = new InvalidAudioFrameException(null);
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(invalidAudioFileException);
+
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+	
+	@Test 
+	public void shouldHandleInvalidId3VersionExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable invalidId3VersionException = new InvalidId3VersionException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(invalidId3VersionException);
+
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+
+	@Test 
+	public void shouldHandleInterruptedExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable interruptedException = new InterruptedException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(interruptedException);
+		
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+		
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
 
 	private void setExpectations() throws InterruptedException, IOException, CannotReadException,
