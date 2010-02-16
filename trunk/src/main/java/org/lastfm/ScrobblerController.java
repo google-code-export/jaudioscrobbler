@@ -51,7 +51,9 @@ public class ScrobblerController {
 			this.fileList = fileList;
 
 			Metadata metadata = null;
-			metadataList = new ArrayList<Metadata>();
+			if (metadataList == null){
+				metadataList = new ArrayList<Metadata>();
+			}
 
 			for (File file : fileList) {
 				if (file.getPath().endsWith("mp3")) {
@@ -70,17 +72,22 @@ public class ScrobblerController {
 			return metadataList;
 		}
 
-		private void showFiles(File root) throws InterruptedException, IOException, CannotReadException, TagException,
+		private int showFiles(File root) throws InterruptedException, IOException, TagException,
 				ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
 			if (fileUtils == null) {
 				fileUtils = new FileUtils();
 			}
-			fileList = fileUtils.getFileList(root);
-			metadataList = getMetadataList(fileList);
+			try{
+				fileList = fileUtils.getFileList(root);
+				metadataList = getMetadataList(fileList);
+			} catch(CannotReadException cre){
+				return ApplicationState.ERROR;
+			}
+			return ApplicationState.OK;
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent event) {
 			if (fileChooser == null) {
 				fileChooser = new JFileChooser();
 			}
@@ -91,25 +98,28 @@ public class ScrobblerController {
 				mainWindow.getDirectoryField().setText(file.getAbsolutePath());
 				try {
 					showFiles(file);
-				} catch (CannotReadException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (TagException e1) {
-					e1.printStackTrace();
-				} catch (ReadOnlyFileException e1) {
-					e1.printStackTrace();
-				} catch (InvalidAudioFrameException e1) {
-					e1.printStackTrace();
-				} catch (InvalidId3VersionException e1) {
-					e1.printStackTrace();
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
+				} catch (IOException e) {
+					handleException(e);
+				} catch (TagException e) {
+					handleException(e);
+				} catch (ReadOnlyFileException e) {
+					handleException(e);
+				} catch (InvalidAudioFrameException e) {
+					handleException(e);
+				} catch (InvalidId3VersionException e) {
+					handleException(e);
+				} catch (InterruptedException e) {
+					handleException(e);
 				}
 			}
 		}
+
 	}
 
+	private void handleException(Exception e) {
+		e.printStackTrace();
+		mainWindow.getLabel().setText(ApplicationState.OPEN_ERROR);
+	}
 	class SendListener implements ActionListener {
 		private void updateStatus(final int i) {
 			mainWindow.getProgressBar().setValue(((i + 1) * 100) / metadataList.size());
