@@ -11,6 +11,12 @@ import java.util.logging.Logger;
 
 import org.apache.log4j.PropertyConfigurator;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public abstract class Metadata {
 	
 	private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger("org.lastfm");

@@ -9,6 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class LoginWindow {
 	public JButton sendButton;
 	public JTextField userName;

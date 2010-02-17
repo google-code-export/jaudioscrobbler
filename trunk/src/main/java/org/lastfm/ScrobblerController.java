@@ -51,7 +51,7 @@ public class ScrobblerController {
 			this.fileList = fileList;
 
 			Metadata metadata = null;
-			if (metadataList == null){
+			if (metadataList == null) {
 				metadataList = new ArrayList<Metadata>();
 			}
 
@@ -72,17 +72,13 @@ public class ScrobblerController {
 			return metadataList;
 		}
 
-		private int showFiles(File root) throws InterruptedException, IOException, TagException,
-				ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+		private int showFiles(File root) throws InterruptedException, IOException, TagException, ReadOnlyFileException,
+				InvalidAudioFrameException, InvalidId3VersionException, CannotReadException {
 			if (fileUtils == null) {
 				fileUtils = new FileUtils();
 			}
-			try{
-				fileList = fileUtils.getFileList(root);
-				metadataList = getMetadataList(fileList);
-			} catch(CannotReadException cre){
-				return ApplicationState.ERROR;
-			}
+			fileList = fileUtils.getFileList(root);
+			metadataList = getMetadataList(fileList);
 			return ApplicationState.OK;
 		}
 
@@ -110,6 +106,8 @@ public class ScrobblerController {
 					handleException(e);
 				} catch (InterruptedException e) {
 					handleException(e);
+				} catch (CannotReadException e) {
+					handleException(e);
 				}
 			}
 		}
@@ -120,6 +118,7 @@ public class ScrobblerController {
 		e.printStackTrace();
 		mainWindow.getLabel().setText(ApplicationState.OPEN_ERROR);
 	}
+
 	class SendListener implements ActionListener {
 		private void updateStatus(final int i) {
 			mainWindow.getProgressBar().setValue(((i + 1) * 100) / metadataList.size());
@@ -138,7 +137,7 @@ public class ScrobblerController {
 							for (Metadata metadata : metadataList) {
 								updateStatus(metadataList.indexOf(metadata));
 								int result = helperScrobbler.send(metadata);
-								if(result == ApplicationState.ERROR){
+								if (result == ApplicationState.ERROR) {
 									mainWindow.getLabel().setText(ApplicationState.NETWORK_ERROR);
 								}
 							}

@@ -18,6 +18,12 @@ import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class MetadataMp3 extends Metadata {
 	private Tag tag;
 	private AudioHeader header;

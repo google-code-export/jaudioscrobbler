@@ -16,6 +16,12 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestHelperScrobbler {
 	Metadata metadata = mock(Metadata.class);
 	private HelperScrobbler helperScrobbler;

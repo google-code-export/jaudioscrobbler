@@ -8,6 +8,12 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TrackService extends Track {
 	List<Track> trackList;
 	List<Release> release;

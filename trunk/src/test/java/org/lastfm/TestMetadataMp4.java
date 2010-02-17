@@ -11,6 +11,11 @@ import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
 
 public class TestMetadataMp4 {
 	File file = Mockito.mock(File.class);

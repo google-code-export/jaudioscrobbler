@@ -7,6 +7,12 @@ import javax.swing.UIManager.LookAndFeelInfo;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class Launcher {
 	public static void main(String[] args) {
 		try {

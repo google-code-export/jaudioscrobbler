@@ -12,6 +12,12 @@ import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mockito;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestSendListener {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;

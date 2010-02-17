@@ -15,6 +15,12 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class HelperScrobbler {
 	private static final int DELTA = 120;
 
