@@ -1,6 +1,7 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.io.File;
@@ -44,6 +45,8 @@ public class TestOpenListener {
 		loginWindow = mock(LoginWindow.class);
 		mainWindow = new MainWindow();
 
+		metadataList = new ArrayList<Metadata>();
+		
 		root = Mockito.mock(File.class);
 		fileUtils = Mockito.mock(FileUtils.class);
 		fileChooser = Mockito.mock(JFileChooser.class);
@@ -59,9 +62,22 @@ public class TestOpenListener {
 
 		controller.fileChooser = fileChooser;
 		controller.fileUtils = fileUtils;
+		
+		fileList.add(new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3"));
 
+		Mockito.when(fileUtils.getFileList(root)).thenReturn(fileList);
 		mainWindow.openButton.doClick();
-		Mockito.verify(fileUtils).getFileList(root);
+		assertEquals(1, controller.metadataList.size());
+		int row = 0;
+		int col = 0;
+		assertEquals(2, controller.mainWindow.getDescritionTable().getRowCount());
+		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Jaytech"));
+		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Pepe Garden"));
+		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Everything is OK"));
+		//TODO Change to String
+		assertEquals(4,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
+		assertEquals(461,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
+		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Ready"));
 	}
 
 	@Test
@@ -86,8 +102,6 @@ public class TestOpenListener {
 		Throwable ioException = new IOException();
 		Mockito.when(fileUtils.getFileList(root)).thenThrow(ioException);
 
-		metadataList = new ArrayList<Metadata>();
-		
 		controller.fileChooser = fileChooser;
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
