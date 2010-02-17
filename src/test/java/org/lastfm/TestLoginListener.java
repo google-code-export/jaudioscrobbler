@@ -1,12 +1,19 @@
 package org.lastfm;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.io.IOException;
+
 import javax.swing.JLabel;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
-import static org.mockito.Mockito.*;
+import org.mockito.Mockito;
 
 
 public class TestLoginListener {
@@ -46,6 +53,20 @@ public class TestLoginListener {
 		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "");
+	}
+	
+	@Test
+	public void shouldHandleIOExceptionWhenLogin() throws Exception {
+		LoginController loginController = mock(LoginController.class);
+		controller.loginController = loginController;
+		
+		Throwable ioException = new IOException();
+		when(loginController.login(anyString(), anyString())).thenThrow(ioException );
+		
+		loginWindow.sendButton.doClick();
+		
+		when(mainWindow.getLoginLabel()).thenReturn(label);
+		Mockito.verify(mainWindow.getLoginLabel(), Mockito.never()).setText(Mockito.anyString());
 	}
 	
 	

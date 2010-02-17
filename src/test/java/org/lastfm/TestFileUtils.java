@@ -6,6 +6,12 @@ import java.util.List;
 
 import org.junit.Test;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestFileUtils {
 
 	@Test

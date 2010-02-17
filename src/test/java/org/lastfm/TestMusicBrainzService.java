@@ -5,6 +5,12 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestMusicBrainzService {
 	
 	@Test

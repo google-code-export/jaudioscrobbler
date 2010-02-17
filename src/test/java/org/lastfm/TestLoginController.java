@@ -8,6 +8,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestLoginController {
 	Scrobbler scrobbler = Mockito.mock(Scrobbler.class);
 	ScrobblerFactory factory = Mockito.mock(ScrobblerFactory.class);

@@ -22,7 +22,7 @@ import org.mockito.Mockito;
 
 /**
  * 
- * @author Theodor Grip
+ * @author Jose Luis De la Cruz
  *
  */
 
@@ -80,7 +80,7 @@ public class TestOpenListener {
 	}
 	
 	@Test 
-	public void shouldHandleCannotReadExceptionWhenGetFilesFromRoot() throws Exception {
+	public void shouldHandleIOExceptionWhenGetFilesFromRoot() throws Exception {
 		setExpectations();
 		
 		Throwable ioException = new IOException();
@@ -175,6 +175,24 @@ public class TestOpenListener {
 		
 		Throwable interruptedException = new InterruptedException();
 		Mockito.when(fileUtils.getFileList(root)).thenThrow(interruptedException);
+		
+		metadataList = new ArrayList<Metadata>();
+		
+		controller.fileChooser = fileChooser;
+		controller.fileUtils = fileUtils;
+		controller.metadataList = metadataList;
+		
+		mainWindow.openButton.doClick();
+		assertEquals(0, metadataList.size());
+		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
+	}
+
+	@Test 
+	public void shouldHandleCannotReadExceptionWhenGetFilesFromRoot() throws Exception {
+		setExpectations();
+		
+		Throwable cannotReadException = new CannotReadException();
+		Mockito.when(fileUtils.getFileList(root)).thenThrow(cannotReadException);
 		
 		metadataList = new ArrayList<Metadata>();
 		

@@ -1,10 +1,9 @@
 package org.lastfm;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
@@ -12,6 +11,12 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
 
 public class TestMetadataMp3 {
 	File file = Mockito.mock(File.class);

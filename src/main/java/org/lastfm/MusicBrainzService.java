@@ -4,6 +4,11 @@ import org.apache.commons.lang.StringUtils;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
 
 public class MusicBrainzService {
 

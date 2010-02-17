@@ -10,6 +10,12 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class FileUtils {
 	private List<File> fileList;
 

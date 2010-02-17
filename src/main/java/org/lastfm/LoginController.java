@@ -7,6 +7,12 @@ import org.apache.commons.lang.StringUtils;
 import net.roarsoftware.lastfm.scrobble.ResponseStatus;
 import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class LoginController {
 	ScrobblerFactory factory;
 	

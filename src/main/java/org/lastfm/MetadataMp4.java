@@ -13,6 +13,12 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class MetadataMp4 extends Metadata {
 	private File file;
 	private Mp4Tag tag;

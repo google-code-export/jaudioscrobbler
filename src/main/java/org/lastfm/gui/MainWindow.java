@@ -11,9 +11,14 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.text.JTextComponent;
 
 import org.lastfm.ApplicationState;
+
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
 
 public class MainWindow {
 	private static final String SEND_SCROBBLINGS = "Send";

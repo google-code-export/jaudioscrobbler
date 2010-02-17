@@ -16,6 +16,12 @@ import org.mockito.Mockito;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ *
+ */
+
 public class TestCompleteListener {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;
