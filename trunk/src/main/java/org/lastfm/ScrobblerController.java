@@ -24,8 +24,8 @@ import org.lastfm.gui.MainWindow;
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 public class ScrobblerController {
-	private final MainWindow mainWindow;
 	private HelperScrobbler helperScrobbler;
+	final MainWindow mainWindow;
 	List<Metadata> metadataList;
 	LoginWindow loginWindow;
 	LoginController loginController;
@@ -76,18 +76,15 @@ public class ScrobblerController {
 
 		private void update(Metadata metadata) {
 			JTable descriptionTable = mainWindow.getDescritionTable();
-			int row = descriptionTable.getRowCount();
-			if(descriptionTable.getRowCount() <= row){
-				DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-				model.addRow(new Object[]{ "", "", "", "", "", "" });
-			}
+			int row = descriptionTable.getRowCount() - 1;
+			DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+			model.addRow(new Object[] { "", "", "", "", "", "" });
 			descriptionTable.setValueAt(metadata.getArtist(), row, 0);
 			descriptionTable.setValueAt(metadata.getTitle(), row, 1);
 			descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
 			descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
 			descriptionTable.setValueAt(metadata.getLength(), row, 4);
 			descriptionTable.setValueAt("Ready", row, 5);
-			row++;	
 		}
 
 		private int showFiles(File root) throws InterruptedException, IOException, TagException, ReadOnlyFileException,
