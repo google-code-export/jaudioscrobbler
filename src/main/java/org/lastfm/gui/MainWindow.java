@@ -67,7 +67,6 @@ public class MainWindow {
 		progressBar.setVisible(false);
 		
 		table = new DescriptionTable();
-		ApplicationState.setDescriptionTable(table);
 		label = new JLabel("Status");
 		textField = new JTextField(20);
 		
@@ -96,6 +95,10 @@ public class MainWindow {
 	public JPanel getPanel() {
 		return panel;
 	}
+	
+	public JTable getDescritionTable() {
+		return table;
+	}
 
 	public JTextField getDirectoryField() {
 		return textField;
@@ -113,10 +116,6 @@ public class MainWindow {
 		return loginLabel;
 	}
 	
-	public JTable getTable() {
-		return table;
-	}
-
 	public void addOpenListener(ActionListener openListener) {
 		openButton.addActionListener(openListener);
 	}

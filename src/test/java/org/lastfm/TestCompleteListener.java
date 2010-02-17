@@ -58,7 +58,7 @@ public class TestCompleteListener {
 		mainWindow.completeMetadataButton.doClick();
 		
 		assertEquals(expectedArtist,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
-		verify(mainWindow.getTable().getModel()).setValueAt(expectedArtist, 0, 2);
+		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedArtist, 0, 2);
 		
 	}
 	
@@ -81,6 +81,6 @@ public class TestCompleteListener {
 		controller.service = service;
 		
 		mainWindow.completeMetadataButton.doClick();
-		verify(mainWindow.getTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt());
+		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt());
 	}
 }

@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.JTable;
 import javax.swing.SwingWorker;
+import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -66,10 +68,26 @@ public class ScrobblerController {
 					log.error(file.getAbsoluteFile() + " is not a valid Audio File");
 				} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 					metadataList.add(metadata);
-					ApplicationState.update(metadata);
+					update(metadata);
 				}
 			}
 			return metadataList;
+		}
+
+		private void update(Metadata metadata) {
+			JTable descriptionTable = mainWindow.getDescritionTable();
+			int row = descriptionTable.getRowCount();
+			if(descriptionTable.getRowCount() <= row){
+				DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+				model.addRow(new Object[]{ "", "", "", "", "", "" });
+			}
+			descriptionTable.setValueAt(metadata.getArtist(), row, 0);
+			descriptionTable.setValueAt(metadata.getTitle(), row, 1);
+			descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
+			descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
+			descriptionTable.setValueAt(metadata.getLength(), row, 4);
+			descriptionTable.setValueAt("Ready", row, 5);
+			row++;	
 		}
 
 		private int showFiles(File root) throws InterruptedException, IOException, TagException, ReadOnlyFileException,
@@ -163,14 +181,14 @@ public class ScrobblerController {
 			if (service == null) {
 				service = new MusicBrainzService();
 			}
-			for (int i = 0; i < mainWindow.getTable().getRowCount(); i++) {
-				String albumName = mainWindow.getTable().getModel().getValueAt(i, 2).toString();
+			for (int i = 0; i < mainWindow.getDescritionTable().getRowCount(); i++) {
+				String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
 				if (StringUtils.isEmpty(albumName)) {
-					String artistName = mainWindow.getTable().getModel().getValueAt(i, 0).toString();
-					String trackName = mainWindow.getTable().getModel().getValueAt(i, 1).toString();
+					String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0).toString();
+					String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1).toString();
 					try {
 						String artist = service.getAlbum(artistName, trackName);
-						mainWindow.getTable().getModel().setValueAt(artist, i, 2);
+						mainWindow.getDescritionTable().getModel().setValueAt(artist, i, 2);
 					} catch (ServerUnavailableException sue) {
 						log.error(sue, sue);
 					}
