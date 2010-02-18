@@ -136,7 +136,11 @@ public class ScrobblerController {
 
 	class SendListener implements ActionListener {
 		private void updateStatus(final int i) {
-			mainWindow.getProgressBar().setValue(((i + 1) * 100) / metadataList.size());
+			int progress = ((i + 1) * 100) / metadataList.size();
+			mainWindow.getProgressBar().setValue(progress);
+			if(progress == 100){
+				mainWindow.getLabel().setText(ApplicationState.DONE);
+			}
 		};
 
 		@Override
@@ -167,7 +171,7 @@ public class ScrobblerController {
 
 			};
 			swingWorker.execute();
-			mainWindow.getLabel().setText(ApplicationState.DONE);
+			mainWindow.getLabel().setText(ApplicationState.WORKING);
 		}
 	}
 
