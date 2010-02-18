@@ -44,7 +44,7 @@ public class TestCompleteListener {
 		TableModel model = Mockito.mock(TableModel.class);
 		
 		String expectedAlbum = "Global";
-		String expectedStatus = ApplicationState.METADATA_UPDATED;
+		String expectedStatus = ApplicationState.NEW_METADATA;
 		
 		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
 		
@@ -70,7 +70,7 @@ public class TestCompleteListener {
 		TableModel model = Mockito.mock(TableModel.class);
 		
 		String expectedAlbum = "";
-		String expectedStatus = ApplicationState.METADATA_UPDATED;
+		String expectedStatus = ApplicationState.NEW_METADATA;
 		
 		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
 		
