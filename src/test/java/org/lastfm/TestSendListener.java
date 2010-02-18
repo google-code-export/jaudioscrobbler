@@ -48,6 +48,7 @@ public class TestSendListener {
 		Mockito.verify(helperScrobbler).send(metadata);
 		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
 		assertEquals(100, mainWindow.getProgressBar().getValue());
+		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
 	}
 	
 }
