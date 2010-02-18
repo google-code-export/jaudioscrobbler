@@ -187,7 +187,7 @@ public class ScrobblerController {
 						String album = service.getAlbum(artistName, trackName);
 						if(StringUtils.isNotEmpty(album)){
 							mainWindow.getDescritionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
-							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED, i,
+							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i,
 									ApplicationState.STATUS_COLUMN);
 						}
 					} catch (ServerUnavailableException sue) {
