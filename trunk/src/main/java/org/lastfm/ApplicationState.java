@@ -1,5 +1,6 @@
 package org.lastfm;
 
+
 /**
  * 
  * @author Jose Luis De la Cruz
@@ -19,4 +20,8 @@ public class ApplicationState {
 	public static final Object HAND_SHAKE_FAIL = "Handshake failed";
 	public static final String NETWORK_ERROR = "Internet Connection Error";
 	public static final String OPEN_ERROR = "Error on importing Music";
+	public static final String METADATA_UPDATED = "Updated";
+	public static final int ALBUM_COLUMN = 2;
+	public static final int STATUS_COLUMN = 5;
+	
 }

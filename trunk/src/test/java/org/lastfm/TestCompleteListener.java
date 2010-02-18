@@ -38,14 +38,15 @@ public class TestCompleteListener {
 	}
 	
 	@Test
-	public void shouldSearchByArtistAndTrackName() throws Exception {
+	public void shouldUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
 		JTable table = Mockito.mock(JTable.class);
 		TableModel model = Mockito.mock(TableModel.class);
 		
-		String expectedArtist = "Paul Van Dyk";
+		String expectedAlbum = "Global";
+		String expectedStatus = ApplicationState.METADATA_UPDATED;
 		
-		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedArtist);
+		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
 		
 		controller.service = service;
 
@@ -57,9 +58,35 @@ public class TestCompleteListener {
 		
 		mainWindow.completeMetadataButton.doClick();
 		
-		assertEquals(expectedArtist,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
-		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedArtist, 0, 2);
+		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
+		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
+		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
+	}
+	
+	@Test
+	public void shouldNotUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
+		MusicBrainzService service = mock(MusicBrainzService.class);
+		JTable table = Mockito.mock(JTable.class);
+		TableModel model = Mockito.mock(TableModel.class);
 		
+		String expectedAlbum = "";
+		String expectedStatus = ApplicationState.METADATA_UPDATED;
+		
+		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
+		
+		controller.service = service;
+
+		when(table.getModel()).thenReturn(model);
+		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
+		when(table.getRowCount()).thenReturn(1);
+
+		mainWindow.table = table;
+		
+		mainWindow.completeMetadataButton.doClick();
+		
+		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
+		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
+		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
 	}
 	
 	@Test

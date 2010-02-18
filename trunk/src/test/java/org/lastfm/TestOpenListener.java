@@ -74,7 +74,6 @@ public class TestOpenListener {
 		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Jaytech"));
 		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Pepe Garden"));
 		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Everything is OK"));
-		//TODO Change to String
 		assertEquals(4,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
 		assertEquals(461,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
 		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Ready"));
