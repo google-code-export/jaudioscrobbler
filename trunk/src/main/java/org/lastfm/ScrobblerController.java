@@ -184,6 +184,17 @@ public class ScrobblerController {
 	}
 
 	class CompleteListener implements ActionListener {
+		
+		private void updateStatus(final int i, int rowCount) {
+			int progress = ((i + 1) * 100) / rowCount;
+			mainWindow.getProgressBar().setValue(progress);
+			if(progress == 100){
+				mainWindow.getLabel().setText(ApplicationState.DONE);
+				mainWindow.getCompleteButton().setEnabled(true);
+				mainWindow.getSendButton().setEnabled(true);
+				mainWindow.getOpenButton().setEnabled(true);
+			}
+		};
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -195,7 +206,9 @@ public class ScrobblerController {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					for (int i = 0; i < mainWindow.getDescritionTable().getRowCount(); i++) {
+					int rowCount = mainWindow.getDescritionTable().getRowCount();
+					for (int i = 0; i < rowCount; i++) {
+						updateStatus(i, rowCount);
 						String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
 						if (StringUtils.isEmpty(albumName)) {
 							String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0).toString();

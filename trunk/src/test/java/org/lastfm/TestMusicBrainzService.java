@@ -46,10 +46,17 @@ public class TestMusicBrainzService {
 	public void shouldReturnTrackNumber() throws Exception {
 		String artistName = "Above & Beyond";
 		String trackName = "Anjunabeach";
+		String album = "Anjunabeach";
 		
 		MusicBrainzService service = new MusicBrainzService();
 		
-		String album = service.getAlbum(artistName, trackName);
+		TrackService trackService = Mockito.mock(TrackService.class);
+		Mockito.when(trackService.getAlbum(artistName, trackName)).thenReturn(album);
+		Mockito.when(trackService.getTrackNumber(album)).thenReturn(12);
+		
+		service.setTrackService(trackService);
+		
+		assertEquals(album, service.getAlbum(artistName, trackName));
 		assertEquals(12, service.getTrackNumber(album));
 	}
 }
