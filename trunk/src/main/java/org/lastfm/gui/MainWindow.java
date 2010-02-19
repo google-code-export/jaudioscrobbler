@@ -1,6 +1,7 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -116,6 +117,18 @@ public class MainWindow {
 		return loginLabel;
 	}
 	
+	public JButton getCompleteButton() {
+		return completeMetadataButton;
+	}
+	
+	public JButton getSendButton() {
+		return sendButton;
+	}
+	
+	public JButton getOpenButton() {
+		return openButton;
+	}
+
 	public void addOpenListener(ActionListener openListener) {
 		openButton.addActionListener(openListener);
 	}

@@ -140,6 +140,9 @@ public class ScrobblerController {
 			mainWindow.getProgressBar().setValue(progress);
 			if(progress == 100){
 				mainWindow.getLabel().setText(ApplicationState.DONE);
+				mainWindow.getCompleteButton().setEnabled(true);
+				mainWindow.getSendButton().setEnabled(true);
+				mainWindow.getOpenButton().setEnabled(true);
 			}
 		};
 
@@ -171,7 +174,12 @@ public class ScrobblerController {
 
 			};
 			swingWorker.execute();
+			mainWindow.getCompleteButton().setEnabled(false);
+			mainWindow.getSendButton().setEnabled(false);
+			mainWindow.getOpenButton().setEnabled(false);
+			
 			mainWindow.getLabel().setText(ApplicationState.WORKING);
+			
 		}
 	}
 
@@ -182,23 +190,32 @@ public class ScrobblerController {
 			if (service == null) {
 				service = new MusicBrainzService();
 			}
-			for (int i = 0; i < mainWindow.getDescritionTable().getRowCount(); i++) {
-				String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
-				if (StringUtils.isEmpty(albumName)) {
-					String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0).toString();
-					String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1).toString();
-					try {
-						String album = service.getAlbum(artistName, trackName);
-						if(StringUtils.isNotEmpty(album)){
-							mainWindow.getDescritionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
-							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i,
-									ApplicationState.STATUS_COLUMN);
+			
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>(){
+
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					for (int i = 0; i < mainWindow.getDescritionTable().getRowCount(); i++) {
+						String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
+						if (StringUtils.isEmpty(albumName)) {
+							String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0).toString();
+							String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1).toString();
+							try {
+								String album = service.getAlbum(artistName, trackName);
+								if(StringUtils.isNotEmpty(album)){
+									mainWindow.getDescritionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
+									mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i,
+											ApplicationState.STATUS_COLUMN);
+								}
+							} catch (ServerUnavailableException sue) {
+								log.error(sue, sue);
+							}
 						}
-					} catch (ServerUnavailableException sue) {
-						log.error(sue, sue);
 					}
+					return true;
 				}
-			}
+			};
+			swingWorker.execute();
 		}
 	}
 

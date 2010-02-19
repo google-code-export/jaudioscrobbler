@@ -58,6 +58,8 @@ public class TestCompleteListener {
 		
 		mainWindow.completeMetadataButton.doClick();
 		
+		Thread.sleep(1000);
+		
 		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
