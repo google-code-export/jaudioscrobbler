@@ -1,6 +1,8 @@
 package org.lastfm;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
@@ -20,35 +22,48 @@ import org.mockito.Mockito;
 
 public class TestSendListener {
 	private HelperScrobbler helperScrobbler;
-	private MainWindow mainWindow;
+	
 	private LoginWindow loginWindow;
 	private ScrobblerController controller;
+	private Metadata metadata;
+	private List<Metadata> metadataList;
 
 	@Before
 	public void initialize(){
 		helperScrobbler = mock(HelperScrobbler.class);
 		loginWindow = mock(LoginWindow.class);
-		mainWindow = new MainWindow();
+		metadata = mock(Metadata.class);
 		
-		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		
 	}
 	
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
-		List<Metadata> metadataList = new ArrayList<Metadata>();
-		
-		Metadata metadata = mock(Metadata.class);
+		MainWindow mainWindow;
+		mainWindow = new MainWindow();
+		metadataList = new ArrayList<Metadata>();
+		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		
 		metadataList.add(metadata);
+		
 		controller.metadataList = metadataList;
 		
 		assertEquals(0, mainWindow.getProgressBar().getValue());
+
 		mainWindow.sendButton.doClick();
+		assertFalse("completeButton should be enable", mainWindow.getCompleteButton().isEnabled());
+		assertFalse("sendButton should be enable", mainWindow.getSendButton().isEnabled());
+		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
+
 		Thread.sleep(500);
+		
 		Mockito.verify(helperScrobbler).send(metadata);
-		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
+		
 		assertEquals(100, mainWindow.getProgressBar().getValue());
 		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
+		
+		assertTrue("completeButton should not be enable", mainWindow.getCompleteButton().isEnabled());
+		assertTrue("sendButton should not be enable", mainWindow.getSendButton().isEnabled());
+		assertTrue("openButton should not be enable", mainWindow.getOpenButton().isEnabled());
 	}
-	
 }
