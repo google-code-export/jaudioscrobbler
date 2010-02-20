@@ -15,6 +15,7 @@ import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.metadata.Metadata;
 
 /**
  * 

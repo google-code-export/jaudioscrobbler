@@ -20,6 +20,9 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataMp3;
+import org.lastfm.metadata.MetadataMp4;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
