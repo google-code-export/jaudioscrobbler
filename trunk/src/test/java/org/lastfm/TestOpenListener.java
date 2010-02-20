@@ -66,7 +66,7 @@ public class TestOpenListener {
 		fileList.add(new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3"));
 
 		Mockito.when(fileUtils.getFileList(root)).thenReturn(fileList);
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(1, controller.metadataList.size());
 		int row = 0;
 		int col = 0;
@@ -91,7 +91,7 @@ public class TestOpenListener {
 		File file = new File("resources/log4j.properties");
 		fileList.add(file);
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		List<Metadata> metadataList = controller.getMetadataList();
 		assertEquals(0, metadataList.size());
 	}
@@ -107,7 +107,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -125,7 +125,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -143,7 +143,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -161,7 +161,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -179,7 +179,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -197,7 +197,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 		
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
@@ -215,7 +215,7 @@ public class TestOpenListener {
 		controller.fileUtils = fileUtils;
 		controller.metadataList = metadataList;
 		
-		mainWindow.openButton.doClick();
+		mainWindow.getOpenButton().doClick();
 		assertEquals(0, metadataList.size());
 		assertEquals(ApplicationState.OPEN_ERROR, mainWindow.getLabel().getText());
 	}
