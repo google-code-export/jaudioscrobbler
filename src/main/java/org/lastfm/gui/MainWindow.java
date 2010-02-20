@@ -64,6 +64,9 @@ public class MainWindow {
 		sendButton = new JButton(SEND_SCROBBLINGS);
 		completeMetadataButton = new JButton(APPLY_METADATA);
 		
+		sendButton.setEnabled(false);
+		completeMetadataButton.setEnabled(false);
+		
 		progressBar = new JProgressBar();
 		progressBar.setVisible(false);
 		

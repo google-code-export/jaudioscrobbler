@@ -57,15 +57,23 @@ public class TestCompleteListener {
 		mainWindow.table = table;
 		
 		assertEquals(0, mainWindow.getProgressBar().getValue());
+		assertFalse("progressBar should not be visible", mainWindow.getProgressBar().isVisible());
 		
 		mainWindow.completeMetadataButton.doClick();
+		assertFalse("completeButton should be enable", mainWindow.getCompleteButton().isEnabled());
+		assertFalse("sendButton should be enable", mainWindow.getSendButton().isEnabled());
+		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 		
 		Thread.sleep(1000);
 		
+		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
+		assertTrue("completeButton should not be enable", mainWindow.getCompleteButton().isEnabled());
+		assertTrue("sendButton should not be enable", mainWindow.getSendButton().isEnabled());
+		assertTrue("openButton should not be enable", mainWindow.getOpenButton().isEnabled());
 	}
 	
 	@Test

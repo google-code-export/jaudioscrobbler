@@ -17,7 +17,7 @@ public class ApplicationState {
 	public static final String LOGIN_FAIL = "Login fail";
 	public static final String LOGGED_AS = "Logged as : ";
 	public static final String DONE = "Done";
-	public static final Object HAND_SHAKE_FAIL = "Handshake failed";
+	public static final String HAND_SHAKE_FAIL = "Handshake failed";
 	public static final String NETWORK_ERROR = "Internet Connection Error";
 	public static final String OPEN_ERROR = "Error on importing Music";
 	public static final String NEW_METADATA = "New";
