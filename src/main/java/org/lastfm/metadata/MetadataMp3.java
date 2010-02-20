@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.metadata;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -17,6 +17,7 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
+import org.lastfm.InvalidId3VersionException;
 
 /**
  * 

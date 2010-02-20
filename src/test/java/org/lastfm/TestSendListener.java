@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.lastfm.metadata.Metadata;
 import org.mockito.Mockito;
 
 /**
