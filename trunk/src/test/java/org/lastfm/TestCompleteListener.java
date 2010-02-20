@@ -59,8 +59,9 @@ public class TestCompleteListener {
 		assertEquals(0, mainWindow.getProgressBar().getValue());
 		assertFalse("progressBar should not be visible", mainWindow.getProgressBar().isVisible());
 		
+		mainWindow.completeMetadataButton.setEnabled(true);
 		mainWindow.completeMetadataButton.doClick();
-		assertFalse("completeButton should be enable", mainWindow.getCompleteButton().isEnabled());
+		
 		assertFalse("sendButton should be enable", mainWindow.getSendButton().isEnabled());
 		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 		
