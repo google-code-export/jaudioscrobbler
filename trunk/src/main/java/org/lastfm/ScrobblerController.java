@@ -109,6 +109,8 @@ public class ScrobblerController {
 				mainWindow.getDirectoryField().setText(file.getAbsolutePath());
 				try {
 					showFiles(file);
+					mainWindow.getSendButton().setEnabled(true);
+					mainWindow.getCompleteButton().setEnabled(true);
 				} catch (IOException e) {
 					handleException(e);
 				} catch (TagException e) {
@@ -185,6 +187,7 @@ public class ScrobblerController {
 
 	class CompleteListener implements ActionListener {
 		
+		
 		private void updateStatus(final int i, int rowCount) {
 			int progress = ((i + 1) * 100) / rowCount;
 			mainWindow.getProgressBar().setValue(progress);
@@ -201,6 +204,8 @@ public class ScrobblerController {
 			if (service == null) {
 				service = new MusicBrainzService();
 			}
+			
+			mainWindow.getProgressBar().setVisible(true);
 			
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>(){
 
@@ -229,6 +234,9 @@ public class ScrobblerController {
 				}
 			};
 			swingWorker.execute();
+			mainWindow.getCompleteButton().setEnabled(false);
+			mainWindow.getSendButton().setEnabled(false);
+			mainWindow.getOpenButton().setEnabled(false);
 		}
 	}
 

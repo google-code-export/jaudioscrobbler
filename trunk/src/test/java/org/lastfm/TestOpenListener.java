@@ -77,6 +77,8 @@ public class TestOpenListener {
 		assertEquals(4,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
 		assertEquals(461,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
 		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Ready"));
+		assertTrue("completeButton should be enable", controller.mainWindow.getCompleteButton().isEnabled());
+		assertTrue("sendButton should be enable", controller.mainWindow.getSendButton().isEnabled());
 	}
 
 	@Test

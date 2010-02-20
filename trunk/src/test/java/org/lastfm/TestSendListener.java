@@ -49,8 +49,10 @@ public class TestSendListener {
 		controller.metadataList = metadataList;
 		
 		assertEquals(0, mainWindow.getProgressBar().getValue());
+		assertFalse("progressBar should not be visible", mainWindow.getProgressBar().isVisible());
 
 		mainWindow.sendButton.doClick();
+		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertFalse("completeButton should be enable", mainWindow.getCompleteButton().isEnabled());
 		assertFalse("sendButton should be enable", mainWindow.getSendButton().isEnabled());
 		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
