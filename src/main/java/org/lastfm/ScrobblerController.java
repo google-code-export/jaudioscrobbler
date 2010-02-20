@@ -150,10 +150,10 @@ public class ScrobblerController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			mainWindow.getProgressBar().setVisible(true);
-
+			
+			
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
-
+				
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					try {
@@ -175,10 +175,13 @@ public class ScrobblerController {
 				}
 
 			};
+			
 			swingWorker.execute();
+			
 			mainWindow.getCompleteButton().setEnabled(false);
 			mainWindow.getSendButton().setEnabled(false);
 			mainWindow.getOpenButton().setEnabled(false);
+			mainWindow.getProgressBar().setVisible(true);
 			
 			mainWindow.getLabel().setText(ApplicationState.WORKING);
 			
