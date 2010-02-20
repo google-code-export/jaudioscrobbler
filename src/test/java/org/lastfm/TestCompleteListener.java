@@ -59,11 +59,11 @@ public class TestCompleteListener {
 		assertEquals(0, mainWindow.getProgressBar().getValue());
 		assertFalse("progressBar should not be visible", mainWindow.getProgressBar().isVisible());
 		
-		mainWindow.completeMetadataButton.setEnabled(true);
-		mainWindow.completeMetadataButton.doClick();
+		mainWindow.getCompleteButton().setEnabled(true);
+		mainWindow.getCompleteButton().doClick();
 		
-		assertFalse("sendButton should be enable", mainWindow.getSendButton().isEnabled());
-		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
+		assertFalse("sendButton should not be enable", mainWindow.getSendButton().isEnabled());
+		assertFalse("openButton should not be enable", mainWindow.getOpenButton().isEnabled());
 		
 		Thread.sleep(1000);
 		
@@ -72,9 +72,9 @@ public class TestCompleteListener {
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
-		assertTrue("completeButton should not be enable", mainWindow.getCompleteButton().isEnabled());
-		assertTrue("sendButton should not be enable", mainWindow.getSendButton().isEnabled());
-		assertTrue("openButton should not be enable", mainWindow.getOpenButton().isEnabled());
+		assertTrue("sendButton should be enable", mainWindow.getSendButton().isEnabled());
+		assertTrue("openButton should be enable", mainWindow.getOpenButton().isEnabled());
+		assertEquals(ApplicationState.APPLY, mainWindow.getCompleteButton().getText());
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class TestCompleteListener {
 		when(table.getRowCount()).thenReturn(1);
 
 		mainWindow.table = table;
-		mainWindow.completeMetadataButton.doClick();
+		mainWindow.getCompleteButton().doClick();
 		
 		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
 		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
@@ -120,7 +120,7 @@ public class TestCompleteListener {
 		
 		controller.service = service;
 		
-		mainWindow.completeMetadataButton.doClick();
+		mainWindow.getCompleteButton().doClick();
 		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(), Mockito.anyInt(), Mockito.anyInt());
 	}
 }

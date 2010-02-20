@@ -32,9 +32,9 @@ public class MainWindow {
 	private JFrame frame;
 	private JPanel panel;
 	
-	public JButton openButton;
-	public JButton sendButton;
-	public JButton completeMetadataButton;
+	private JButton openButton;
+	private JButton sendButton;
+	private JButton completeMetadataButton;
 	
 	
 	private JTextField textField;

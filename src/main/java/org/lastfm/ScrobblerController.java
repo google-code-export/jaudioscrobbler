@@ -199,6 +199,7 @@ public class ScrobblerController {
 				mainWindow.getCompleteButton().setEnabled(true);
 				mainWindow.getSendButton().setEnabled(true);
 				mainWindow.getOpenButton().setEnabled(true);
+				mainWindow.getCompleteButton().setText(ApplicationState.APPLY);
 			}
 		};
 
