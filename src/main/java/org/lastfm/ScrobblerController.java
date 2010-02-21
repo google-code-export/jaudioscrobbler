@@ -23,6 +23,7 @@ import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataMp3;
 import org.lastfm.metadata.MetadataMp4;
+import org.lastfm.metadata.MetadataMp4Writer;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -143,7 +144,7 @@ public class ScrobblerController {
 		private void updateStatus(final int i) {
 			int progress = ((i + 1) * 100) / metadataList.size();
 			mainWindow.getProgressBar().setValue(progress);
-			if(progress == 100){
+			if (progress == 100) {
 				mainWindow.getLabel().setText(ApplicationState.DONE);
 				mainWindow.getCompleteButton().setEnabled(true);
 				mainWindow.getSendButton().setEnabled(true);
@@ -153,10 +154,9 @@ public class ScrobblerController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
-			
+
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
-				
+
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					try {
@@ -178,32 +178,29 @@ public class ScrobblerController {
 				}
 
 			};
-			
+
 			swingWorker.execute();
-			
+
 			mainWindow.getCompleteButton().setEnabled(false);
 			mainWindow.getSendButton().setEnabled(false);
 			mainWindow.getOpenButton().setEnabled(false);
 			mainWindow.getProgressBar().setVisible(true);
-			
+
 			mainWindow.getLabel().setText(ApplicationState.WORKING);
-			
+
 		}
 	}
 
 	class CompleteListener implements ActionListener {
-		
-		
+
+		protected List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
+
 		private void updateStatus(final int i, int rowCount) {
 			int progress = ((i + 1) * 100) / rowCount;
 			mainWindow.getProgressBar().setValue(progress);
-			if(progress == 100){
-				mainWindow.getLabel().setText(ApplicationState.DONE);
-				mainWindow.getCompleteButton().setEnabled(true);
-				mainWindow.getSendButton().setEnabled(true);
-				mainWindow.getOpenButton().setEnabled(true);
-				mainWindow.getCompleteButton().setText(ApplicationState.APPLY);
-			}
+//			if (progress == 100) {
+				
+//			}
 		};
 
 		@Override
@@ -211,39 +208,75 @@ public class ScrobblerController {
 			if (service == null) {
 				service = new MusicBrainzService();
 			}
-			
+
+			mainWindow.getProgressBar().setValue(0);
 			mainWindow.getProgressBar().setVisible(true);
-			
-			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>(){
+
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					int rowCount = mainWindow.getDescritionTable().getRowCount();
-					for (int i = 0; i < rowCount; i++) {
-						updateStatus(i, rowCount);
-						String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
-						if (StringUtils.isEmpty(albumName)) {
-							String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0).toString();
-							String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1).toString();
-							try {
-								String album = service.getAlbum(artistName, trackName);
-								if(StringUtils.isNotEmpty(album)){
-									mainWindow.getDescritionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
-									mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i,
-											ApplicationState.STATUS_COLUMN);
+					if (mainWindow.getCompleteButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
+						for (Metadata metadata : metadataList) {
+							int i = metadataList.indexOf(metadata);
+							updateStatus(i, metadataList.size());
+							String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
+							if (StringUtils.isEmpty(albumName)) {
+								String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0)
+										.toString();
+								String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1)
+										.toString();
+								try {
+									String album = service.getAlbum(artistName, trackName);
+									if (StringUtils.isNotEmpty(album)) {
+										String trackNumber = "" + service.getTrackNumber(album);
+										mainWindow.getDescritionTable().getModel().setValueAt(album, i,
+												ApplicationState.ALBUM_COLUMN);
+										mainWindow.getDescritionTable().getModel().setValueAt(trackNumber, i,
+												ApplicationState.TRACK_NUMBER_COLUMN);
+										mainWindow.getDescritionTable().getModel().setValueAt(
+												ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+										MetadataBean bean = new MetadataBean();
+										bean.setAlbum(album);
+										bean.setTrackNumber(trackNumber);
+										bean.setFile(metadata.getFile());
+										bean.setBeanRow(i);
+										metadataBeanList.add(bean);
+									}
+								} catch (ServerUnavailableException sue) {
+									log.error(sue, sue);
 								}
-							} catch (ServerUnavailableException sue) {
-								log.error(sue, sue);
+							}
+						}
+					} else {
+						mainWindow.getProgressBar().setValue(0);
+						for (MetadataBean bean : metadataBeanList) {
+							updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
+							File file = bean.getFile();
+							if(file.getAbsolutePath().endsWith(".mp4")){
+								MetadataMp4Writer metadataWriter = new MetadataMp4Writer(file);
+								metadataWriter.writeAlbum(bean.getAlbum());
+								metadataWriter.writeTrackNumber(bean.getTrackNumber());
+								mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
+										bean.getRow(), ApplicationState.STATUS_COLUMN);
 							}
 						}
 					}
 					return true;
 				}
+				
+				public void done(){
+					mainWindow.getLabel().setText(ApplicationState.DONE);
+					mainWindow.getCompleteButton().setEnabled(true);
+					mainWindow.getSendButton().setEnabled(true);
+					mainWindow.getOpenButton().setEnabled(true);
+					mainWindow.getCompleteButton().setText(ApplicationState.APPLY);
+				}
 			};
-			swingWorker.execute();
 			mainWindow.getCompleteButton().setEnabled(false);
 			mainWindow.getSendButton().setEnabled(false);
 			mainWindow.getOpenButton().setEnabled(false);
+			swingWorker.execute();
 		}
 	}
 

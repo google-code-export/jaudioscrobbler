@@ -36,7 +36,10 @@ public class MetadataMp4Writer {
 	public MetadataMp4Writer(File file) {
 		try {
 			audioFile = AudioFileIO.read(file);
+			System.err.println("audioFile is now:" + audioFile.getFile().getAbsolutePath());
+			System.err.println(audioFile.getTag());
 			tag = (Mp4Tag)audioFile.getTag();
+			System.err.println("audioFile is getting tag now:" + audioFile.getTag());
 		} catch (CannotReadException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -54,8 +57,11 @@ public class MetadataMp4Writer {
 	public void writeAlbum(String album) {
 		this.album = album;
 		try {
+			System.err.println("tag is : " + tag.getFirst(FieldKey.ALBUM));
 			tag.setField(FieldKey.ALBUM, album);
+			System.err.println("after set : " + tag.getFirst(FieldKey.ALBUM));
 			audioFile.commit();
+			System.err.println("after commit : " + tag.getFirst(FieldKey.ALBUM));
 		} catch (KeyNotFoundException e) {
 			e.printStackTrace();
 		} catch (FieldDataInvalidException e) {

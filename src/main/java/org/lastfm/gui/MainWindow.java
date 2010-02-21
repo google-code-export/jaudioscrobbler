@@ -24,9 +24,9 @@ import org.lastfm.ApplicationState;
 public class MainWindow {
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
-	private static final String APPLY_METADATA = "Complete";
 	private static final String APPLICATION_NAME = "JAudioScrobbler";
 	private static final String LOG_OUT = "logged out";
+	public static final String COMPLETE_BUTTON = "Complete";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
 	private JFrame frame;
@@ -62,7 +62,7 @@ public class MainWindow {
 		
 		openButton = new JButton(LOAD_FILES);
 		sendButton = new JButton(SEND_SCROBBLINGS);
-		completeMetadataButton = new JButton(APPLY_METADATA);
+		completeMetadataButton = new JButton(COMPLETE_BUTTON);
 		
 		sendButton.setEnabled(false);
 		completeMetadataButton.setEnabled(false);

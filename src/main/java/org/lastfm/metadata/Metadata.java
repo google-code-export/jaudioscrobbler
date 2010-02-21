@@ -26,7 +26,7 @@ public abstract class Metadata {
 		properties.load(new FileInputStream(new File("src/main/resources/log4j.properties")));
 		PropertyConfigurator.configure(properties);
 		
-		turnOffLogMessages();
+		//turnOffLogMessages();
 	}
 
 	public org.apache.log4j.Logger getLog(){
@@ -39,6 +39,7 @@ public abstract class Metadata {
 			handlers[index].setLevel(Level.OFF);
 		}
 	}
+	public abstract File getFile();
 
 	public abstract String getArtist();
 
@@ -49,5 +50,6 @@ public abstract class Metadata {
 	public abstract int getLength();
 
 	public abstract int getTrackNumber();
+
 
 }

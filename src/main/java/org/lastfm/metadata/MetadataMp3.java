@@ -124,4 +124,9 @@ public class MetadataMp3 extends Metadata {
 		}
 		return trackNumber;
 	}
+
+	@Override
+	public File getFile() {
+		return file;
+	}
 }
