@@ -18,8 +18,8 @@ import org.mockito.Mockito;
  */
 
 
-public class TestWriteMp4Metadata {
-	MetadataMp4Writer metadataMp4Writer;
+public class TestWriteMetadata {
+	MetadataWriter metadataWriter;
 	private File file;
 	private AudioFile audioFile;
 	private Tag tag;
@@ -31,25 +31,25 @@ public class TestWriteMp4Metadata {
 		tag = Mockito.mock(Tag.class);
 		
 		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		metadataMp4Writer = new MetadataMp4Writer(file, audioFile);
+		metadataWriter = new MetadataWriter(file, audioFile);
 	}
 	
 	@Test
 	public void shouldWriteAlbum() throws Exception {
 		String album = "Sahara Nights";
-		metadataMp4Writer.writeAlbum(album);
+		metadataWriter.writeAlbum(album);
 
 		Mockito.verify(tag).setField(FieldKey.ALBUM, album);
 		Mockito.verify(audioFile).commit();
-		assertEquals(album, metadataMp4Writer.getAlbum());
+		assertEquals(album, metadataWriter.getAlbum());
 	}
 	
 	@Test
 	public void shouldWriteTrackNumber() throws Exception {
 		String trackNumber = "1";
 		
-		metadataMp4Writer.writeTrackNumber(trackNumber);
+		metadataWriter.writeTrackNumber(trackNumber);
 		Mockito.verify(audioFile).commit();
-		assertEquals(trackNumber, metadataMp4Writer.getTrackNumber());
+		assertEquals(trackNumber, metadataWriter.getTrackNumber());
 	}
 }

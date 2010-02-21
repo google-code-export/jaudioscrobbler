@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.metadata;
 
 import java.io.File;
 
