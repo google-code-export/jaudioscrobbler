@@ -21,9 +21,10 @@ import org.jaudiotagger.tag.TagException;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataBean;
 import org.lastfm.metadata.MetadataMp3;
 import org.lastfm.metadata.MetadataMp4;
-import org.lastfm.metadata.MetadataMp4Writer;
+import org.lastfm.metadata.MetadataWriter;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -198,9 +199,6 @@ public class ScrobblerController {
 		private void updateStatus(final int i, int rowCount) {
 			int progress = ((i + 1) * 100) / rowCount;
 			mainWindow.getProgressBar().setValue(progress);
-//			if (progress == 100) {
-				
-//			}
 		};
 
 		@Override
@@ -253,19 +251,17 @@ public class ScrobblerController {
 						for (MetadataBean bean : metadataBeanList) {
 							updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
 							File file = bean.getFile();
-							if(file.getAbsolutePath().endsWith(".mp4")){
-								MetadataMp4Writer metadataWriter = new MetadataMp4Writer(file);
-								metadataWriter.writeAlbum(bean.getAlbum());
-								metadataWriter.writeTrackNumber(bean.getTrackNumber());
-								mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
-										bean.getRow(), ApplicationState.STATUS_COLUMN);
-							}
+							MetadataWriter metadataWriter = new MetadataWriter(file);
+							metadataWriter.writeAlbum(bean.getAlbum());
+							metadataWriter.writeTrackNumber(bean.getTrackNumber());
+							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
+									bean.getRow(), ApplicationState.STATUS_COLUMN);
 						}
 					}
 					return true;
 				}
-				
-				public void done(){
+
+				public void done() {
 					mainWindow.getLabel().setText(ApplicationState.DONE);
 					mainWindow.getCompleteButton().setEnabled(true);
 					mainWindow.getSendButton().setEnabled(true);

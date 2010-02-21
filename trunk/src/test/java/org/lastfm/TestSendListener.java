@@ -56,7 +56,6 @@ public class TestSendListener {
 		mainWindow.getSendButton().doClick();
 		
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
-		assertFalse("completeButton should be enable", mainWindow.getCompleteButton().isEnabled());
 		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 
 		Thread.sleep(500);
