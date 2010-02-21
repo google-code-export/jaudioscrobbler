@@ -71,4 +71,9 @@ public class MetadataMp4 extends Metadata {
 		return trackNumber;
 	}
 
+	@Override
+	public File getFile() {
+		return new File(file.getAbsolutePath());
+	}
+
 }
