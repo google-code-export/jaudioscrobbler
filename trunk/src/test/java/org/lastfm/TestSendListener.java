@@ -1,7 +1,7 @@
 package org.lastfm;
 
-import static org.junit.Assert.*;
-//import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 
@@ -38,7 +38,7 @@ public class TestSendListener {
 		
 	}
 	
-	@Test
+	@Test 
 	public void shouldUpdateProgressBar() throws Exception {
 		MainWindow mainWindow;
 		mainWindow = new MainWindow();
