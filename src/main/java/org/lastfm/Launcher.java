@@ -31,8 +31,6 @@ public class Launcher {
 		} catch (IllegalAccessException e) {
 			// handle exception
 		}
-		
-		new ApplicationState();
 		new ScrobblerController(new HelperScrobbler(), new MainWindow(), new LoginWindow());
 	}
 }

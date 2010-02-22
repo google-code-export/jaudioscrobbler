@@ -8,14 +8,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.lastfm.metadata.Metadata;
 import org.mockito.Mockito;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
@@ -26,11 +29,13 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
  *
  */
 
+
 public class TestCompleteListener {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;
 	private LoginWindow loginWindow;
 	private ScrobblerController controller;
+	private List<Metadata> metadataList;
 
 	@Before
 	public void initialize(){
@@ -38,11 +43,12 @@ public class TestCompleteListener {
 		loginWindow = mock(LoginWindow.class);
 		mainWindow = new MainWindow();
 		
+		metadataList = new ArrayList<Metadata>();
+		
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 	}
 	
-	//FIXME
-	@Test @Ignore
+	@Test
 	public void shouldUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
 		JTable table = Mockito.mock(JTable.class);
@@ -61,6 +67,10 @@ public class TestCompleteListener {
 
 		mainWindow.table = table;
 		
+		createMetadataList();
+		controller.metadataList = metadataList;
+		
+		assertNotNull("metadataList should not be null", controller.metadataList);
 		assertEquals(0, mainWindow.getProgressBar().getValue());
 		assertFalse("progressBar should not be visible", mainWindow.getProgressBar().isVisible());
 		
@@ -69,20 +79,25 @@ public class TestCompleteListener {
 		
 		assertFalse("openButton should not be enable", mainWindow.getOpenButton().isEnabled());
 		
-		Thread.sleep(1000);
+		Thread.sleep(200);
 		
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertEquals(expectedAlbum,service.getAlbum(Mockito.anyString(), Mockito.anyString()));
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
+		verify(mainWindow.getDescritionTable().getModel()).setValueAt("0", 0, ApplicationState.TRACK_NUMBER_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
 		assertTrue("sendButton should be enable", mainWindow.getSendButton().isEnabled());
 		assertTrue("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 		assertEquals(ApplicationState.APPLY, mainWindow.getCompleteButton().getText());
 	}
 	
-	//FIXME: Never test code inside on doInBackground
-	@Test @Ignore
+	private void createMetadataList() {
+		Metadata metadata = Mockito.mock(Metadata.class);
+		metadataList.add(metadata);
+	}
+
+	@Test
 	public void shouldNotUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
 		JTable table = Mockito.mock(JTable.class);
@@ -94,6 +109,8 @@ public class TestCompleteListener {
 		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
 		
 		controller.service = service;
+		createMetadataList();
+		controller.metadataList = metadataList;
 
 		when(table.getModel()).thenReturn(model);
 		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
@@ -102,7 +119,6 @@ public class TestCompleteListener {
 		mainWindow.table = table;
 		mainWindow.getCompleteButton().setEnabled(true);
 		mainWindow.getCompleteButton().doClick();
-		System.err.println(mainWindow.getCompleteButton().getText());
 
 		assertNotNull("metadataList should not be null", controller.metadataList);
 		verify(service, Mockito.never()).getTrackNumber(Mockito.anyString());

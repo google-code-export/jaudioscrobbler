@@ -17,6 +17,34 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>appassembler-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<repositoryLayout>flat</repositoryLayout>
+					<repoPath>lib</repoPath>
+					<extraJvmArguments>-Xmx1024m -Xms128m -Djava.library.path=../repo</extraJvmArguments>
+					<programs>
+						<program>
+							<mainClass>org.lastfm.Launcher</mainClass>
+							<name>JAudioScrobbler</name>
+						</program>
+					</programs>
+				</configuration>
+			</plugin>
+			<plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-assembly-plugin</artifactId>
+			  <configuration>
+			  <finalName>
+						JAudioScrobbler
+					</finalName>
+					<descriptors>
+						<descriptor>distribution.xml</descriptor>
+					</descriptors>
+			  </configuration>
+			</plugin>
 		</plugins>
 	</build>
 	<repositories>
