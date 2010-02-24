@@ -27,6 +27,7 @@ public class MainWindow {
 	private static final String APPLICATION_NAME = "JAudioScrobbler";
 	private static final String LOG_OUT = "logged out";
 	public static final String COMPLETE_BUTTON = "Complete";
+	public static final String APPLY = "Apply";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
 	private JFrame frame;

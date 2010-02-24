@@ -14,7 +14,6 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.mp4.Mp4Tag;
 
 /**
  * 
@@ -28,12 +27,15 @@ public class MetadataWriter {
 	private AudioFile audioFile;
 	private String trackNumber;
 
+	public MetadataWriter() {
+	}
+
 	public MetadataWriter(File file, AudioFile audioFile) {
 		this.audioFile = audioFile;
 		tag = audioFile.getTag();
 	}
 
-	public MetadataWriter(File file) {
+	public void setFile(File file) {
 		try {
 			audioFile = AudioFileIO.read(file);
 			tag = audioFile.getTag();

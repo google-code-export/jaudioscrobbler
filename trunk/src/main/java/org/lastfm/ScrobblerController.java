@@ -2,6 +2,8 @@ package org.lastfm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,6 +39,8 @@ public class ScrobblerController {
 	JFileChooser fileChooser;
 	FileUtils fileUtils;
 	MusicBrainzService service;
+	MetadataWriter metadataWriter;
+	List<MetadataBean> metadataBeanList;
 	private Logger log = Logger.getLogger(this.getClass());
 
 	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
@@ -47,6 +51,52 @@ public class ScrobblerController {
 		this.mainWindow.addSendListener(new SendListener());
 		this.mainWindow.addCompleteListener(new CompleteListener());
 		this.loginWindow.addLoginListener(new LoginListener());
+		this.loginWindow.addKeyListener(new PasswordKeyListener());
+		this.metadataWriter = new MetadataWriter();
+		this.metadataBeanList = new ArrayList<MetadataBean>();
+	}
+	
+	private void login() {
+		int result = -1;
+		String username = loginWindow.getUsername().getText();
+		String password = loginWindow.getPassword().getText();
+
+		if (loginController == null) {
+			loginController = new LoginController();
+		}
+		try {
+			result = loginController.login(username, password);
+			if (result == ApplicationState.OK) {
+				ApplicationState.userName = username;
+				ApplicationState.password = password;
+				loginWindow.getFrame().dispose();
+				mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
+			} else {
+				System.err.println("I'm on else");
+				mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
+			}
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+	
+	class PasswordKeyListener implements KeyListener {
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			int id = e.getKeyCode();
+			if(id == KeyEvent.VK_ENTER){
+				login();
+			}
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
 	}
 
 	class OpenListener implements ActionListener {
@@ -194,8 +244,6 @@ public class ScrobblerController {
 
 	class CompleteListener implements ActionListener {
 
-		protected List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
-
 		private void updateStatus(final int i, int rowCount) {
 			int progress = ((i + 1) * 100) / rowCount;
 			mainWindow.getProgressBar().setValue(progress);
@@ -251,7 +299,7 @@ public class ScrobblerController {
 						for (MetadataBean bean : metadataBeanList) {
 							updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
 							File file = bean.getFile();
-							MetadataWriter metadataWriter = new MetadataWriter(file);
+							metadataWriter.setFile(file);
 							metadataWriter.writeAlbum(bean.getAlbum());
 							metadataWriter.writeTrackNumber(bean.getTrackNumber());
 							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
@@ -266,7 +314,7 @@ public class ScrobblerController {
 					mainWindow.getCompleteButton().setEnabled(true);
 					mainWindow.getSendButton().setEnabled(true);
 					mainWindow.getOpenButton().setEnabled(true);
-					mainWindow.getCompleteButton().setText(ApplicationState.APPLY);
+					mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 				}
 			};
 			mainWindow.getCompleteButton().setEnabled(false);
@@ -276,29 +324,10 @@ public class ScrobblerController {
 		}
 	}
 
-	public class LoginListener implements ActionListener {
+	public class LoginListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			int result = -1;
-			String username = loginWindow.getUsername().getText();
-			String password = loginWindow.getPassword().getText();
-
-			if (loginController == null) {
-				loginController = new LoginController();
-			}
-			try {
-				result = loginController.login(username, password);
-				if (result == ApplicationState.OK) {
-					ApplicationState.userName = username;
-					ApplicationState.password = password;
-					loginWindow.getFrame().dispose();
-					mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
-				} else {
-					mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
-				}
-			} catch (IOException ioe) {
-				ioe.printStackTrace();
-			}
+			login();
 		}
 	}
 
