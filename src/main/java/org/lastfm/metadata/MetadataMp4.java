@@ -73,7 +73,7 @@ public class MetadataMp4 extends Metadata {
 
 	@Override
 	public File getFile() {
-		return new File(file.getAbsolutePath());
+		return file;
 	}
 
 }
