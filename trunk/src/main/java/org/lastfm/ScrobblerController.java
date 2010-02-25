@@ -2,8 +2,8 @@ package org.lastfm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,6 +56,11 @@ public class ScrobblerController {
 		this.metadataBeanList = new ArrayList<MetadataBean>();
 	}
 	
+	private void updateStatus(final int i, int rowCount) {
+		int progress = ((i + 1) * 100) / rowCount;
+		mainWindow.getProgressBar().setValue(progress);
+	};
+	
 	private void login() {
 		int result = -1;
 		String username = loginWindow.getUsername().getText();
@@ -72,7 +77,6 @@ public class ScrobblerController {
 				loginWindow.getFrame().dispose();
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
 			} else {
-				System.err.println("I'm on else");
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 			}
 		} catch (IOException ioe) {
@@ -80,22 +84,13 @@ public class ScrobblerController {
 		}
 	}
 	
-	class PasswordKeyListener implements KeyListener {
-
-		@Override
-		public void keyPressed(KeyEvent e) {
-		}
-
+	class PasswordKeyListener extends KeyAdapter {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			int id = e.getKeyCode();
 			if(id == KeyEvent.VK_ENTER){
 				login();
 			}
-		}
-
-		@Override
-		public void keyTyped(KeyEvent e) {
 		}
 	}
 
@@ -192,17 +187,6 @@ public class ScrobblerController {
 	}
 
 	class SendListener implements ActionListener {
-		private void updateStatus(final int i) {
-			int progress = ((i + 1) * 100) / metadataList.size();
-			mainWindow.getProgressBar().setValue(progress);
-			if (progress == 100) {
-				mainWindow.getLabel().setText(ApplicationState.DONE);
-				mainWindow.getCompleteButton().setEnabled(true);
-				mainWindow.getSendButton().setEnabled(true);
-				mainWindow.getOpenButton().setEnabled(true);
-			}
-		};
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -213,7 +197,7 @@ public class ScrobblerController {
 					try {
 						if (metadataList != null) {
 							for (Metadata metadata : metadataList) {
-								updateStatus(metadataList.indexOf(metadata));
+								updateStatus(metadataList.indexOf(metadata), metadataList.size());
 								int result = helperScrobbler.send(metadata);
 								if (result == ApplicationState.ERROR) {
 									mainWindow.getLabel().setText(ApplicationState.NETWORK_ERROR);
@@ -227,28 +211,27 @@ public class ScrobblerController {
 					}
 					return true;
 				}
+				
+				@Override
+				public void done(){
+					mainWindow.getLabel().setText(ApplicationState.DONE);
+					mainWindow.getCompleteButton().setEnabled(true);
+					mainWindow.getSendButton().setEnabled(true);
+					mainWindow.getOpenButton().setEnabled(true);
+				}
 
 			};
 
 			swingWorker.execute();
-
 			mainWindow.getCompleteButton().setEnabled(false);
 			mainWindow.getSendButton().setEnabled(false);
 			mainWindow.getOpenButton().setEnabled(false);
 			mainWindow.getProgressBar().setVisible(true);
-
 			mainWindow.getLabel().setText(ApplicationState.WORKING);
-
 		}
 	}
 
 	class CompleteListener implements ActionListener {
-
-		private void updateStatus(final int i, int rowCount) {
-			int progress = ((i + 1) * 100) / rowCount;
-			mainWindow.getProgressBar().setValue(progress);
-		};
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (service == null) {
@@ -308,7 +291,8 @@ public class ScrobblerController {
 					}
 					return true;
 				}
-
+				
+				@Override
 				public void done() {
 					mainWindow.getLabel().setText(ApplicationState.DONE);
 					mainWindow.getCompleteButton().setEnabled(true);

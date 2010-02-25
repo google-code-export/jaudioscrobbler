@@ -38,7 +38,7 @@ public class TestSendListener {
 		
 	}
 	
-	@Test 
+	@Test
 	public void shouldUpdateProgressBar() throws Exception {
 		MainWindow mainWindow;
 		mainWindow = new MainWindow();
@@ -58,7 +58,7 @@ public class TestSendListener {
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 
-		Thread.sleep(500);
+		Thread.sleep(5000);
 		
 		Mockito.verify(helperScrobbler).send(metadata);
 		
