@@ -12,6 +12,8 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
 import javax.swing.SwingWorker;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang.StringUtils;
@@ -52,12 +54,15 @@ public class ScrobblerController {
 		this.mainWindow.addCompleteListener(new CompleteListener());
 		this.loginWindow.addLoginListener(new LoginListener());
 		this.loginWindow.addKeyListener(new PasswordKeyListener());
+		this.mainWindow.getDescritionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
+		
+		
 		this.metadataWriter = new MetadataWriter();
 		this.metadataBeanList = new ArrayList<MetadataBean>();
 	}
 	
-	private void updateStatus(final int i, int rowCount) {
-		int progress = ((i + 1) * 100) / rowCount;
+	private void updateStatus(final int i, int size) {
+		int progress = ((i + 1) * 100) / size;
 		mainWindow.getProgressBar().setValue(progress);
 	};
 	
@@ -82,6 +87,19 @@ public class ScrobblerController {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+	
+	class DescriptionTableModelListener implements TableModelListener {
+
+		@Override
+		public void tableChanged(TableModelEvent e) {
+			if(mainWindow.getCompleteButton().getText().equals(mainWindow.APPLY)){
+				System.err.println("Type of TableModelEvent is: " + e.getType());
+				MetadataBean bean = new MetadataBean();
+				metadataBeanList.add(bean);
+			}
+		}
+
 	}
 	
 	class PasswordKeyListener extends KeyAdapter {
@@ -313,9 +331,5 @@ public class ScrobblerController {
 		public void actionPerformed(ActionEvent e) {
 			login();
 		}
-	}
-
-	public List<Metadata> getMetadataList() {
-		return metadataList;
 	}
 }

@@ -2,6 +2,7 @@ package org.lastfm.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Frame;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
@@ -143,5 +144,9 @@ public class MainWindow {
 	
 	public void addCompleteListener(ActionListener completeListener){
 		completeMetadataButton.addActionListener(completeListener);
+	}
+
+	public Frame getFrame() {
+		return frame;
 	}
 }

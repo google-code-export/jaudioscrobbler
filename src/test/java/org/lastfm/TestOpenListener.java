@@ -93,7 +93,7 @@ public class TestOpenListener {
 		fileList.add(file);
 
 		mainWindow.getOpenButton().doClick();
-		List<Metadata> metadataList = controller.getMetadataList();
+		List<Metadata> metadataList = controller.metadataList;
 		assertEquals(0, metadataList.size());
 	}
 	
