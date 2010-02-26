@@ -8,6 +8,8 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,10 @@ public class TestLoginListener {
 		mainWindow = mock(MainWindow.class);
 		loginWindow = new LoginWindow();
 		
+		JTable table = Mockito.mock(JTable.class);
+		TableModel model = Mockito.mock(TableModel.class);
+		Mockito.when(mainWindow.getDescritionTable()).thenReturn(table);
+		Mockito.when(table.getModel()).thenReturn(model);
 		
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label );
@@ -50,6 +56,7 @@ public class TestLoginListener {
 		when(loginController.login(anyString(), anyString())).thenReturn(ApplicationState.OK);
 		
 		loginWindow.sendButton.doClick();
+
 		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "");
