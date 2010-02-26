@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.Test;
@@ -21,7 +23,15 @@ public class TestPasswordKeyListener {
 		String password = "secret";
 
 		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
+		
+		JTable table = Mockito.mock(JTable.class);
+		TableModel model = Mockito.mock(TableModel.class);
+		
 		MainWindow mainWindow = Mockito.mock(MainWindow.class);
+		Mockito.when(mainWindow.getDescritionTable()).thenReturn(table);
+		Mockito.when(table.getModel()).thenReturn(model);
+		
+		
 		LoginWindow loginWindow = new LoginWindow();
 		
 		JLabel loginLabel = Mockito.mock(JLabel.class);
