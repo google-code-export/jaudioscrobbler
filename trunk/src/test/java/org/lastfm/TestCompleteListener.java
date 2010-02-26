@@ -1,6 +1,5 @@
 package org.lastfm;
 
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -9,13 +8,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
@@ -50,6 +49,11 @@ public class TestCompleteListener {
 
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		mainWindow.getCompleteButton().setEnabled(true);
+	}
+	
+	@After
+	public void finalize(){
+		mainWindow.getFrame().dispose();
 	}
 
 	@Test
