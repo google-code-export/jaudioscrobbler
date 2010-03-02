@@ -95,7 +95,7 @@ public class TestCompleteListener {
 		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescritionTable().getModel())
 				.setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
-		verify(mainWindow.getDescritionTable().getModel()).setValueAt("0", 0, ApplicationState.TRACK_NUMBER_COLUMN);
+		verify(mainWindow.getDescritionTable().getModel()).setValueAt(0, 0, ApplicationState.TRACK_NUMBER_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
 		assertTrue("sendButton should be enable", mainWindow.getSendButton().isEnabled());
 		assertTrue("openButton should be enable", mainWindow.getOpenButton().isEnabled());

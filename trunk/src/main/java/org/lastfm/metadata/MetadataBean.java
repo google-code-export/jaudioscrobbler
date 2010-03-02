@@ -5,7 +5,7 @@ import java.io.File;
 public class MetadataBean {
 
 	private String album;
-	private String trackNumber;
+	private Integer trackNumber;
 	private File file;
 	private int row;
 	private String artist;
@@ -15,7 +15,7 @@ public class MetadataBean {
 		this.album = album;
 	}
 
-	public void setTrackNumber(String trackNumber) {
+	public void setTrackNumber(Integer trackNumber) {
 		this.trackNumber = trackNumber;
 	}
 
@@ -31,7 +31,7 @@ public class MetadataBean {
 		return album;
 	}
 
-	public String getTrackNumber() {
+	public Integer getTrackNumber() {
 		return trackNumber;
 	}
 
