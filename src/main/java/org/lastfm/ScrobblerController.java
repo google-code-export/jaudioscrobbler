@@ -56,7 +56,6 @@ public class ScrobblerController {
 		this.loginWindow.addKeyListener(new PasswordKeyListener());
 		this.mainWindow.getDescritionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 		
-		
 		this.metadataWriter = new MetadataWriter();
 		this.metadataBeanList = new ArrayList<MetadataBean>();
 	}
@@ -94,8 +93,18 @@ public class ScrobblerController {
 		@Override
 		public void tableChanged(TableModelEvent e) {
 			if(mainWindow.getCompleteButton().getText().equals(mainWindow.APPLY)){
-				System.err.println("Type of TableModelEvent is: " + e.getType());
+				int lastRow = e.getLastRow();
+				System.err.println("Row modified: " + lastRow);
+				DefaultTableModel model = (DefaultTableModel) e.getSource();
+				String artist = (String) model.getValueAt(lastRow, 0);
+				String trackName = (String) model.getValueAt(lastRow, 1);
+				String album = (String) model.getValueAt(lastRow, 2);
+				String trackNumber = (String) model.getValueAt(lastRow, 3);
 				MetadataBean bean = new MetadataBean();
+				bean.setArtist(artist);
+				bean.setTrackName(trackName);
+				bean.setAlbum(album);
+				bean.setTrackNumber(trackNumber);
 				metadataBeanList.add(bean);
 			}
 		}
@@ -301,6 +310,8 @@ public class ScrobblerController {
 							updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
 							File file = bean.getFile();
 							metadataWriter.setFile(file);
+							metadataWriter.writeArtist(bean.getArtist());
+							metadataWriter.writeTrackName(bean.getTrackName());
 							metadataWriter.writeAlbum(bean.getAlbum());
 							metadataWriter.writeTrackNumber(bean.getTrackNumber());
 							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,

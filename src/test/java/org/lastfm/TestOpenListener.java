@@ -15,6 +15,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
@@ -55,6 +56,11 @@ public class TestOpenListener {
 		fileList = new ArrayList<File>();
 
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+	}
+	
+	@After
+	public void finalize(){
+		mainWindow.getFrame().dispose();
 	}
 
 	@Test

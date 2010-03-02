@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
@@ -39,6 +40,11 @@ public class TestLoginListener {
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label );
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+	}
+	
+	@After
+	public void finalize(){
+		loginWindow.getFrame().dispose();
 	}
 	
 	@Test

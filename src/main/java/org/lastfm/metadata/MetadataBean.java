@@ -8,6 +8,8 @@ public class MetadataBean {
 	private String trackNumber;
 	private File file;
 	private int row;
+	private String artist;
+	private String trackName;
 
 	public void setAlbum(String album) {
 		this.album = album;
@@ -39,5 +41,21 @@ public class MetadataBean {
 
 	public int getRow() {
 		return row;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
+	public void setTrackName(String trackName) {
+		this.trackName = trackName;
+	}
+
+	public String getArtist() {
+		return artist;
+	}
+
+	public String getTrackName() {
+		return trackName;
 	}
 }
