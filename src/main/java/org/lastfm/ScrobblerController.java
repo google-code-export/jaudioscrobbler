@@ -99,12 +99,16 @@ public class ScrobblerController {
 				String artist = (String) model.getValueAt(lastRow, 0);
 				String trackName = (String) model.getValueAt(lastRow, 1);
 				String album = (String) model.getValueAt(lastRow, 2);
-				String trackNumber = (String) model.getValueAt(lastRow, 3);
 				MetadataBean bean = new MetadataBean();
 				bean.setArtist(artist);
 				bean.setTrackName(trackName);
 				bean.setAlbum(album);
-				bean.setTrackNumber(trackNumber);
+				try{
+					Integer trackNumber = (Integer) model.getValueAt(lastRow, 3);
+					bean.setTrackNumber(trackNumber);
+				}catch(ClassCastException cce){
+					log.debug(cce,cce);
+				}
 				metadataBeanList.add(bean);
 			}
 		}
@@ -285,7 +289,7 @@ public class ScrobblerController {
 								try {
 									String album = service.getAlbum(artistName, trackName);
 									if (StringUtils.isNotEmpty(album)) {
-										String trackNumber = "" + service.getTrackNumber(album);
+										Integer trackNumber = service.getTrackNumber(album);
 										mainWindow.getDescritionTable().getModel().setValueAt(album, i,
 												ApplicationState.ALBUM_COLUMN);
 										mainWindow.getDescritionTable().getModel().setValueAt(trackNumber, i,
@@ -313,7 +317,7 @@ public class ScrobblerController {
 							metadataWriter.writeArtist(bean.getArtist());
 							metadataWriter.writeTrackName(bean.getTrackName());
 							metadataWriter.writeAlbum(bean.getAlbum());
-							metadataWriter.writeTrackNumber(bean.getTrackNumber());
+							metadataWriter.writeTrackNumber(bean.getTrackNumber().toString());
 							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
 									bean.getRow(), ApplicationState.STATUS_COLUMN);
 						}
