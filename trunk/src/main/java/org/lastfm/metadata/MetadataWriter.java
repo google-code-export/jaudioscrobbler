@@ -26,6 +26,8 @@ public class MetadataWriter {
 	private Tag tag;
 	private AudioFile audioFile;
 	private String trackNumber;
+	private String artist;
+	private String trackName;
 
 	public MetadataWriter() {
 	}
@@ -52,6 +54,34 @@ public class MetadataWriter {
 		}
 	}
 
+	
+	public void writeArtist(String artist) {
+		this.artist = artist;
+		try {
+			tag.setField(FieldKey.ARTIST, artist);
+			audioFile.commit();
+		} catch (KeyNotFoundException e) {
+			e.printStackTrace();
+		} catch (FieldDataInvalidException e) {
+			e.printStackTrace();
+		} catch (CannotWriteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void writeTrackName(String trackName) {
+		this.trackName = trackName;
+		try {
+			tag.setField(FieldKey.TITLE, trackName);
+			audioFile.commit();
+		} catch (KeyNotFoundException e) {
+			e.printStackTrace();
+		} catch (FieldDataInvalidException e) {
+			e.printStackTrace();
+		} catch (CannotWriteException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void writeAlbum(String album) {
 		this.album = album;

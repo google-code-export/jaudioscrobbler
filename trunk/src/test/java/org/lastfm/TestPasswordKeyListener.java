@@ -9,6 +9,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import org.fest.swing.fixture.FrameFixture;
+import org.junit.After;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
@@ -17,6 +18,15 @@ import org.mockito.Mockito;
 
 public class TestPasswordKeyListener {
 	
+	private LoginWindow loginWindow;
+	private FrameFixture window;
+	
+	@After
+	public void finalize(){
+		loginWindow.getFrame().dispose();
+		window.cleanUp();
+	}
+
 	@Test
 	public void shouldLoginIfUserPressEnterKey() throws Exception {
 		String userName = "josdem";
@@ -32,7 +42,7 @@ public class TestPasswordKeyListener {
 		Mockito.when(table.getModel()).thenReturn(model);
 		
 		
-		LoginWindow loginWindow = new LoginWindow();
+		loginWindow = new LoginWindow();
 		
 		JLabel loginLabel = Mockito.mock(JLabel.class);
 		Mockito.when(mainWindow.getLoginLabel()).thenReturn(loginLabel);
@@ -47,12 +57,12 @@ public class TestPasswordKeyListener {
 		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		controller.loginController = loginController;
 		
-		FrameFixture window;
 		window = new FrameFixture(loginWindow.getFrame());
 		window.show();
 		window.textBox("userName").enterText(userName);
 		window.textBox("password").enterText(password);
 		window.textBox("password").releaseKey(KeyEvent.VK_ENTER);
+		loginWindow.getFrame().dispose();
 		
 		assertEquals(userName, ApplicationState.userName);
 		assertEquals(password, ApplicationState.password);

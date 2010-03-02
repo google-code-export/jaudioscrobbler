@@ -1,7 +1,6 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.event.ActionListener;
 
@@ -13,8 +12,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import org.lastfm.ApplicationState;
 
 /**
  * 

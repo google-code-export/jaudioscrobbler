@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
@@ -29,18 +30,22 @@ public class TestSendListener {
 	private Metadata metadata;
 	private List<Metadata> metadataList;
 
+	private MainWindow mainWindow;
+
 	@Before
 	public void initialize(){
 		helperScrobbler = mock(HelperScrobbler.class);
 		loginWindow = mock(LoginWindow.class);
 		metadata = mock(Metadata.class);
-		
-		
+	}
+	
+	@After
+	public void finalize(){
+		mainWindow.getFrame().dispose();
 	}
 	
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
-		MainWindow mainWindow;
 		mainWindow = new MainWindow();
 		metadataList = new ArrayList<Metadata>();
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
