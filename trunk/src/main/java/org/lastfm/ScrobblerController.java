@@ -319,8 +319,8 @@ public class ScrobblerController {
 							metadataWriter.writeTrackName(bean.getTrackName());
 							metadataWriter.writeAlbum(bean.getAlbum());
 							metadataWriter.writeTrackNumber(bean.getTrackNumber().toString());
-							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
-									bean.getRow(), ApplicationState.STATUS_COLUMN);
+//							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
+//									bean.getRow(), ApplicationState.STATUS_COLUMN);
 						}
 					}
 					return true;
