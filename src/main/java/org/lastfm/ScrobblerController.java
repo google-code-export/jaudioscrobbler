@@ -43,6 +43,7 @@ public class ScrobblerController {
 	MusicBrainzService service;
 	MetadataWriter metadataWriter;
 	List<MetadataBean> metadataBeanList;
+	List<File> fileList;
 	private Logger log = Logger.getLogger(this.getClass());
 
 	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
@@ -103,6 +104,7 @@ public class ScrobblerController {
 				bean.setArtist(artist);
 				bean.setTrackName(trackName);
 				bean.setAlbum(album);
+				bean.setFile(fileList.get(lastRow));
 				try{
 					Integer trackNumber = (Integer) model.getValueAt(lastRow, 3);
 					bean.setTrackNumber(trackNumber);
@@ -126,12 +128,11 @@ public class ScrobblerController {
 	}
 
 	class OpenListener implements ActionListener {
-		private List<File> fileList;
 
 		public List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException,
 				CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
 				InvalidId3VersionException {
-			this.fileList = fileList;
+			ScrobblerController.this.fileList = fileList;
 
 			Metadata metadata = null;
 			if (metadataList == null) {
