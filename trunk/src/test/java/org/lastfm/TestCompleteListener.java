@@ -59,8 +59,8 @@ public class TestCompleteListener {
 	@Test
 	public void shouldUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
-		JTable table = Mockito.mock(JTable.class);
-		TableModel model = Mockito.mock(TableModel.class);
+		JTable table = mock(JTable.class);
+		TableModel model = mock(TableModel.class);
 
 		String expectedAlbum = "Global";
 		String expectedStatus = ApplicationState.NEW_METADATA;
@@ -103,15 +103,15 @@ public class TestCompleteListener {
 	}
 
 	private void createMetadataList() {
-		Metadata metadata = Mockito.mock(Metadata.class);
+		Metadata metadata = mock(Metadata.class);
 		metadataList.add(metadata);
 	}
 
 	@Test
 	public void shouldNotUpdateAlbumOnSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
-		JTable table = Mockito.mock(JTable.class);
-		TableModel model = Mockito.mock(TableModel.class);
+		JTable table = mock(JTable.class);
+		TableModel model = mock(TableModel.class);
 
 		String expectedAlbum = "";
 		String expectedStatus = ApplicationState.NEW_METADATA;
@@ -141,8 +141,8 @@ public class TestCompleteListener {
 	@Test
 	public void shouldCatchServerUnavailableExceptionWheSearchByArtistAndTrackName() throws Exception {
 		MusicBrainzService service = mock(MusicBrainzService.class);
-		JTable table = Mockito.mock(JTable.class);
-		TableModel model = Mockito.mock(TableModel.class);
+		JTable table = mock(JTable.class);
+		TableModel model = mock(TableModel.class);
 
 		when(table.getModel()).thenReturn(model);
 		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
@@ -166,10 +166,9 @@ public class TestCompleteListener {
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 		List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
 
-		MetadataWriter writer = Mockito.mock(MetadataWriter.class);
+		MetadataWriter writer = mock(MetadataWriter.class);
 
-		MetadataBean bean = Mockito.mock(MetadataBean.class);
-		Mockito.when(bean.getRow()).thenReturn(0);
+		MetadataBean bean = mock(MetadataBean.class);
 		metadataBeanList.add(bean);
 
 		controller.metadataWriter = writer;
@@ -178,6 +177,12 @@ public class TestCompleteListener {
 		mainWindow.getCompleteButton().doClick();
 		Thread.sleep(1000);
 		
+		verify(writer).setFile(bean.getFile());
+		verify(writer).writeArtist(bean.getArtist());
+		verify(writer).writeTrackName(bean.getTrackName());
+		verify(writer).writeAlbum(bean.getAlbum());
+		verify(bean).getTrackNumber();
+		verify(writer).writeTrackNumber(Mockito.anyString());
 		assertEquals(ApplicationState.METADATA_UPDATED, mainWindow.getDescritionTable().getModel().getValueAt(bean.getRow(),
 				ApplicationState.STATUS_COLUMN));
 
