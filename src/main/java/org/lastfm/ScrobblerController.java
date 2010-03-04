@@ -22,6 +22,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.lastfm.gui.DescriptionTable;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
@@ -31,6 +32,12 @@ import org.lastfm.metadata.MetadataMp4;
 import org.lastfm.metadata.MetadataWriter;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
+
+/**
+ * 
+ * @author Jose Luis De la Cruz
+ * 
+ */
 
 public class ScrobblerController {
 	private HelperScrobbler helperScrobbler;
@@ -56,16 +63,16 @@ public class ScrobblerController {
 		this.loginWindow.addLoginListener(new LoginListener());
 		this.loginWindow.addKeyListener(new PasswordKeyListener());
 		this.mainWindow.getDescritionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
-		
+
 		this.metadataWriter = new MetadataWriter();
 		this.metadataBeanList = new ArrayList<MetadataBean>();
 	}
-	
+
 	private void updateStatus(final int i, int size) {
 		int progress = ((i + 1) * 100) / size;
 		mainWindow.getProgressBar().setValue(progress);
 	};
-	
+
 	private void login() {
 		int result = -1;
 		String username = loginWindow.getUsername().getText();
@@ -88,14 +95,14 @@ public class ScrobblerController {
 			ioe.printStackTrace();
 		}
 	}
-	
+
 	class DescriptionTableModelListener implements TableModelListener {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-			if(mainWindow.getCompleteButton().getText().equals(mainWindow.APPLY)){
+			if (mainWindow.getCompleteButton().getText().equals(mainWindow.APPLY)
+					&& e.getColumn() != ApplicationState.STATUS_COLUMN) {
 				int lastRow = e.getLastRow();
-				System.err.println("Row modified: " + lastRow);
 				DefaultTableModel model = (DefaultTableModel) e.getSource();
 				String artist = (String) model.getValueAt(lastRow, 0);
 				String trackName = (String) model.getValueAt(lastRow, 1);
@@ -105,23 +112,23 @@ public class ScrobblerController {
 				bean.setTrackName(trackName);
 				bean.setAlbum(album);
 				bean.setFile(fileList.get(lastRow));
-				try{
+				try {
 					Integer trackNumber = (Integer) model.getValueAt(lastRow, 3);
 					bean.setTrackNumber(trackNumber);
-				}catch(ClassCastException cce){
-					log.debug(cce,cce);
+				} catch (ClassCastException cce) {
+					log.debug(cce, cce);
 				}
 				metadataBeanList.add(bean);
 			}
 		}
 
 	}
-	
+
 	class PasswordKeyListener extends KeyAdapter {
 		@Override
 		public void keyReleased(KeyEvent e) {
 			int id = e.getKeyCode();
-			if(id == KeyEvent.VK_ENTER){
+			if (id == KeyEvent.VK_ENTER) {
 				login();
 			}
 		}
@@ -243,9 +250,9 @@ public class ScrobblerController {
 					}
 					return true;
 				}
-				
+
 				@Override
-				public void done(){
+				public void done() {
 					mainWindow.getLabel().setText(ApplicationState.DONE);
 					mainWindow.getCompleteButton().setEnabled(true);
 					mainWindow.getSendButton().setEnabled(true);
@@ -318,14 +325,15 @@ public class ScrobblerController {
 							metadataWriter.writeArtist(bean.getArtist());
 							metadataWriter.writeTrackName(bean.getTrackName());
 							metadataWriter.writeAlbum(bean.getAlbum());
-							metadataWriter.writeTrackNumber(bean.getTrackNumber().toString());
-//							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
-//									bean.getRow(), ApplicationState.STATUS_COLUMN);
+							Integer trackNumber = bean.getTrackNumber();
+							metadataWriter.writeTrackNumber(trackNumber.toString());
+							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
+									bean.getRow(), ApplicationState.STATUS_COLUMN);
 						}
 					}
 					return true;
 				}
-				
+
 				@Override
 				public void done() {
 					mainWindow.getLabel().setText(ApplicationState.DONE);
@@ -342,7 +350,7 @@ public class ScrobblerController {
 		}
 	}
 
-	public class LoginListener implements ActionListener{
+	public class LoginListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			login();

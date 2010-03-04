@@ -3,6 +3,7 @@ package org.lastfm;
 import static org.junit.Assert.assertEquals;
 
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,15 @@ public class TestDescriptionTableModelListener {
 	List<MetadataBean> metadataBeanList;
 	private MainWindow mainWindow;
 	private FrameFixture window;
+	private List<File> fileList;
 	
 	@Before
 	public void initialize(){
 		metadataBeanList = new ArrayList<MetadataBean>();
+		fileList = new ArrayList<File>();
+		File file = Mockito.mock(File.class);
+		fileList.add(file);
+		
 		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
 		LoginWindow loginWindow = Mockito.mock(LoginWindow.class);
 		mainWindow = new MainWindow();
@@ -31,6 +37,7 @@ public class TestDescriptionTableModelListener {
 		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		
 		controller.metadataBeanList = metadataBeanList;
+		controller.fileList = fileList;
 	}
 	
 	@After
