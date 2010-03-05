@@ -1,6 +1,6 @@
 package org.lastfm.gui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.After;
 import org.junit.Test;
@@ -17,7 +17,8 @@ public class TestMainWindow {
 	@Test
 	public void shouldNotEnableSendAndCompleteButton() throws Exception {
 		mainWindow = new MainWindow();
-		assertFalse("sendButton should not be enable", mainWindow.getSendButton().isEnabled());
-		assertFalse("completeButton should not be enable", mainWindow.getCompleteButton().isEnabled());
+		assertFalse("sendButton should not be enabled", mainWindow.getSendButton().isEnabled());
+		assertFalse("completeButton should not be enabled", mainWindow.getCompleteButton().isEnabled());
+		assertFalse("descriptionTable should be disabled", mainWindow.getDescriptionTable().isEnabled());
 	}
 }

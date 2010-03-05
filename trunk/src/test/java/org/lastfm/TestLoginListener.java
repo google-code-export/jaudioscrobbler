@@ -34,7 +34,7 @@ public class TestLoginListener {
 		
 		JTable table = Mockito.mock(JTable.class);
 		TableModel model = Mockito.mock(TableModel.class);
-		Mockito.when(mainWindow.getDescritionTable()).thenReturn(table);
+		Mockito.when(mainWindow.getDescriptionTable()).thenReturn(table);
 		Mockito.when(table.getModel()).thenReturn(model);
 		
 		label = mock(JLabel.class);

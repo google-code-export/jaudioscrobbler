@@ -33,6 +33,7 @@ public class TestDescriptionTableModelListener {
 		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
 		LoginWindow loginWindow = Mockito.mock(LoginWindow.class);
 		mainWindow = new MainWindow();
+		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		
@@ -56,7 +57,7 @@ public class TestDescriptionTableModelListener {
 		assertEquals(0, metadataBeanList.size());
 		
 		window.show();
-		window.robot.doubleClick(mainWindow.getDescritionTable());
+		window.robot.doubleClick(mainWindow.getDescriptionTable());
 		window.robot.enterText(album);
 		window.robot.pressKey(KeyEvent.VK_ENTER);
 		
