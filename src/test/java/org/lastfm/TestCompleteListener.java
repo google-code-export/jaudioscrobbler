@@ -92,13 +92,13 @@ public class TestCompleteListener {
 
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertEquals(expectedAlbum, service.getAlbum(Mockito.anyString(), Mockito.anyString()));
-		verify(mainWindow.getDescritionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
-		verify(mainWindow.getDescritionTable().getModel())
+		verify(mainWindow.getDescriptionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
+		verify(mainWindow.getDescriptionTable().getModel())
 				.setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
-		verify(mainWindow.getDescritionTable().getModel()).setValueAt(0, 0, ApplicationState.TRACK_NUMBER_COLUMN);
+		verify(mainWindow.getDescriptionTable().getModel()).setValueAt(0, 0, ApplicationState.TRACK_NUMBER_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
-		assertTrue("sendButton should be enable", mainWindow.getSendButton().isEnabled());
-		assertTrue("openButton should be enable", mainWindow.getOpenButton().isEnabled());
+		assertTrue("sendButton should be enabled", mainWindow.getSendButton().isEnabled());
+		assertTrue("openButton should be enabled", mainWindow.getOpenButton().isEnabled());
 		assertEquals(MainWindow.APPLY, mainWindow.getCompleteButton().getText());
 	}
 
@@ -132,9 +132,9 @@ public class TestCompleteListener {
 
 		assertNotNull("metadataList should not be null", controller.metadataList);
 		verify(service, Mockito.never()).getTrackNumber(Mockito.anyString());
-		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(expectedAlbum, 0,
+		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(expectedAlbum, 0,
 				ApplicationState.ALBUM_COLUMN);
-		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(expectedStatus, 0,
+		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(expectedStatus, 0,
 				ApplicationState.STATUS_COLUMN);
 	}
 
@@ -157,7 +157,7 @@ public class TestCompleteListener {
 		controller.service = service;
 
 		mainWindow.getCompleteButton().doClick();
-		verify(mainWindow.getDescritionTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(),
+		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(),
 				Mockito.anyInt(), Mockito.anyInt());
 	}
 
@@ -183,7 +183,7 @@ public class TestCompleteListener {
 		verify(writer).writeAlbum(bean.getAlbum());
 		verify(bean).getTrackNumber();
 		verify(writer).writeTrackNumber(Mockito.anyString());
-		assertEquals(ApplicationState.METADATA_UPDATED, mainWindow.getDescritionTable().getModel().getValueAt(bean.getRow(),
+		assertEquals(ApplicationState.METADATA_UPDATED, mainWindow.getDescriptionTable().getModel().getValueAt(bean.getRow(),
 				ApplicationState.STATUS_COLUMN));
 
 	}

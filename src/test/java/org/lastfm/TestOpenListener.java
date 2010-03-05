@@ -77,13 +77,13 @@ public class TestOpenListener {
 		assertEquals(1, controller.metadataList.size());
 		int row = 0;
 		int col = 0;
-		assertEquals(2, controller.mainWindow.getDescritionTable().getRowCount());
-		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Jaytech"));
-		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Pepe Garden"));
-		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Everything is OK"));
-		assertEquals(4,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
-		assertEquals(461,controller.mainWindow.getDescritionTable().getValueAt(row, col++));
-		assertTrue(((String)controller.mainWindow.getDescritionTable().getValueAt(row, col++)).contains("Ready"));
+		assertEquals(2, controller.mainWindow.getDescriptionTable().getRowCount());
+		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Jaytech"));
+		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Pepe Garden"));
+		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Everything is OK"));
+		assertEquals(4,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
+		assertEquals(461,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
+		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Ready"));
 		assertTrue("completeButton should be enable", controller.mainWindow.getCompleteButton().isEnabled());
 		assertTrue("sendButton should be enable", controller.mainWindow.getSendButton().isEnabled());
 	}

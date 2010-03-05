@@ -22,7 +22,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.gui.DescriptionTable;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
@@ -62,7 +61,7 @@ public class ScrobblerController {
 		this.mainWindow.addCompleteListener(new CompleteListener());
 		this.loginWindow.addLoginListener(new LoginListener());
 		this.loginWindow.addKeyListener(new PasswordKeyListener());
-		this.mainWindow.getDescritionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
+		this.mainWindow.getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 
 		this.metadataWriter = new MetadataWriter();
 		this.metadataBeanList = new ArrayList<MetadataBean>();
@@ -164,7 +163,7 @@ public class ScrobblerController {
 		}
 
 		private void update(Metadata metadata) {
-			JTable descriptionTable = mainWindow.getDescritionTable();
+			JTable descriptionTable = mainWindow.getDescriptionTable();
 			int row = descriptionTable.getRowCount() - 1;
 			DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 			model.addRow(new Object[] { "", "", "", "", "", "" });
@@ -288,21 +287,21 @@ public class ScrobblerController {
 						for (Metadata metadata : metadataList) {
 							int i = metadataList.indexOf(metadata);
 							updateStatus(i, metadataList.size());
-							String albumName = mainWindow.getDescritionTable().getModel().getValueAt(i, 2).toString();
+							String albumName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 2).toString();
 							if (StringUtils.isEmpty(albumName)) {
-								String artistName = mainWindow.getDescritionTable().getModel().getValueAt(i, 0)
+								String artistName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 0)
 										.toString();
-								String trackName = mainWindow.getDescritionTable().getModel().getValueAt(i, 1)
+								String trackName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 1)
 										.toString();
 								try {
 									String album = service.getAlbum(artistName, trackName);
 									if (StringUtils.isNotEmpty(album)) {
 										Integer trackNumber = service.getTrackNumber(album);
-										mainWindow.getDescritionTable().getModel().setValueAt(album, i,
+										mainWindow.getDescriptionTable().getModel().setValueAt(album, i,
 												ApplicationState.ALBUM_COLUMN);
-										mainWindow.getDescritionTable().getModel().setValueAt(trackNumber, i,
+										mainWindow.getDescriptionTable().getModel().setValueAt(trackNumber, i,
 												ApplicationState.TRACK_NUMBER_COLUMN);
-										mainWindow.getDescritionTable().getModel().setValueAt(
+										mainWindow.getDescriptionTable().getModel().setValueAt(
 												ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 										MetadataBean bean = new MetadataBean();
 										bean.setAlbum(album);
@@ -327,7 +326,7 @@ public class ScrobblerController {
 							metadataWriter.writeAlbum(bean.getAlbum());
 							Integer trackNumber = bean.getTrackNumber();
 							metadataWriter.writeTrackNumber(trackNumber.toString());
-							mainWindow.getDescritionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
+							mainWindow.getDescriptionTable().getModel().setValueAt(ApplicationState.METADATA_UPDATED,
 									bean.getRow(), ApplicationState.STATUS_COLUMN);
 						}
 					}
@@ -340,6 +339,7 @@ public class ScrobblerController {
 					mainWindow.getCompleteButton().setEnabled(true);
 					mainWindow.getSendButton().setEnabled(true);
 					mainWindow.getOpenButton().setEnabled(true);
+					mainWindow.getDescriptionTable().setEnabled(true);
 					mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 				}
 			};

@@ -38,7 +38,7 @@ public class TestPasswordKeyListener {
 		TableModel model = Mockito.mock(TableModel.class);
 		
 		MainWindow mainWindow = Mockito.mock(MainWindow.class);
-		Mockito.when(mainWindow.getDescritionTable()).thenReturn(table);
+		Mockito.when(mainWindow.getDescriptionTable()).thenReturn(table);
 		Mockito.when(table.getModel()).thenReturn(model);
 		
 		
