@@ -47,7 +47,6 @@ public class TestDescriptionTableModelListener {
 		window.cleanUp();
 	}
 
-	//FIXME: Frozen window when run this test with others
 	@Test
 	public void shouldPutUpdatedRowInMetadataBeanList() throws Exception {
 		window = new FrameFixture(mainWindow.getFrame());

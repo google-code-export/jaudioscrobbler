@@ -2,10 +2,15 @@ package org.lastfm.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Frame;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -14,6 +19,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 /**
  * 
@@ -22,6 +28,8 @@ import javax.swing.JTextField;
  */
 
 public class MainWindow {
+	static final String CTRL_O = "CTRL+O";
+	static final String ENTER = "ENTER";
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String APPLICATION_NAME = "JAudioScrobbler";
@@ -33,9 +41,9 @@ public class MainWindow {
 	private JFrame frame;
 	private JPanel panel;
 
-	private JButton openButton;
-	private JButton sendButton;
-	private JButton completeMetadataButton;
+	JButton openButton;
+	JButton sendButton;
+	JButton completeMetadataButton;
 
 	private JTextField textField;
 	private JPanel bottomPanel;
@@ -45,6 +53,8 @@ public class MainWindow {
 	private JLabel label;
 	private JLabel loginLabel;
 	private JPanel topPanel;
+	InputMap inputMap;
+	
 
 	public MainWindow() {
 		doLayout();
@@ -60,6 +70,9 @@ public class MainWindow {
 		topPanel.add(loginLabel);
 
 		openButton = new JButton(LOAD_FILES);
+		openButton.setMnemonic(KeyEvent.VK_O);
+		registerKeyStrokeAction();
+
 		sendButton = new JButton(SEND_SCROBBLINGS);
 		completeMetadataButton = new JButton(COMPLETE_BUTTON);
 
@@ -100,6 +113,16 @@ public class MainWindow {
 		frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+	}
+
+	private void registerKeyStrokeAction() {
+		KeyStroke ctrlo = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
+		KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
+		inputMap = openButton.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW);
+		inputMap.put(ctrlo, CTRL_O);
+		inputMap.put(enter, ENTER);
+		openButton.getActionMap().put(CTRL_O, new ClickAction(openButton));
+		openButton.getActionMap().put(ENTER, new ClickAction(openButton));
 	}
 
 	public JPanel getPanel() {
@@ -152,5 +175,21 @@ public class MainWindow {
 
 	public Frame getFrame() {
 		return frame;
+	}
+
+	public class ClickAction extends AbstractAction {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private JButton button;
+
+		public ClickAction(JButton button) {
+			this.button = button;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			button.doClick();
+		}
 	}
 }
