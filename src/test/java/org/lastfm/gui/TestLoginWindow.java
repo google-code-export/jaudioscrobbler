@@ -1,6 +1,6 @@
 package org.lastfm.gui;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.After;
 import org.junit.Test;
@@ -22,5 +22,4 @@ public class TestLoginWindow {
 		assertEquals("userName", loginWindow.userName.getName());
 		assertEquals("password", loginWindow.password.getName());
 	}
-
 }

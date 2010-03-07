@@ -59,6 +59,7 @@ public class MainWindow {
 
 	public MainWindow() {
 		doLayout();
+		this.getFrame().setEnabled(false);
 	}
 
 	private void doLayout() {
