@@ -5,9 +5,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.awt.Frame;
 import java.io.IOException;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -26,7 +26,7 @@ public class TestLoginListener {
 	private LoginWindow loginWindow;
 	private JLabel label;
 	private ScrobblerController controller;
-	private Frame frame;
+	private JFrame mainWindowFrame;
 
 	@Before
 	public void initialize(){
@@ -34,8 +34,8 @@ public class TestLoginListener {
 		mainWindow = mock(MainWindow.class);
 		loginWindow = new LoginWindow();
 		
-		frame = mock(Frame.class);
-		when(mainWindow.getFrame()).thenReturn(frame );
+		mainWindowFrame = mock(JFrame.class);
+		when(mainWindow.getFrame()).thenReturn(mainWindowFrame);
 		
 		JTable table = mock(JTable.class);
 		TableModel model = mock(TableModel.class);
@@ -70,6 +70,8 @@ public class TestLoginListener {
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "");
+		verify(mainWindowFrame).setEnabled(true);
+		verify(mainWindowFrame).setVisible(true);
 	}
 	
 	@Test
