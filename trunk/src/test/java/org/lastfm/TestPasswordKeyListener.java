@@ -1,9 +1,12 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -32,23 +35,25 @@ public class TestPasswordKeyListener {
 		String userName = "josdem";
 		String password = "secret";
 
-		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
+		HelperScrobbler helperScrobbler = mock(HelperScrobbler.class);
 		
-		JTable table = Mockito.mock(JTable.class);
-		TableModel model = Mockito.mock(TableModel.class);
+		JTable table = mock(JTable.class);
+		TableModel model = mock(TableModel.class);
 		
-		MainWindow mainWindow = Mockito.mock(MainWindow.class);
-		Mockito.when(mainWindow.getDescriptionTable()).thenReturn(table);
-		Mockito.when(table.getModel()).thenReturn(model);
+		MainWindow mainWindow = mock(MainWindow.class);
+		when(mainWindow.getDescriptionTable()).thenReturn(table);
+		when(table.getModel()).thenReturn(model);
 		
+		JFrame frame = mock(JFrame.class);
+		when(mainWindow.getFrame()).thenReturn(frame);
 		
 		loginWindow = new LoginWindow();
 		
-		JLabel loginLabel = Mockito.mock(JLabel.class);
-		Mockito.when(mainWindow.getLoginLabel()).thenReturn(loginLabel);
+		JLabel loginLabel = mock(JLabel.class);
+		when(mainWindow.getLoginLabel()).thenReturn(loginLabel);
 		
-		LoginController loginController = Mockito.mock(LoginController.class);
-		Mockito.when(loginController.login(userName, password)).thenReturn(ApplicationState.OK);
+		LoginController loginController = mock(LoginController.class);
+		when(loginController.login(userName, password)).thenReturn(ApplicationState.OK);
 		
 		assertEquals(null, ApplicationState.userName);
 		assertEquals(null, ApplicationState.password);

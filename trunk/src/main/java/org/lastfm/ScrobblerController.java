@@ -87,6 +87,7 @@ public class ScrobblerController {
 				ApplicationState.password = password;
 				loginWindow.getFrame().dispose();
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
+				mainWindow.getFrame().setEnabled(true);
 			} else {
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 			}
