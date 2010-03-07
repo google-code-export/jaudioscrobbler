@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Frame;
 import java.io.IOException;
 
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ public class TestLoginListener {
 	private LoginWindow loginWindow;
 	private JLabel label;
 	private ScrobblerController controller;
+	private Frame frame;
 
 	@Before
 	public void initialize(){
@@ -32,10 +34,13 @@ public class TestLoginListener {
 		mainWindow = mock(MainWindow.class);
 		loginWindow = new LoginWindow();
 		
-		JTable table = Mockito.mock(JTable.class);
-		TableModel model = Mockito.mock(TableModel.class);
-		Mockito.when(mainWindow.getDescriptionTable()).thenReturn(table);
-		Mockito.when(table.getModel()).thenReturn(model);
+		frame = mock(Frame.class);
+		when(mainWindow.getFrame()).thenReturn(frame );
+		
+		JTable table = mock(JTable.class);
+		TableModel model = mock(TableModel.class);
+		when(mainWindow.getDescriptionTable()).thenReturn(table);
+		when(table.getModel()).thenReturn(model);
 		
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label );
@@ -63,9 +68,9 @@ public class TestLoginListener {
 		
 		loginWindow.sendButton.doClick();
 
-		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "");
+		verify(frame).setEnabled(true);
 	}
 	
 	@Test
@@ -79,7 +84,7 @@ public class TestLoginListener {
 		loginWindow.sendButton.doClick();
 		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		Mockito.verify(mainWindow.getLoginLabel(), Mockito.never()).setText(Mockito.anyString());
+		verify(mainWindow.getLoginLabel(), Mockito.never()).setText(Mockito.anyString());
 	}
 	
 	

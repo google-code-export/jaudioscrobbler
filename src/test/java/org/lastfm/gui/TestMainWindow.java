@@ -1,5 +1,6 @@
 package org.lastfm.gui;
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
@@ -42,5 +43,10 @@ public class TestMainWindow {
 		KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
 		assertEquals(MainWindow.CTRL_O, mainWindow.inputMap.get(ctrlo));
 		assertEquals(MainWindow.ENTER, mainWindow.inputMap.get(enter));
+	}
+	
+	@Test
+	public void shouldVerifyDirectoryTextFieldNotEditable() throws Exception {
+		assertFalse(mainWindow.directorySelected.isEnabled());
 	}
 }

@@ -33,6 +33,7 @@ public class TestDescriptionTableModelListener {
 		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
 		LoginWindow loginWindow = Mockito.mock(LoginWindow.class);
 		mainWindow = new MainWindow();
+		mainWindow.getFrame().setEnabled(true);
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);

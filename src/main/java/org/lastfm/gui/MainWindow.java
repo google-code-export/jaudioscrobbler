@@ -45,7 +45,8 @@ public class MainWindow {
 	JButton sendButton;
 	JButton completeMetadataButton;
 
-	private JTextField textField;
+	JTextField directorySelected;
+	
 	private JPanel bottomPanel;
 	public JTable table;
 
@@ -58,6 +59,7 @@ public class MainWindow {
 
 	public MainWindow() {
 		doLayout();
+		this.getFrame().setEnabled(false);
 	}
 
 	private void doLayout() {
@@ -91,7 +93,8 @@ public class MainWindow {
 			}
 		});
 		label = new JLabel("Status");
-		textField = new JTextField(20);
+		directorySelected = new JTextField(20);
+		directorySelected.setEnabled(false);
 
 		JScrollPane scrollPane = new JScrollPane(table);
 
@@ -100,7 +103,7 @@ public class MainWindow {
 		panel.add(topPanel, BorderLayout.NORTH);
 		panel.add(scrollPane, BorderLayout.CENTER);
 		bottomPanel.add(label);
-		bottomPanel.add(textField);
+		bottomPanel.add(directorySelected);
 		bottomPanel.add(progressBar);
 
 		bottomPanel.add(openButton);
@@ -134,7 +137,7 @@ public class MainWindow {
 	}
 
 	public JTextField getDirectoryField() {
-		return textField;
+		return directorySelected;
 	}
 
 	public JProgressBar getProgressBar() {
