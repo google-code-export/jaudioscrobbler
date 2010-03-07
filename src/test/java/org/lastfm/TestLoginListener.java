@@ -70,7 +70,6 @@ public class TestLoginListener {
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "");
-		verify(frame).setEnabled(true);
 	}
 	
 	@Test

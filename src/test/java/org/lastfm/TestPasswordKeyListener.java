@@ -16,7 +16,6 @@ import org.junit.After;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
-import org.mockito.Mockito;
 
 
 public class TestPasswordKeyListener {
