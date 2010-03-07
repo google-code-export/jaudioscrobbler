@@ -82,7 +82,7 @@ public class TestOpenListener {
 		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Pepe Garden"));
 		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Everything is OK"));
 		assertEquals(4,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
-		assertEquals(461,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
+		assertEquals(26,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
 		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Ready"));
 		assertTrue("completeButton should be enable", controller.mainWindow.getCompleteButton().isEnabled());
 		assertTrue("sendButton should be enable", controller.mainWindow.getSendButton().isEnabled());
