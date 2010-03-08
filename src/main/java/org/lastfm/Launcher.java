@@ -6,6 +6,8 @@ import javax.swing.UIManager.LookAndFeelInfo;
 
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * 
@@ -14,7 +16,10 @@ import org.lastfm.gui.MainWindow;
  */
 
 public class Launcher {
-	public static void main(String[] args) {
+	
+	private ConfigurableApplicationContext applicationContext;
+
+	public Launcher() {
 		try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
@@ -31,6 +36,23 @@ public class Launcher {
 		} catch (IllegalAccessException e) {
 			// handle exception
 		}
-		new ScrobblerController(new HelperScrobbler(), new MainWindow(), new LoginWindow());
+		
+		this.applicationContext = getApplicationContext();
+		HelperScrobbler helperScrobbler = applicationContext.getBean(HelperScrobbler.class);
+		MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
+		LoginWindow loginWindow = applicationContext.getBean(LoginWindow.class);
+		
+		new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+	}
+	
+	private ConfigurableApplicationContext getApplicationContext() {
+		if (applicationContext == null) {
+			applicationContext = new ClassPathXmlApplicationContext( "/spring/applicationContext.xml" );
+		}
+		return applicationContext;
+	}
+
+	public static void main(String[] args) {
+		new Launcher();
 	}
 }
