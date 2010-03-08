@@ -34,16 +34,17 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 public class TestCompleteListener {
 	private HelperScrobbler helperScrobbler;
-	private MainWindow mainWindow;
 	private LoginWindow loginWindow;
 	private ScrobblerController controller;
 	private List<Metadata> metadataList;
-
+    
+	private MainWindow mainWindow;
+	
 	@Before
 	public void initialize() {
+		mainWindow = new MainWindow();
 		helperScrobbler = mock(HelperScrobbler.class);
 		loginWindow = mock(LoginWindow.class);
-		mainWindow = new MainWindow();
 
 		metadataList = new ArrayList<Metadata>();
 
@@ -165,6 +166,8 @@ public class TestCompleteListener {
 	public void shouldWriteAlbumAndTrackNumerInFile() throws Exception {
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 		List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
+		
+		
 
 		MetadataWriter writer = mock(MetadataWriter.class);
 
@@ -175,7 +178,7 @@ public class TestCompleteListener {
 		controller.metadataBeanList = metadataBeanList;
 		
 		mainWindow.getCompleteButton().doClick();
-		Thread.sleep(1000);
+		Thread.sleep(2000);
 		
 		verify(writer).setFile(bean.getFile());
 		verify(writer).writeArtist(bean.getArtist());

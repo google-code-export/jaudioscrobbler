@@ -11,10 +11,14 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
@@ -22,6 +26,8 @@ import org.mockito.Mockito;
  *
  */
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestSendListener {
 	private HelperScrobbler helperScrobbler;
 	
@@ -30,6 +36,7 @@ public class TestSendListener {
 	private Metadata metadata;
 	private List<Metadata> metadataList;
 
+	@Autowired
 	private MainWindow mainWindow;
 
 	@Before
@@ -46,7 +53,6 @@ public class TestSendListener {
 	
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
-		mainWindow = new MainWindow();
 		metadataList = new ArrayList<Metadata>();
 		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 		

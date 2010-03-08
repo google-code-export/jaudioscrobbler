@@ -6,7 +6,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 
 /**
  * 
@@ -15,8 +15,8 @@ import org.mockito.Mockito;
  */
 
 public class TestLoginController {
-	Scrobbler scrobbler = Mockito.mock(Scrobbler.class);
-	ScrobblerFactory factory = Mockito.mock(ScrobblerFactory.class);
+	Scrobbler scrobbler = mock(Scrobbler.class);
+	ScrobblerFactory factory = mock(ScrobblerFactory.class);
 	ResponseStatus status;
 	LoginController controller;
 	
@@ -34,8 +34,8 @@ public class TestLoginController {
 		String password = "validPassword";
 		
 		status = new ResponseStatus(0);
-		Mockito.when(factory.getScrobbler(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(scrobbler);
-		Mockito.when(scrobbler.handshake(password)).thenReturn(status);
+		when(factory.getScrobbler(anyString(), anyString(), anyString())).thenReturn(scrobbler);
+		when(scrobbler.handshake(password)).thenReturn(status);
 		
 		result = controller.login(username, password);
 		
@@ -78,8 +78,8 @@ public class TestLoginController {
 		String password = "invalidPassword";
 		
 		status = new ResponseStatus(2);
-		Mockito.when(factory.getScrobbler(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(scrobbler);
-		Mockito.when(scrobbler.handshake(password)).thenReturn(status);
+		when(factory.getScrobbler(anyString(), anyString(), anyString())).thenReturn(scrobbler);
+		when(scrobbler.handshake(password)).thenReturn(status);
 		
 		result = controller.login(username, password);
 		

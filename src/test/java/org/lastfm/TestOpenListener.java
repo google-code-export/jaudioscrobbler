@@ -3,6 +3,7 @@ package org.lastfm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +22,6 @@ import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
-import org.mockito.Mockito;
 
 /**
  * 
@@ -32,7 +32,6 @@ import org.mockito.Mockito;
 public class TestOpenListener {
 	private static final String MY_ROOT_PATH = "MyRootPath";
 	private HelperScrobbler helperScrobbler;
-	private MainWindow mainWindow;
 	private LoginWindow loginWindow;
 	private ScrobblerController controller;
 	private File root;
@@ -41,17 +40,19 @@ public class TestOpenListener {
 	private List<File> fileList;
 	private ArrayList<Metadata> metadataList;
 
+	private MainWindow mainWindow;
+
 	@Before
 	public void initialize() {
+		mainWindow = new MainWindow();
 		helperScrobbler = mock(HelperScrobbler.class);
 		loginWindow = mock(LoginWindow.class);
-		mainWindow = new MainWindow();
 
 		metadataList = new ArrayList<Metadata>();
 		
-		root = Mockito.mock(File.class);
-		fileUtils = Mockito.mock(FileUtils.class);
-		fileChooser = Mockito.mock(JFileChooser.class);
+		root = mock(File.class);
+		fileUtils = mock(FileUtils.class);
+		fileChooser = mock(JFileChooser.class);
 
 		fileList = new ArrayList<File>();
 
@@ -72,7 +73,7 @@ public class TestOpenListener {
 		
 		fileList.add(new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3"));
 
-		Mockito.when(fileUtils.getFileList(root)).thenReturn(fileList);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		mainWindow.getOpenButton().doClick();
 		assertEquals(1, controller.metadataList.size());
 		int row = 0;
@@ -108,7 +109,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable ioException = new IOException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(ioException);
+		when(fileUtils.getFileList(root)).thenThrow(ioException);
 
 		controller.fileChooser = fileChooser;
 		controller.fileUtils = fileUtils;
@@ -124,7 +125,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable tagException = new TagException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(tagException);
+		when(fileUtils.getFileList(root)).thenThrow(tagException);
 
 		metadataList = new ArrayList<Metadata>();
 		
@@ -142,7 +143,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable readOnlyFileException = new ReadOnlyFileException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(readOnlyFileException);
+		when(fileUtils.getFileList(root)).thenThrow(readOnlyFileException);
 
 		metadataList = new ArrayList<Metadata>();
 		
@@ -160,7 +161,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable invalidAudioFileException = new InvalidAudioFrameException(null);
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(invalidAudioFileException);
+		when(fileUtils.getFileList(root)).thenThrow(invalidAudioFileException);
 
 		metadataList = new ArrayList<Metadata>();
 		
@@ -178,7 +179,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable invalidId3VersionException = new InvalidId3VersionException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(invalidId3VersionException);
+		when(fileUtils.getFileList(root)).thenThrow(invalidId3VersionException);
 
 		metadataList = new ArrayList<Metadata>();
 		
@@ -196,7 +197,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable interruptedException = new InterruptedException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(interruptedException);
+		when(fileUtils.getFileList(root)).thenThrow(interruptedException);
 		
 		metadataList = new ArrayList<Metadata>();
 		
@@ -214,7 +215,7 @@ public class TestOpenListener {
 		setExpectations();
 		
 		Throwable cannotReadException = new CannotReadException();
-		Mockito.when(fileUtils.getFileList(root)).thenThrow(cannotReadException);
+		when(fileUtils.getFileList(root)).thenThrow(cannotReadException);
 		
 		metadataList = new ArrayList<Metadata>();
 		
@@ -229,9 +230,9 @@ public class TestOpenListener {
 
 	private void setExpectations() throws InterruptedException, IOException, CannotReadException,
 			TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
-		Mockito.when(fileUtils.getFileList(root)).thenReturn(fileList);
-		Mockito.when(root.getAbsolutePath()).thenReturn(MY_ROOT_PATH);
-		Mockito.when(fileChooser.showOpenDialog(mainWindow.getPanel())).thenReturn(0);
-		Mockito.when(fileChooser.getSelectedFile()).thenReturn(root);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
+		when(root.getAbsolutePath()).thenReturn(MY_ROOT_PATH);
+		when(fileChooser.showOpenDialog(mainWindow.getPanel())).thenReturn(0);
+		when(fileChooser.getSelectedFile()).thenReturn(root);
 	}
 }

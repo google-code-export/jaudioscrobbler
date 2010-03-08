@@ -14,12 +14,19 @@ import javax.swing.table.TableModel;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestPasswordKeyListener {
 	
+	@Autowired
 	private LoginWindow loginWindow;
 	private FrameFixture window;
 	
@@ -45,8 +52,6 @@ public class TestPasswordKeyListener {
 		
 		JFrame frame = mock(JFrame.class);
 		when(mainWindow.getFrame()).thenReturn(frame);
-		
-		loginWindow = new LoginWindow();
 		
 		JLabel loginLabel = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(loginLabel);

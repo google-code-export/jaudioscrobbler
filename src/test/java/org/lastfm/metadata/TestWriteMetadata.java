@@ -9,7 +9,8 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
 
 /**
  * 
@@ -26,11 +27,11 @@ public class TestWriteMetadata {
 	
 	@Before
 	public void initialize() {
-		file = Mockito.mock(File.class);
-		audioFile = Mockito.mock(AudioFile.class);
-		tag = Mockito.mock(Tag.class);
+		file = mock(File.class);
+		audioFile = mock(AudioFile.class);
+		tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getTag()).thenReturn(tag);
 		metadataWriter = new MetadataWriter(file, audioFile);
 	}
 	
@@ -39,8 +40,8 @@ public class TestWriteMetadata {
 		String album = "Sahara Nights";
 		metadataWriter.writeAlbum(album);
 
-		Mockito.verify(tag).setField(FieldKey.ALBUM, album);
-		Mockito.verify(audioFile).commit();
+		verify(tag).setField(FieldKey.ALBUM, album);
+		verify(audioFile).commit();
 		assertEquals(album, metadataWriter.getAlbum());
 	}
 	
@@ -49,7 +50,7 @@ public class TestWriteMetadata {
 		String trackNumber = "1";
 		
 		metadataWriter.writeTrackNumber(trackNumber);
-		Mockito.verify(audioFile).commit();
+		verify(audioFile).commit();
 		assertEquals(trackNumber, metadataWriter.getTrackNumber());
 	}
 }

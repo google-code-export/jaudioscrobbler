@@ -15,11 +15,15 @@ import javax.swing.table.TableModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mockito;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestLoginListener {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;
@@ -27,7 +31,7 @@ public class TestLoginListener {
 	private JLabel label;
 	private ScrobblerController controller;
 	private JFrame mainWindowFrame;
-
+	
 	@Before
 	public void initialize(){
 		helperScrobbler = mock(HelperScrobbler.class);
