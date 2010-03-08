@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -24,11 +25,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestPasswordKeyListener {
+public class TestPasswordKeyListener extends BaseTestCase{
 	
 	@Autowired
 	private LoginWindow loginWindow;
 	private FrameFixture window;
+	
+	@Mock
+	private HelperScrobbler helperScrobbler;
 	
 	@After
 	public void finalize(){
@@ -41,8 +45,6 @@ public class TestPasswordKeyListener {
 		String userName = "josdem";
 		String password = "secret";
 
-		HelperScrobbler helperScrobbler = mock(HelperScrobbler.class);
-		
 		JTable table = mock(JTable.class);
 		TableModel model = mock(TableModel.class);
 		

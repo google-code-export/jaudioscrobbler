@@ -10,8 +10,10 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Test;
+import org.lastfm.BaseTestCase;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataMp3;
+import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
@@ -21,9 +23,11 @@ import static org.mockito.Mockito.*;
  *
  */
 
-public class TestMetadataMp3 {
+public class TestMetadataMp3 extends BaseTestCase{
 	File file = mock(File.class);
-	MP3File audioFile = mock(MP3File.class);
+	
+	@Mock
+	MP3File audioFile;
 
 	@Test
 	public void shouldUpdateID3toV2() throws Exception {

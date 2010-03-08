@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
+import org.mockito.Mock;
 
 /**
  * 
@@ -29,10 +30,8 @@ import org.lastfm.metadata.Metadata;
  *
  */
 
-public class TestOpenListener {
+public class TestOpenListener extends BaseTestCase{
 	private static final String MY_ROOT_PATH = "MyRootPath";
-	private HelperScrobbler helperScrobbler;
-	private LoginWindow loginWindow;
 	private ScrobblerController controller;
 	private File root;
 	private FileUtils fileUtils;
@@ -40,13 +39,16 @@ public class TestOpenListener {
 	private List<File> fileList;
 	private ArrayList<Metadata> metadataList;
 
+	@Mock
+	private HelperScrobbler helperScrobbler;
+	@Mock
+	private LoginWindow loginWindow;
+
 	private MainWindow mainWindow;
 
 	@Before
 	public void initialize() {
 		mainWindow = new MainWindow();
-		helperScrobbler = mock(HelperScrobbler.class);
-		loginWindow = mock(LoginWindow.class);
 
 		metadataList = new ArrayList<Metadata>();
 		

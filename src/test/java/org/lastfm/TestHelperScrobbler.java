@@ -16,6 +16,7 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.metadata.Metadata;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -28,11 +29,13 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestHelperScrobbler {
-	Metadata metadata = mock(Metadata.class);
+public class TestHelperScrobbler extends BaseTestCase{
 	
 	@Autowired
 	private HelperScrobbler helperScrobbler;
+	
+	@Mock
+	Metadata metadata;
 
 	@Test
 	public void shouldNotAddAScrobblingifTrackSmallerThan240() throws Exception {

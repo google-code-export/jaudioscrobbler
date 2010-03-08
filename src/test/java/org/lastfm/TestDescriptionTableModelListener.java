@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.MetadataBean;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,13 +24,18 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestDescriptionTableModelListener {
+public class TestDescriptionTableModelListener extends BaseTestCase{
 	List<MetadataBean> metadataBeanList;
 	private FrameFixture window;
 	private List<File> fileList;
 
 	@Autowired
 	private MainWindow mainWindow;
+	
+	@Mock
+	private HelperScrobbler helperScrobbler;
+	@Mock
+	private LoginWindow loginWindow;
 	
 	@Before
 	public void initialize(){
@@ -38,8 +44,6 @@ public class TestDescriptionTableModelListener {
 		File file = Mockito.mock(File.class);
 		fileList.add(file);
 		
-		HelperScrobbler helperScrobbler = Mockito.mock(HelperScrobbler.class);
-		LoginWindow loginWindow = Mockito.mock(LoginWindow.class);
 		mainWindow.getFrame().setEnabled(true);
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);

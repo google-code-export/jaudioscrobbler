@@ -18,27 +18,29 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestLoginListener {
-	private HelperScrobbler helperScrobbler;
-	private MainWindow mainWindow;
+public class TestLoginListener extends BaseTestCase{
 	private LoginWindow loginWindow;
 	private JLabel label;
 	private ScrobblerController controller;
+
+	@Mock
+	private HelperScrobbler helperScrobbler;
+	@Mock
+	private MainWindow mainWindow;
+	@Mock
 	private JFrame mainWindowFrame;
 	
 	@Before
 	public void initialize(){
-		helperScrobbler = mock(HelperScrobbler.class);
-		mainWindow = mock(MainWindow.class);
 		loginWindow = new LoginWindow();
 		
-		mainWindowFrame = mock(JFrame.class);
 		when(mainWindow.getFrame()).thenReturn(mainWindowFrame);
 		
 		JTable table = mock(JTable.class);

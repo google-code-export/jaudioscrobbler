@@ -9,8 +9,10 @@ import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Test;
+import org.lastfm.BaseTestCase;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataMp4;
+import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
@@ -20,11 +22,16 @@ import static org.mockito.Mockito.*;
  *
  */
 
-public class TestMetadataMp4 {
-	File file = mock(File.class);
-	AudioFile audioFile = mock(AudioFile.class);
-	Mp4Tag tag = mock(Mp4Tag.class);
-	AudioHeader header = mock(AudioHeader.class);
+public class TestMetadataMp4 extends BaseTestCase{
+	
+	@Mock
+	File file;
+	@Mock
+	Mp4Tag tag;
+	@Mock
+	AudioFile audioFile;
+	@Mock
+	AudioHeader header;
 
 	@Test
 	public void shouldGetAlbum() throws Exception {
