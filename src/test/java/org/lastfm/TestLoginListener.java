@@ -2,6 +2,7 @@ package org.lastfm;
 
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -19,7 +20,6 @@ import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -91,7 +91,7 @@ public class TestLoginListener extends BaseTestCase{
 		loginWindow.sendButton.doClick();
 		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(mainWindow.getLoginLabel(), Mockito.never()).setText(Mockito.anyString());
+		verify(mainWindow.getLoginLabel(), never()).setText(anyString());
 	}
 	
 	

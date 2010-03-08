@@ -1,6 +1,8 @@
 package org.lastfm.metadata;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 
@@ -11,8 +13,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.BaseTestCase;
 import org.mockito.Mock;
-
-import static org.mockito.Mockito.*;
 
 /**
  * 

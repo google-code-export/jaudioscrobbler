@@ -1,6 +1,7 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -16,7 +17,6 @@ import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.MetadataBean;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -41,7 +41,7 @@ public class TestDescriptionTableModelListener extends BaseTestCase{
 	public void initialize(){
 		metadataBeanList = new ArrayList<MetadataBean>();
 		fileList = new ArrayList<File>();
-		File file = Mockito.mock(File.class);
+		File file = mock(File.class);
 		fileList.add(file);
 		
 		mainWindow.getFrame().setEnabled(true);
