@@ -11,7 +11,8 @@ import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataMp4;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
 
 /**
  * 
@@ -20,18 +21,18 @@ import org.mockito.Mockito;
  */
 
 public class TestMetadataMp4 {
-	File file = Mockito.mock(File.class);
-	AudioFile audioFile = Mockito.mock(AudioFile.class);
-	Mp4Tag tag = Mockito.mock(Mp4Tag.class);
-	AudioHeader header = Mockito.mock(AudioHeader.class);
+	File file = mock(File.class);
+	AudioFile audioFile = mock(AudioFile.class);
+	Mp4Tag tag = mock(Mp4Tag.class);
+	AudioHeader header = mock(AudioHeader.class);
 
 	@Test
 	public void shouldGetAlbum() throws Exception {
 		String album = "Simple Pleasures";
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(album, metadata.getAlbum());
@@ -41,9 +42,9 @@ public class TestMetadataMp4 {
 	public void shouldGetArtist() throws Exception {
 		String artist = "Ferry Corsten";
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(artist, metadata.getArtist());
@@ -53,9 +54,9 @@ public class TestMetadataMp4 {
 	public void shouldGetLength() throws Exception {
 		int length = 325;
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(header.getTrackLength()).thenReturn(length);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(header.getTrackLength()).thenReturn(length);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(length, metadata.getLength());
@@ -65,9 +66,9 @@ public class TestMetadataMp4 {
 	public void shouldGetTitle() throws Exception {
 		String title = "A Magical Moment";
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(title, metadata.getTitle());
@@ -77,9 +78,9 @@ public class TestMetadataMp4 {
 	public void shouldGetTrackNumber() throws Exception {
 		String trackNumber = "11";
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(11, metadata.getTrackNumber());
@@ -89,9 +90,9 @@ public class TestMetadataMp4 {
 	public void shouldGetNotTrackNumber() throws Exception {
 		String trackNumber = "";
 
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
-		Mockito.when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
 		
 		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(-1, metadata.getTrackNumber());

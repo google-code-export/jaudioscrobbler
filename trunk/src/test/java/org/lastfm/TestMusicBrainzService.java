@@ -3,7 +3,7 @@ package org.lastfm;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
-import org.mockito.Mockito;
+import static org.mockito.Mockito.*;
 
 /**
  * 
@@ -35,8 +35,8 @@ public class TestMusicBrainzService {
 		
 		MusicBrainzService service = new MusicBrainzService();
 
-		TrackService trackService = Mockito.mock(TrackService.class);
-		Mockito.when(trackService.getAlbum(artistName, trackName)).thenReturn("Some Kind Of Blue");
+		TrackService trackService = mock(TrackService.class);
+		when(trackService.getAlbum(artistName, trackName)).thenReturn("Some Kind Of Blue");
 		
 		service.setTrackService(trackService);
 		assertEquals("Some Kind Of Blue", service.getAlbum(artistName, trackName));
@@ -50,9 +50,9 @@ public class TestMusicBrainzService {
 		
 		MusicBrainzService service = new MusicBrainzService();
 		
-		TrackService trackService = Mockito.mock(TrackService.class);
-		Mockito.when(trackService.getAlbum(artistName, trackName)).thenReturn(album);
-		Mockito.when(trackService.getTrackNumber(album)).thenReturn(12);
+		TrackService trackService = mock(TrackService.class);
+		when(trackService.getAlbum(artistName, trackName)).thenReturn(album);
+		when(trackService.getTrackNumber(album)).thenReturn(12);
 		
 		service.setTrackService(trackService);
 		

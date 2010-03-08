@@ -12,7 +12,8 @@ import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataMp3;
-import org.mockito.Mockito;
+
+import static org.mockito.Mockito.*;
 
 /**
  * 
@@ -21,36 +22,36 @@ import org.mockito.Mockito;
  */
 
 public class TestMetadataMp3 {
-	File file = Mockito.mock(File.class);
-	MP3File audioFile = Mockito.mock(MP3File.class);
+	File file = mock(File.class);
+	MP3File audioFile = mock(MP3File.class);
 
 	@Test
 	public void shouldUpdateID3toV2() throws Exception {
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(false);
+		when(audioFile.hasID3v2Tag()).thenReturn(false);
 		new MetadataMp3(file, audioFile);
 		
-		((MP3File) Mockito.verify(audioFile)).setID3v2TagOnly((AbstractID3v2Tag) Mockito.anyObject());
-		((MP3File) Mockito.verify(audioFile)).commit();
+		((MP3File) verify(audioFile)).setID3v2TagOnly((AbstractID3v2Tag) anyObject());
+		((MP3File) verify(audioFile)).commit();
 	}
 	
 	@Test
 	public void shouldGetMetadata() throws Exception {
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		new MetadataMp3(file, audioFile);
 		
-		((MP3File) Mockito.verify(audioFile)).getTag();
-		((MP3File) Mockito.verify(audioFile)).getAudioHeader();
+		((MP3File) verify(audioFile)).getTag();
+		((MP3File) verify(audioFile)).getAudioHeader();
 		
 	}
 	
 	@Test
 	public void shouldGetArtist() throws Exception {
 		String artist = "Armin Van Buuren";
-		Tag tag = Mockito.mock(Tag.class);
+		Tag tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+		when(audioFile.getTag()).thenReturn(tag);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(artist, metadata.getArtist());
@@ -59,11 +60,11 @@ public class TestMetadataMp3 {
 	@Test
 	public void shouldGetTitle() throws Exception {
 		String title = "Control Freak (Sander Van Doorn Remix)";
-		Tag tag = Mockito.mock(Tag.class);
+		Tag tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
+		when(audioFile.getTag()).thenReturn(tag);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(title, metadata.getTitle());
@@ -72,11 +73,11 @@ public class TestMetadataMp3 {
 	@Test
 	public void shouldGetAlbum() throws Exception {
 		String album = "Nobody Seems To Care / Murder Weapon";
-		Tag tag = Mockito.mock(Tag.class);
+		Tag tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
+		when(audioFile.getTag()).thenReturn(tag);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(album, metadata.getAlbum());
@@ -85,11 +86,11 @@ public class TestMetadataMp3 {
 	@Test
 	public void shouldGetLength() throws Exception {
 		int length = 325;
-		AudioHeader header = Mockito.mock(AudioHeader.class);
+		AudioHeader header = mock(AudioHeader.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(header.getTrackLength()).thenReturn(length);
-		Mockito.when(audioFile.getAudioHeader()).thenReturn(header);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(header.getTrackLength()).thenReturn(length);
+		when(audioFile.getAudioHeader()).thenReturn(header);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(length, metadata.getLength());
@@ -98,11 +99,11 @@ public class TestMetadataMp3 {
 	@Test
 	public void shouldGetTrackNumber() throws Exception {
 		String trackNumber = "11";
-		Tag tag = Mockito.mock(Tag.class);
+		Tag tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		when(audioFile.getTag()).thenReturn(tag);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(11, metadata.getTrackNumber());
@@ -111,11 +112,11 @@ public class TestMetadataMp3 {
 	@Test
 	public void shouldNotGetTrackNumber() throws Exception {
 		String trackNumber = "";
-		Tag tag = Mockito.mock(Tag.class);
+		Tag tag = mock(Tag.class);
 		
-		Mockito.when(audioFile.hasID3v2Tag()).thenReturn(true);
-		Mockito.when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
-		Mockito.when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		when(audioFile.getTag()).thenReturn(tag);
 		Metadata metadata = new MetadataMp3(file, audioFile);
 		
 		assertEquals(-1, metadata.getTrackNumber());

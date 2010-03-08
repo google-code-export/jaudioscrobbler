@@ -18,6 +18,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Launcher {
 	
 	private ConfigurableApplicationContext applicationContext;
+	HelperScrobbler helperScrobbler;
+	MainWindow mainWindow;
+	LoginWindow loginWindow;
 
 	public Launcher() {
 		try {
@@ -38,9 +41,9 @@ public class Launcher {
 		}
 		
 		this.applicationContext = getApplicationContext();
-		HelperScrobbler helperScrobbler = applicationContext.getBean(HelperScrobbler.class);
-		MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
-		LoginWindow loginWindow = applicationContext.getBean(LoginWindow.class);
+		helperScrobbler = applicationContext.getBean(HelperScrobbler.class);
+		mainWindow = applicationContext.getBean(MainWindow.class);
+		loginWindow = applicationContext.getBean(LoginWindow.class);
 		
 		new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
 	}
