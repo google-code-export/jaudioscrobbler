@@ -22,6 +22,7 @@ import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataBean;
 import org.lastfm.metadata.MetadataWriter;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
@@ -32,19 +33,20 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
  * 
  */
 
-public class TestCompleteListener {
-	private HelperScrobbler helperScrobbler;
-	private LoginWindow loginWindow;
+public class TestCompleteListener extends BaseTestCase{
 	private ScrobblerController controller;
 	private List<Metadata> metadataList;
     
 	private MainWindow mainWindow;
 	
+	@Mock
+	private HelperScrobbler helperScrobbler;
+	@Mock
+	private LoginWindow loginWindow;
+
 	@Before
 	public void initialize() {
 		mainWindow = new MainWindow();
-		helperScrobbler = mock(HelperScrobbler.class);
-		loginWindow = mock(LoginWindow.class);
 
 		metadataList = new ArrayList<Metadata>();
 

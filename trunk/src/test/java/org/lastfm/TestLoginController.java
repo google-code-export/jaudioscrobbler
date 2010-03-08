@@ -6,6 +6,8 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+
 import static org.mockito.Mockito.*;
 
 /**
@@ -14,9 +16,13 @@ import static org.mockito.Mockito.*;
  *
  */
 
-public class TestLoginController {
-	Scrobbler scrobbler = mock(Scrobbler.class);
-	ScrobblerFactory factory = mock(ScrobblerFactory.class);
+public class TestLoginController extends BaseTestCase{
+
+	@Mock
+	Scrobbler scrobbler;
+	@Mock
+	ScrobblerFactory factory;
+	
 	ResponseStatus status;
 	LoginController controller;
 	

@@ -9,6 +9,8 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.BaseTestCase;
+import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;
 
@@ -19,18 +21,18 @@ import static org.mockito.Mockito.*;
  */
 
 
-public class TestWriteMetadata {
+public class TestWriteMetadata extends BaseTestCase{
 	MetadataWriter metadataWriter;
+	
+	@Mock
 	private File file;
+	@Mock
 	private AudioFile audioFile;
+	@Mock
 	private Tag tag;
 	
 	@Before
 	public void initialize() {
-		file = mock(File.class);
-		audioFile = mock(AudioFile.class);
-		tag = mock(Tag.class);
-		
 		when(audioFile.getTag()).thenReturn(tag);
 		metadataWriter = new MetadataWriter(file, audioFile);
 	}

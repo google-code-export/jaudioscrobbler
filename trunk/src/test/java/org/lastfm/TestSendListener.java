@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,23 +29,20 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestSendListener {
-	private HelperScrobbler helperScrobbler;
+public class TestSendListener extends BaseTestCase{
 	
-	private LoginWindow loginWindow;
 	private ScrobblerController controller;
-	private Metadata metadata;
 	private List<Metadata> metadataList;
 
 	@Autowired
 	private MainWindow mainWindow;
 
-	@Before
-	public void initialize(){
-		helperScrobbler = mock(HelperScrobbler.class);
-		loginWindow = mock(LoginWindow.class);
-		metadata = mock(Metadata.class);
-	}
+	@Mock
+	private HelperScrobbler helperScrobbler;
+	@Mock
+	private LoginWindow loginWindow;
+	@Mock
+	private Metadata metadata;
 	
 	@After
 	public void finalize(){
