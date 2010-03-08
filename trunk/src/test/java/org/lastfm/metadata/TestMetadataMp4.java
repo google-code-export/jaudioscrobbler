@@ -1,6 +1,7 @@
 package org.lastfm.metadata;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 
@@ -10,11 +11,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Test;
 import org.lastfm.BaseTestCase;
-import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataMp4;
 import org.mockito.Mock;
-
-import static org.mockito.Mockito.*;
 
 /**
  * 

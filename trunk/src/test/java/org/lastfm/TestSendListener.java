@@ -3,20 +3,18 @@ package org.lastfm;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -69,7 +67,7 @@ public class TestSendListener extends BaseTestCase{
 
 		Thread.sleep(2500);
 		
-		Mockito.verify(helperScrobbler).send(metadata);
+		verify(helperScrobbler).send(metadata);
 		
 		assertEquals(100, mainWindow.getProgressBar().getValue());
 		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());

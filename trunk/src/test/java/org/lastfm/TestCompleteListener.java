@@ -4,7 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -23,7 +26,6 @@ import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataBean;
 import org.lastfm.metadata.MetadataWriter;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -68,12 +70,12 @@ public class TestCompleteListener extends BaseTestCase{
 		String expectedAlbum = "Global";
 		String expectedStatus = ApplicationState.NEW_METADATA;
 
-		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
+		when(service.getAlbum(anyString(), anyString())).thenReturn(expectedAlbum);
 
 		controller.service = service;
 
 		when(table.getModel()).thenReturn(model);
-		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
+		when(model.getValueAt(anyInt(), anyInt())).thenReturn("");
 		when(table.getRowCount()).thenReturn(1);
 
 		mainWindow.table = table;
@@ -94,7 +96,7 @@ public class TestCompleteListener extends BaseTestCase{
 		Thread.sleep(200);
 
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
-		assertEquals(expectedAlbum, service.getAlbum(Mockito.anyString(), Mockito.anyString()));
+		assertEquals(expectedAlbum, service.getAlbum(anyString(), anyString()));
 		verify(mainWindow.getDescriptionTable().getModel()).setValueAt(expectedAlbum, 0, ApplicationState.ALBUM_COLUMN);
 		verify(mainWindow.getDescriptionTable().getModel())
 				.setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
@@ -119,14 +121,14 @@ public class TestCompleteListener extends BaseTestCase{
 		String expectedAlbum = "";
 		String expectedStatus = ApplicationState.NEW_METADATA;
 
-		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenReturn(expectedAlbum);
+		when(service.getAlbum(anyString(), anyString())).thenReturn(expectedAlbum);
 
 		controller.service = service;
 		createMetadataList();
 		controller.metadataList = metadataList;
 
 		when(table.getModel()).thenReturn(model);
-		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
+		when(model.getValueAt(anyInt(), anyInt())).thenReturn("");
 		when(table.getRowCount()).thenReturn(1);
 
 		mainWindow.table = table;
@@ -134,10 +136,10 @@ public class TestCompleteListener extends BaseTestCase{
 		mainWindow.getCompleteButton().doClick();
 
 		assertNotNull("metadataList should not be null", controller.metadataList);
-		verify(service, Mockito.never()).getTrackNumber(Mockito.anyString());
-		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(expectedAlbum, 0,
+		verify(service, never()).getTrackNumber(anyString());
+		verify(mainWindow.getDescriptionTable().getModel(), never()).setValueAt(expectedAlbum, 0,
 				ApplicationState.ALBUM_COLUMN);
-		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(expectedStatus, 0,
+		verify(mainWindow.getDescriptionTable().getModel(), never()).setValueAt(expectedStatus, 0,
 				ApplicationState.STATUS_COLUMN);
 	}
 
@@ -148,20 +150,20 @@ public class TestCompleteListener extends BaseTestCase{
 		TableModel model = mock(TableModel.class);
 
 		when(table.getModel()).thenReturn(model);
-		when(model.getValueAt(Mockito.anyInt(), Mockito.anyInt())).thenReturn("");
+		when(model.getValueAt(anyInt(), anyInt())).thenReturn("");
 		when(table.getRowCount()).thenReturn(1);
 
 		mainWindow.table = table;
 
 		Exception serverUnavailableException = new ServerUnavailableException();
 
-		when(service.getAlbum(Mockito.anyString(), Mockito.anyString())).thenThrow(serverUnavailableException);
+		when(service.getAlbum(anyString(), anyString())).thenThrow(serverUnavailableException);
 
 		controller.service = service;
 
 		mainWindow.getCompleteButton().doClick();
-		verify(mainWindow.getDescriptionTable().getModel(), Mockito.never()).setValueAt(Mockito.anyString(),
-				Mockito.anyInt(), Mockito.anyInt());
+		verify(mainWindow.getDescriptionTable().getModel(), never()).setValueAt(anyString(),
+				anyInt(), anyInt());
 	}
 
 	@Test
@@ -187,7 +189,7 @@ public class TestCompleteListener extends BaseTestCase{
 		verify(writer).writeTrackName(bean.getTrackName());
 		verify(writer).writeAlbum(bean.getAlbum());
 		verify(bean).getTrackNumber();
-		verify(writer).writeTrackNumber(Mockito.anyString());
+		verify(writer).writeTrackNumber(anyString());
 		assertEquals(ApplicationState.METADATA_UPDATED, mainWindow.getDescriptionTable().getModel().getValueAt(bean.getRow(),
 				ApplicationState.STATUS_COLUMN));
 
