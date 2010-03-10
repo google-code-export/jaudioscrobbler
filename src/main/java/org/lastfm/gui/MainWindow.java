@@ -76,9 +76,9 @@ public class MainWindow {
 		registerKeyStrokeAction();
 
 		sendButton = new JButton(SEND_SCROBBLINGS);
-		completeMetadataButton = new JButton(COMPLETE_BUTTON);
-
 		sendButton.setEnabled(false);
+		
+		completeMetadataButton = new JButton(COMPLETE_BUTTON);
 		completeMetadataButton.setEnabled(false);
 
 		progressBar = new JProgressBar();

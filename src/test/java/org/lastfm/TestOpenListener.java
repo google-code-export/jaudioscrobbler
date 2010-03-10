@@ -16,7 +16,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
@@ -30,6 +29,7 @@ import org.mockito.Mock;
  *
  */
 
+//TODO: Inject Spring
 public class TestOpenListener extends BaseTestCase{
 	private static final String MY_ROOT_PATH = "MyRootPath";
 	private ScrobblerController controller;
@@ -39,17 +39,15 @@ public class TestOpenListener extends BaseTestCase{
 	private List<File> fileList;
 	private ArrayList<Metadata> metadataList;
 
+	private MainWindow mainWindow = new MainWindow();
 	@Mock
 	private HelperScrobbler helperScrobbler;
 	@Mock
 	private LoginWindow loginWindow;
 
-	private MainWindow mainWindow;
 
 	@Before
 	public void initialize() {
-		mainWindow = new MainWindow();
-
 		metadataList = new ArrayList<Metadata>();
 		
 		root = mock(File.class);
@@ -58,12 +56,7 @@ public class TestOpenListener extends BaseTestCase{
 
 		fileList = new ArrayList<File>();
 
-		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
-	}
-	
-	@After
-	public void finalize(){
-		mainWindow.getFrame().dispose();
+		controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
 	}
 
 	@Test

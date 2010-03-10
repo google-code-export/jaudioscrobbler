@@ -8,31 +8,24 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.KeyStroke;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
+//TODO: Inject Spring
 public class TestMainWindow {
 	
-	@Autowired
-	private MainWindow mainWindow;
+	private MainWindow mainWindow = new MainWindow();
 
 	@Before
-	public void setup() {
-		mainWindow = new MainWindow();
-	}
-
-	@After
-	public void finalize(){
-		mainWindow.getFrame().dispose();
+	public void setup(){
+		this.mainWindow.getFrame().setEnabled(true);
 	}
 
 	@Test
 	public void shouldNotEnableSendAndCompleteButton() throws Exception {
-		assertFalse("sendButton should not be enabled", mainWindow.getSendButton().isEnabled());
-		assertFalse("completeButton should not be enabled", mainWindow.getCompleteButton().isEnabled());
-		assertFalse("descriptionTable should be disabled", mainWindow.getDescriptionTable().isEnabled());
+		assertFalse("sendButton should not be enabled", this.mainWindow.getSendButton().isEnabled());
+		assertFalse("completeButton should not be enabled", this.mainWindow.getCompleteButton().isEnabled());
+		assertFalse("descriptionTable should be disabled", this.mainWindow.getDescriptionTable().isEnabled());
 	}
 	
 	@Test

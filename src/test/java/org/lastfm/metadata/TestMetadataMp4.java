@@ -38,7 +38,7 @@ public class TestMetadataMp4 extends BaseTestCase{
 		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
+		Metadata metadata = new MetadataMp4(this.file, this.audioFile);
 		assertEquals(album, metadata.getAlbum());
 	}
 	

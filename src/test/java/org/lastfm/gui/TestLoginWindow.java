@@ -16,11 +16,6 @@ public class TestLoginWindow {
 	@Autowired
 	private LoginWindow loginWindow;
 
-	@After
-	public void finalize(){
-		loginWindow.getFrame().dispose();
-	}
-	
 	@Test
 	public void shouldValidateGUIElements() throws Exception {
 		assertEquals("sendButton", loginWindow.sendButton.getName());

@@ -34,7 +34,7 @@ public class TestWriteMetadata extends BaseTestCase{
 	@Before
 	public void initialize() {
 		when(audioFile.getTag()).thenReturn(tag);
-		metadataWriter = new MetadataWriter(file, audioFile);
+		metadataWriter = new MetadataWriter(this.file, this.audioFile);
 	}
 	
 	@Test

@@ -20,15 +20,18 @@ import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestLoginListener extends BaseTestCase{
-	private LoginWindow loginWindow;
 	private JLabel label;
 	private ScrobblerController controller;
+
+	@Autowired
+	private LoginWindow loginWindow;
 
 	@Mock
 	private HelperScrobbler helperScrobbler;
@@ -39,8 +42,6 @@ public class TestLoginListener extends BaseTestCase{
 	
 	@Before
 	public void initialize(){
-		loginWindow = new LoginWindow();
-		
 		when(mainWindow.getFrame()).thenReturn(mainWindowFrame);
 		
 		JTable table = mock(JTable.class);
@@ -50,12 +51,7 @@ public class TestLoginListener extends BaseTestCase{
 		
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label );
-		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
-	}
-	
-	@After
-	public void finalize(){
-		loginWindow.getFrame().dispose();
+		controller = new ScrobblerController(this.helperScrobbler, this.mainWindow, loginWindow);
 	}
 	
 	@Test
@@ -75,7 +71,7 @@ public class TestLoginListener extends BaseTestCase{
 		loginWindow.sendButton.doClick();
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(label).setText(ApplicationState.LOGGED_AS + "");
+		verify(label).setText(ApplicationState.LOGGED_AS + "josdem");
 		verify(mainWindowFrame).setEnabled(true);
 		verify(mainWindowFrame).setVisible(true);
 	}
