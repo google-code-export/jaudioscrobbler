@@ -47,7 +47,7 @@ public class TestDescriptionTableModelListener extends BaseTestCase{
 		mainWindow.getFrame().setEnabled(true);
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
-		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		ScrobblerController controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
 		
 		controller.metadataBeanList = metadataBeanList;
 		controller.fileList = fileList;

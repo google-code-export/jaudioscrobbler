@@ -42,15 +42,10 @@ public class TestSendListener extends BaseTestCase{
 	@Mock
 	private Metadata metadata;
 	
-	@After
-	public void finalize(){
-		mainWindow.getFrame().dispose();
-	}
-	
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
 		metadataList = new ArrayList<Metadata>();
-		controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
 		
 		metadataList.add(metadata);
 		

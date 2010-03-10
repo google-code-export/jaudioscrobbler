@@ -1,6 +1,6 @@
 package org.lastfm;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import static org.mockito.Mockito.*;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestScrobblerController extends BaseTestCase{
@@ -22,11 +20,12 @@ public class TestScrobblerController extends BaseTestCase{
 	
 	@Mock
 	private HelperScrobbler helperScrobbler;
-
+	@Mock
+	LoginWindow loginWindow;
+	
 	@Test
 	public void shouldVerifyMainWindowIsDiasableByDefault() throws Exception {
-		LoginWindow loginWindow = mock(LoginWindow.class);
-		new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
 		assertFalse(mainWindow.getFrame().isEnabled());
 	}
 }

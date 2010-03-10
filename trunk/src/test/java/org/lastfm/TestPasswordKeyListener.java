@@ -27,16 +27,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestPasswordKeyListener extends BaseTestCase{
 	
+	private FrameFixture window;
+
 	@Autowired
 	private LoginWindow loginWindow;
-	private FrameFixture window;
 	
 	@Mock
 	private HelperScrobbler helperScrobbler;
 	
 	@After
 	public void finalize(){
-		loginWindow.getFrame().dispose();
 		window.cleanUp();
 	}
 
