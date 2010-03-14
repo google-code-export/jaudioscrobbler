@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

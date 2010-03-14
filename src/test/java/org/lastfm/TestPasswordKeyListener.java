@@ -23,6 +23,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
+/**
+ * 
+ * @author josdem (joseluis.delacruz@gmail.com)
+ *
+ */
+
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestPasswordKeyListener extends BaseTestCase{
@@ -42,7 +49,7 @@ public class TestPasswordKeyListener extends BaseTestCase{
 
 	@Test
 	public void shouldLoginIfUserPressEnterKey() throws Exception {
-		String userName = "josdem";
+		String userName = "josdem (joseluis.delacruz@gmail.com)";
 		String password = "secret";
 
 		JTable table = mock(JTable.class);

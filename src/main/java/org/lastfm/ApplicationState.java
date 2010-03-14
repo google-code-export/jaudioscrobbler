@@ -3,7 +3,7 @@ package org.lastfm;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

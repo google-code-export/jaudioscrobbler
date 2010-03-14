@@ -4,7 +4,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

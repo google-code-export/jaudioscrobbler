@@ -23,6 +23,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+/**
+ * 
+ * @author josdem (joseluis.delacruz@gmail.com) 
+ *
+ */
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestLoginListener extends BaseTestCase{
@@ -70,7 +76,7 @@ public class TestLoginListener extends BaseTestCase{
 		loginWindow.sendButton.doClick();
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(label).setText(ApplicationState.LOGGED_AS + "josdem");
+		verify(label).setText(ApplicationState.LOGGED_AS + "josdem (joseluis.delacruz@gmail.com)");
 		verify(mainWindowFrame).setEnabled(true);
 		verify(mainWindowFrame).setVisible(true);
 	}

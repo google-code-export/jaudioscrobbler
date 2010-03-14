@@ -19,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

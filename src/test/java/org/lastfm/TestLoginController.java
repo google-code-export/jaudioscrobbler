@@ -12,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 
@@ -36,7 +36,7 @@ public class TestLoginController extends BaseTestCase{
 	
 	@Test
 	public void shouldLogin() throws Exception {
-		String username = "josdem";
+		String username = "josdem (joseluis.delacruz@gmail.com)";
 		String password = "validPassword";
 		
 		status = new ResponseStatus(0);
@@ -80,7 +80,7 @@ public class TestLoginController extends BaseTestCase{
 	
 	@Test
 	public void shouldFailAtLogin() throws Exception {
-		String username = "josdem";
+		String username = "josdem (joseluis.delacruz@gmail.com)";
 		String password = "invalidPassword";
 		
 		status = new ResponseStatus(2);

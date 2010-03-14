@@ -9,7 +9,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 /**
  * 
- * @author josdem
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 
