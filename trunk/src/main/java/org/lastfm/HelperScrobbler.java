@@ -18,7 +18,7 @@ import org.lastfm.metadata.Metadata;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

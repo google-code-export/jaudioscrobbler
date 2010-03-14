@@ -15,7 +15,7 @@ import org.jaudiotagger.tag.mp4.Mp4Tag;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

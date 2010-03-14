@@ -21,7 +21,7 @@ import org.lastfm.InvalidId3VersionException;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 

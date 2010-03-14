@@ -4,6 +4,13 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+
+/**
+ * 
+ * @author josdem (joseluis.delacruz@gmail.com)
+ *
+ */
+
 public class TestLauncher {
 	
 	@Test

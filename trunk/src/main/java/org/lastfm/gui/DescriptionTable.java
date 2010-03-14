@@ -5,7 +5,7 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  * 
- * @author josdem
+ * @author josdem (joseluis.delacruz@gmail.com)
  *
  */
 
