@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

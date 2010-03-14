@@ -9,7 +9,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 /**
  * 
- * @author Jose Luis De la Cruz
+ * @author josdem
  *
  */
 
@@ -21,8 +21,9 @@ public class LoginController {
 	}
 
 	public int login(String username, String password) throws IOException {
-		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password))
+		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 			return ApplicationState.ERROR;
+		}
 		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", username);
 		ResponseStatus status = scrobbler.handshake(password);
 		return status.getStatus();

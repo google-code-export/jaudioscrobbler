@@ -9,15 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
@@ -25,14 +22,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestSendListener extends BaseTestCase{
 	
 	private ScrobblerController controller;
 	private List<Metadata> metadataList;
 
-	@Autowired
 	private MainWindow mainWindow;
 
 	@Mock
@@ -41,6 +35,16 @@ public class TestSendListener extends BaseTestCase{
 	private LoginWindow loginWindow;
 	@Mock
 	private Metadata metadata;
+	
+	@Before
+	public void setup(){
+		mainWindow = new MainWindow();
+	}
+	
+	@After
+	public void finalize(){
+		mainWindow.getFrame().dispose();
+	}
 	
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
@@ -60,7 +64,7 @@ public class TestSendListener extends BaseTestCase{
 		assertTrue("progressBar should be visible", mainWindow.getProgressBar().isVisible());
 		assertFalse("openButton should be enable", mainWindow.getOpenButton().isEnabled());
 
-		Thread.sleep(2500);
+		Thread.sleep(2000);
 		
 		verify(helperScrobbler).send(metadata);
 		
