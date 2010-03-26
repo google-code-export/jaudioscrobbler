@@ -46,7 +46,7 @@ public class LoginWindow {
 		panel.add(sendButton, BorderLayout.SOUTH);
 		
 		frame.add(panel);
-		frame.setVisible(true);
+		frame.setVisible(false);
 	}
 	
 	public void addLoginListener(ActionListener loginListener){

@@ -14,6 +14,9 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -54,6 +57,9 @@ public class MainWindow {
 	private JLabel label;
 	private JLabel loginLabel;
 	private JPanel topPanel;
+	private JMenuBar menuBar;
+	private JMenu menu;
+	private JMenuItem menuItem;
 	InputMap inputMap;
 	
 
@@ -67,6 +73,12 @@ public class MainWindow {
 		panel = new JPanel();
 		bottomPanel = new JPanel();
 		topPanel = new JPanel();
+		menuBar = new JMenuBar();
+		menu = new JMenu("Last.fm");
+		menu.setMnemonic(KeyEvent.VK_L);
+		menuItem = new JMenuItem("Sign in Last.fm");
+		menu.add(menuItem);
+		menuBar.add(menu);
 
 		loginLabel = new JLabel(LOG_OUT);
 		topPanel.add(loginLabel);
@@ -113,6 +125,7 @@ public class MainWindow {
 		panel.add(bottomPanel, BorderLayout.SOUTH);
 
 		frame.add(panel);
+		frame.setJMenuBar(menuBar);
 		frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
@@ -174,6 +187,10 @@ public class MainWindow {
 
 	public void addCompleteListener(ActionListener completeListener) {
 		completeMetadataButton.addActionListener(completeListener);
+	}
+	
+	public void addLastFMLoginListener(ActionListener lastFMLoginListener){
+		menuItem.addActionListener(lastFMLoginListener);
 	}
 
 	public Frame getFrame() {
