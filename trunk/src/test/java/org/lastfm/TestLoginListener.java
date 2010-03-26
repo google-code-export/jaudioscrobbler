@@ -57,6 +57,7 @@ public class TestLoginListener extends BaseTestCase{
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label );
 		controller = new ScrobblerController(this.helperScrobbler, this.mainWindow, loginWindow);
+		loginWindow.getFrame().setVisible(true);
 	}
 	
 	@Test
@@ -76,7 +77,7 @@ public class TestLoginListener extends BaseTestCase{
 		loginWindow.sendButton.doClick();
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(label).setText(ApplicationState.LOGGED_AS + "josdem (joseluis.delacruz@gmail.com)");
+		verify(label).setText(ApplicationState.LOGGED_AS + "josdem");
 		verify(mainWindowFrame).setEnabled(true);
 		verify(mainWindowFrame).setVisible(true);
 	}

@@ -49,7 +49,7 @@ public class TestPasswordKeyListener extends BaseTestCase{
 
 	@Test
 	public void shouldLoginIfUserPressEnterKey() throws Exception {
-		String userName = "josdem (joseluis.delacruz@gmail.com)";
+		String userName = "josdem";
 		String password = "secret";
 
 		JTable table = mock(JTable.class);

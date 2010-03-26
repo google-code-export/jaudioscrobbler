@@ -36,7 +36,7 @@ public class TestLoginController extends BaseTestCase{
 	
 	@Test
 	public void shouldLogin() throws Exception {
-		String username = "josdem (joseluis.delacruz@gmail.com)";
+		String username = "josdem";
 		String password = "validPassword";
 		
 		status = new ResponseStatus(0);
@@ -80,7 +80,7 @@ public class TestLoginController extends BaseTestCase{
 	
 	@Test
 	public void shouldFailAtLogin() throws Exception {
-		String username = "josdem (joseluis.delacruz@gmail.com)";
+		String username = "josdem";
 		String password = "invalidPassword";
 		
 		status = new ResponseStatus(2);

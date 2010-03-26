@@ -59,6 +59,7 @@ public class ScrobblerController {
 		this.mainWindow.addOpenListener(new OpenListener());
 		this.mainWindow.addSendListener(new SendListener());
 		this.mainWindow.addCompleteListener(new CompleteListener());
+		this.mainWindow.addLastFMLoginListener(new LastFMLoginListener());
 		this.loginWindow.addLoginListener(new LoginListener());
 		this.loginWindow.addKeyListener(new PasswordKeyListener());
 		this.mainWindow.getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
@@ -96,7 +97,7 @@ public class ScrobblerController {
 			ioe.printStackTrace();
 		}
 	}
-
+	
 	class DescriptionTableModelListener implements TableModelListener {
 
 		@Override
@@ -133,6 +134,15 @@ public class ScrobblerController {
 				login();
 			}
 		}
+	}
+	
+	class LastFMLoginListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			loginWindow.getFrame().setVisible(true);
+		}
+		
 	}
 
 	class OpenListener implements ActionListener {
