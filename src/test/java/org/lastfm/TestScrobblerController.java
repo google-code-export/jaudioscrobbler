@@ -1,7 +1,8 @@
 package org.lastfm;
 
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.fest.swing.fixture.FrameFixture;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
@@ -23,15 +24,25 @@ public class TestScrobblerController extends BaseTestCase{
 
 	@Autowired
 	private MainWindow mainWindow;
+	@Autowired
+	private LoginWindow loginWindow;
 	
 	@Mock
 	private HelperScrobbler helperScrobbler;
-	@Mock
-	LoginWindow loginWindow;
 	
 	@Test
-	public void shouldVerifyMainWindowIsDiasableByDefault() throws Exception {
-		new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
-		assertFalse(mainWindow.getFrame().isEnabled());
+	public void shouldVerifyMainWindowIsEnableByDefault() throws Exception {
+		new ScrobblerController(this.helperScrobbler, mainWindow, loginWindow);
+		assertTrue(mainWindow.getFrame().isEnabled());
+	}
+	
+	@Test
+	public void shouldClickOnLoginLastFM() throws Exception {
+		FrameFixture window = new FrameFixture(mainWindow.getFrame());
+		window.show();
+		window.menuItem("loginMenuItem").click();
+		
+		assertTrue(this.loginWindow.getFrame().isVisible());
+		window.cleanUp();
 	}
 }

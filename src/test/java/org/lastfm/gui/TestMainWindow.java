@@ -8,27 +8,19 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.KeyStroke;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.AbstractDependencyInjectionSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-//TODO: Inject Spring
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-@SuppressWarnings("deprecation")
-public class TestMainWindow extends AbstractDependencyInjectionSpringContextTests{
+public class TestMainWindow {
 	
 	@Autowired
 	private MainWindow mainWindow;
 
-	@Before
-	public void setup(){
-		this.mainWindow.getFrame().setEnabled(true);
-	}
 
 	@Test
 	public void shouldNotEnableSendAndCompleteButton() throws Exception {

@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -42,13 +41,9 @@ public class TestLoginListener extends BaseTestCase{
 	private HelperScrobbler helperScrobbler;
 	@Mock
 	private MainWindow mainWindow;
-	@Mock
-	private JFrame mainWindowFrame;
 	
 	@Before
 	public void initialize(){
-		when(mainWindow.getFrame()).thenReturn(mainWindowFrame);
-		
 		JTable table = mock(JTable.class);
 		TableModel model = mock(TableModel.class);
 		when(mainWindow.getDescriptionTable()).thenReturn(table);
@@ -78,8 +73,6 @@ public class TestLoginListener extends BaseTestCase{
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(label).setText(ApplicationState.LOGGED_AS + "josdem");
-		verify(mainWindowFrame).setEnabled(true);
-		verify(mainWindowFrame).setVisible(true);
 	}
 	
 	@Test
