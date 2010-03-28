@@ -31,7 +31,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestDescriptionTableModelListener extends BaseTestCase{
 	List<MetadataBean> metadataBeanList;
-	private FrameFixture window;
 	private List<File> fileList;
 
 	@Autowired
@@ -49,7 +48,6 @@ public class TestDescriptionTableModelListener extends BaseTestCase{
 		File file = mock(File.class);
 		fileList.add(file);
 		
-		mainWindow.getFrame().setEnabled(true);
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 		ScrobblerController controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
@@ -61,12 +59,12 @@ public class TestDescriptionTableModelListener extends BaseTestCase{
 	@After
 	public void finalize(){
 		mainWindow.getFrame().dispose();
-		window.cleanUp();
+		
 	}
 
 	@Test
 	public void shouldPutUpdatedRowInMetadataBeanList() throws Exception {
-		window = new FrameFixture(mainWindow.getFrame());
+		FrameFixture window = new FrameFixture(mainWindow.getFrame());
 
 		String album = "Pushing Air";
 		
@@ -76,6 +74,7 @@ public class TestDescriptionTableModelListener extends BaseTestCase{
 		window.robot.doubleClick(mainWindow.getDescriptionTable());
 		window.robot.enterText(album);
 		window.robot.pressKey(KeyEvent.VK_ENTER);
+		window.cleanUp();
 		
 		assertEquals(1, metadataBeanList.size());
 		MetadataBean bean = metadataBeanList.get(0);

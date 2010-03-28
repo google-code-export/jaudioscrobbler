@@ -33,6 +33,7 @@ import javax.swing.KeyStroke;
 public class MainWindow {
 	static final String CTRL_O = "CTRL+O";
 	static final String ENTER = "ENTER";
+	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String APPLICATION_NAME = "JAudioScrobbler";
@@ -65,7 +66,6 @@ public class MainWindow {
 
 	public MainWindow() {
 		doLayout();
-		this.getFrame().setEnabled(false);
 	}
 
 	private void doLayout() {
@@ -77,6 +77,7 @@ public class MainWindow {
 		menu = new JMenu("Last.fm");
 		menu.setMnemonic(KeyEvent.VK_L);
 		menuItem = new JMenuItem("Sign in Last.fm");
+		menuItem.setName(LOGIN_MENU_ITEM);
 		menu.add(menuItem);
 		menuBar.add(menu);
 
