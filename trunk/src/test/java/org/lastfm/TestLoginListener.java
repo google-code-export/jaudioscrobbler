@@ -8,19 +8,16 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 
@@ -28,14 +25,11 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  *
  */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestLoginListener extends BaseTestCase{
 	private JLabel label;
 	private ScrobblerController controller;
 
-	@Autowired
-	private LoginWindow loginWindow;
+	private LoginWindow loginWindow = new LoginWindow();
 
 	@Mock
 	private HelperScrobbler helperScrobbler;
@@ -50,14 +44,14 @@ public class TestLoginListener extends BaseTestCase{
 		when(table.getModel()).thenReturn(model);
 		
 		label = mock(JLabel.class);
-		when(mainWindow.getLoginLabel()).thenReturn(label );
-		controller = new ScrobblerController(this.helperScrobbler, this.mainWindow, loginWindow);
+		when(mainWindow.getLoginLabel()).thenReturn(label);
 		loginWindow.getFrame().setVisible(true);
+		controller = new ScrobblerController(this.helperScrobbler, this.mainWindow, loginWindow);
 	}
 	
 	@Test
 	public void shouldFailLogin() throws Exception {
-		loginWindow.sendButton.doClick();
+		loginWindow.getSendButton().doClick();
 		
 		verify(label).setText(ApplicationState.LOGIN_FAIL);
 	}
@@ -65,14 +59,17 @@ public class TestLoginListener extends BaseTestCase{
 	@Test
 	public void shouldLogin() throws Exception {
 		LoginController loginController = mock(LoginController.class);
+		JButton sendButton = mock(JButton.class);
 		controller.loginController = loginController;
 		
 		when(loginController.login(anyString(), anyString())).thenReturn(ApplicationState.OK);
+		when(mainWindow.getSendButton()).thenReturn(sendButton);
 		
-		loginWindow.sendButton.doClick();
+		loginWindow.getSendButton().doClick();
 
 		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(label).setText(ApplicationState.LOGGED_AS + "josdem");
+		verify(label).setText(ApplicationState.LOGGED_AS);
+		verify(sendButton).setEnabled(true);
 	}
 	
 	@Test

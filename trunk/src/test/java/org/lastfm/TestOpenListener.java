@@ -1,6 +1,7 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -81,7 +82,7 @@ public class TestOpenListener extends BaseTestCase{
 		assertEquals(26,controller.mainWindow.getDescriptionTable().getValueAt(row, col++));
 		assertTrue(((String)controller.mainWindow.getDescriptionTable().getValueAt(row, col++)).contains("Ready"));
 		assertTrue("completeButton should be enable", controller.mainWindow.getCompleteButton().isEnabled());
-		assertTrue("sendButton should be enable", controller.mainWindow.getSendButton().isEnabled());
+		assertFalse("sendButton should not be enable", controller.mainWindow.getSendButton().isEnabled());
 	}
 
 	@Test

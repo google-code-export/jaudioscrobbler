@@ -26,4 +26,5 @@ public class ApplicationState {
 	public static final int ALBUM_COLUMN = 2;
 	public static final int TRACK_NUMBER_COLUMN = 3;
 	public static final int STATUS_COLUMN = 5;
+	public static final int LOGGED_OUT = 0;
 }

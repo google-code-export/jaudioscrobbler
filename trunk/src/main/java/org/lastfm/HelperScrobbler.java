@@ -39,6 +39,10 @@ public class HelperScrobbler {
 	}
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
+		System.err.println("at scrobbling");
+		if(StringUtils.isEmpty(ApplicationState.userName)){
+			return ApplicationState.LOGGED_OUT;
+		}
 		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", ApplicationState.userName);
 		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
 
@@ -64,6 +68,7 @@ public class HelperScrobbler {
 				return ApplicationState.ERROR;
 			}
 		} else {
+			System.err.println("error at scrobbling");
 			log.error(ApplicationState.HAND_SHAKE_FAIL);
 			return ApplicationState.FAILURE;
 		}

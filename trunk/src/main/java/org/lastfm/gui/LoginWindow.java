@@ -69,4 +69,8 @@ public class LoginWindow {
 		return frame;
 	}
 
+	public JButton getSendButton() {
+		return sendButton;
+	}
+
 }
