@@ -102,7 +102,7 @@ public class TestCompleteListener extends BaseTestCase{
 				.setValueAt(expectedStatus, 0, ApplicationState.STATUS_COLUMN);
 		verify(mainWindow.getDescriptionTable().getModel()).setValueAt(0, 0, ApplicationState.TRACK_NUMBER_COLUMN);
 		assertEquals(100, mainWindow.getProgressBar().getValue());
-		assertTrue("sendButton should be enabled", mainWindow.getSendButton().isEnabled());
+		assertFalse("sendButton should not be enabled", mainWindow.getSendButton().isEnabled());
 		assertTrue("openButton should be enabled", mainWindow.getOpenButton().isEnabled());
 		assertEquals(MainWindow.APPLY, mainWindow.getCompleteButton().getText());
 	}

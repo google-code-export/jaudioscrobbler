@@ -88,8 +88,7 @@ public class ScrobblerController {
 				ApplicationState.password = password;
 				loginWindow.getFrame().dispose();
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
-//				mainWindow.getFrame().setEnabled(true);
-//				mainWindow.getFrame().setVisible(true);
+				mainWindow.getSendButton().setEnabled(true);
 			} else {
 				mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 			}
@@ -209,7 +208,6 @@ public class ScrobblerController {
 				mainWindow.getDirectoryField().setText(file.getAbsolutePath());
 				try {
 					showFiles(file);
-					mainWindow.getSendButton().setEnabled(true);
 					mainWindow.getCompleteButton().setEnabled(true);
 				} catch (IOException e) {
 					handleException(e);
@@ -237,6 +235,7 @@ public class ScrobblerController {
 	}
 
 	class SendListener implements ActionListener {
+		
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
@@ -349,14 +348,12 @@ public class ScrobblerController {
 				public void done() {
 					mainWindow.getLabel().setText(ApplicationState.DONE);
 					mainWindow.getCompleteButton().setEnabled(true);
-					mainWindow.getSendButton().setEnabled(true);
 					mainWindow.getOpenButton().setEnabled(true);
 					mainWindow.getDescriptionTable().setEnabled(true);
 					mainWindow.getCompleteButton().setText(MainWindow.APPLY);
 				}
 			};
 			mainWindow.getCompleteButton().setEnabled(false);
-			mainWindow.getSendButton().setEnabled(false);
 			mainWindow.getOpenButton().setEnabled(false);
 			swingWorker.execute();
 		}

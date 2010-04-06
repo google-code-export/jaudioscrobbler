@@ -3,6 +3,8 @@ package org.lastfm;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import java.net.ConnectException;
 import java.net.UnknownHostException;
@@ -13,6 +15,7 @@ import net.roarsoftware.lastfm.scrobble.ResponseStatus;
 import net.roarsoftware.lastfm.scrobble.Scrobbler;
 import net.roarsoftware.lastfm.scrobble.Source;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.metadata.Metadata;
@@ -36,6 +39,13 @@ public class TestHelperScrobbler extends BaseTestCase{
 	
 	@Mock
 	Metadata metadata;
+	@Mock
+	ScrobblerFactory factory;
+	
+	@Before
+	public void setup(){
+		ApplicationState.userName = "josdem";
+	}
 
 	@Test
 	public void shouldNotAddAScrobblingifTrackSmallerThan240() throws Exception {
@@ -73,7 +83,7 @@ public class TestHelperScrobbler extends BaseTestCase{
 		Scrobbler scrobbler = mock(Scrobbler.class);
 		ResponseStatus responseStatus = mock(ResponseStatus.class);
 
-		ScrobblerFactory factory = mock(ScrobblerFactory.class);
+		
 
 		when(factory.getScrobbler("tst", "1.0", ApplicationState.userName)).thenReturn(scrobbler);
 		when(responseStatus.getStatus()).thenReturn(ResponseStatus.FAILED);
@@ -181,6 +191,12 @@ public class TestHelperScrobbler extends BaseTestCase{
 		
 		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
 	}
+	
+	private void setExpectations() {
+		when(metadata.getAlbum()).thenReturn("");
+		when(metadata.getLength()).thenReturn(1);
+		when(metadata.getTrackNumber()).thenReturn(1);
+	}
 
 	@Test
 	public void shouldCatchUnknownHostExceptionWhenSubmitScrobbler() throws Exception {
@@ -212,10 +228,19 @@ public class TestHelperScrobbler extends BaseTestCase{
 		
 		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
 	}
-	private void setExpectations() {
-		when(metadata.getAlbum()).thenReturn("");
-		when(metadata.getLength()).thenReturn(1);
-		when(metadata.getTrackNumber()).thenReturn(1);
+	
+	@Test
+	public void shouldReturnIfNoLogin() throws Exception {
+		ApplicationState.userName = "";
+		Metadata metadata = mock(Metadata.class);
+		
+		when(metadata.getArtist()).thenReturn("Tiesto");
+		when(metadata.getTitle()).thenReturn("Ten Seconds Before Sunrise");
+		when(metadata.getLength()).thenReturn(300);
+		
+		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata));
+		verify(factory, never()).getScrobbler("tst", "1.0",  ApplicationState.userName);
 	}
+	
 
 }
