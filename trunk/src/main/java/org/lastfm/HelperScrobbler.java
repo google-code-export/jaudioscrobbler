@@ -39,7 +39,6 @@ public class HelperScrobbler {
 	}
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
-		System.err.println("at scrobbling");
 		if(StringUtils.isEmpty(ApplicationState.userName)){
 			return ApplicationState.LOGGED_OUT;
 		}
