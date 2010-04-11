@@ -139,6 +139,7 @@ public class ScrobblerController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			loginWindow.getFrame().setLocationRelativeTo(mainWindow.getFrame());
 			loginWindow.getFrame().setVisible(true);
 		}
 		
