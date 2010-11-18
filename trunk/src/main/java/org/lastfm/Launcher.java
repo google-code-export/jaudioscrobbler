@@ -4,6 +4,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -21,6 +23,7 @@ public class Launcher {
 	HelperScrobbler helperScrobbler;
 	MainWindow mainWindow;
 	LoginWindow loginWindow;
+	private Log log = LogFactory.getLog(Launcher.class);
 
 	public Launcher() {
 		try {
@@ -30,14 +33,14 @@ public class Launcher {
 					break;
 				}
 			}
-		} catch (UnsupportedLookAndFeelException e) {
-			// handle exception
-		} catch (ClassNotFoundException e) {
-			// handle exception
-		} catch (InstantiationException e) {
-			// handle exception
-		} catch (IllegalAccessException e) {
-			// handle exception
+		} catch (UnsupportedLookAndFeelException lfe) {
+			log.error(lfe,lfe);
+		} catch (ClassNotFoundException cne) {
+			log.error(cne,cne);
+		} catch (InstantiationException ine) {
+			log.error(ine,ine);
+		} catch (IllegalAccessException ile) {
+			log.error(ile,ile);
 		}
 		
 		this.applicationContext = getApplicationContext();
