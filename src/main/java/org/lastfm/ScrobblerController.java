@@ -99,6 +99,7 @@ public class ScrobblerController {
 	
 	class DescriptionTableModelListener implements TableModelListener {
 
+		@SuppressWarnings("static-access")
 		@Override
 		public void tableChanged(TableModelEvent e) {
 			if (mainWindow.getCompleteButton().getText().equals(mainWindow.APPLY)
