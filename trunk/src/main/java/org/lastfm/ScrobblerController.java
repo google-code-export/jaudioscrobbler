@@ -25,12 +25,11 @@ import org.jaudiotagger.tag.TagException;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataException;
-import org.lastfm.metadata.MetadataReader;
 import org.lastfm.metadata.MetadataBean;
+import org.lastfm.metadata.MetadataException;
+import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
-import org.lastfm.metadata.MetadataWriter;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -323,7 +322,7 @@ public class ScrobblerController {
 										MetadataBean bean = new MetadataBean();
 										bean.setAlbum(album);
 										bean.setTrackNumber(trackNumber);
-//										bean.setFile(metadata.getFile());
+										bean.setFile(metadata.getFile());
 										bean.setBeanRow(i);
 										metadataBeanList.add(bean);
 									}

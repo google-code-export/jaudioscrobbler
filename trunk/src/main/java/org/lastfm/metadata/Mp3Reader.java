@@ -41,7 +41,7 @@ public class Mp3Reader extends MetadataReader {
 			}
 			tag = audioFile.getTag();
 			header = audioFile.getAudioHeader();
-			return generateMetadata();
+			return generateMetadata(file);
 		}
 		return new Metadata();
 	}
