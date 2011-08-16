@@ -13,6 +13,7 @@ import javax.swing.table.TableModel;
 
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
@@ -41,6 +42,13 @@ public class TestPasswordKeyListener extends BaseTestCase{
 	
 	@Mock
 	private HelperScrobbler helperScrobbler;
+	
+	
+	@Before
+	public void setup() throws Exception {
+		ApplicationState.userName = null;
+		ApplicationState.password = null;
+	}
 	
 	@After
 	public void finalize(){

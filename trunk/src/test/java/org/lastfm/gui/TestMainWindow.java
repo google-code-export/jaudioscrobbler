@@ -23,13 +23,6 @@ public class TestMainWindow {
 
 
 	@Test
-	public void shouldNotEnableSendAndCompleteButton() throws Exception {
-		assertFalse("sendButton should not be enabled", this.mainWindow.getSendButton().isEnabled());
-		assertFalse("completeButton should not be enabled", this.mainWindow.getCompleteButton().isEnabled());
-		assertFalse("descriptionTable should be disabled", this.mainWindow.getDescriptionTable().isEnabled());
-	}
-	
-	@Test
 	public void shouldVerifyKeyStrokeActionWasRegistered() throws Exception {
 		assertEquals(2, mainWindow.inputMap.size());
 		assertEquals(2, mainWindow.openButton.getActionMap().size());
