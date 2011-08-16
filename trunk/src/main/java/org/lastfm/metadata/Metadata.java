@@ -1,59 +1,65 @@
 package org.lastfm.metadata;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.awt.image.BufferedImage;
 
-import org.apache.log4j.PropertyConfigurator;
-
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- *
- */
-
-public abstract class Metadata {
+public class Metadata {
+	private String title;
+	private String artist;
+	private String album;
+	private String genre;
+	private int trackNumber;
+	private BufferedImage artwork;
+	private int length;
+	private int bitRate;
 	
-	private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger("org.lastfm");
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getArtist() {
+		return artist;
+	}
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+	public String getAlbum() {
+		return album;
+	}
+	public void setAlbum(String album) {
+		this.album = album;
+	}
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	public int getTrackNumber() {
+		return trackNumber;
+	}
+	public void setTrackNumber(int trackNumber) {
+		this.trackNumber = trackNumber;
+	}
+	public BufferedImage getArtwork() {
+		return artwork;
+	}
+	public void setArtwork(BufferedImage artwork) {
+		this.artwork = artwork;
+	}
+	public void setLenght(int length) {
+		this.length = length;
+	}
 	
-	public Metadata() throws FileNotFoundException, IOException {
-		Properties properties = new Properties();
-		File file = new File("src/main/resources/log4j.properties");
-		if(!file.exists()){
-			file = new File("log4j.properties");
-		} 
-		properties.load(new FileInputStream(file));
-		PropertyConfigurator.configure(properties);
-		
-		turnOffLogMessages();
+	public int getLength() {
+		return length;
 	}
-
-	public org.apache.log4j.Logger getLog(){
-		return log;
+	public void setBitRate(int bitRate) {
+		this.bitRate = bitRate;
 	}
-
-	protected void turnOffLogMessages() {
-		Handler[] handlers = Logger.getLogger("").getHandlers();
-		for (int index = 0; index < handlers.length; index++) {
-			handlers[index].setLevel(Level.OFF);
-		}
+	
+	public int getBitRate() {
+		return bitRate;
 	}
-	public abstract File getFile();
-
-	public abstract String getArtist();
-
-	public abstract String getTitle();
-
-	public abstract String getAlbum();
-
-	public abstract int getLength();
-
-	public abstract int getTrackNumber();
-
-
 }

@@ -1,6 +1,7 @@
 package org.lastfm.metadata;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
@@ -8,10 +9,13 @@ import java.io.File;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
+import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.BaseTestCase;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * 
@@ -19,87 +23,98 @@ import org.mockito.Mock;
  *
  */
 
-public class TestMetadataMp4 extends BaseTestCase{
+public class TestMp4Reader{
+	@InjectMocks
+	private Mp4Reader reader = new Mp4Reader();
+	@Mock
+	private File file;
+	@Mock
+	private Mp4Tag tag;
+	@Mock
+	private AudioFile audioFile;
+	@Mock
+	private AudioHeader header;
+	@Mock
+	private Artwork artwork;
+	@Mock
+	private AudioFileHelper audioFileHelper;
 	
-	@Mock
-	File file;
-	@Mock
-	Mp4Tag tag;
-	@Mock
-	AudioFile audioFile;
-	@Mock
-	AudioHeader header;
-
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+		when(audioFileHelper.getAudioFile(file)).thenReturn(audioFile);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(header.getBitRate()).thenReturn("64");
+	}
+	
 	@Test
 	public void shouldGetAlbum() throws Exception {
 		String album = "Simple Pleasures";
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(this.file, this.audioFile);
 		assertEquals(album, metadata.getAlbum());
+	}
+	
+	@Test
+	public void shouldGetGenre() throws Exception {
+		String genre = "Minimal Techno";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(genre, metadata.getGenre());
 	}
 	
 	@Test
 	public void shouldGetArtist() throws Exception {
 		String artist = "Ferry Corsten";
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(artist, metadata.getArtist());
 	}
 	
 	@Test
 	public void shouldGetLength() throws Exception {
 		int length = 325;
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(header.getTrackLength()).thenReturn(length);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(length, metadata.getLength());
 	}
 	
 	@Test
 	public void shouldGetTitle() throws Exception {
 		String title = "A Magical Moment";
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(title, metadata.getTitle());
 	}
-	
+
 	@Test
 	public void shouldGetTrackNumber() throws Exception {
 		String trackNumber = "11";
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(11, metadata.getTrackNumber());
 	}
 	
 	@Test
 	public void shouldGetNotTrackNumber() throws Exception {
 		String trackNumber = "";
-
-		when(audioFile.getTag()).thenReturn(tag);
-		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		Metadata metadata = reader.getMetadata(file);
 		
-		Metadata metadata = new MetadataMp4(file, audioFile);
 		assertEquals(-1, metadata.getTrackNumber());
 	}
-	
+
+	@Test
+	public void shouldGetArtwork() throws Exception {
+		reader.getMetadata(file);
+		verify(artwork).getImage();
+	}
 }
