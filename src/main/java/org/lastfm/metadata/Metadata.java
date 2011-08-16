@@ -1,6 +1,7 @@
 package org.lastfm.metadata;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Metadata {
 	private String title;
@@ -11,7 +12,11 @@ public class Metadata {
 	private BufferedImage artwork;
 	private int length;
 	private int bitRate;
+	private File file;
 	
+	public File getFile() {
+		return file;
+	}
 	public String getTitle() {
 		return title;
 	}
@@ -61,5 +66,8 @@ public class Metadata {
 	
 	public int getBitRate() {
 		return bitRate;
+	}
+	public void setFile(File file) {
+		this.file = file;
 	}
 }

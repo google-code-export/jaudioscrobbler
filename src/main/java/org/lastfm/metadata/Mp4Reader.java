@@ -22,6 +22,6 @@ private AudioFileHelper audioFileHelper = new AudioFileHelper();
 		AudioFile audioFile = audioFileHelper.getAudioFile(file);
 		tag = (Mp4Tag)audioFile.getTag();	
 		header = audioFile.getAudioHeader();
-		return generateMetadata();
+		return generateMetadata(file);
 	}
 }

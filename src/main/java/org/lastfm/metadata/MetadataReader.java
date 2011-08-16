@@ -2,17 +2,13 @@ package org.lastfm.metadata;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.log4j.PropertyConfigurator;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
@@ -27,6 +23,7 @@ public abstract class MetadataReader {
 	protected Tag tag;
 	protected AudioHeader header;
 	protected Log log = LogFactory.getLog(this.getClass());
+	private File file;
 	
 	public MetadataReader() { 
 		turnOffLogMessages();
@@ -83,7 +80,8 @@ public abstract class MetadataReader {
 		return artwork==null ? null: artwork.getImage();
 	}
 	
-	protected Metadata generateMetadata() throws IOException, MetadataException {
+	protected Metadata generateMetadata(File file) throws IOException, MetadataException {
+		this.file = file;
 		Metadata metadata = new Metadata();
 		metadata.setArtwork(getArtwork());
 		metadata.setTitle(getTitle());
@@ -93,6 +91,7 @@ public abstract class MetadataReader {
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setBitRate(getBitRate());
+		metadata.setFile(file);
 		return metadata;
 	}
 }
