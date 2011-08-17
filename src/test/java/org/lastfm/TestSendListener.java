@@ -15,6 +15,7 @@ import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * 
@@ -22,7 +23,7 @@ import org.mockito.Mock;
  *
  */
 
-public class TestSendListener extends BaseTestCase{
+public class TestSendListener {
 	
 	private ScrobblerController controller;
 	private List<Metadata> metadataList;
@@ -38,6 +39,7 @@ public class TestSendListener extends BaseTestCase{
 	
 	@Before
 	public void setup(){
+		MockitoAnnotations.initMocks(this);
 		mainWindow = new MainWindow();
 	}
 	

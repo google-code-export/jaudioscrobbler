@@ -26,16 +26,6 @@ public class MetadataWriter {
 	private Tag tag;
 	private AudioFile audioFile;
 	private String trackNumber;
-	private String artist;
-	private String trackName;
-
-	public MetadataWriter() {
-	}
-
-	public MetadataWriter(File file, AudioFile audioFile) {
-		this.audioFile = audioFile;
-		tag = audioFile.getTag();
-	}
 
 	public void setFile(File file) {
 		try {
@@ -56,7 +46,6 @@ public class MetadataWriter {
 
 	
 	public void writeArtist(String artist) {
-		this.artist = artist;
 		try {
 			tag.setField(FieldKey.ARTIST, artist);
 			audioFile.commit();
@@ -70,7 +59,6 @@ public class MetadataWriter {
 	}
 	
 	public void writeTrackName(String trackName) {
-		this.trackName = trackName;
 		try {
 			tag.setField(FieldKey.TITLE, trackName);
 			audioFile.commit();

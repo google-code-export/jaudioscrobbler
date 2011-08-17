@@ -23,6 +23,7 @@ import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * 
@@ -31,7 +32,7 @@ import org.mockito.Mock;
  */
 
 //TODO: Inject Spring
-public class TestOpenListener extends BaseTestCase{
+public class TestOpenListener {
 	private static final String MY_ROOT_PATH = "MyRootPath";
 	private ScrobblerController controller;
 	private File root;
@@ -49,6 +50,7 @@ public class TestOpenListener extends BaseTestCase{
 
 	@Before
 	public void initialize() {
+		MockitoAnnotations.initMocks(this);
 		metadataList = new ArrayList<Metadata>();
 		
 		root = mock(File.class);

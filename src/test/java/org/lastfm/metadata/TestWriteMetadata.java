@@ -4,28 +4,24 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.File;
-
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.BaseTestCase;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
  */
 
 
-public class TestWriteMetadata extends BaseTestCase{
-	MetadataWriter metadataWriter;
+public class TestWriteMetadata {
+	@InjectMocks
+	MetadataWriter metadataWriter = new MetadataWriter();
 	
-	@Mock
-	private File file;
 	@Mock
 	private AudioFile audioFile;
 	@Mock
@@ -33,8 +29,8 @@ public class TestWriteMetadata extends BaseTestCase{
 	
 	@Before
 	public void initialize() {
+		MockitoAnnotations.initMocks(this);
 		when(audioFile.getTag()).thenReturn(tag);
-		metadataWriter = new MetadataWriter(this.file, this.audioFile);
 	}
 	
 	@Test
