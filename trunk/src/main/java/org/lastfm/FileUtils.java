@@ -28,7 +28,7 @@ public class FileUtils {
 	private void scan(File root) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
 		String[] listFiles = root.list();
 		for(int i=0; i<listFiles.length; i++){
-			File file = new File(root.getAbsolutePath() + "\\" + listFiles[i]);
+			File file = new File(root.getAbsolutePath() + File.pathSeparator + listFiles[i]);
 			if(file.isDirectory()){
 				scan(file);
 			} else{
