@@ -1,11 +1,9 @@
 package org.lastfm;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import net.roarsoftware.lastfm.scrobble.ResponseStatus;
@@ -17,26 +15,16 @@ import org.apache.log4j.Logger;
 import org.lastfm.metadata.Metadata;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
+ * @understands A class who knows how to send scrobblings
  */
 
 public class HelperScrobbler {
+	private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
+	private ScrobblerFactory factory = new ScrobblerFactory();
 	private static final int DELTA = 120;
 
-	Map<Metadata, Long> metadataMap;
-
-	@SuppressWarnings("unused")
-	private List<File> fileList;
-	ScrobblerFactory factory;
-
 	private Logger log = Logger.getLogger("org.lastfm");
-
-	public HelperScrobbler() {
-		metadataMap = new HashMap<Metadata, Long>();
-		factory = new ScrobblerFactory();
-	}
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		if(StringUtils.isEmpty(ApplicationState.userName)){
@@ -77,7 +65,7 @@ public class HelperScrobbler {
 		int result = ApplicationState.FAILURE;
 		long time = (System.currentTimeMillis() / 1000);
 
-		// According to Submission rules http://www.last.fm/api/submissions
+		// According to submission rules http://www.last.fm/api/submissions
 		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())
 				&& metadata.getLength() > 240) {
 			long startTime = time - (metadataMap.size() * DELTA);

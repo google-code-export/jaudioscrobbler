@@ -22,9 +22,7 @@ import org.lastfm.gui.MainWindow;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
  */
 
 public class TestLauncher {
