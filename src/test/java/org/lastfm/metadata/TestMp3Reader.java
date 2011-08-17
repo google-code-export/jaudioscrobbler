@@ -48,7 +48,7 @@ public class TestMp3Reader{
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(audioFileHelper.getAudioFile(file)).thenReturn(audioFile);
+		when(audioFileHelper.read(file)).thenReturn(audioFile);
 		when(audioFile.getTag()).thenReturn(tag);
 		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(tag.getFirstArtwork()).thenReturn(artwork);

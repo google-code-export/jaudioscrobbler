@@ -26,7 +26,7 @@ public class Mp3Reader extends MetadataReader {
 
 	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException,
 			ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-		audioFile = audioFileHelper.getAudioFile(file);
+		audioFile = audioFileHelper.read(file);
 		if (audioFile instanceof MP3File) {
 			MP3File audioMP3 = (MP3File) audioFile;
 			if (!audioMP3.hasID3v2Tag()) {

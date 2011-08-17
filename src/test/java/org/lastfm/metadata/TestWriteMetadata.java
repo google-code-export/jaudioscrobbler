@@ -1,8 +1,9 @@
 package org.lastfm.metadata;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.io.File;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
@@ -26,11 +27,41 @@ public class TestWriteMetadata {
 	private AudioFile audioFile;
 	@Mock
 	private Tag tag;
+	@Mock
+	private File file;
+	@Mock
+	private AudioFileHelper audioFileHelper;
 	
 	@Before
 	public void initialize() {
 		MockitoAnnotations.initMocks(this);
 		when(audioFile.getTag()).thenReturn(tag);
+	}
+	
+	@Test
+	public void shouldSetFile() throws Exception {
+		when(audioFileHelper.read(file)).thenReturn(audioFile);
+		metadataWriter.setFile(file);
+		
+		verify(audioFile).getTag();
+	}
+	
+	@Test
+	public void shouldWriteArtist() throws Exception {
+		String artist = "Markus Schulz";
+		metadataWriter.writeArtist(artist);
+		
+		verify(tag).setField(FieldKey.ARTIST, artist);
+		verify(audioFile).commit();
+	}
+	
+	@Test
+	public void shouldWriteTrackName() throws Exception {
+		String trackName = "Nowhere";
+		metadataWriter.writeTrackName(trackName);
+		
+		verify(tag).setField(FieldKey.TITLE, trackName);
+		verify(audioFile).commit();
 	}
 	
 	@Test
@@ -40,7 +71,6 @@ public class TestWriteMetadata {
 
 		verify(tag).setField(FieldKey.ALBUM, album);
 		verify(audioFile).commit();
-		assertEquals(album, metadataWriter.getAlbum());
 	}
 	
 	@Test
@@ -49,6 +79,5 @@ public class TestWriteMetadata {
 		
 		metadataWriter.writeTrackNumber(trackNumber);
 		verify(audioFile).commit();
-		assertEquals(trackNumber, metadataWriter.getTrackNumber());
 	}
 }

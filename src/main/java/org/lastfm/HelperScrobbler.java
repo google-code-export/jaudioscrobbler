@@ -42,7 +42,7 @@ public class HelperScrobbler {
 		if(StringUtils.isEmpty(ApplicationState.userName)){
 			return ApplicationState.LOGGED_OUT;
 		}
-		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", ApplicationState.userName);
+		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.userName);
 		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
 
 		if (status.getStatus() == ResponseStatus.OK) {

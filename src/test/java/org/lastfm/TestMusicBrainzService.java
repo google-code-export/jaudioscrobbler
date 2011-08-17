@@ -1,61 +1,72 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
  */
 
 public class TestMusicBrainzService {
+	@InjectMocks
+	MusicBrainzService service = new MusicBrainzService();
+	
+	@Mock
+	private TrackService trackService;
+	
+	String artistName = "";
+	String trackName = "";
+
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+	}
 	
 	@Test
 	public void shouldNotGetAlbumIfNoArtistOrTrackName() throws Exception {
-		String artistName = "";
-		String trackName = "";
-		MusicBrainzService service = new MusicBrainzService();
 		assertEquals("", service.getAlbum(artistName, trackName));
-		
+		verify(trackService, never()).getAlbum(artistName, trackName);
+	}
+	
+	@Test
+	public void shouldNotGetAlbumIfNoArtist() throws Exception {
 		artistName = "Tiesto";
 		assertEquals("", service.getAlbum(artistName, trackName));
-		
-		artistName = "";
+		verify(trackService, never()).getAlbum(artistName, trackName);
+	}
+	
+	@Test
+	public void shouldNotGetAlbumIfNoTrackname() throws Exception {
 		trackName = "Here on Earth";
 		assertEquals("", service.getAlbum(artistName, trackName));
+		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
 	@Test
 	public void shouldGetAlbum() throws Exception {
-		String artistName = "Deadmau5";
-		String trackName = "Faxing Berlin";
-		
-		MusicBrainzService service = new MusicBrainzService();
-
-		TrackService trackService = mock(TrackService.class);
+		artistName = "Deadmau5";
+		trackName = "Faxing Berlin";
 		when(trackService.getAlbum(artistName, trackName)).thenReturn("Some Kind Of Blue");
 		
-		service.setTrackService(trackService);
 		assertEquals("Some Kind Of Blue", service.getAlbum(artistName, trackName));
 	}
 	
 	@Test
 	public void shouldReturnTrackNumber() throws Exception {
-		String artistName = "Above & Beyond";
-		String trackName = "Anjunabeach";
+		artistName = "Above & Beyond";
+		trackName = "Anjunabeach";
 		String album = "Anjunabeach";
 		
-		MusicBrainzService service = new MusicBrainzService();
-		
-		TrackService trackService = mock(TrackService.class);
 		when(trackService.getAlbum(artistName, trackName)).thenReturn(album);
 		when(trackService.getTrackNumber(album)).thenReturn(12);
-		
-		service.setTrackService(trackService);
 		
 		assertEquals(album, service.getAlbum(artistName, trackName));
 		assertEquals(12, service.getTrackNumber(album));
