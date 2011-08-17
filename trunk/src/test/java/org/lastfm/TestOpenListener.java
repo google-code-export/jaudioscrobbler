@@ -31,7 +31,6 @@ import org.mockito.MockitoAnnotations;
  *
  */
 
-//TODO: Inject Spring
 public class TestOpenListener {
 	private static final String MY_ROOT_PATH = "MyRootPath";
 	private ScrobblerController controller;

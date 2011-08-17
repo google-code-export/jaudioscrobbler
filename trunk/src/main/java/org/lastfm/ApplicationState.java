@@ -27,4 +27,7 @@ public class ApplicationState {
 	public static final int TRACK_NUMBER_COLUMN = 3;
 	public static final int STATUS_COLUMN = 5;
 	public static final int LOGGED_OUT = 0;
+	
+	public static final String CLIENT_SCROBBLER_ID = "tst"; 
+	public static final String CLIENT_SCROBBLER_VERSION = "1.0"; 
 }

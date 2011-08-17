@@ -5,19 +5,13 @@ import org.apache.commons.lang.StringUtils;
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
+ * @understands A class who knows how to get Album and track number using Music Brainz 
  */
 
 public class MusicBrainzService {
+	private TrackService trackService = new TrackService();
 
-	private TrackService trackService;
-
-	public MusicBrainzService() {
-		trackService = new TrackService();
-	}
-	
 	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {
 		if(StringUtils.isEmpty(artistName) || StringUtils.isEmpty(trackName)){
 			return "";
@@ -26,13 +20,8 @@ public class MusicBrainzService {
 		}
 	}
 
-	public void setTrackService(TrackService trackService) {
-		this.trackService = trackService;
-	}
-
 	public int getTrackNumber(String album) {
 		return trackService.getTrackNumber(album);
 	}
-
 
 }

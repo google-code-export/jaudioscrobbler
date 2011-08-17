@@ -1,39 +1,40 @@
 package org.lastfm;
 
 import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+
 import net.roarsoftware.lastfm.scrobble.ResponseStatus;
 import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
  */
 
 public class TestLoginController {
+	@InjectMocks
+	LoginController controller = new LoginController();
 
 	@Mock
-	Scrobbler scrobbler;
+	private Scrobbler scrobbler;
 	@Mock
-	ScrobblerFactory factory;
-	
-	ResponseStatus status;
-	LoginController controller;
+	private ScrobblerFactory factory;
+	@Mock
+	private ResponseStatus status;
 	
 	int result;
 	
 	@Before
 	public void initialize(){
 		MockitoAnnotations.initMocks(this);
-		controller = new LoginController();
-		controller.factory = factory;
 	}
 	
 	@Test
@@ -41,9 +42,9 @@ public class TestLoginController {
 		String username = "josdem";
 		String password = "validPassword";
 		
-		status = new ResponseStatus(0);
-		when(factory.getScrobbler(anyString(), anyString(), anyString())).thenReturn(scrobbler);
+		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username)).thenReturn(scrobbler);
 		when(scrobbler.handshake(password)).thenReturn(status);
+		when(status.getStatus()).thenReturn(ResponseStatus.OK);
 		
 		result = controller.login(username, password);
 		
@@ -58,6 +59,14 @@ public class TestLoginController {
 		result = controller.login(username, password);
 		
 		assertEquals(ApplicationState.ERROR, result);
+		
+		notToCallScrobblerServicesAssertion(username, password);
+	}
+
+	private void notToCallScrobblerServicesAssertion(String username, String password) throws IOException {
+		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username);
+		verify(scrobbler, never()).handshake(password);
+		verify(status, never()).getStatus();
 	}
 	
 	@Test
@@ -68,6 +77,7 @@ public class TestLoginController {
 		result = controller.login(username, password);
 		
 		assertEquals(ApplicationState.ERROR, result);
+		notToCallScrobblerServicesAssertion(username, password);
 	}
 	
 	@Test
@@ -78,6 +88,7 @@ public class TestLoginController {
 		result = controller.login(username, password);
 		
 		assertEquals(ApplicationState.ERROR, result);
+		notToCallScrobblerServicesAssertion(username, password);
 	}
 	
 	@Test
@@ -85,9 +96,9 @@ public class TestLoginController {
 		String username = "josdem";
 		String password = "invalidPassword";
 		
-		status = new ResponseStatus(2);
 		when(factory.getScrobbler(anyString(), anyString(), anyString())).thenReturn(scrobbler);
 		when(scrobbler.handshake(password)).thenReturn(status);
+		when(status.getStatus()).thenReturn(ResponseStatus.BADAUTH);
 		
 		result = controller.login(username, password);
 		

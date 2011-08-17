@@ -14,17 +14,13 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
  */
 
 public class LoginController {
-	ScrobblerFactory factory;
+	private ScrobblerFactory factory = new ScrobblerFactory();
 	
-	public LoginController() {
-		factory = new ScrobblerFactory();
-	}
-
 	public int login(String username, String password) throws IOException {
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
 			return ApplicationState.ERROR;
 		}
-		Scrobbler scrobbler = factory.getScrobbler("tst", "1.0", username);
+		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username);
 		ResponseStatus status = scrobbler.handshake(password);
 		return status.getStatus();
 	}
