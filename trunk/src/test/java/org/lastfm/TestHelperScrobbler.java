@@ -20,6 +20,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.lastfm.metadata.Metadata;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -32,7 +33,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestHelperScrobbler extends BaseTestCase{
+public class TestHelperScrobbler {
 	
 	@Autowired
 	private HelperScrobbler helperScrobbler;
@@ -44,6 +45,7 @@ public class TestHelperScrobbler extends BaseTestCase{
 	
 	@Before
 	public void setup(){
+		MockitoAnnotations.initMocks(this);
 		ApplicationState.userName = "josdem";
 	}
 

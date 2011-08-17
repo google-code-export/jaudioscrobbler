@@ -7,6 +7,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 import static org.mockito.Mockito.*;
 
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
  *
  */
 
-public class TestLoginController extends BaseTestCase{
+public class TestLoginController {
 
 	@Mock
 	Scrobbler scrobbler;
@@ -30,6 +31,7 @@ public class TestLoginController extends BaseTestCase{
 	
 	@Before
 	public void initialize(){
+		MockitoAnnotations.initMocks(this);
 		controller = new LoginController();
 		controller.factory = factory;
 	}

@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestScrobblerController extends BaseTestCase{
+public class TestScrobblerController {
 
 	@Autowired
 	private MainWindow mainWindow;

@@ -19,6 +19,7 @@ import org.junit.runner.RunWith;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -33,7 +34,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
-public class TestPasswordKeyListener extends BaseTestCase{
+public class TestPasswordKeyListener{
 	
 	private FrameFixture window;
 
@@ -46,6 +47,7 @@ public class TestPasswordKeyListener extends BaseTestCase{
 	
 	@Before
 	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
 		ApplicationState.userName = null;
 		ApplicationState.password = null;
 	}

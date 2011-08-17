@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * 
@@ -25,7 +26,7 @@ import org.mockito.Mock;
  *
  */
 
-public class TestLoginListener extends BaseTestCase{
+public class TestLoginListener {
 	private JLabel label;
 	private ScrobblerController controller;
 
@@ -38,6 +39,7 @@ public class TestLoginListener extends BaseTestCase{
 	
 	@Before
 	public void initialize(){
+		MockitoAnnotations.initMocks(this);
 		JTable table = mock(JTable.class);
 		TableModel model = mock(TableModel.class);
 		when(mainWindow.getDescriptionTable()).thenReturn(table);
