@@ -41,19 +41,20 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 public class ScrobblerController {
 	private HelperScrobbler helperScrobbler;
-	final MainWindow mainWindow;
+	MainWindow mainWindow;
 	List<Metadata> metadataList;
 	LoginWindow loginWindow;
-	LoginController loginController;
 	JFileChooser fileChooser;
 	FileUtils fileUtils;
 	MusicBrainzService service;
 	MetadataWriter metadataWriter;
 	List<MetadataBean> metadataBeanList;
 	List<File> fileList;
+	LoginController loginController = new LoginController();;
 	private Logger log = Logger.getLogger(this.getClass());
 
-	public ScrobblerController(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
+	
+	public void initialize(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
 		this.helperScrobbler = helperScrobbler;
 		this.mainWindow = mainWindow;
 		this.loginWindow = loginWindow;
@@ -79,9 +80,6 @@ public class ScrobblerController {
 		String username = loginWindow.getUsername().getText();
 		String password = loginWindow.getPassword().getText();
 
-		if (loginController == null) {
-			loginController = new LoginController();
-		}
 		try {
 			result = loginController.login(username, password);
 			if (result == ApplicationState.OK) {

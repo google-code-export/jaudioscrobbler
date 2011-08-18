@@ -52,7 +52,8 @@ public class TestDescriptionTableModelListener {
 		
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getCompleteButton().setText(MainWindow.APPLY);
-		ScrobblerController controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
+		ScrobblerController controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 		
 		controller.metadataBeanList = metadataBeanList;
 		controller.fileList = fileList;
