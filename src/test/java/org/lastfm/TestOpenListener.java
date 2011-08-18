@@ -58,7 +58,8 @@ public class TestOpenListener {
 
 		fileList = new ArrayList<File>();
 
-		controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
+		controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 	}
 
 	@Test

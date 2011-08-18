@@ -51,7 +51,8 @@ public class TestSendListener {
 	@Test
 	public void shouldUpdateProgressBar() throws Exception {
 		metadataList = new ArrayList<Metadata>();
-		controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
+		controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 		
 		metadataList.add(metadata);
 		

@@ -82,7 +82,8 @@ public class TestPasswordKeyListener{
 		assertEquals(null, ApplicationState.password);
 		
 		
-		ScrobblerController controller = new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		ScrobblerController controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 		controller.loginController = loginController;
 		
 		window = new FrameFixture(loginWindow.getFrame());

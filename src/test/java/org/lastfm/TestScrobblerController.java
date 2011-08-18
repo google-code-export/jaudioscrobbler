@@ -1,48 +1,60 @@
 package org.lastfm;
 
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
-import org.fest.swing.fixture.FrameFixture;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JTextField;
+import javax.swing.table.TableModel;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.lastfm.ScrobblerController.LoginListener;
+import org.lastfm.gui.DescriptionTable;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.MockitoAnnotations;
 
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- * 
- */
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "/spring/applicationContext.xml"} )
 public class TestScrobblerController {
-
-	@Autowired
-	private MainWindow mainWindow;
-	@Autowired
-	private LoginWindow loginWindow;
+	@InjectMocks
+	private ScrobblerController controller = new ScrobblerController();
 	
 	@Mock
 	private HelperScrobbler helperScrobbler;
+	@Captor
+	private ArgumentCaptor<ActionEvent> event;
+	@Mock
+	public JTextField userNameTextField;
+	@Mock
+	private MainWindow mainWindow;
+	@Mock
+	private LoginWindow loginWindow;
+	@Mock
+	private DescriptionTable descriptionTable;
+	@Mock
+	private TableModel tableModel;
+
 	
-	@Test
-	public void shouldVerifyMainWindowIsEnableByDefault() throws Exception {
-		new ScrobblerController(this.helperScrobbler, mainWindow, loginWindow);
-		assertTrue(mainWindow.getFrame().isEnabled());
-	}
-	
-	@Test
-	public void shouldClickOnLoginLastFM() throws Exception {
-		FrameFixture window = new FrameFixture(mainWindow.getFrame());
-		window.show();
-		window.menuItem("loginMenuItem").click();
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
 		
-		assertTrue(this.loginWindow.getFrame().isVisible());
-		window.cleanUp();
+		when(descriptionTable.getModel()).thenReturn(tableModel);
+		when(mainWindow.getDescriptionTable()).thenReturn(descriptionTable);
+		
+		
+		controller.initialize(helperScrobbler, mainWindow, loginWindow);
 	}
+	
+	@Test
+	public void shouldLogin() throws Exception {
+		LoginListener loginListener = controller.new LoginListener();
+//		loginListener.actionPerformed(event.capture());
+	}
+	
 }

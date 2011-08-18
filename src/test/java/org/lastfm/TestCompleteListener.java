@@ -54,7 +54,8 @@ public class TestCompleteListener {
 
 		metadataList = new ArrayList<Metadata>();
 
-		controller = new ScrobblerController(this.helperScrobbler, mainWindow, this.loginWindow);
+		controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 		mainWindow.getCompleteButton().setEnabled(true);
 	}
 	

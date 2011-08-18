@@ -45,7 +45,7 @@ public class Launcher {
 		mainWindow = applicationContext.getBean(MainWindow.class);
 		loginWindow = applicationContext.getBean(LoginWindow.class);
 		
-		new ScrobblerController(helperScrobbler, mainWindow, loginWindow);
+		new ScrobblerController().initialize(helperScrobbler, mainWindow, loginWindow);
 	}
 	
 	public static void main(String[] args) {

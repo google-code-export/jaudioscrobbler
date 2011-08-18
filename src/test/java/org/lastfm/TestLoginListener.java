@@ -48,7 +48,8 @@ public class TestLoginListener {
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		loginWindow.getFrame().setVisible(true);
-		controller = new ScrobblerController(this.helperScrobbler, this.mainWindow, loginWindow);
+		controller = new ScrobblerController();
+		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 	}
 	
 	@Test
