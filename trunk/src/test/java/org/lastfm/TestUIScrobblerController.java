@@ -32,7 +32,6 @@ public class TestUIScrobblerController {
 	
 	@Test
 	public void shouldVerifyMainWindowIsEnableByDefault() throws Exception {
-		new ScrobblerController().initialize(this.helperScrobbler, mainWindow, loginWindow);
 		assertTrue(mainWindow.getFrame().isEnabled());
 	}
 	

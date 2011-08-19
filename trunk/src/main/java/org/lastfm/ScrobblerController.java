@@ -22,6 +22,8 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.lastfm.action.Actions;
+import org.lastfm.action.control.ActionMethod;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
@@ -30,6 +32,8 @@ import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -39,42 +43,52 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
  * 
  */
 
+@Controller
 public class ScrobblerController {
+	@Autowired
 	private HelperScrobbler helperScrobbler;
-	MainWindow mainWindow;
+	@Autowired
+	private MainWindow mainWindow;
+	@Autowired
+	private LoginWindow loginWindow;
+	
 	List<Metadata> metadataList;
-	LoginWindow loginWindow;
 	JFileChooser fileChooser;
 	FileUtils fileUtils;
 	MusicBrainzService service;
-	MetadataWriter metadataWriter;
-	List<MetadataBean> metadataBeanList;
+	MetadataWriter metadataWriter = new MetadataWriter();
+	List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
 	List<File> fileList;
 	LoginController loginController = new LoginController();;
 	private Logger log = Logger.getLogger(this.getClass());
-
 	
-	public void initialize(HelperScrobbler helperScrobbler, MainWindow mainWindow, LoginWindow loginWindow) {
+	@Autowired
+	public void setAddHelperScrobbler(HelperScrobbler helperScrobbler) {
 		this.helperScrobbler = helperScrobbler;
+	}
+	
+	@Autowired
+	public void setAddMainWindow(MainWindow mainWindow) {
 		this.mainWindow = mainWindow;
-		this.loginWindow = loginWindow;
 		this.mainWindow.addOpenListener(new OpenListener());
 		this.mainWindow.addSendListener(new SendListener());
 		this.mainWindow.addCompleteListener(new CompleteListener());
 		this.mainWindow.addLastFMLoginListener(new LastFMLoginListener());
-		this.loginWindow.addLoginListener(new LoginListener());
-		this.loginWindow.addKeyListener(new PasswordKeyListener());
 		this.mainWindow.getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
-
-		this.metadataWriter = new MetadataWriter();
-		this.metadataBeanList = new ArrayList<MetadataBean>();
 	}
-
+	
+	@Autowired
+	public void setAddLoginWindow(LoginWindow loginWindow) {
+		this.loginWindow = loginWindow;
+		this.loginWindow.addKeyListener(new PasswordKeyListener());
+	}
+	
 	private void updateStatus(final int i, int size) {
 		int progress = ((i + 1) * 100) / size;
 		mainWindow.getProgressBar().setValue(progress);
 	};
 
+	@ActionMethod(Actions.LOGIN_ID)
 	private void login() {
 		int result = -1;
 		String username = loginWindow.getUsername().getText();
@@ -362,10 +376,4 @@ public class ScrobblerController {
 		}
 	}
 
-	public class LoginListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			login();
-		}
-	}
 }

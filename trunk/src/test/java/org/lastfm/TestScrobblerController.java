@@ -9,7 +9,6 @@ import javax.swing.table.TableModel;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ScrobblerController.LoginListener;
 import org.lastfm.gui.DescriptionTable;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
@@ -48,13 +47,10 @@ public class TestScrobblerController {
 		when(mainWindow.getDescriptionTable()).thenReturn(descriptionTable);
 		
 		
-		controller.initialize(helperScrobbler, mainWindow, loginWindow);
 	}
 	
 	@Test
 	public void shouldLogin() throws Exception {
-		LoginListener loginListener = controller.new LoginListener();
-//		loginListener.actionPerformed(event.capture());
 	}
 	
 }

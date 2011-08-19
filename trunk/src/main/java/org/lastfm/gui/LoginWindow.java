@@ -1,6 +1,7 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
 
@@ -10,10 +11,17 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.lastfm.ApplicationConextFactory;
+import org.lastfm.action.Actions;
+import org.lastfm.action.control.DefaultEngine;
+import org.lastfm.action.control.ViewEngineConfigurator;
+import org.springframework.context.ConfigurableApplicationContext;
+
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
+ * @understands UI components for logging window
  */
 
 public class LoginWindow {
@@ -21,6 +29,9 @@ public class LoginWindow {
 	public JTextField userName;
 	public JTextField password;
 	JFrame frame;
+	private Log log = LogFactory.getLog(this.getClass());
+	
+	private ViewEngineConfigurator configurator;
 	
 	public LoginWindow() {
 		doLayout();
@@ -47,6 +58,20 @@ public class LoginWindow {
 		
 		frame.add(panel);
 		frame.setVisible(false);
+		
+		sendButton.addActionListener(new ActionListener() {
+			
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				log.info("Sending Login message");
+				ConfigurableApplicationContext context = ApplicationConextFactory.getApplicationContext();
+				configurator = context.getBean(ViewEngineConfigurator.class);
+				DefaultEngine defaultEngine = context.getBean(DefaultEngine.class);
+				defaultEngine.start();
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, userName.getText() + "|" + password.getText());
+			}
+		});
 	}
 	
 	public void addLoginListener(ActionListener loginListener){
