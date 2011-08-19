@@ -48,15 +48,17 @@ public class ScrobblerController {
 	private MainWindow mainWindow;
 	private LoginWindow loginWindow;
 	
-	List<Metadata> metadataList;
-	JFileChooser fileChooser;
-	FileUtils fileUtils;
-	MusicBrainzService service;
-	MetadataWriter metadataWriter = new MetadataWriter();
-	List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
-	List<File> fileList;
-	LoginController loginController = new LoginController();;
+	private JFileChooser fileChooser;
+	private FileUtils fileUtils;
+	private MetadataWriter metadataWriter = new MetadataWriter();
+	private List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
+	private List<File> fileList;
 	private Logger log = Logger.getLogger(this.getClass());
+	
+	//TODO Change this awful code in order to respect encapsulation
+	LoginController loginController = new LoginController();;
+	List<Metadata> metadataList;
+	MusicBrainzService service;
 	
 	@Autowired
 	public void setAddHelperScrobbler(HelperScrobbler helperScrobbler) {
