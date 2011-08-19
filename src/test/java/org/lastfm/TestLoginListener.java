@@ -49,31 +49,8 @@ public class TestLoginListener {
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		loginWindow.getFrame().setVisible(true);
 		controller = new ScrobblerController();
-		controller.initialize(this.helperScrobbler, mainWindow, this.loginWindow);
 	}
 	
-	@Test
-	public void shouldFailLogin() throws Exception {
-		loginWindow.getSendButton().doClick();
-		
-		verify(label).setText(ApplicationState.LOGIN_FAIL);
-	}
-	
-	@Test
-	public void shouldLogin() throws Exception {
-		LoginController loginController = mock(LoginController.class);
-		JButton sendButton = mock(JButton.class);
-		controller.loginController = loginController;
-		
-		when(loginController.login(anyString(), anyString())).thenReturn(ApplicationState.OK);
-		when(mainWindow.getSendButton()).thenReturn(sendButton);
-		
-		loginWindow.getSendButton().doClick();
-
-		when(mainWindow.getLoginLabel()).thenReturn(label);
-		verify(label).setText(ApplicationState.LOGGED_AS);
-		verify(sendButton).setEnabled(true);
-	}
 	
 	@Test
 	public void shouldHandleIOExceptionWhenLogin() throws Exception {

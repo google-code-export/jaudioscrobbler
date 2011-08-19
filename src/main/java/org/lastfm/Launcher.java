@@ -6,8 +6,6 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.gui.LoginWindow;
-import org.lastfm.gui.MainWindow;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
@@ -18,9 +16,6 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 
 public class Launcher {
-	private HelperScrobbler helperScrobbler;
-	private MainWindow mainWindow;
-	private LoginWindow loginWindow;
 	private Log log = LogFactory.getLog(getClass());
 
 	public Launcher(ConfigurableApplicationContext applicationContext) {
@@ -41,11 +36,8 @@ public class Launcher {
 			log.error(ile, ile);
 		}
 		
-		helperScrobbler = applicationContext.getBean(HelperScrobbler.class);
-		mainWindow = applicationContext.getBean(MainWindow.class);
-		loginWindow = applicationContext.getBean(LoginWindow.class);
+		applicationContext.getBean(ScrobblerController.class);
 		
-		new ScrobblerController().initialize(helperScrobbler, mainWindow, loginWindow);
 	}
 	
 	public static void main(String[] args) {
