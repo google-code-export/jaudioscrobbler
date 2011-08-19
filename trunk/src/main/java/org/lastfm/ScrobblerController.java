@@ -2,12 +2,11 @@ package org.lastfm;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -45,11 +44,8 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 @Controller
 public class ScrobblerController {
-	@Autowired
 	private HelperScrobbler helperScrobbler;
-	@Autowired
 	private MainWindow mainWindow;
-	@Autowired
 	private LoginWindow loginWindow;
 	
 	List<Metadata> metadataList;
@@ -80,7 +76,6 @@ public class ScrobblerController {
 	@Autowired
 	public void setAddLoginWindow(LoginWindow loginWindow) {
 		this.loginWindow = loginWindow;
-		this.loginWindow.addKeyListener(new PasswordKeyListener());
 	}
 	
 	private void updateStatus(final int i, int size) {
@@ -88,12 +83,14 @@ public class ScrobblerController {
 		mainWindow.getProgressBar().setValue(progress);
 	};
 
+	@SuppressWarnings("unused")
 	@ActionMethod(Actions.LOGIN_ID)
-	private void login() {
+	private void login(String credentials) {
 		int result = -1;
-		String username = loginWindow.getUsername().getText();
-		String password = loginWindow.getPassword().getText();
-
+		StringTokenizer tokens = new StringTokenizer(credentials,ApplicationState.DELIMITER);  
+		String username = tokens.nextToken();
+		String password = tokens.nextToken();
+ 
 		try {
 			result = loginController.login(username, password);
 			if (result == ApplicationState.OK) {
@@ -139,16 +136,6 @@ public class ScrobblerController {
 
 	}
 
-	class PasswordKeyListener extends KeyAdapter {
-		@Override
-		public void keyReleased(KeyEvent e) {
-			int id = e.getKeyCode();
-			if (id == KeyEvent.VK_ENTER) {
-				login();
-			}
-		}
-	}
-	
 	class LastFMLoginListener implements ActionListener {
 
 		@Override

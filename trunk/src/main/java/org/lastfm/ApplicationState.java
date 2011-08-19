@@ -30,4 +30,5 @@ public class ApplicationState {
 	
 	public static final String CLIENT_SCROBBLER_ID = "tst"; 
 	public static final String CLIENT_SCROBBLER_VERSION = "1.0"; 
+	public static final String DELIMITER = "|";
 }
