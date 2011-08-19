@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationConextFactory;
+import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.DefaultEngine;
 import org.lastfm.action.control.ViewEngineConfigurator;
@@ -69,7 +70,11 @@ public class LoginWindow {
 				configurator = context.getBean(ViewEngineConfigurator.class);
 				DefaultEngine defaultEngine = context.getBean(DefaultEngine.class);
 				defaultEngine.start();
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, userName.getText() + "|" + password.getText());
+				StringBuilder sb = new StringBuilder();
+				sb.append(userName.getText());
+				sb.append(ApplicationState.DELIMITER);
+				sb.append(password.getText());
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, sb.toString());
 			}
 		});
 	}
