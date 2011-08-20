@@ -8,13 +8,14 @@ import static org.mockito.Mockito.when;
 
 import java.io.IOException;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.action.ViewEngine;
+import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.mockito.Mock;
@@ -33,9 +34,11 @@ public class TestLoginListener {
 	private LoginWindow loginWindow = new LoginWindow();
 
 	@Mock
-	private HelperScrobbler helperScrobbler;
+	private ViewEngineConfigurator configurator;
 	@Mock
 	private MainWindow mainWindow;
+	@Mock
+	private ViewEngine viewEngine;
 	
 	@Before
 	public void initialize(){
@@ -48,6 +51,7 @@ public class TestLoginListener {
 		label = mock(JLabel.class);
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		loginWindow.getFrame().setVisible(true);
+		loginWindow.setAddConfigurator(configurator);
 		controller = new ScrobblerController();
 	}
 	
@@ -59,8 +63,9 @@ public class TestLoginListener {
 		
 		Throwable ioException = new IOException();
 		when(loginController.login(anyString(), anyString())).thenThrow(ioException );
+		when(configurator.getViewEngine()).thenReturn(viewEngine);
 		
-		loginWindow.sendButton.doClick();
+		loginWindow.getSendButton().doClick();
 		
 		when(mainWindow.getLoginLabel()).thenReturn(label);
 		verify(mainWindow.getLoginLabel(), never()).setText(anyString());
