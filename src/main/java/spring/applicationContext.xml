@@ -11,16 +11,6 @@
            http://www.springframework.org/schema/task
            http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 	
-	
-	<bean id="helperScrobbler" class="org.lastfm.HelperScrobbler"/>
-	<bean id="mainWindow" class="org.lastfm.gui.MainWindow"/>
-	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow"/>
-	<bean id="scrobblerController" class="org.lastfm.ScrobblerController">
-		<property name="addHelperScrobbler" ref="helperScrobbler" />
-		<property name="addMainWindow" ref="mainWindow" />
-		<property name="addLoginWindow" ref="loginWindow" />
-	</bean>
-	
 	<bean class="org.lastfm.action.control.DefaultEngine" id="applicationEngine" />
 	<bean class="org.lastfm.action.control.ViewEngineConfigurator" id="viewEngineConfigurator">
 		<constructor-arg ref="applicationEngine" />
@@ -31,5 +21,16 @@
 	<bean class="org.lastfm.action.control.SpringAppControlAutoConfigurerBeanPostProcessor">
 		<constructor-arg ref="viewEngineConfigurator" />
 		<constructor-arg ref="controlEngineConfigurator" />
+	</bean>
+	
+	<bean id="helperScrobbler" class="org.lastfm.HelperScrobbler"/>
+	<bean id="mainWindow" class="org.lastfm.gui.MainWindow"/>
+	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow">
+		<property name="addConfigurator" ref="viewEngineConfigurator" />
+	</bean>
+	<bean id="scrobblerController" class="org.lastfm.ScrobblerController">
+		<property name="addHelperScrobbler" ref="helperScrobbler" />
+		<property name="addMainWindow" ref="mainWindow" />
+		<property name="addLoginWindow" ref="loginWindow" />
 	</bean>
 </beans>

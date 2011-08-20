@@ -11,14 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationConextFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
-import org.lastfm.action.control.DefaultEngine;
 import org.lastfm.action.control.ViewEngineConfigurator;
-import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -26,13 +22,16 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 
 public class LoginWindow {
-	public JButton sendButton;
-	public JTextField userName;
-	public JTextField password;
-	JFrame frame;
-	private Log log = LogFactory.getLog(this.getClass());
-	
+	private JButton sendButton;
+	private JTextField userName;
+	private JTextField password;
+	private JFrame frame;
 	private ViewEngineConfigurator configurator;
+	
+	@Autowired
+	public void setAddConfigurator(ViewEngineConfigurator configurator) {
+		this.configurator = configurator;
+	}
 	
 	public LoginWindow() {
 		doLayout();
@@ -46,35 +45,30 @@ public class LoginWindow {
 		password = new JPasswordField();
 		password.setName("password");
 		
-		sendButton = new JButton("Login");
-		sendButton.setName("sendButton");
-		
 		frame.setBounds(300, 300, 300, 122);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JPanel panel = new JPanel(new BorderLayout());
 		panel.add(userName, BorderLayout.NORTH);
 		panel.add(password, BorderLayout.CENTER);
-		panel.add(sendButton, BorderLayout.SOUTH);
+		panel.add(getSendButton(), BorderLayout.SOUTH);
 		
 		frame.add(panel);
 		frame.setVisible(false);
 		
-		sendButton.addActionListener(new ActionListener() {
-			
-
+		getSendButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				log.info("Sending Login message");
-				ConfigurableApplicationContext context = ApplicationConextFactory.getApplicationContext();
-				configurator = context.getBean(ViewEngineConfigurator.class);
-				DefaultEngine defaultEngine = context.getBean(DefaultEngine.class);
-				defaultEngine.start();
-				StringBuilder sb = new StringBuilder();
-				sb.append(userName.getText());
-				sb.append(ApplicationState.DELIMITER);
-				sb.append(password.getText());
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, sb.toString());
+				StringBuilder credentials = packCredentials();
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, credentials.toString());
+			}
+
+			private StringBuilder packCredentials() {
+				StringBuilder stringBuilder = new StringBuilder();
+				stringBuilder.append(userName.getText());
+				stringBuilder.append(ApplicationState.DELIMITER);
+				stringBuilder.append(password.getText());
+				return stringBuilder;
 			}
 		});
 	}
@@ -100,6 +94,10 @@ public class LoginWindow {
 	}
 
 	public JButton getSendButton() {
+		if (sendButton == null) {
+			sendButton = new JButton("Login");
+			sendButton.setName("sendButton");
+		}
 		return sendButton;
 	}
 

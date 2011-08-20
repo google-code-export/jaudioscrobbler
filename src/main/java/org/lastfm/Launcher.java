@@ -6,6 +6,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.action.control.DefaultEngine;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
@@ -35,9 +36,10 @@ public class Launcher {
 		} catch (IllegalAccessException ile) {
 			log.error(ile, ile);
 		}
-		
+
+		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
+		defaultEngine.start();
 		applicationContext.getBean(ScrobblerController.class);
-		
 	}
 	
 	public static void main(String[] args) {
