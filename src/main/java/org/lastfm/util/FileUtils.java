@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.util;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.lastfm.InvalidId3VersionException;
 
 /**
  * 
