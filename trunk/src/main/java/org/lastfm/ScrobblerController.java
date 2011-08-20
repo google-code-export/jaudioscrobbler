@@ -31,6 +31,7 @@ import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
+import org.lastfm.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
