@@ -11,7 +11,8 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.metadata.Metadata;
 
 /**
@@ -24,7 +25,7 @@ public class HelperScrobbler {
 	private ScrobblerFactory factory = new ScrobblerFactory();
 	private static final int DELTA = 120;
 
-	private Logger log = Logger.getLogger("org.lastfm");
+	private Log log = LogFactory.getLog(this.getClass()); 
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		if(StringUtils.isEmpty(ApplicationState.userName)){
