@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ViewEngineConfigurator;
-import org.lastfm.util.ArgumentPacker;
+import org.lastfm.model.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -25,12 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class LoginWindow {
 	private JButton sendButton;
-	private JTextField userName;
-	private JTextField password;
+	private JTextField usernameTextfield;
+	private JTextField passwordTextfield;
 	private JFrame frame;
 	private ViewEngineConfigurator configurator;
 	private JPanel panel;
-	private ArgumentPacker argumentPacker = new ArgumentPacker();
 	private static final String USERNAME_TEXTFIELD_NAME = "userName";
 	private static final String PASSWORD_TEXTFIELD_NAME = "password";
 	private static final String SEND_BUTTON_LABEL = "Login";
@@ -52,14 +51,14 @@ public class LoginWindow {
 		getSendButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, argumentPacker.pack(userName.getText(), password.getText()));
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new Credentials(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
 		
 		getSendButton().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, argumentPacker.pack(userName.getText(), password.getText()));
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new Credentials(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
 	}
@@ -79,23 +78,23 @@ public class LoginWindow {
 	}
 	
 	public void addKeyListener(KeyListener keyListener){
-		password.addKeyListener(keyListener);
+		passwordTextfield.addKeyListener(keyListener);
 	}
 
 	private JTextField getUsername() {
-		if(userName == null){
-			userName = new JTextField();
-			userName.setName(USERNAME_TEXTFIELD_NAME);
+		if(usernameTextfield == null){
+			usernameTextfield = new JTextField();
+			usernameTextfield.setName(USERNAME_TEXTFIELD_NAME);
 		}
-		return userName;
+		return usernameTextfield;
 	}
 
 	private JTextField getPassword() {
-		if(password == null){
-			password = new JPasswordField();
-			password.setName(PASSWORD_TEXTFIELD_NAME);
+		if(passwordTextfield == null){
+			passwordTextfield = new JPasswordField();
+			passwordTextfield.setName(PASSWORD_TEXTFIELD_NAME);
 		}
-		return password;
+		return passwordTextfield;
 	}
 
 	public JFrame getFrame() {

@@ -24,13 +24,20 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.lastfm.action.Actions;
+import org.lastfm.action.control.ViewEngineConfigurator;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- * 
+ * @understands A principal JAudioScrobbler principal window
  */
 
 public class MainWindow {
+	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
+	private static final String JMENU_LABEL = "Last.fm";
+	private static final int DIRECTORY_SELECTED_LENGHT = 20;
+	private static final String STATUS_LABEL = "Status";
 	static final String CTRL_O = "CTRL+O";
 	static final String ENTER = "ENTER";
 	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
@@ -52,7 +59,7 @@ public class MainWindow {
 	JTextField directorySelected;
 	
 	private JPanel bottomPanel;
-	public JTable table;
+	public JTable descriptionTable;
 
 	private JProgressBar progressBar;
 	private JLabel label;
@@ -62,120 +69,167 @@ public class MainWindow {
 	private JMenu menu;
 	private JMenuItem menuItem;
 	InputMap inputMap;
+	private JScrollPane scrollPane;
+	private ViewEngineConfigurator configurator;
 	
 
 	public MainWindow() {
 		doLayout();
 	}
+	
+	@Autowired
+	public void setAddConfigurator(ViewEngineConfigurator configurator) {
+		this.configurator = configurator;
+	}
 
 	private void doLayout() {
-		frame = new JFrame(APPLICATION_NAME);
-		panel = new JPanel();
-		bottomPanel = new JPanel();
-		topPanel = new JPanel();
-		menuBar = new JMenuBar();
-		menu = new JMenu("Last.fm");
-		menu.setMnemonic(KeyEvent.VK_L);
-		menuItem = new JMenuItem("Sign in Last.fm");
-		menuItem.setName(LOGIN_MENU_ITEM);
-		menu.add(menuItem);
-		menuBar.add(menu);
-
-		loginLabel = new JLabel(LOG_OUT);
-		topPanel.add(loginLabel);
-
-		openButton = new JButton(LOAD_FILES);
-		openButton.setMnemonic(KeyEvent.VK_O);
 		registerKeyStrokeAction();
+		getFrame();
+	}
 
-		sendButton = new JButton(SEND_SCROBBLINGS);
-		sendButton.setEnabled(false);
-		
-		completeMetadataButton = new JButton(COMPLETE_BUTTON);
-		completeMetadataButton.setEnabled(false);
+	private JMenuBar getMenubar() {
+		if(menuBar == null){
+			menuBar = new JMenuBar();
+			menuBar.add(getMenu());
+		}
+		return menuBar;
+	}
 
-		progressBar = new JProgressBar();
-		progressBar.setVisible(false);
+	private JMenu getMenu() {
+		if(menu == null){
+			menu = new JMenu(JMENU_LABEL);
+			menu.setMnemonic(KeyEvent.VK_L);
+			menuItem = new JMenuItem(JMENU_ITEM_LABEL);
+			menuItem.setName(LOGIN_MENU_ITEM);
+			menu.add(menuItem);
+		}
+		return menu;
+	}
 
-		table = new DescriptionTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				table.setToolTipText("In order to enter a custom metadata you have to click "
-						+ "on complete button first");
-			}
-		});
-		label = new JLabel("Status");
-		directorySelected = new JTextField(20);
-		directorySelected.setEnabled(false);
-
-		JScrollPane scrollPane = new JScrollPane(table);
-
-		panel.setLayout(new BorderLayout());
-
-		panel.add(topPanel, BorderLayout.NORTH);
-		panel.add(scrollPane, BorderLayout.CENTER);
-		bottomPanel.add(label);
-		bottomPanel.add(directorySelected);
-		bottomPanel.add(progressBar);
-
-		bottomPanel.add(openButton);
-		bottomPanel.add(sendButton);
-		bottomPanel.add(completeMetadataButton);
-
-		panel.add(bottomPanel, BorderLayout.SOUTH);
-
-		frame.add(panel);
-		frame.setJMenuBar(menuBar);
-		frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setVisible(true);
+	private JPanel getBottomPanel() {
+		if(bottomPanel == null){
+			bottomPanel = new JPanel();
+			bottomPanel.add(getLabel());
+			bottomPanel.add(getDirectoryField());
+			bottomPanel.add(getProgressBar());
+			bottomPanel.add(getOpenButton());
+			bottomPanel.add(getSendButton());
+			bottomPanel.add(getCompleteMetadataButton());
+		}
+		return bottomPanel;
 	}
 
 	private void registerKeyStrokeAction() {
 		KeyStroke ctrlo = KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_DOWN_MASK);
 		KeyStroke enter = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0);
-		inputMap = openButton.getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW);
+		inputMap = getOpenButton().getInputMap(JButton.WHEN_IN_FOCUSED_WINDOW);
 		inputMap.put(ctrlo, CTRL_O);
 		inputMap.put(enter, ENTER);
-		openButton.getActionMap().put(CTRL_O, new ClickAction(openButton));
-		openButton.getActionMap().put(ENTER, new ClickAction(openButton));
+		getOpenButton().getActionMap().put(CTRL_O, new ClickAction(getOpenButton()));
+		getOpenButton().getActionMap().put(ENTER, new ClickAction(getOpenButton()));
 	}
 
 	public JPanel getPanel() {
+		if(panel == null){
+			panel = new JPanel();
+			panel.setLayout(new BorderLayout());
+			panel.add(getTopPanel(), BorderLayout.NORTH);
+			panel.add(getScrollPane(), BorderLayout.CENTER);
+			panel.add(getBottomPanel(), BorderLayout.SOUTH);
+		}
 		return panel;
 	}
 
-	public JTable getDescriptionTable() {
-		return table;
+	
+	private JPanel getTopPanel() {
+		if(topPanel == null){
+			topPanel = new JPanel();
+			topPanel.add(getLoginLabel());
+		}
+		return topPanel;
 	}
 
 	public JTextField getDirectoryField() {
+		if(directorySelected == null){
+			directorySelected = new JTextField(DIRECTORY_SELECTED_LENGHT);
+			directorySelected.setEnabled(false);
+		}
 		return directorySelected;
 	}
 
 	public JProgressBar getProgressBar() {
+		if(progressBar == null){
+			progressBar = new JProgressBar();
+			progressBar.setVisible(false);
+		}
 		return progressBar;
 	}
 
 	public JLabel getLabel() {
+		if(label == null){
+			label = new JLabel(STATUS_LABEL);
+		}
 		return label;
 	}
 
 	public JLabel getLoginLabel() {
+		if(loginLabel == null){
+			loginLabel = new JLabel(LOG_OUT);
+		}
 		return loginLabel;
 	}
 
-	public JButton getCompleteButton() {
+	public JButton getCompleteMetadataButton() {
+		if(completeMetadataButton == null){
+			completeMetadataButton = new JButton(COMPLETE_BUTTON);
+			completeMetadataButton.setEnabled(false);
+		}
 		return completeMetadataButton;
 	}
 
 	public JButton getSendButton() {
+		if(sendButton == null){
+			sendButton = new JButton(SEND_SCROBBLINGS);
+			sendButton.setEnabled(false);
+		}
 		return sendButton;
 	}
 
 	public JButton getOpenButton() {
+		if(openButton == null){
+			openButton = new JButton(LOAD_FILES);
+			openButton.setMnemonic(KeyEvent.VK_O);
+			
+			openButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					configurator.getViewEngine().send(Actions.METADATA);
+				}
+			});
+		}
 		return openButton;
+	}
+	
+	public JScrollPane getScrollPane() {
+		if(scrollPane == null){
+			scrollPane = new JScrollPane(getDescriptionTable());
+		}
+		return scrollPane;
+	}
+
+	public JTable getDescriptionTable() {
+		if(descriptionTable == null){
+			descriptionTable = new DescriptionTable();
+			descriptionTable.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click "
+							+ "on complete button first");
+				}
+			});
+		}
+		return descriptionTable;
 	}
 
 	public void addOpenListener(ActionListener openListener) {
@@ -195,13 +249,18 @@ public class MainWindow {
 	}
 
 	public Frame getFrame() {
+		if(frame == null){
+			frame = new JFrame(APPLICATION_NAME);
+			frame.add(getPanel());
+			frame.setJMenuBar(getMenubar());
+			frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
+		}
 		return frame;
 	}
 
 	public class ClickAction extends AbstractAction {
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = 1L;
 		private JButton button;
 

@@ -1,9 +1,6 @@
 package org.lastfm;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -23,8 +20,6 @@ import org.junit.Test;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataBean;
-import org.lastfm.metadata.MetadataWriter;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -55,7 +50,7 @@ public class TestCompleteListener {
 		metadataList = new ArrayList<Metadata>();
 
 		controller = new ScrobblerController();
-		mainWindow.getCompleteButton().setEnabled(true);
+		mainWindow.getCompleteMetadataButton().setEnabled(true);
 	}
 	
 	@After
@@ -87,9 +82,9 @@ public class TestCompleteListener {
 		when(model.getValueAt(anyInt(), anyInt())).thenReturn("");
 		when(table.getRowCount()).thenReturn(1);
 
-		mainWindow.table = table;
+		mainWindow.descriptionTable = table;
 		
-		mainWindow.getCompleteButton().doClick();
+		mainWindow.getCompleteMetadataButton().doClick();
 
 		assertNotNull("metadataList should not be null", controller.metadataList);
 		verify(service, never()).getTrackNumber(anyString());
@@ -109,7 +104,7 @@ public class TestCompleteListener {
 		when(model.getValueAt(anyInt(), anyInt())).thenReturn("");
 		when(table.getRowCount()).thenReturn(1);
 
-		mainWindow.table = table;
+		mainWindow.descriptionTable = table;
 
 		Exception serverUnavailableException = new ServerUnavailableException();
 
@@ -117,7 +112,7 @@ public class TestCompleteListener {
 
 		controller.service = service;
 
-		mainWindow.getCompleteButton().doClick();
+		mainWindow.getCompleteMetadataButton().doClick();
 		verify(mainWindow.getDescriptionTable().getModel(), never()).setValueAt(anyString(),
 				anyInt(), anyInt());
 	}

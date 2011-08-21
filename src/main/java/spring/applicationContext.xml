@@ -24,7 +24,9 @@
 	</bean>
 	
 	<bean id="helperScrobbler" class="org.lastfm.HelperScrobbler"/>
-	<bean id="mainWindow" class="org.lastfm.gui.MainWindow"/>
+	<bean id="mainWindow" class="org.lastfm.gui.MainWindow">
+		<property name="addConfigurator" ref="viewEngineConfigurator" />
+	</bean>	
 	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow">
 		<property name="addConfigurator" ref="viewEngineConfigurator" />
 	</bean>
