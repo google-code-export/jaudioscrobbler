@@ -1,7 +1,5 @@
 package org.lastfm;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,9 +36,8 @@ import org.springframework.stereotype.Controller;
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- * 
+ * @understands A class who manage ALL scrobbler actions 
  */
 
 @Controller
@@ -69,9 +66,6 @@ public class ScrobblerController {
 	@Autowired
 	public void setAddMainWindow(MainWindow mainWindow) {
 		this.mainWindow = mainWindow;
-		this.mainWindow.addSendListener(new SendListener());
-		this.mainWindow.addCompleteListener(new CompleteListener());
-		this.mainWindow.addLastFMLoginListener(new LastFMLoginListener());
 		this.mainWindow.getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 	}
 
@@ -106,6 +100,173 @@ public class ScrobblerController {
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
+	}
+	
+	@SuppressWarnings("unused")
+	@ActionMethod(Actions.GET_METADATA)
+	private void showMetadata() {
+		if (fileChooser == null) {
+			fileChooser = new JFileChooser();
+		}
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int selection = fileChooser.showOpenDialog(mainWindow.getPanel());
+		if (selection == JFileChooser.APPROVE_OPTION) {
+			File file = fileChooser.getSelectedFile();
+			mainWindow.getDirectoryField().setText(file.getAbsolutePath());
+			try {
+				showFiles(file);
+				mainWindow.getCompleteMetadataButton().setEnabled(true);
+			} catch (IOException e) {
+				handleException(e);
+			} catch (TagException e) {
+				handleException(e);
+			} catch (ReadOnlyFileException e) {
+				handleException(e);
+			} catch (InvalidAudioFrameException e) {
+				handleException(e);
+			} catch (InvalidId3VersionException e) {
+				handleException(e);
+			} catch (InterruptedException e) {
+				handleException(e);
+			} catch (CannotReadException e) {
+				handleException(e);
+			} catch (MetadataException e) {
+				handleException(e);
+			}
+		}
+	}
+	
+	@SuppressWarnings("unused")
+	@ActionMethod(Actions.SEND_METADATA)
+	private void sendMetadata(){
+		SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+			@Override
+			protected Boolean doInBackground() throws Exception {
+				try {
+					if (metadataList != null) {
+						for (Metadata metadata : metadataList) {
+							updateStatus(metadataList.indexOf(metadata), metadataList.size());
+							int result = helperScrobbler.send(metadata);
+							if (result == ApplicationState.ERROR) {
+								mainWindow.getLabel().setText(ApplicationState.NETWORK_ERROR);
+							}
+						}
+					}
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				return true;
+			}
+
+			@Override
+			public void done() {
+				mainWindow.getLabel().setText(ApplicationState.DONE);
+				mainWindow.getCompleteMetadataButton().setEnabled(true);
+				mainWindow.getSendButton().setEnabled(true);
+				mainWindow.getOpenButton().setEnabled(true);
+			}
+		};
+
+		swingWorker.execute();
+		mainWindow.getCompleteMetadataButton().setEnabled(false);
+		mainWindow.getSendButton().setEnabled(false);
+		mainWindow.getOpenButton().setEnabled(false);
+		mainWindow.getProgressBar().setVisible(true);
+		mainWindow.getLabel().setText(ApplicationState.WORKING);
+	}
+	
+	@SuppressWarnings("unused")
+	@ActionMethod(Actions.COMPLETE_METADATA)
+	private void completeMetadata(){
+		if (service == null) {
+			service = new MusicBrainzService();
+		}
+
+		mainWindow.getProgressBar().setValue(0);
+		mainWindow.getProgressBar().setVisible(true);
+
+		SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+			@Override
+			protected Boolean doInBackground() throws Exception {
+				if (mainWindow.getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
+					for (Metadata metadata : metadataList) {
+						int i = metadataList.indexOf(metadata);
+						updateStatus(i, metadataList.size());
+						String albumName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 2).toString();
+						if (StringUtils.isEmpty(albumName)) {
+							String artistName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 0)
+									.toString();
+							String trackName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 1)
+									.toString();
+							try {
+								String album = service.getAlbum(artistName, trackName);
+								if (StringUtils.isNotEmpty(album)) {
+									Integer trackNumber = service.getTrackNumber(album);
+									mainWindow.getDescriptionTable().getModel()
+											.setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
+									mainWindow.getDescriptionTable().getModel()
+											.setValueAt(trackNumber, i, ApplicationState.TRACK_NUMBER_COLUMN);
+									mainWindow
+											.getDescriptionTable()
+											.getModel()
+											.setValueAt(ApplicationState.NEW_METADATA, i,
+													ApplicationState.STATUS_COLUMN);
+									MetadataBean bean = new MetadataBean();
+									bean.setAlbum(album);
+									bean.setTrackNumber(trackNumber);
+									bean.setFile(metadata.getFile());
+									bean.setBeanRow(i);
+									metadataBeanList.add(bean);
+								}
+							} catch (ServerUnavailableException sue) {
+								log.error(sue, sue);
+							}
+						}
+					}
+				} else {
+					mainWindow.getProgressBar().setValue(0);
+					for (MetadataBean bean : metadataBeanList) {
+						updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
+						File file = bean.getFile();
+						metadataWriter.setFile(file);
+						metadataWriter.writeArtist(bean.getArtist());
+						metadataWriter.writeTrackName(bean.getTrackName());
+						metadataWriter.writeAlbum(bean.getAlbum());
+						Integer trackNumber = bean.getTrackNumber();
+						metadataWriter.writeTrackNumber(trackNumber.toString());
+						mainWindow
+								.getDescriptionTable()
+								.getModel()
+								.setValueAt(ApplicationState.METADATA_UPDATED, bean.getRow(),
+										ApplicationState.STATUS_COLUMN);
+					}
+				}
+				return true;
+			}
+
+			@Override
+			public void done() {
+				mainWindow.getLabel().setText(ApplicationState.DONE);
+				mainWindow.getCompleteMetadataButton().setEnabled(true);
+				mainWindow.getOpenButton().setEnabled(true);
+				mainWindow.getDescriptionTable().setEnabled(true);
+				mainWindow.getCompleteMetadataButton().setText(MainWindow.APPLY);
+			}
+		};
+		mainWindow.getCompleteMetadataButton().setEnabled(false);
+		mainWindow.getOpenButton().setEnabled(false);
+		swingWorker.execute();
+	}
+	
+	@SuppressWarnings("unused")
+	@ActionMethod(Actions.LOGIN_LASTFM)
+	private void loginLastFM(){
+		loginWindow.getFrame().setLocationRelativeTo(mainWindow.getFrame());
+		loginWindow.getFrame().setVisible(true);
 	}
 	
 	private void update(Metadata metadata) {
@@ -158,40 +319,6 @@ public class ScrobblerController {
 		return ApplicationState.OK;
 	}
 
-	@SuppressWarnings("unused")
-	@ActionMethod(Actions.GET_METADATA)
-	private void showMetadata() {
-		if (fileChooser == null) {
-			fileChooser = new JFileChooser();
-		}
-		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		int selection = fileChooser.showOpenDialog(mainWindow.getPanel());
-		if (selection == JFileChooser.APPROVE_OPTION) {
-			File file = fileChooser.getSelectedFile();
-			mainWindow.getDirectoryField().setText(file.getAbsolutePath());
-			try {
-				showFiles(file);
-				mainWindow.getCompleteMetadataButton().setEnabled(true);
-			} catch (IOException e) {
-				handleException(e);
-			} catch (TagException e) {
-				handleException(e);
-			} catch (ReadOnlyFileException e) {
-				handleException(e);
-			} catch (InvalidAudioFrameException e) {
-				handleException(e);
-			} catch (InvalidId3VersionException e) {
-				handleException(e);
-			} catch (InterruptedException e) {
-				handleException(e);
-			} catch (CannotReadException e) {
-				handleException(e);
-			} catch (MetadataException e) {
-				handleException(e);
-			}
-		}
-	}
-
 	class DescriptionTableModelListener implements TableModelListener {
 
 		@SuppressWarnings("static-access")
@@ -221,150 +348,8 @@ public class ScrobblerController {
 
 	}
 
-	class LastFMLoginListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			loginWindow.getFrame().setLocationRelativeTo(mainWindow.getFrame());
-			loginWindow.getFrame().setVisible(true);
-		}
-
-	}
-
 	private void handleException(Exception e) {
 		e.printStackTrace();
 		mainWindow.getLabel().setText(ApplicationState.OPEN_ERROR);
 	}
-
-	class SendListener implements ActionListener {
-
-		@Override
-		public void actionPerformed(ActionEvent e) {
-
-			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
-
-				@Override
-				protected Boolean doInBackground() throws Exception {
-					try {
-						if (metadataList != null) {
-							for (Metadata metadata : metadataList) {
-								updateStatus(metadataList.indexOf(metadata), metadataList.size());
-								int result = helperScrobbler.send(metadata);
-								if (result == ApplicationState.ERROR) {
-									mainWindow.getLabel().setText(ApplicationState.NETWORK_ERROR);
-								}
-							}
-						}
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-					return true;
-				}
-
-				@Override
-				public void done() {
-					mainWindow.getLabel().setText(ApplicationState.DONE);
-					mainWindow.getCompleteMetadataButton().setEnabled(true);
-					mainWindow.getSendButton().setEnabled(true);
-					mainWindow.getOpenButton().setEnabled(true);
-				}
-
-			};
-
-			swingWorker.execute();
-			mainWindow.getCompleteMetadataButton().setEnabled(false);
-			mainWindow.getSendButton().setEnabled(false);
-			mainWindow.getOpenButton().setEnabled(false);
-			mainWindow.getProgressBar().setVisible(true);
-			mainWindow.getLabel().setText(ApplicationState.WORKING);
-		}
-	}
-
-	class CompleteListener implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (service == null) {
-				service = new MusicBrainzService();
-			}
-
-			mainWindow.getProgressBar().setValue(0);
-			mainWindow.getProgressBar().setVisible(true);
-
-			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
-
-				@Override
-				protected Boolean doInBackground() throws Exception {
-					if (mainWindow.getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						for (Metadata metadata : metadataList) {
-							int i = metadataList.indexOf(metadata);
-							updateStatus(i, metadataList.size());
-							String albumName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 2).toString();
-							if (StringUtils.isEmpty(albumName)) {
-								String artistName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 0)
-										.toString();
-								String trackName = mainWindow.getDescriptionTable().getModel().getValueAt(i, 1)
-										.toString();
-								try {
-									String album = service.getAlbum(artistName, trackName);
-									if (StringUtils.isNotEmpty(album)) {
-										Integer trackNumber = service.getTrackNumber(album);
-										mainWindow.getDescriptionTable().getModel()
-												.setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
-										mainWindow.getDescriptionTable().getModel()
-												.setValueAt(trackNumber, i, ApplicationState.TRACK_NUMBER_COLUMN);
-										mainWindow
-												.getDescriptionTable()
-												.getModel()
-												.setValueAt(ApplicationState.NEW_METADATA, i,
-														ApplicationState.STATUS_COLUMN);
-										MetadataBean bean = new MetadataBean();
-										bean.setAlbum(album);
-										bean.setTrackNumber(trackNumber);
-										bean.setFile(metadata.getFile());
-										bean.setBeanRow(i);
-										metadataBeanList.add(bean);
-									}
-								} catch (ServerUnavailableException sue) {
-									log.error(sue, sue);
-								}
-							}
-						}
-					} else {
-						mainWindow.getProgressBar().setValue(0);
-						for (MetadataBean bean : metadataBeanList) {
-							updateStatus(metadataBeanList.indexOf(bean), metadataBeanList.size());
-							File file = bean.getFile();
-							metadataWriter.setFile(file);
-							metadataWriter.writeArtist(bean.getArtist());
-							metadataWriter.writeTrackName(bean.getTrackName());
-							metadataWriter.writeAlbum(bean.getAlbum());
-							Integer trackNumber = bean.getTrackNumber();
-							metadataWriter.writeTrackNumber(trackNumber.toString());
-							mainWindow
-									.getDescriptionTable()
-									.getModel()
-									.setValueAt(ApplicationState.METADATA_UPDATED, bean.getRow(),
-											ApplicationState.STATUS_COLUMN);
-						}
-					}
-					return true;
-				}
-
-				@Override
-				public void done() {
-					mainWindow.getLabel().setText(ApplicationState.DONE);
-					mainWindow.getCompleteMetadataButton().setEnabled(true);
-					mainWindow.getOpenButton().setEnabled(true);
-					mainWindow.getDescriptionTable().setEnabled(true);
-					mainWindow.getCompleteMetadataButton().setText(MainWindow.APPLY);
-				}
-			};
-			mainWindow.getCompleteMetadataButton().setEnabled(false);
-			mainWindow.getOpenButton().setEnabled(false);
-			swingWorker.execute();
-		}
-	}
-
 }

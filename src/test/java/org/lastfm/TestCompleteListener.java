@@ -17,6 +17,8 @@ import javax.swing.table.TableModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.action.ViewEngine;
+import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
@@ -41,11 +43,17 @@ public class TestCompleteListener {
 	private HelperScrobbler helperScrobbler;
 	@Mock
 	private LoginWindow loginWindow;
+	@Mock
+	private ViewEngineConfigurator configurator;
+	@Mock
+	private ViewEngine viewEngine;
 
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
+		when(configurator.getViewEngine()).thenReturn(viewEngine);
 		mainWindow = new MainWindow();
+		mainWindow.setAddConfigurator(configurator);
 
 		metadataList = new ArrayList<Metadata>();
 

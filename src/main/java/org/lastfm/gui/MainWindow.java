@@ -99,11 +99,27 @@ public class MainWindow {
 		if(menu == null){
 			menu = new JMenu(JMENU_LABEL);
 			menu.setMnemonic(KeyEvent.VK_L);
-			menuItem = new JMenuItem(JMENU_ITEM_LABEL);
-			menuItem.setName(LOGIN_MENU_ITEM);
-			menu.add(menuItem);
+			menu.add(getMenuItem());
 		}
 		return menu;
+	}
+	
+	
+
+	private JMenuItem getMenuItem() {
+		if(menuItem == null){
+			menuItem = new JMenuItem(JMENU_ITEM_LABEL);
+			menuItem.setName(LOGIN_MENU_ITEM);
+			
+			menuItem.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					configurator.getViewEngine().send(Actions.LASTFM);
+				}
+			});
+		}
+		return menuItem;
 	}
 
 	private JPanel getBottomPanel() {
@@ -183,6 +199,14 @@ public class MainWindow {
 		if(completeMetadataButton == null){
 			completeMetadataButton = new JButton(COMPLETE_BUTTON);
 			completeMetadataButton.setEnabled(false);
+			
+			completeMetadataButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					configurator.getViewEngine().send(Actions.COMPLETE);
+				}
+			});
 		}
 		return completeMetadataButton;
 	}
@@ -191,6 +215,14 @@ public class MainWindow {
 		if(sendButton == null){
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setEnabled(false);
+			
+			sendButton.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					configurator.getViewEngine().send(Actions.SEND);
+				}
+			});
 		}
 		return sendButton;
 	}
@@ -230,22 +262,6 @@ public class MainWindow {
 			});
 		}
 		return descriptionTable;
-	}
-
-	public void addOpenListener(ActionListener openListener) {
-		openButton.addActionListener(openListener);
-	}
-
-	public void addSendListener(ActionListener sendListener) {
-		sendButton.addActionListener(sendListener);
-	}
-
-	public void addCompleteListener(ActionListener completeListener) {
-		completeMetadataButton.addActionListener(completeListener);
-	}
-	
-	public void addLastFMLoginListener(ActionListener lastFMLoginListener){
-		menuItem.addActionListener(lastFMLoginListener);
 	}
 
 	public Frame getFrame() {
