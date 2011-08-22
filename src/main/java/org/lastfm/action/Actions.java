@@ -17,6 +17,4 @@ public interface Actions {
 	String COMPLETE_METADATA = "completeMetadata";
 	ActionType<EmptyAction> COMPLETE = cm(COMPLETE_METADATA);
 	
-	String LOGIN_LASTFM = "loginLastfm";
-	ActionType<EmptyAction> LASTFM = cm(LOGIN_LASTFM);
 }

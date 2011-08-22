@@ -22,7 +22,6 @@ import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
-import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataBean;
@@ -46,20 +45,19 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 public class ScrobblerController {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;
-	private LoginWindow loginWindow;
 	private ControlEngineConfigurator configurator;
 
-	private JFileChooser fileChooser;
 	private FileUtils fileUtils;
 	private MetadataWriter metadataWriter = new MetadataWriter();
 	private List<MetadataBean> metadataBeanList = new ArrayList<MetadataBean>();
+	private JFileChooser fileChooser = new JFileChooser();
 	private List<File> fileList;
 	private Logger log = Logger.getLogger(this.getClass());
 
 	// TODO Change this awful code in order to respect encapsulation
 	LoginController loginController = new LoginController();;
 	List<Metadata> metadataList;
-	MusicBrainzService service;
+	MusicBrainzService service = new MusicBrainzService();
 
 	@Autowired
 	public void setAddHelperScrobbler(HelperScrobbler helperScrobbler) {
@@ -72,11 +70,6 @@ public class ScrobblerController {
 		this.mainWindow.getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 	}
 
-	@Autowired
-	public void setAddLoginWindow(LoginWindow loginWindow) {
-		this.loginWindow = loginWindow;
-	}
-	
 	@Autowired
 	public void setAddConfigurator(ControlEngineConfigurator configurator) {
 		this.configurator = configurator;
@@ -111,9 +104,6 @@ public class ScrobblerController {
 	@SuppressWarnings("unused")
 	@ActionMethod(Actions.GET_METADATA)
 	private void showMetadata() {
-		if (fileChooser == null) {
-			fileChooser = new JFileChooser();
-		}
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int selection = fileChooser.showOpenDialog(mainWindow.getPanel());
 		if (selection == JFileChooser.APPROVE_OPTION) {
@@ -145,8 +135,9 @@ public class ScrobblerController {
 	@SuppressWarnings("unused")
 	@ActionMethod(Actions.SEND_METADATA)
 	private void sendMetadata(){
+		
 		SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
-
+			
 			@Override
 			protected Boolean doInBackground() throws Exception {
 				try {
@@ -187,10 +178,6 @@ public class ScrobblerController {
 	@SuppressWarnings("unused")
 	@ActionMethod(Actions.COMPLETE_METADATA)
 	private void completeMetadata(){
-		if (service == null) {
-			service = new MusicBrainzService();
-		}
-
 		mainWindow.getProgressBar().setValue(0);
 		mainWindow.getProgressBar().setVisible(true);
 
@@ -266,13 +253,6 @@ public class ScrobblerController {
 		mainWindow.getCompleteMetadataButton().setEnabled(false);
 		mainWindow.getOpenButton().setEnabled(false);
 		swingWorker.execute();
-	}
-	
-	@SuppressWarnings("unused")
-	@ActionMethod(Actions.LOGIN_LASTFM)
-	private void loginLastFM(){
-		loginWindow.getFrame().setLocationRelativeTo(mainWindow.getFrame());
-		loginWindow.getFrame().setVisible(true);
 	}
 	
 	private void update(Metadata metadata) {

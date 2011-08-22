@@ -74,10 +74,16 @@ public class MainWindow {
 	InputMap inputMap;
 	private JScrollPane scrollPane;
 	private ViewEngineConfigurator configurator;
+	private LoginWindow loginWindow;
 	
 
 	public MainWindow() {
 		doLayout();
+	}
+	
+	@Autowired
+	public void setAddLoginWindow(LoginWindow loginWindow) {
+		this.loginWindow = loginWindow;
 	}
 	
 	@Autowired
@@ -131,7 +137,8 @@ public class MainWindow {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					configurator.getViewEngine().send(Actions.LASTFM);
+					loginWindow.getFrame().setLocationRelativeTo(getFrame());
+					loginWindow.getFrame().setVisible(true);
 				}
 			});
 		}
