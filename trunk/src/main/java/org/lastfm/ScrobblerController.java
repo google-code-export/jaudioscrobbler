@@ -20,6 +20,8 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
+import org.lastfm.action.control.ControlEngineConfigurator;
+import org.lastfm.event.Events;
 import org.lastfm.gui.LoginWindow;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
@@ -45,6 +47,7 @@ public class ScrobblerController {
 	private HelperScrobbler helperScrobbler;
 	private MainWindow mainWindow;
 	private LoginWindow loginWindow;
+	private ControlEngineConfigurator configurator;
 
 	private JFileChooser fileChooser;
 	private FileUtils fileUtils;
@@ -73,6 +76,12 @@ public class ScrobblerController {
 	public void setAddLoginWindow(LoginWindow loginWindow) {
 		this.loginWindow = loginWindow;
 	}
+	
+	@Autowired
+	public void setAddConfigurator(ControlEngineConfigurator configurator) {
+		this.configurator = configurator;
+	}
+	
 
 	private void updateStatus(final int i, int size) {
 		int progress = ((i + 1) * 100) / size;
@@ -82,23 +91,20 @@ public class ScrobblerController {
 	@SuppressWarnings("unused")
 	@ActionMethod(Actions.LOGIN_ID)
 	private void login(Credentials credentials) {
-		int result = -1;
+		int result = ApplicationState.ERROR;
 		String username = credentials.getUsername();
 		String password = credentials.getPassword();
-
 		try {
 			result = loginController.login(username, password);
 			if (result == ApplicationState.OK) {
-				ApplicationState.userName = username;
+				ApplicationState.username = username;
 				ApplicationState.password = password;
-				loginWindow.getFrame().dispose();
-				mainWindow.getLoginLabel().setText(ApplicationState.LOGGED_AS + username);
-				mainWindow.getSendButton().setEnabled(true);
+				configurator.getControlEngine().fireEvent(Events.LOGGED);
 			} else {
-				mainWindow.getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
+				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 			}
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
+			log.error(ioe, ioe);
 		}
 	}
 	

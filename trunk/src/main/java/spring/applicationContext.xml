@@ -34,5 +34,6 @@
 		<property name="addHelperScrobbler" ref="helperScrobbler" />
 		<property name="addMainWindow" ref="mainWindow" />
 		<property name="addLoginWindow" ref="loginWindow" />
+		<property name="addConfigurator" ref="controlEngineConfigurator" />
 	</bean>
 </beans>
