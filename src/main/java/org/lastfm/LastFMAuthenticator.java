@@ -13,7 +13,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
  *
  */
 
-public class LoginController {
+public class LastFMAuthenticator {
 	private ScrobblerFactory factory = new ScrobblerFactory();
 	
 	public int login(String username, String password) throws IOException {
