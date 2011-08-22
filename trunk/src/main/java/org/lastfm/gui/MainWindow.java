@@ -36,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @understands A principal JAudioScrobbler principal window
  */
 
+@SuppressWarnings("unused")
 public class MainWindow {
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
 	private static final String JMENU_LABEL = "Last.fm";
@@ -96,17 +97,25 @@ public class MainWindow {
 		getFrame();
 	}
 	
-	@SuppressWarnings("unused")
 	@EventMethod(Events.USER_LOGGED)
 	private void onUserLogged(){
 		getLoginLabel().setText(ApplicationState.LOGGED_AS + ApplicationState.username);
 		getSendButton().setEnabled(true);
 	}
 	
-	@SuppressWarnings("unused")
 	@EventMethod(Events.USER_LOGIN_FAILED)
 	private void onUserLoginFailed(){
 		getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
+	}
+	
+	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED)
+	private void onMusicDirectorySelected(String path){
+		getDirectoryField().setText(path);
+	}
+	
+	@EventMethod(Events.TRACKS_LOADED)
+	private void onTracksLoaded(){
+		getCompleteMetadataButton().setEnabled(true);
 	}
 
 	private JMenuBar getMenubar() {

@@ -31,6 +31,9 @@
 		<property name="addLoginWindow" ref="loginWindow" />
 		<property name="addConfigurator" ref="viewEngineConfigurator" />
 	</bean>	
+	<bean id="loginController" class="org.lastfm.controller.LoginController">
+		<property name="addConfigurator" ref="controlEngineConfigurator" />
+	</bean>
 	<bean id="scrobblerController" class="org.lastfm.ScrobblerController">
 		<property name="addHelperScrobbler" ref="helperScrobbler" />
 		<property name="addMainWindow" ref="mainWindow" />

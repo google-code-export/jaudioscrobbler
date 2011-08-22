@@ -22,6 +22,7 @@ import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
+import org.lastfm.event.ValueEvent;
 import org.lastfm.gui.MainWindow;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataBean;
@@ -29,7 +30,6 @@ import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
-import org.lastfm.model.Credentials;
 import org.lastfm.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,7 +55,6 @@ public class ScrobblerController {
 	private Logger log = Logger.getLogger(this.getClass());
 
 	// TODO Change this awful code in order to respect encapsulation
-	LoginController loginController = new LoginController();;
 	List<Metadata> metadataList;
 	MusicBrainzService service = new MusicBrainzService();
 
@@ -82,36 +81,16 @@ public class ScrobblerController {
 	};
 
 	@SuppressWarnings("unused")
-	@ActionMethod(Actions.LOGIN_ID)
-	private void login(Credentials credentials) {
-		int result = ApplicationState.ERROR;
-		String username = credentials.getUsername();
-		String password = credentials.getPassword();
-		try {
-			result = loginController.login(username, password);
-			if (result == ApplicationState.OK) {
-				ApplicationState.username = username;
-				ApplicationState.password = password;
-				configurator.getControlEngine().fireEvent(Events.LOGGED);
-			} else {
-				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
-			}
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-		}
-	}
-	
-	@SuppressWarnings("unused")
 	@ActionMethod(Actions.GET_METADATA)
 	private void showMetadata() {
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		int selection = fileChooser.showOpenDialog(mainWindow.getPanel());
+		int selection = fileChooser.showOpenDialog(null);
 		if (selection == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			mainWindow.getDirectoryField().setText(file.getAbsolutePath());
+			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(file.getAbsolutePath()));
 			try {
 				showFiles(file);
-				mainWindow.getCompleteMetadataButton().setEnabled(true);
+				configurator.getControlEngine().fireEvent(Events.LOADED);
 			} catch (IOException e) {
 				handleException(e);
 			} catch (TagException e) {

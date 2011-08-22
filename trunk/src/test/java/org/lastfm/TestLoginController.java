@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 public class TestLoginController {
 	@InjectMocks
-	LoginController controller = new LoginController();
+	LastFMAuthenticator controller = new LastFMAuthenticator();
 
 	@Mock
 	private Scrobbler scrobbler;
