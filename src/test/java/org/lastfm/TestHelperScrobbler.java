@@ -47,7 +47,7 @@ public class TestHelperScrobbler {
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
-		ApplicationState.userName = "josdem";
+		ApplicationState.username = "josdem";
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class TestHelperScrobbler {
 
 	@Test
 	public void shouldFailHandShakeWhenSendAnScrobbler() throws Exception {
-		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.userName)).thenReturn(scrobbler);
+		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username)).thenReturn(scrobbler);
 		when(responseStatus.getStatus()).thenReturn(ResponseStatus.FAILED);
 		when(scrobbler.handshake(ApplicationState.password)).thenReturn(responseStatus);
 		setExpectations();
@@ -126,7 +126,7 @@ public class TestHelperScrobbler {
 	}
 
 	private void setHandshakeExpectations() throws IOException {
-		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.userName)).thenReturn(scrobbler);
+		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username)).thenReturn(scrobbler);
 		when(responseStatus.getStatus()).thenReturn(ResponseStatus.OK);
 		when(scrobbler.handshake(ApplicationState.password)).thenReturn(responseStatus);
 	}
@@ -189,11 +189,11 @@ public class TestHelperScrobbler {
 	
 	@Test
 	public void shouldReturnIfNoLogin() throws Exception {
-		ApplicationState.userName = "";
+		ApplicationState.username = "";
 		setMetadataTrackExpectations();
 		
 		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata));
-		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.userName);
+		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username);
 	}
 	
 

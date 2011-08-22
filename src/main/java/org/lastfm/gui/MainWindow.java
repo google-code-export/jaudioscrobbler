@@ -24,8 +24,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 
+import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ViewEngineConfigurator;
+import org.lastfm.event.EventMethod;
+import org.lastfm.event.Events;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -85,6 +88,19 @@ public class MainWindow {
 	private void doLayout() {
 		registerKeyStrokeAction();
 		getFrame();
+	}
+	
+	@SuppressWarnings("unused")
+	@EventMethod(Events.USER_LOGGED)
+	private void onUserLogged(){
+		getLoginLabel().setText(ApplicationState.LOGGED_AS + ApplicationState.username);
+		getSendButton().setEnabled(true);
+	}
+	
+	@SuppressWarnings("unused")
+	@EventMethod(Events.USER_LOGIN_FAILED)
+	private void onUserLoginFailed(){
+		getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 	}
 
 	private JMenuBar getMenubar() {

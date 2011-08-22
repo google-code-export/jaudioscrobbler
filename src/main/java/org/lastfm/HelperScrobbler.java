@@ -28,10 +28,10 @@ public class HelperScrobbler {
 	private Log log = LogFactory.getLog(this.getClass()); 
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
-		if(StringUtils.isEmpty(ApplicationState.userName)){
+		if(StringUtils.isEmpty(ApplicationState.username)){
 			return ApplicationState.LOGGED_OUT;
 		}
-		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.userName);
+		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username);
 		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
 
 		if (status.getStatus() == ResponseStatus.OK) {

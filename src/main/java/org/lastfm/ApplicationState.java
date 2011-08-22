@@ -8,7 +8,7 @@ package org.lastfm;
  */
 
 public class ApplicationState {
-	public static String userName;
+	public static String username;
 	public static String password;
 	public static int ERROR = -1;
 	public static int OK = 0;

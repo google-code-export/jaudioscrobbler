@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ViewEngineConfigurator;
+import org.lastfm.event.EventMethod;
+import org.lastfm.event.Events;
 import org.lastfm.model.Credentials;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -61,6 +63,12 @@ public class LoginWindow {
 				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new Credentials(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
+	}
+	
+	@SuppressWarnings("unused")
+	@EventMethod(Events.USER_LOGGED)
+	private void onUserLogged(){
+		this.getFrame().dispose();
 	}
 	
 	private JPanel getPanel() {
