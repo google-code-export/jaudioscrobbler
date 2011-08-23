@@ -8,6 +8,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -23,12 +24,19 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.SwingWorker;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
+import org.lastfm.action.ResponseCallback;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
+import org.lastfm.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -61,7 +69,7 @@ public class MainWindow {
 	JButton completeMetadataButton;
 
 	JTextField directorySelected;
-	
+
 	private JPanel bottomPanel;
 	public JTable descriptionTable;
 
@@ -76,17 +84,17 @@ public class MainWindow {
 	private JScrollPane scrollPane;
 	private ViewEngineConfigurator configurator;
 	private LoginWindow loginWindow;
-	
 
 	public MainWindow() {
 		doLayout();
+		getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 	}
-	
+
 	@Autowired
 	public void setAddLoginWindow(LoginWindow loginWindow) {
 		this.loginWindow = loginWindow;
 	}
-	
+
 	@Autowired
 	public void setAddConfigurator(ViewEngineConfigurator configurator) {
 		this.configurator = configurator;
@@ -96,30 +104,55 @@ public class MainWindow {
 		registerKeyStrokeAction();
 		getFrame();
 	}
-	
+
 	@EventMethod(Events.USER_LOGGED)
-	private void onUserLogged(){
+	private void onUserLogged() {
 		getLoginLabel().setText(ApplicationState.LOGGED_AS + ApplicationState.username);
 		getSendButton().setEnabled(true);
 	}
-	
+
 	@EventMethod(Events.USER_LOGIN_FAILED)
-	private void onUserLoginFailed(){
+	private void onUserLoginFailed() {
 		getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 	}
-	
+
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED)
-	private void onMusicDirectorySelected(String path){
+	private void onMusicDirectorySelected(String path) {
 		getDirectoryField().setText(path);
 	}
-	
+
 	@EventMethod(Events.TRACKS_LOADED)
-	private void onTracksLoaded(){
+	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
 	}
 
+	@EventMethod(Events.READY_TO_COMPLETE_METADATA)
+	private void onReadyToCompleteMetadata() {
+		getProgressBar().setValue(0);
+		getProgressBar().setVisible(true);
+	}
+
+	@EventMethod(Events.LOAD_METADATA)
+	private void onLoadMetadata(Metadata metadata) {
+		JTable descriptionTable = getDescriptionTable();
+		int row = descriptionTable.getRowCount() - 1;
+		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+		model.addRow(new Object[] { "", "", "", "", "", "" });
+		descriptionTable.setValueAt(metadata.getArtist(), row, 0);
+		descriptionTable.setValueAt(metadata.getTitle(), row, 1);
+		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
+		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
+		descriptionTable.setValueAt(metadata.getLength(), row, 4);
+		descriptionTable.setValueAt("Ready", row, 5);
+	}
+
+	@EventMethod(Events.OPEN_ERROR)
+	private void onOpenError() {
+		getLabel().setText(ApplicationState.OPEN_ERROR);
+	}
+
 	private JMenuBar getMenubar() {
-		if(menuBar == null){
+		if (menuBar == null) {
 			menuBar = new JMenuBar();
 			menuBar.add(getMenu());
 		}
@@ -127,23 +160,21 @@ public class MainWindow {
 	}
 
 	private JMenu getMenu() {
-		if(menu == null){
+		if (menu == null) {
 			menu = new JMenu(JMENU_LABEL);
 			menu.setMnemonic(KeyEvent.VK_L);
 			menu.add(getMenuItem());
 		}
 		return menu;
 	}
-	
-	
 
 	private JMenuItem getMenuItem() {
-		if(menuItem == null){
+		if (menuItem == null) {
 			menuItem = new JMenuItem(JMENU_ITEM_LABEL);
 			menuItem.setName(LOGIN_MENU_ITEM);
-			
+
 			menuItem.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					loginWindow.getFrame().setLocationRelativeTo(getFrame());
@@ -155,7 +186,7 @@ public class MainWindow {
 	}
 
 	private JPanel getBottomPanel() {
-		if(bottomPanel == null){
+		if (bottomPanel == null) {
 			bottomPanel = new JPanel();
 			bottomPanel.add(getLabel());
 			bottomPanel.add(getDirectoryField());
@@ -178,7 +209,7 @@ public class MainWindow {
 	}
 
 	public JPanel getPanel() {
-		if(panel == null){
+		if (panel == null) {
 			panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			panel.add(getTopPanel(), BorderLayout.NORTH);
@@ -188,9 +219,8 @@ public class MainWindow {
 		return panel;
 	}
 
-	
 	private JPanel getTopPanel() {
-		if(topPanel == null){
+		if (topPanel == null) {
 			topPanel = new JPanel();
 			topPanel.add(getLoginLabel());
 		}
@@ -198,7 +228,7 @@ public class MainWindow {
 	}
 
 	public JTextField getDirectoryField() {
-		if(directorySelected == null){
+		if (directorySelected == null) {
 			directorySelected = new JTextField(DIRECTORY_SELECTED_LENGHT);
 			directorySelected.setEnabled(false);
 		}
@@ -206,7 +236,7 @@ public class MainWindow {
 	}
 
 	public JProgressBar getProgressBar() {
-		if(progressBar == null){
+		if (progressBar == null) {
 			progressBar = new JProgressBar();
 			progressBar.setVisible(false);
 		}
@@ -214,29 +244,29 @@ public class MainWindow {
 	}
 
 	public JLabel getLabel() {
-		if(label == null){
+		if (label == null) {
 			label = new JLabel(STATUS_LABEL);
 		}
 		return label;
 	}
 
 	public JLabel getLoginLabel() {
-		if(loginLabel == null){
+		if (loginLabel == null) {
 			loginLabel = new JLabel(LOG_OUT);
 		}
 		return loginLabel;
 	}
 
 	public JButton getCompleteMetadataButton() {
-		if(completeMetadataButton == null){
+		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(COMPLETE_BUTTON);
 			completeMetadataButton.setEnabled(false);
-			
+
 			completeMetadataButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					configurator.getViewEngine().send(Actions.COMPLETE);
+					 new CompleteWorker();
 				}
 			});
 		}
@@ -244,15 +274,16 @@ public class MainWindow {
 	}
 
 	public JButton getSendButton() {
-		if(sendButton == null){
+		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setEnabled(false);
-			
+
 			sendButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					configurator.getViewEngine().send(Actions.SEND);
+//					configurator.getViewEngine().send(Actions.SEND);
+					new SendWorker();
 				}
 			});
 		}
@@ -260,12 +291,12 @@ public class MainWindow {
 	}
 
 	public JButton getOpenButton() {
-		if(openButton == null){
+		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
 			openButton.setMnemonic(KeyEvent.VK_O);
-			
+
 			openButton.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					configurator.getViewEngine().send(Actions.METADATA);
@@ -274,22 +305,21 @@ public class MainWindow {
 		}
 		return openButton;
 	}
-	
+
 	public JScrollPane getScrollPane() {
-		if(scrollPane == null){
+		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getDescriptionTable());
 		}
 		return scrollPane;
 	}
 
 	public JTable getDescriptionTable() {
-		if(descriptionTable == null){
+		if (descriptionTable == null) {
 			descriptionTable = new DescriptionTable();
 			descriptionTable.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click "
-							+ "on complete button first");
+					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
 				}
 			});
 		}
@@ -297,7 +327,7 @@ public class MainWindow {
 	}
 
 	public Frame getFrame() {
-		if(frame == null){
+		if (frame == null) {
 			frame = new JFrame(APPLICATION_NAME);
 			frame.add(getPanel());
 			frame.setJMenuBar(getMenubar());
@@ -306,6 +336,109 @@ public class MainWindow {
 			frame.setVisible(true);
 		}
 		return frame;
+	}
+
+	private class CompleteWorker {
+		
+		public CompleteWorker() {
+			work();
+		}
+		
+		private void work() {
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
+						List<Metadata> metadataList = ApplicationState.metadataList;
+						for (Metadata metadata : metadataList) {
+							final int i = metadataList.indexOf(metadata);
+							updateStatus(i, metadataList.size());
+							String albumName = getDescriptionTable().getModel().getValueAt(i, 2).toString();
+							if (StringUtils.isEmpty(albumName)) {
+								String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
+								String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
+								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, new ResponseCallback<Metadata>() {
+
+									@Override
+									public void onResponse(Metadata metadata) {
+										if (StringUtils.isNotEmpty(metadata.getAlbum())) {
+											getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
+											getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
+											getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+										}
+									}
+
+								});
+							}
+						}
+					}
+					return true;
+				}
+				
+				@Override
+				public void done() {
+					getLabel().setText(ApplicationState.DONE);
+					getCompleteMetadataButton().setEnabled(true);
+					getOpenButton().setEnabled(true);
+					getDescriptionTable().setEnabled(true);
+					getCompleteMetadataButton().setText(MainWindow.APPLY);
+				}
+			};
+			
+			MainWindow.this.getCompleteMetadataButton().setEnabled(false);
+			getOpenButton().setEnabled(false);
+			swingWorker.execute();
+		}
+	}
+	
+	private void updateStatus(final int i, int size) {
+		int progress = ((i + 1) * 100) / size;
+		getProgressBar().setValue(progress);
+	};
+	
+	private class SendWorker {
+		public SendWorker() {
+			work();
+		}
+
+		private void work() {
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					for (Metadata metadata : ApplicationState.metadataList) {
+						updateStatus(ApplicationState.metadataList.indexOf(metadata), ApplicationState.metadataList.size());
+						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, new ResponseCallback<Metadata>() {
+
+							@Override
+							public void onResponse(Metadata metadata) {
+								if(metadata.getSendStatus() == ApplicationState.ERROR){
+									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
+								}
+							}
+							
+						});
+						
+					}
+					return true;
+				}
+				
+				@Override
+				public void done() {
+					getLabel().setText(ApplicationState.DONE);
+					getCompleteMetadataButton().setEnabled(true);
+					getSendButton().setEnabled(true);
+					getOpenButton().setEnabled(true);
+				}
+			};
+			swingWorker.execute();
+			getCompleteMetadataButton().setEnabled(false);
+			getSendButton().setEnabled(false);
+			getOpenButton().setEnabled(false);
+			getProgressBar().setVisible(true);
+			getLabel().setText(ApplicationState.WORKING);
+		}
 	}
 
 	public class ClickAction extends AbstractAction {
@@ -320,4 +453,20 @@ public class MainWindow {
 			button.doClick();
 		}
 	}
+	
+	class DescriptionTableModelListener implements TableModelListener {
+
+		@Override
+		public void tableChanged(TableModelEvent e) {
+			if (MainWindow.this.getCompleteMetadataButton().getText().equals(MainWindow.APPLY)
+					&& e.getColumn() != ApplicationState.STATUS_COLUMN) {
+				int lastRow = e.getLastRow();
+				DefaultTableModel model = (DefaultTableModel) e.getSource();
+				String artist = (String) model.getValueAt(lastRow, 0);
+				String trackName = (String) model.getValueAt(lastRow, 1);
+				String album = (String) model.getValueAt(lastRow, 2);
+			}
+		}
+	}
+
 }

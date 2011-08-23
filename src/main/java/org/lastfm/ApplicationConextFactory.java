@@ -6,7 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
- * @understands a class who knows how to get the application context from srping
+ * @understands a class who knows how to get the application context from spring
  */
 
 public class ApplicationConextFactory {

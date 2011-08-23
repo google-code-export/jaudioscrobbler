@@ -1,5 +1,9 @@
 package org.lastfm;
 
+import java.util.List;
+
+import org.lastfm.metadata.Metadata;
+
 
 /**
  * 
@@ -13,6 +17,7 @@ public class ApplicationState {
 	public static int ERROR = -1;
 	public static int OK = 0;
 	public static int FAILURE = 2;
+	public static List<Metadata> metadataList;
 	
 	public static final String LOGIN_FAIL = "Login fail";
 	public static final String LOGGED_AS = "Logged as : ";

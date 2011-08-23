@@ -34,9 +34,11 @@
 	<bean id="loginController" class="org.lastfm.controller.LoginController">
 		<property name="addConfigurator" ref="controlEngineConfigurator" />
 	</bean>
-	<bean id="scrobblerController" class="org.lastfm.ScrobblerController">
-		<property name="addHelperScrobbler" ref="helperScrobbler" />
-		<property name="addMainWindow" ref="mainWindow" />
+	<bean id="metadataController" class="org.lastfm.controller.MetadataController">
 		<property name="addConfigurator" ref="controlEngineConfigurator" />
+	</bean>
+	<bean id="completeController" class="org.lastfm.controller.CompleteController" />
+	<bean id="scrobblerController" class="org.lastfm.controller.ScrobblerController">
+		<property name="addHelperScrobbler" ref="helperScrobbler" />
 	</bean>
 </beans>
