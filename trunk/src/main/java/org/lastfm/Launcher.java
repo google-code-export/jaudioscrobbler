@@ -7,6 +7,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.control.DefaultEngine;
+import org.lastfm.controller.ScrobblerController;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**

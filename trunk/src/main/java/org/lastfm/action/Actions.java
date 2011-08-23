@@ -2,6 +2,7 @@ package org.lastfm.action;
 
 import static org.lastfm.action.ActionType.cm;
 
+import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Credentials;
 
 public interface Actions {
@@ -12,9 +13,9 @@ public interface Actions {
 	ActionType<EmptyAction> METADATA = cm(GET_METADATA);
 	
 	String SEND_METADATA = "sendMetadata";
-	ActionType<EmptyAction> SEND = cm(SEND_METADATA);
+	ActionType<RequestAction<Void, Metadata>> SEND = cm(SEND_METADATA);
 	
 	String COMPLETE_METADATA = "completeMetadata";
-	ActionType<EmptyAction> COMPLETE = cm(COMPLETE_METADATA);
+	ActionType<RequestAction<Void, Metadata>> COMPLETE = cm(COMPLETE_METADATA);
 	
 }
