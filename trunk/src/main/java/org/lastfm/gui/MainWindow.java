@@ -81,23 +81,16 @@ public class MainWindow {
 	private JMenuItem menuItem;
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
-	private LoginWindow loginWindow;
-	private ViewEngineConfigurator configurator;
 	private Log log = LogFactory.getLog(this.getClass());
+	
+	@Autowired
+	private LoginWindow loginWindow;
+	@Autowired
+	private ViewEngineConfigurator configurator;
 
 	public MainWindow() {
 		doLayout();
 		getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
-	}
-
-	@Autowired
-	public void setAddLoginWindow(LoginWindow loginWindow) {
-		this.loginWindow = loginWindow;
-	}
-
-	@Autowired
-	public void setAddConfigurator(ViewEngineConfigurator configurator) {
-		this.configurator = configurator;
 	}
 
 	private void doLayout() {

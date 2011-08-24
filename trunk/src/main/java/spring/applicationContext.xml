@@ -10,6 +10,8 @@
            http://www.springframework.org/schema/util/spring-util-2.5.xsd
            http://www.springframework.org/schema/task
            http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+           
+    <context:component-scan base-package="org.lastfm" />       
 	
 	<bean class="org.lastfm.action.control.DefaultEngine" id="applicationEngine" />
 	<bean class="org.lastfm.action.control.ViewEngineConfigurator" id="viewEngineConfigurator">
@@ -23,22 +25,12 @@
 		<constructor-arg ref="controlEngineConfigurator" />
 	</bean>
 	
-	<bean id="helperScrobbler" class="org.lastfm.HelperScrobbler"/>
-	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow">
-		<property name="addConfigurator" ref="viewEngineConfigurator" />
-	</bean>
-	<bean id="mainWindow" class="org.lastfm.gui.MainWindow">
-		<property name="addLoginWindow" ref="loginWindow" />
-		<property name="addConfigurator" ref="viewEngineConfigurator" />
-	</bean>	
-	<bean id="loginController" class="org.lastfm.controller.LoginController">
-		<property name="addConfigurator" ref="controlEngineConfigurator" />
-	</bean>
-	<bean id="metadataController" class="org.lastfm.controller.MetadataController">
-		<property name="addConfigurator" ref="controlEngineConfigurator" />
-	</bean>
+	<bean id="scrobblerHelper" class="org.lastfm.helper.ScrobblerHelper"/>
+	<bean id="metadataExtractor" class="org.lastfm.controller.service.MetadataExtractor" />
+	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow" />
+	<bean id="mainWindow" class="org.lastfm.gui.MainWindow" />
+	<bean id="loginController" class="org.lastfm.controller.LoginController" />
+	<bean id="metadataController" class="org.lastfm.controller.MetadataController" />
 	<bean id="completeController" class="org.lastfm.controller.CompleteController" />
-	<bean id="scrobblerController" class="org.lastfm.controller.ScrobblerController">
-		<property name="addHelperScrobbler" ref="helperScrobbler" />
-	</bean>
+	<bean id="scrobblerController" class="org.lastfm.controller.ScrobblerController" />
 </beans>

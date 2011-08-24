@@ -5,9 +5,9 @@ import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
-import org.lastfm.HelperScrobbler;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.RequestMethod;
+import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,17 +19,13 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class ScrobblerController {
-	private HelperScrobbler helperScrobbler;
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
-	public void setAddHelperScrobbler(HelperScrobbler helperScrobbler) {
-		this.helperScrobbler = helperScrobbler;
-	}
+	private ScrobblerHelper helperScrobbler;
 
-	@SuppressWarnings("unused")
 	@RequestMethod(Actions.SEND_METADATA)
-	private Integer sendMetadata(Metadata metadata) {
+	public Integer sendMetadata(Metadata metadata) {
 		int result = ApplicationState.OK;
 		try {
 			result = helperScrobbler.send(metadata);

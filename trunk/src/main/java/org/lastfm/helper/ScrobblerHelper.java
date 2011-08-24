@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -13,6 +13,8 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.ApplicationState;
+import org.lastfm.ScrobblerFactory;
 import org.lastfm.metadata.Metadata;
 
 /**
@@ -20,7 +22,7 @@ import org.lastfm.metadata.Metadata;
  * @understands A class who knows how to send scrobblings
  */
 
-public class HelperScrobbler {
+public class ScrobblerHelper {
 	private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
 	private ScrobblerFactory factory = new ScrobblerFactory();
 	private static final int DELTA = 120;

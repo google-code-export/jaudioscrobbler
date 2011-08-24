@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,20 +12,17 @@ import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
+ * @understands A class who knows how to get Album and track number using MusicBrainz
  */
 
-public class TrackService extends Track {
-	List<Track> trackList;
-	List<Release> release;
-	Map<String, Integer> compilation = new HashMap<String, Integer>();
-	private static final Log log = LogFactory.getLog(TrackService.class);
+public class TrackFinder extends Track {
+	private List<Track> trackList;
+	private List<Release> release;
+	private Map<String, Integer> compilation = new HashMap<String, Integer>();
+	private static final Log log = LogFactory.getLog(TrackFinder.class);
 
-	public String getAlbum(String artistName, String trackName)
-			throws ServerUnavailableException {
-		log.debug("--------------------------------------------");
+	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {
 		String album = "";
 		trackList = Track.findByTitle(trackName);
 		if (!trackList.isEmpty()) {
@@ -46,7 +43,7 @@ public class TrackService extends Track {
 	}
 
 	public int getTrackNumber(String album) {
-		//TrackList offset starts in 0 
+		// TrackList offset starts in 0
 		return compilation.get(album) + 1;
 	}
 }

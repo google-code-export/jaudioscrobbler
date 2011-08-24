@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.helper.MusicBrainzHelper;
+import org.lastfm.helper.TrackFinder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -17,10 +19,10 @@ import org.mockito.MockitoAnnotations;
 
 public class TestMusicBrainzService {
 	@InjectMocks
-	MusicBrainzService service = new MusicBrainzService();
+	MusicBrainzHelper service = new MusicBrainzHelper();
 	
 	@Mock
-	private TrackService trackService;
+	private TrackFinder trackService;
 	
 	String artistName = "";
 	String trackName = "";

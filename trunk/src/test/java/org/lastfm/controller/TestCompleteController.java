@@ -8,7 +8,7 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
-import org.lastfm.MusicBrainzService;
+import org.lastfm.helper.MusicBrainzHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,7 +23,7 @@ public class TestCompleteController {
 	private CompleteController controller = new CompleteController();
 	
 	@Mock
-	private MusicBrainzService service;
+	private MusicBrainzHelper service;
 	@Mock
 	private Metadata metadata;
 

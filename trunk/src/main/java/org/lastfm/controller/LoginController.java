@@ -23,13 +23,10 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class LoginController {
 	private LastFMAuthenticator lastfmAuthenticator = new LastFMAuthenticator();
-	private ControlEngineConfigurator configurator;
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	@Autowired
-	public void setAddConfigurator(ControlEngineConfigurator configurator) {
-		this.configurator = configurator;
-	}
+	private ControlEngineConfigurator configurator;
 
 	@ActionMethod(Actions.LOGIN_ID)
 	public void login(Credentials credentials) {

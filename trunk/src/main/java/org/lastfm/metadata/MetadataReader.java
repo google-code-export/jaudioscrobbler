@@ -23,7 +23,6 @@ public abstract class MetadataReader {
 	protected Tag tag;
 	protected AudioHeader header;
 	protected Log log = LogFactory.getLog(this.getClass());
-	private File file;
 	
 	public MetadataReader() { 
 		turnOffLogMessages();
@@ -81,7 +80,6 @@ public abstract class MetadataReader {
 	}
 	
 	protected Metadata generateMetadata(File file) throws IOException, MetadataException {
-		this.file = file;
 		Metadata metadata = new Metadata();
 		metadata.setArtwork(getArtwork());
 		metadata.setTitle(getTitle());
@@ -91,7 +89,6 @@ public abstract class MetadataReader {
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setBitRate(getBitRate());
-		metadata.setFile(file);
 		return metadata;
 	}
 }
