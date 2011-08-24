@@ -30,6 +30,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
@@ -84,6 +86,7 @@ public class MainWindow {
 	private JScrollPane scrollPane;
 	private ViewEngineConfigurator configurator;
 	private LoginWindow loginWindow;
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public MainWindow() {
 		doLayout();
@@ -282,7 +285,6 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-//					configurator.getViewEngine().send(Actions.SEND);
 					new SendWorker();
 				}
 			});
@@ -351,17 +353,18 @@ public class MainWindow {
 				protected Boolean doInBackground() throws Exception {
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
 						List<Metadata> metadataList = ApplicationState.metadataList;
-						for (Metadata metadata : metadataList) {
+						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
 							updateStatus(i, metadataList.size());
 							String albumName = getDescriptionTable().getModel().getValueAt(i, 2).toString();
 							if (StringUtils.isEmpty(albumName)) {
 								String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
 								String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
-								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, new ResponseCallback<Metadata>() {
+								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<Integer>() {
 
 									@Override
-									public void onResponse(Metadata metadata) {
+									public void onResponse(Integer reponse) {
+										log.info("response on complete " + metadata.getTitle() + ": " + reponse);
 										if (StringUtils.isNotEmpty(metadata.getAlbum())) {
 											getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 											getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
@@ -407,13 +410,14 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					for (Metadata metadata : ApplicationState.metadataList) {
+					for (final Metadata metadata : ApplicationState.metadataList) {
 						updateStatus(ApplicationState.metadataList.indexOf(metadata), ApplicationState.metadataList.size());
-						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, new ResponseCallback<Metadata>() {
+						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<Integer>() {
 
 							@Override
-							public void onResponse(Metadata metadata) {
-								if(metadata.getSendStatus() == ApplicationState.ERROR){
+							public void onResponse(Integer reponse) {
+								log.info("response on sending " + metadata.getTitle() + ": " + reponse);
+								if(reponse == ApplicationState.ERROR){
 									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
 								}
 							}

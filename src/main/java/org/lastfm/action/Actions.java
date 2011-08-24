@@ -13,9 +13,9 @@ public interface Actions {
 	ActionType<EmptyAction> METADATA = cm(GET_METADATA);
 	
 	String SEND_METADATA = "sendMetadata";
-	ActionType<RequestAction<Void, Metadata>> SEND = cm(SEND_METADATA);
+	ActionType<RequestAction<Metadata, Integer>> SEND = cm(SEND_METADATA);
 	
 	String COMPLETE_METADATA = "completeMetadata";
-	ActionType<RequestAction<Void, Metadata>> COMPLETE = cm(COMPLETE_METADATA);
+	ActionType<RequestAction<Metadata, Integer>> COMPLETE = cm(COMPLETE_METADATA);
 	
 }

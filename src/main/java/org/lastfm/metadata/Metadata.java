@@ -13,7 +13,6 @@ public class Metadata {
 	private int length;
 	private int bitRate;
 	private File file;
-	private int sendStatus;
 	
 	public File getFile() {
 		return file;
@@ -70,11 +69,5 @@ public class Metadata {
 	}
 	public void setFile(File file) {
 		this.file = file;
-	}
-	public void setSendStatus(int sendStatus) {
-		this.sendStatus = sendStatus;
-	}
-	public int getSendStatus() {
-		return this.sendStatus;
 	}
 }
