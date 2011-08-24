@@ -52,29 +52,26 @@ public class MainWindow {
 	private static final String JMENU_LABEL = "Last.fm";
 	private static final int DIRECTORY_SELECTED_LENGHT = 20;
 	private static final String STATUS_LABEL = "Status";
-	static final String CTRL_O = "CTRL+O";
-	static final String ENTER = "ENTER";
+	private static final String CTRL_O = "CTRL+O";
+	private static final String ENTER = "ENTER";
 	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String APPLICATION_NAME = "JAudioScrobbler";
 	private static final String LOG_OUT = "logged out";
-	public static final String COMPLETE_BUTTON = "Complete";
-	public static final String APPLY = "Apply";
+	private static final String COMPLETE_BUTTON = "Complete";
+	private static final String APPLY = "Apply";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
+	
 	private JFrame frame;
 	private JPanel panel;
-
-	JButton openButton;
-	JButton sendButton;
-	JButton completeMetadataButton;
-
-	JTextField directorySelected;
-
+	private JButton openButton;
+	private JButton sendButton;
+	private JButton completeMetadataButton;
+	private JTextField directorySelected;
 	private JPanel bottomPanel;
-	public JTable descriptionTable;
-
+	private JTable descriptionTable;
 	private JProgressBar progressBar;
 	private JLabel label;
 	private JLabel loginLabel;
@@ -82,10 +79,10 @@ public class MainWindow {
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
-	InputMap inputMap;
+	private InputMap inputMap;
 	private JScrollPane scrollPane;
-	private ViewEngineConfigurator configurator;
 	private LoginWindow loginWindow;
+	private ViewEngineConfigurator configurator;
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public MainWindow() {
@@ -211,7 +208,7 @@ public class MainWindow {
 		getOpenButton().getActionMap().put(ENTER, new ClickAction(getOpenButton()));
 	}
 
-	public JPanel getPanel() {
+	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setLayout(new BorderLayout());
@@ -230,7 +227,7 @@ public class MainWindow {
 		return topPanel;
 	}
 
-	public JTextField getDirectoryField() {
+	private JTextField getDirectoryField() {
 		if (directorySelected == null) {
 			directorySelected = new JTextField(DIRECTORY_SELECTED_LENGHT);
 			directorySelected.setEnabled(false);
@@ -238,7 +235,7 @@ public class MainWindow {
 		return directorySelected;
 	}
 
-	public JProgressBar getProgressBar() {
+	private JProgressBar getProgressBar() {
 		if (progressBar == null) {
 			progressBar = new JProgressBar();
 			progressBar.setVisible(false);
@@ -246,21 +243,21 @@ public class MainWindow {
 		return progressBar;
 	}
 
-	public JLabel getLabel() {
+	private JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel(STATUS_LABEL);
 		}
 		return label;
 	}
 
-	public JLabel getLoginLabel() {
+	private JLabel getLoginLabel() {
 		if (loginLabel == null) {
 			loginLabel = new JLabel(LOG_OUT);
 		}
 		return loginLabel;
 	}
 
-	public JButton getCompleteMetadataButton() {
+	private JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(COMPLETE_BUTTON);
 			completeMetadataButton.setEnabled(false);
@@ -276,7 +273,7 @@ public class MainWindow {
 		return completeMetadataButton;
 	}
 
-	public JButton getSendButton() {
+	private JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setEnabled(false);
@@ -292,7 +289,7 @@ public class MainWindow {
 		return sendButton;
 	}
 
-	public JButton getOpenButton() {
+	private JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
 			openButton.setMnemonic(KeyEvent.VK_O);
@@ -308,14 +305,14 @@ public class MainWindow {
 		return openButton;
 	}
 
-	public JScrollPane getScrollPane() {
+	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getDescriptionTable());
 		}
 		return scrollPane;
 	}
 
-	public JTable getDescriptionTable() {
+	private JTable getDescriptionTable() {
 		if (descriptionTable == null) {
 			descriptionTable = new DescriptionTable();
 			descriptionTable.addMouseListener(new MouseAdapter() {
@@ -328,7 +325,7 @@ public class MainWindow {
 		return descriptionTable;
 	}
 
-	public Frame getFrame() {
+	private Frame getFrame() {
 		if (frame == null) {
 			frame = new JFrame(APPLICATION_NAME);
 			frame.add(getPanel());
@@ -423,7 +420,6 @@ public class MainWindow {
 							}
 							
 						});
-						
 					}
 					return true;
 				}
@@ -445,7 +441,7 @@ public class MainWindow {
 		}
 	}
 
-	public class ClickAction extends AbstractAction {
+	private class ClickAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private JButton button;
 
@@ -458,7 +454,7 @@ public class MainWindow {
 		}
 	}
 	
-	class DescriptionTableModelListener implements TableModelListener {
+	private class DescriptionTableModelListener implements TableModelListener {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {

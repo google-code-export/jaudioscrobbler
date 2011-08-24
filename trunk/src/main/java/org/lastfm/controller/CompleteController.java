@@ -21,15 +21,16 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 public class CompleteController {
 	private Log log = LogFactory.getLog(this.getClass());
 	private MusicBrainzService service = new MusicBrainzService();
-
 	
 	@RequestMethod(Actions.COMPLETE_METADATA)
 	public Integer completeMetadata(Metadata metadata){
 		try {
 			String album = service.getAlbum(metadata.getArtist(), metadata.getTitle());
-			log.info("Album found: " + album + " for track: " + metadata.getTitle());
 			if(StringUtils.isNotEmpty(album)){
+				log.info("Album found: " + album + " for track: " + metadata.getTitle());
 				metadata.setAlbum(album);
+			} else {
+				log.info("No album found for track: " + metadata.getTitle());
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
