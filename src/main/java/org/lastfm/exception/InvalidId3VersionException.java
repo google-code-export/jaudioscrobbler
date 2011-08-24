@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.exception;
 
 public class InvalidId3VersionException extends Exception {
 

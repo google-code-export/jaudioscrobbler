@@ -30,17 +30,14 @@ public class LoginWindow {
 	private JTextField usernameTextfield;
 	private JTextField passwordTextfield;
 	private JFrame frame;
-	private ViewEngineConfigurator configurator;
 	private JPanel panel;
-	private static final String USERNAME_TEXTFIELD_NAME = "userName";
+	private static final String USERNAME_TEXTFIELD_NAME = "username";
 	private static final String PASSWORD_TEXTFIELD_NAME = "password";
 	private static final String SEND_BUTTON_LABEL = "Login";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	
 	@Autowired
-	public void setAddConfigurator(ViewEngineConfigurator configurator) {
-		this.configurator = configurator;
-	}
+	private ViewEngineConfigurator configurator;
 	
 	public LoginWindow() {
 		doLayout();

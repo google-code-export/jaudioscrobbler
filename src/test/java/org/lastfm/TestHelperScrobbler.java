@@ -18,6 +18,7 @@ import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,7 +30,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestHelperScrobbler {
 	@InjectMocks
-	private HelperScrobbler helperScrobbler = new HelperScrobbler();
+	private ScrobblerHelper helperScrobbler = new ScrobblerHelper();
 	
 	@Mock
 	private Metadata metadata;
