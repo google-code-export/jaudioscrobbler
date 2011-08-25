@@ -1,14 +1,11 @@
 package org.lastfm.helper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
-import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
 
 /**
@@ -18,23 +15,23 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 public class TrackFinder extends Track {
 	private List<Track> trackList;
-	private List<Release> release;
-	private Map<String, Integer> compilation = new HashMap<String, Integer>();
+	private int tracknumber;
+	private TrackHelper trackHelper = new TrackHelper();
 	private static final Log log = LogFactory.getLog(TrackFinder.class);
 
-	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {
-		String album = "";
-		trackList = Track.findByTitle(trackName);
+	public String getAlbum(String artist, String trackname) throws ServerUnavailableException {
+		String album = new String();
+		trackList = trackHelper.findByTitle(trackname);
 		if (!trackList.isEmpty()) {
-			log.debug("Getting album for track: " + trackName);
+			log.debug("Getting album for track: " + trackname);
 			for (Track track : trackList) {
-				if (artistName.equals(track.getArtist().getName())) {
-					log.debug("Artist: " + track.getArtist().getName());
-					release = track.getReleases().getReleases();
-					String trackNumber = (release.get(0).getTrackList().getOffset()).trim();
+				String artistFromMusicBrainz = trackHelper.getArtist(track);
+				if (artist.equals(artistFromMusicBrainz)) {
+					log.debug("Artist: " + artistFromMusicBrainz);
+					String trackNumber = trackHelper.getTrackNumber(track);
 					log.debug("trackNumber: " + Integer.parseInt(trackNumber) + 1);
-					album = release.get(0).getTitle();
-					compilation.put(album, Integer.parseInt(trackNumber));
+					tracknumber = Integer.parseInt(trackNumber) + 1;
+					album = trackHelper.getAlbum(track); 
 					break;
 				}
 			}
@@ -43,7 +40,6 @@ public class TrackFinder extends Track {
 	}
 
 	public int getTrackNumber(String album) {
-		// TrackList offset starts in 0
-		return compilation.get(album) + 1;
+		return tracknumber;
 	}
 }

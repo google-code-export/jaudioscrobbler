@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.isA;
@@ -18,6 +18,8 @@ import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
+import org.lastfm.ScrobblerFactory;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
@@ -28,7 +30,7 @@ import org.mockito.MockitoAnnotations;
  * @author josdem (joseluis.delacruz@gmail.com)
  */
 
-public class TestHelperScrobbler {
+public class TestScrobblerHelper {
 	@InjectMocks
 	private ScrobblerHelper helperScrobbler = new ScrobblerHelper();
 	

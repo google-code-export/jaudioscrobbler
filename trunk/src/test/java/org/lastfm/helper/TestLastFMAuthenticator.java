@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import static org.junit.Assert.assertEquals;
 
@@ -9,6 +9,9 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
+import org.lastfm.ScrobblerFactory;
+import org.lastfm.helper.LastFMAuthenticator;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,7 +22,7 @@ import static org.mockito.Mockito.*;
  * @author josdem (joseluis.delacruz@gmail.com)
  */
 
-public class TestLoginController {
+public class TestLastFMAuthenticator {
 	@InjectMocks
 	LastFMAuthenticator controller = new LastFMAuthenticator();
 
