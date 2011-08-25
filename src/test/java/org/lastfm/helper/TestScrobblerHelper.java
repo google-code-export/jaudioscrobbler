@@ -19,7 +19,6 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
-import org.lastfm.ScrobblerFactory;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
@@ -37,7 +36,7 @@ public class TestScrobblerHelper {
 	@Mock
 	private Metadata metadata;
 	@Mock
-	private ScrobblerFactory factory;
+	private ScrobblerSingleton factory;
 	@Mock
 	private Map<Metadata, Long> metadataMap;
 	@Mock

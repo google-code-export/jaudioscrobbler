@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.control.DefaultEngine;
 import org.lastfm.controller.ScrobblerController;
+import org.lastfm.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
@@ -44,6 +45,6 @@ public class Launcher {
 	}
 	
 	public static void main(String[] args) {
-		new Launcher(ApplicationConextFactory.getApplicationContext());
+		new Launcher(ApplicationContextSingleton.getApplicationContext());
 	}
 }

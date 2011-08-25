@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
 import org.lastfm.ApplicationState;
-import org.lastfm.ScrobblerFactory;
 
 import net.roarsoftware.lastfm.scrobble.ResponseStatus;
 import net.roarsoftware.lastfm.scrobble.Scrobbler;
@@ -16,7 +15,7 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
  */
 
 public class LastFMAuthenticator {
-	private ScrobblerFactory factory = new ScrobblerFactory();
+	private ScrobblerSingleton factory = new ScrobblerSingleton();
 	
 	public int login(String username, String password) throws IOException {
 		if(StringUtils.isEmpty(username) || StringUtils.isEmpty(password)){
