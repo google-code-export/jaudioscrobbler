@@ -10,7 +10,6 @@ import net.roarsoftware.lastfm.scrobble.Scrobbler;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
-import org.lastfm.ScrobblerFactory;
 import org.lastfm.helper.LastFMAuthenticator;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -29,7 +28,7 @@ public class TestLastFMAuthenticator {
 	@Mock
 	private Scrobbler scrobbler;
 	@Mock
-	private ScrobblerFactory factory;
+	private ScrobblerSingleton factory;
 	@Mock
 	private ResponseStatus status;
 	

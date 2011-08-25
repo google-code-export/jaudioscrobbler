@@ -14,7 +14,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
-import org.lastfm.ScrobblerFactory;
 import org.lastfm.metadata.Metadata;
 
 /**
@@ -24,7 +23,7 @@ import org.lastfm.metadata.Metadata;
 
 public class ScrobblerHelper {
 	private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
-	private ScrobblerFactory factory = new ScrobblerFactory();
+	private ScrobblerSingleton factory = new ScrobblerSingleton();
 	private static final int DELTA = 120;
 
 	private Log log = LogFactory.getLog(this.getClass()); 

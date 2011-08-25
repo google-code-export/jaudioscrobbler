@@ -6,18 +6,18 @@ import org.lastfm.metadata.Metadata;
 
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
- *
+ * @understands define ALL constants on JaudioScrobbler
  */
 
 public class ApplicationState {
-	public static String username;
-	public static String password;
 	public static int ERROR = -1;
 	public static int OK = 0;
 	public static int FAILURE = 2;
+
 	public static List<Metadata> metadataList;
+	public static String username;
+	public static String password;
 	
 	public static final String LOGIN_FAIL = "Login fail";
 	public static final String LOGGED_AS = "Logged as : ";

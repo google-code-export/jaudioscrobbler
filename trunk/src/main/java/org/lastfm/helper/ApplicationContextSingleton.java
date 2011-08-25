@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -9,7 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * @understands a class who knows how to get the application context from spring
  */
 
-public class ApplicationConextFactory {
+public class ApplicationContextSingleton {
 	private static ConfigurableApplicationContext applicationContext;
 	
 	public static ConfigurableApplicationContext getApplicationContext(){
