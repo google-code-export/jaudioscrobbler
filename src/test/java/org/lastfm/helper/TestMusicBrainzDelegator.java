@@ -1,4 +1,4 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.never;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.MusicBrainzHelper;
+import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.helper.TrackFinder;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,9 +17,9 @@ import org.mockito.MockitoAnnotations;
  * @author josdem (joseluis.delacruz@gmail.com)
  */
 
-public class TestMusicBrainzService {
+public class TestMusicBrainzDelegator {
 	@InjectMocks
-	MusicBrainzHelper service = new MusicBrainzHelper();
+	MusicBrainzDelegator service = new MusicBrainzDelegator();
 	
 	@Mock
 	private TrackFinder trackService;

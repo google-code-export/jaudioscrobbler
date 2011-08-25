@@ -9,7 +9,7 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
  * @understands A class who knows how to get Album and track number using MusicBrainz in the top abstraction level
  */
 
-public class MusicBrainzHelper {
+public class MusicBrainzDelegator {
 	private TrackFinder trackFinder = new TrackFinder();
 
 	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {

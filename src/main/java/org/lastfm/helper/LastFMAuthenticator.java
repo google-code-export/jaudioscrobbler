@@ -1,8 +1,10 @@
-package org.lastfm;
+package org.lastfm.helper;
 
 import java.io.IOException;
 
 import org.apache.commons.lang.StringUtils;
+import org.lastfm.ApplicationState;
+import org.lastfm.ScrobblerFactory;
 
 import net.roarsoftware.lastfm.scrobble.ResponseStatus;
 import net.roarsoftware.lastfm.scrobble.Scrobbler;

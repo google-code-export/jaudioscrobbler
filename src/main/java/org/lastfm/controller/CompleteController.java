@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.RequestMethod;
-import org.lastfm.helper.MusicBrainzHelper;
+import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.springframework.stereotype.Controller;
 
@@ -20,7 +20,7 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 @Controller
 public class CompleteController {
 	private Log log = LogFactory.getLog(this.getClass());
-	private MusicBrainzHelper service = new MusicBrainzHelper();
+	private MusicBrainzDelegator service = new MusicBrainzDelegator();
 	
 	@RequestMethod(Actions.COMPLETE_METADATA)
 	public Integer completeMetadata(Metadata metadata){
