@@ -20,8 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.control.ControlEngine;
-import org.lastfm.action.control.ControlEngineConfigurator;
-import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -48,8 +46,6 @@ public class TestScrobblerHelper {
 	@Mock
 	private ResponseStatus responseStatus;
 	@Mock
-	private ControlEngineConfigurator configurator;
-	@Mock
 	private ControlEngine controlEngine;
 	@Mock
 	private User currentUser;
@@ -64,8 +60,8 @@ public class TestScrobblerHelper {
 		MockitoAnnotations.initMocks(this);
 		when(currentUser.getUsername()).thenReturn(username);
 		when(currentUser.getPassword()).thenReturn(password);
-		when(configurator.getControlEngine()).thenReturn(controlEngine);
 		when(controlEngine.get(Model.CURRENT_USER)).thenReturn(currentUser);
+		helperScrobbler.setControlEngine(controlEngine);
 	}
 
 	@Test
@@ -74,7 +70,7 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 
-		result = helperScrobbler.send(metadata, configurator);
+		result = helperScrobbler.send(metadata);
 		
 		notSendToScrobblingMapAssertion();
 	}
@@ -85,7 +81,7 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("");
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 
-		result = helperScrobbler.send(metadata, configurator);
+		result = helperScrobbler.send(metadata);
 		
 		notSendToScrobblingMapAssertion();
 	}
@@ -102,7 +98,7 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
 		when(metadata.getTitle()).thenReturn("");
 
-		result = helperScrobbler.send(metadata, configurator);
+		result = helperScrobbler.send(metadata);
 		notSendToScrobblingMapAssertion();
 	}
 
@@ -114,7 +110,7 @@ public class TestScrobblerHelper {
 		setExpectations();
 		setMetadataTrackExpectations();
 
-		result = helperScrobbler.send(metadata, configurator);
+		result = helperScrobbler.send(metadata);
 		
 		verify(metadataMap).size();
 		verify(metadataMap).put(isA(Metadata.class), isA(Long.class));
@@ -134,7 +130,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenReturn(sctrobblingStatus);
 		
-		assertEquals(ApplicationState.FAILURE, helperScrobbler.send(metadata, configurator));
+		assertEquals(ApplicationState.FAILURE, helperScrobbler.send(metadata));
 	}
 
 	private void setMetadataTrackExpectations() {
@@ -162,7 +158,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenReturn(sctrobblingStatus);
 		
-		assertEquals(ApplicationState.OK, helperScrobbler.send(metadata, configurator));
+		assertEquals(ApplicationState.OK, helperScrobbler.send(metadata));
 	}
 	
 	@Test
@@ -179,7 +175,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenThrow(connectException);
 		
-		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata, configurator));
+		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
 	}
 	
 	private void setExpectations() {
@@ -202,7 +198,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenThrow(unknownHostException);
 		
-		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata, configurator));
+		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
 	}
 	
 	@Test
@@ -210,7 +206,7 @@ public class TestScrobblerHelper {
 		when(currentUser.getUsername()).thenReturn("");
 		setMetadataTrackExpectations();
 		
-		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata, configurator));
+		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata));
 		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username);
 	}
 	

@@ -14,7 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
-import org.lastfm.action.control.ControlEngineConfigurator;
+import org.lastfm.action.control.ControlEngine;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -30,10 +30,10 @@ public class ScrobblerHelper {
 	private static final int DELTA = 120;
 
 	private Log log = LogFactory.getLog(this.getClass());
-	private ControlEngineConfigurator configurator; 
+	private ControlEngine controlEngine; 
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
-		User currentUser = configurator.getControlEngine().get(Model.CURRENT_USER);
+		User currentUser = controlEngine.get(Model.CURRENT_USER);
 		log.info("currentUser is: " + currentUser.getUsername());
 		if(StringUtils.isEmpty(currentUser.getUsername())){
 			return ApplicationState.LOGGED_OUT;
@@ -69,8 +69,7 @@ public class ScrobblerHelper {
 		}
 	}
 
-	public int send(Metadata metadata, ControlEngineConfigurator configurator) throws IOException, InterruptedException {
-		this.configurator = configurator;
+	public int send(Metadata metadata) throws IOException, InterruptedException {
 		int result = ApplicationState.FAILURE;
 		long time = (System.currentTimeMillis() / 1000);
 
@@ -85,5 +84,9 @@ public class ScrobblerHelper {
 			}
 		}
 		return result;
+	}
+
+	public void setControlEngine(ControlEngine controlEngine) {
+		this.controlEngine = controlEngine;
 	}
 }
