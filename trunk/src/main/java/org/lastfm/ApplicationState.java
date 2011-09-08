@@ -16,8 +16,6 @@ public class ApplicationState {
 	public static int FAILURE = 2;
 
 	public static List<Metadata> metadataList;
-	public static String username;
-	public static String password;
 	
 	public static final String LOGIN_FAIL = "Login fail";
 	public static final String LOGGED_AS = "Logged as : ";

@@ -17,7 +17,7 @@ import org.lastfm.action.Actions;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
-import org.lastfm.model.Credentials;
+import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -50,14 +50,14 @@ public class LoginWindow {
 		getSendButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new Credentials(usernameTextfield.getText(), passwordTextfield.getText()));
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
 		
 		getSendButton().addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new Credentials(usernameTextfield.getText(), passwordTextfield.getText()));
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
 	}

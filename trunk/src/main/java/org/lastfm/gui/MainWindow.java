@@ -39,6 +39,7 @@ import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -99,8 +100,8 @@ public class MainWindow {
 	}
 
 	@EventMethod(Events.USER_LOGGED)
-	private void onUserLogged() {
-		getLoginLabel().setText(ApplicationState.LOGGED_AS + ApplicationState.username);
+	private void onUserLogged(User currentUser) {
+		getLoginLabel().setText(ApplicationState.LOGGED_AS + currentUser.getUsername());
 		getSendButton().setEnabled(true);
 	}
 

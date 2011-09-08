@@ -19,8 +19,12 @@ import net.roarsoftware.lastfm.scrobble.Source;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
+import org.lastfm.action.control.ControlEngine;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Model;
+import org.lastfm.model.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -43,13 +47,25 @@ public class TestScrobblerHelper {
 	private Scrobbler scrobbler;
 	@Mock
 	private ResponseStatus responseStatus;
+	@Mock
+	private ControlEngineConfigurator configurator;
+	@Mock
+	private ControlEngine controlEngine;
+	@Mock
+	private User currentUser;
 	
-	int result;
+	private int result;
+	private String username = "josdem";
+	private String password = "password";
+
 	
 	@Before
 	public void setup(){
 		MockitoAnnotations.initMocks(this);
-		ApplicationState.username = "josdem";
+		when(currentUser.getUsername()).thenReturn(username);
+		when(currentUser.getPassword()).thenReturn(password);
+		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		when(controlEngine.get(Model.CURRENT_USER)).thenReturn(currentUser);
 	}
 
 	@Test
@@ -58,7 +74,7 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 
-		result = helperScrobbler.send(metadata);
+		result = helperScrobbler.send(metadata, configurator);
 		
 		notSendToScrobblingMapAssertion();
 	}
@@ -69,7 +85,7 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("");
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 
-		result = helperScrobbler.send(metadata);
+		result = helperScrobbler.send(metadata, configurator);
 		
 		notSendToScrobblingMapAssertion();
 	}
@@ -86,19 +102,19 @@ public class TestScrobblerHelper {
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
 		when(metadata.getTitle()).thenReturn("");
 
-		result = helperScrobbler.send(metadata);
+		result = helperScrobbler.send(metadata, configurator);
 		notSendToScrobblingMapAssertion();
 	}
 
 	@Test
 	public void shouldFailHandShakeWhenSendAnScrobbler() throws Exception {
-		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username)).thenReturn(scrobbler);
+		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username)).thenReturn(scrobbler);
 		when(responseStatus.getStatus()).thenReturn(ResponseStatus.FAILED);
-		when(scrobbler.handshake(ApplicationState.password)).thenReturn(responseStatus);
+		when(scrobbler.handshake(password)).thenReturn(responseStatus);
 		setExpectations();
 		setMetadataTrackExpectations();
 
-		result = helperScrobbler.send(metadata);
+		result = helperScrobbler.send(metadata, configurator);
 		
 		verify(metadataMap).size();
 		verify(metadataMap).put(isA(Metadata.class), isA(Long.class));
@@ -118,7 +134,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenReturn(sctrobblingStatus);
 		
-		assertEquals(ApplicationState.FAILURE, helperScrobbler.send(metadata));
+		assertEquals(ApplicationState.FAILURE, helperScrobbler.send(metadata, configurator));
 	}
 
 	private void setMetadataTrackExpectations() {
@@ -128,9 +144,9 @@ public class TestScrobblerHelper {
 	}
 
 	private void setHandshakeExpectations() throws IOException {
-		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username)).thenReturn(scrobbler);
+		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username)).thenReturn(scrobbler);
 		when(responseStatus.getStatus()).thenReturn(ResponseStatus.OK);
-		when(scrobbler.handshake(ApplicationState.password)).thenReturn(responseStatus);
+		when(scrobbler.handshake(password)).thenReturn(responseStatus);
 	}
 	
 	@Test
@@ -146,7 +162,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenReturn(sctrobblingStatus);
 		
-		assertEquals(ApplicationState.OK, helperScrobbler.send(metadata));
+		assertEquals(ApplicationState.OK, helperScrobbler.send(metadata, configurator));
 	}
 	
 	@Test
@@ -163,7 +179,7 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenThrow(connectException);
 		
-		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
+		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata, configurator));
 	}
 	
 	private void setExpectations() {
@@ -186,16 +202,16 @@ public class TestScrobblerHelper {
 				.getTrackNumber(), Source.USER, metadataMap.get(
 						metadata).longValue())).thenThrow(unknownHostException);
 		
-		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata));
+		assertEquals(ApplicationState.ERROR, helperScrobbler.send(metadata, configurator));
 	}
 	
 	@Test
 	public void shouldReturnIfNoLogin() throws Exception {
-		ApplicationState.username = "";
+		when(currentUser.getUsername()).thenReturn("");
 		setMetadataTrackExpectations();
 		
-		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata));
-		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username);
+		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata, configurator));
+		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username);
 	}
 	
 
