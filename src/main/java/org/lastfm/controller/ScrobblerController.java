@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.RequestMethod;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
@@ -23,12 +24,14 @@ public class ScrobblerController {
 
 	@Autowired
 	private ScrobblerHelper helperScrobbler;
+	@Autowired
+	private ControlEngineConfigurator configurator;
 
 	@RequestMethod(Actions.SEND_METADATA)
 	public Integer sendMetadata(Metadata metadata) {
 		int result = ApplicationState.OK;
 		try {
-			result = helperScrobbler.send(metadata);
+			result = helperScrobbler.send(metadata, configurator);
 			log.info("Sending scrobbling for: " + metadata.getTitle());
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);

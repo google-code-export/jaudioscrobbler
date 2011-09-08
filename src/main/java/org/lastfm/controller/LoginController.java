@@ -9,8 +9,10 @@ import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
+import org.lastfm.event.ValueEvent;
 import org.lastfm.helper.LastFMAuthenticator;
-import org.lastfm.model.Credentials;
+import org.lastfm.model.Model;
+import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -29,16 +31,15 @@ public class LoginController {
 	private ControlEngineConfigurator configurator;
 
 	@ActionMethod(Actions.LOGIN_ID)
-	public void login(Credentials credentials) {
+	public void login(User user) {
 		int result = ApplicationState.ERROR;
-		String username = credentials.getUsername();
-		String password = credentials.getPassword();
+		String username = user.getUsername();
+		String password = user.getPassword();
 		try {
 			result = lastfmAuthenticator.login(username, password);
 			if (result == ApplicationState.OK) {
-				ApplicationState.username = username;
-				ApplicationState.password = password;
-				configurator.getControlEngine().fireEvent(Events.LOGGED);
+				configurator.getControlEngine().set(Model.CURRENT_USER, user, null);
+				configurator.getControlEngine().fireEvent(Events.LOGGED, new ValueEvent<User>(user));
 			} else {
 				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 			}

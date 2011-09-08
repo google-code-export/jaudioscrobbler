@@ -3,11 +3,11 @@ package org.lastfm.action;
 import static org.lastfm.action.ActionType.cm;
 
 import org.lastfm.metadata.Metadata;
-import org.lastfm.model.Credentials;
+import org.lastfm.model.User;
 
 public interface Actions {
 	String LOGIN_ID = "login";
-	ActionType<ValueAction<Credentials>> LOGIN = cm(LOGIN_ID);
+	ActionType<ValueAction<User>> LOGIN = cm(LOGIN_ID);
 	
 	String GET_METADATA = "getMetadata";
 	ActionType<EmptyAction> METADATA = cm(GET_METADATA);

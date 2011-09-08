@@ -14,7 +14,10 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Model;
+import org.lastfm.model.User;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -26,14 +29,17 @@ public class ScrobblerHelper {
 	private ScrobblerSingleton factory = new ScrobblerSingleton();
 	private static final int DELTA = 120;
 
-	private Log log = LogFactory.getLog(this.getClass()); 
+	private Log log = LogFactory.getLog(this.getClass());
+	private ControlEngineConfigurator configurator; 
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
-		if(StringUtils.isEmpty(ApplicationState.username)){
+		User currentUser = configurator.getControlEngine().get(Model.CURRENT_USER);
+		log.info("currentUser is: " + currentUser.getUsername());
+		if(StringUtils.isEmpty(currentUser.getUsername())){
 			return ApplicationState.LOGGED_OUT;
 		}
-		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, ApplicationState.username);
-		ResponseStatus status = scrobbler.handshake(ApplicationState.password);
+		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, currentUser.getUsername());
+		ResponseStatus status = scrobbler.handshake(currentUser.getPassword());
 
 		if (status.getStatus() == ResponseStatus.OK) {
 			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
@@ -63,7 +69,8 @@ public class ScrobblerHelper {
 		}
 	}
 
-	public int send(Metadata metadata) throws IOException, InterruptedException {
+	public int send(Metadata metadata, ControlEngineConfigurator configurator) throws IOException, InterruptedException {
+		this.configurator = configurator;
 		int result = ApplicationState.FAILURE;
 		long time = (System.currentTimeMillis() / 1000);
 
