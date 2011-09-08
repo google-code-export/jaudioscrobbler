@@ -2,6 +2,8 @@ package org.lastfm.controller;
 
 import java.io.IOException;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
@@ -26,12 +28,17 @@ public class ScrobblerController {
 	private ScrobblerHelper helperScrobbler;
 	@Autowired
 	private ControlEngineConfigurator configurator;
+	
+	@PostConstruct
+	public void setup() {
+		helperScrobbler.setControlEngine(configurator.getControlEngine());
+	}
 
 	@RequestMethod(Actions.SEND_METADATA)
 	public Integer sendMetadata(Metadata metadata) {
 		int result = ApplicationState.OK;
 		try {
-			result = helperScrobbler.send(metadata, configurator);
+			result = helperScrobbler.send(metadata);
 			log.info("Sending scrobbling for: " + metadata.getTitle());
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
