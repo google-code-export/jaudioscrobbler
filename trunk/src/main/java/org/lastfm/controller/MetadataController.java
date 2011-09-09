@@ -2,6 +2,7 @@ package org.lastfm.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -11,7 +12,6 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.ControlEngineConfigurator;
@@ -19,7 +19,9 @@ import org.lastfm.controller.service.MetadataExtractor;
 import org.lastfm.event.Events;
 import org.lastfm.event.ValueEvent;
 import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
+import org.lastfm.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -46,7 +48,8 @@ public class MetadataController {
 			File root = fileChooser.getSelectedFile();
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
-				ApplicationState.metadataList = metadataExtractor.extractMetadata(root);
+				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
+				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
 				configurator.getControlEngine().fireEvent(Events.LOADED);
 			} catch (IOException e) {
 				handleException(e);

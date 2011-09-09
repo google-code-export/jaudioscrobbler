@@ -34,7 +34,6 @@ public class ScrobblerHelper {
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);
-		log.info("currentUser is: " + currentUser.getUsername());
 		if(StringUtils.isEmpty(currentUser.getUsername())){
 			return ApplicationState.LOGGED_OUT;
 		}
