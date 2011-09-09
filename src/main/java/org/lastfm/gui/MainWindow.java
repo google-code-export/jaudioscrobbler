@@ -39,6 +39,7 @@ import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -343,7 +344,7 @@ public class MainWindow {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						List<Metadata> metadataList = ApplicationState.metadataList;
+						List<Metadata> metadataList = configurator.getViewEngine().get(Model.METADATA);
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
 							updateStatus(i, metadataList.size());
@@ -401,8 +402,9 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					for (final Metadata metadata : ApplicationState.metadataList) {
-						updateStatus(ApplicationState.metadataList.indexOf(metadata), ApplicationState.metadataList.size());
+					List<Metadata> metadataList = configurator.getViewEngine().get(Model.METADATA);
+					for (final Metadata metadata : metadataList) {
+						updateStatus(metadataList.indexOf(metadata),metadataList.size());
 						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<Integer>() {
 
 							@Override
