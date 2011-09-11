@@ -1,13 +1,13 @@
 package org.lastfm.controller;
 
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.action.control.ControlEngine;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
@@ -18,6 +18,8 @@ import org.lastfm.model.User;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
+import de.umass.lastfm.Session;
 
 
 
@@ -31,6 +33,8 @@ public class TestLoginController {
 	private ControlEngineConfigurator configurator;
 	@Mock
 	private ControlEngine controlEngine;
+	@Mock
+	private Session session;
 
 	private String username = "josdem";
 	private String password = "password";
@@ -48,7 +52,7 @@ public class TestLoginController {
 	@Test
 	@SuppressWarnings("unchecked")
 	public void shouldLogin() throws Exception {
-		when(lastfmAuthenticator.login(username, password)).thenReturn(ApplicationState.OK);
+		when(lastfmAuthenticator.login(username, password)).thenReturn(session);
 		
 		controller.login(credentials);
 		
@@ -59,8 +63,6 @@ public class TestLoginController {
 	
 	@Test
 	public void shouldfailAtLogin() throws Exception {
-		when(lastfmAuthenticator.login(username, password)).thenReturn(ApplicationState.ERROR);
-		
 		controller.login(credentials);
 		
 		verify(lastfmAuthenticator).login(username, password);

@@ -1,21 +1,16 @@
 package org.lastfm.helper;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.IOException;
-
-import net.roarsoftware.lastfm.scrobble.ResponseStatus;
-import net.roarsoftware.lastfm.scrobble.Scrobbler;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
-import org.lastfm.helper.LastFMAuthenticator;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import static org.mockito.Mockito.*;
+import de.umass.lastfm.Session;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -23,16 +18,15 @@ import static org.mockito.Mockito.*;
 
 public class TestLastFMAuthenticator {
 	@InjectMocks
-	LastFMAuthenticator controller = new LastFMAuthenticator();
+	private LastFMAuthenticator controller = new LastFMAuthenticator();
 
 	@Mock
-	private Scrobbler scrobbler;
+	private AuthenticatorHelper authenticatorHelper;
 	@Mock
-	private ScrobblerSingleton factory;
-	@Mock
-	private ResponseStatus status;
+	private Session session;
 	
 	int result;
+
 	
 	@Before
 	public void initialize(){
@@ -43,14 +37,10 @@ public class TestLastFMAuthenticator {
 	public void shouldLogin() throws Exception {
 		String username = "josdem";
 		String password = "validPassword";
+
+		when(authenticatorHelper.getSession(username, password)).thenReturn(session);
 		
-		when(factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username)).thenReturn(scrobbler);
-		when(scrobbler.handshake(password)).thenReturn(status);
-		when(status.getStatus()).thenReturn(ResponseStatus.OK);
-		
-		result = controller.login(username, password);
-		
-		assertEquals(ApplicationState.OK, result);
+		assertNotNull(controller.login(username, password));
 	}
 	
 	@Test
@@ -58,28 +48,15 @@ public class TestLastFMAuthenticator {
 		String username = "";
 		String password = "";
 		
-		result = controller.login(username, password);
-		
-		assertEquals(ApplicationState.ERROR, result);
-		
-		notToCallScrobblerServicesAssertion(username, password);
+		assertNull(controller.login(username, password));
 	}
 
-	private void notToCallScrobblerServicesAssertion(String username, String password) throws IOException {
-		verify(factory, never()).getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, username);
-		verify(scrobbler, never()).handshake(password);
-		verify(status, never()).getStatus();
-	}
-	
 	@Test
 	public void shouldFailAtLoginIfNoUsername() throws Exception {
 		String username = "";
 		String password = "somePassword";
 		
-		result = controller.login(username, password);
-		
-		assertEquals(ApplicationState.ERROR, result);
-		notToCallScrobblerServicesAssertion(username, password);
+		assertNull(controller.login(username, password));
 	}
 	
 	@Test
@@ -87,10 +64,7 @@ public class TestLastFMAuthenticator {
 		String username = "someUsername";
 		String password = "";
 		
-		result = controller.login(username, password);
-		
-		assertEquals(ApplicationState.ERROR, result);
-		notToCallScrobblerServicesAssertion(username, password);
+		assertNull(controller.login(username, password));
 	}
 	
 	@Test
@@ -98,12 +72,6 @@ public class TestLastFMAuthenticator {
 		String username = "josdem";
 		String password = "invalidPassword";
 		
-		when(factory.getScrobbler(anyString(), anyString(), anyString())).thenReturn(scrobbler);
-		when(scrobbler.handshake(password)).thenReturn(status);
-		when(status.getStatus()).thenReturn(ResponseStatus.BADAUTH);
-		
-		result = controller.login(username, password);
-		
-		assertEquals(ApplicationState.FAILURE, result);
+		assertNull(controller.login(username, password));
 	}
 }
