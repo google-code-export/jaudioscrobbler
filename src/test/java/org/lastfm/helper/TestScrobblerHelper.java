@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
+import org.lastfm.ActionResult;
 import org.lastfm.action.control.ControlEngine;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
@@ -46,7 +46,7 @@ public class TestScrobblerHelper {
 	@Mock
 	private Session session;
 	
-	private int result;
+	private ActionResult result;
 	private String username = "josdem";
 	private String password = "password";
 
@@ -85,7 +85,7 @@ public class TestScrobblerHelper {
 	private void notSendToScrobblingMapAssertion() {
 		verify(metadataMap, never()).size();
 		verify(metadataMap, never()).put(isA(Metadata.class), isA(Long.class));
-		assertEquals(ApplicationState.FAILURE, result);
+		assertEquals(ActionResult.NOT_SCROBBLEABLE, result);
 	}
 
 	@Test
@@ -107,11 +107,11 @@ public class TestScrobblerHelper {
 		when(result.isSuccessful()).thenReturn(false);
 		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
 		
-		assertEquals(ApplicationState.FAILURE, helperScrobbler.send(metadata));
+		assertEquals(ActionResult.SESSIONLESS, helperScrobbler.send(metadata));
 	}
 
 	private void setMetadataTrackExpectations() {
-		when(metadata.getLength()).thenReturn(250);
+		when(metadata.getLength()).thenReturn(300);
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 	}
@@ -126,7 +126,7 @@ public class TestScrobblerHelper {
 		when(result.isSuccessful()).thenReturn(true);
 		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
 		
-		assertEquals(ApplicationState.OK, helperScrobbler.send(metadata));
+		assertEquals(ActionResult.SUCCESS, helperScrobbler.send(metadata));
 	}
 	
 	private void setExpectations() {
@@ -141,7 +141,7 @@ public class TestScrobblerHelper {
 		setMetadataTrackExpectations();
 		when(currentUser.getUsername()).thenReturn(EMPTY_STRING);
 		
-		assertEquals(ApplicationState.LOGGED_OUT, helperScrobbler.send(metadata));
+		assertEquals(ActionResult.LOGGED_OUT, helperScrobbler.send(metadata));
 	}
 	
 

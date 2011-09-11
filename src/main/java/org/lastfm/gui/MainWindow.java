@@ -32,6 +32,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.ActionResult;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
@@ -405,12 +406,12 @@ public class MainWindow {
 					List<Metadata> metadataList = configurator.getViewEngine().get(Model.METADATA);
 					for (final Metadata metadata : metadataList) {
 						updateStatus(metadataList.indexOf(metadata),metadataList.size());
-						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<Integer>() {
+						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
-							public void onResponse(Integer reponse) {
+							public void onResponse(ActionResult reponse) {
 								log.info("response on sending " + metadata.getTitle() + ": " + reponse);
-								if(reponse == ApplicationState.ERROR){
+								if(reponse == ActionResult.ERROR){
 									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
 								}
 							}

@@ -18,7 +18,6 @@ public interface ApplicationState {
 	static final String LOGIN_FAIL = "Login fail";
 	static final String LOGGED_AS = "Logged as : ";
 	static final String DONE = "Done";
-	static final String HAND_SHAKE_FAIL = "Handshake failed";
 	static final String NETWORK_ERROR = "Internet Connection Error";
 	static final String OPEN_ERROR = "Error on importing Music";
 	static final String NEW_METADATA = "New";

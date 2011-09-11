@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
+import org.lastfm.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.RequestMethod;
@@ -35,17 +35,16 @@ public class ScrobblerController {
 	}
 
 	@RequestMethod(Actions.SEND_METADATA)
-	public Integer sendMetadata(Metadata metadata) {
-		int result = ApplicationState.OK;
+	public ActionResult sendMetadata(Metadata metadata) {
 		try {
-			result = helperScrobbler.send(metadata);
 			log.info("Sending scrobbling for: " + metadata.getTitle());
+			return helperScrobbler.send(metadata);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 		} catch (InterruptedException ine) {
 			log.error(ine, ine);
 		}
-		return result;
+		return ActionResult.FAILURE;
 	}
 
 }

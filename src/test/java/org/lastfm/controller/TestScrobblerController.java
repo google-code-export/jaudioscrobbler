@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
+import org.lastfm.ActionResult;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
@@ -29,21 +29,21 @@ public class TestScrobblerController {
 
 	@Test
 	public void shouldSendMetadata() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ApplicationState.OK);
+		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.SUCCESS);
 
-		int result = controller.sendMetadata(metadata);
+		ActionResult result = controller.sendMetadata(metadata);
 
 		verify(helperScrobbler).send(metadata);
-		assertEquals(ApplicationState.OK, result);
+		assertEquals(ActionResult.SUCCESS, result);
 	}
 
 	@Test
 	public void shouldDetectWhenErrorInScrobbling() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ApplicationState.ERROR);
+		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.ERROR);
 
-		int result = controller.sendMetadata(metadata);
+		ActionResult result = controller.sendMetadata(metadata);
 
 		verify(helperScrobbler).send(metadata);
-		assertEquals(ApplicationState.ERROR, result);
+		assertEquals(ActionResult.ERROR, result);
 	}
 }
