@@ -3,16 +3,23 @@ package org.lastfm.helper;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
+import org.lastfm.ActionResult;
 import org.lastfm.action.control.ControlEngine;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 
+import de.umass.lastfm.Session;
 import de.umass.lastfm.scrobble.ScrobbleResult;
 
 /**
@@ -21,55 +28,74 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
  */
 
 public class ScrobblerHelper {
+	private static final int ONE_THOUSAND = 1000;
+	private static final int MIN_LENGHT = 240;
+	private static final int REQUEST_PERIOD = 250;
 	private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
 	private LastFMTrackHelper lastFMTrackHelper = new LastFMTrackHelper();
+	private ScheduledExecutorService  scheduler = Executors.newSingleThreadScheduledExecutor();
 	private static final int DELTA = 120;
 
 	private Log log = LogFactory.getLog(this.getClass());
 	private ControlEngine controlEngine;
 
-	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
+	private ActionResult scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);
 		if (StringUtils.isEmpty(currentUser.getUsername())) {
-			return ApplicationState.LOGGED_OUT;
+			return ActionResult.LOGGED_OUT;
 		}
 
 		if (currentUser.getSession() != null) {
-			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
-			Thread.sleep(200);
-
-			ScrobbleResult result = lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession());
-			if (result.isSuccessful() && !result.isIgnored()) {
-				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
-				return ApplicationState.OK;
-			} else {
-				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + result);
-				return ApplicationState.FAILURE;
+			try {
+				// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
+				ScheduledFuture<ActionResult> future = scheduler.schedule(new ScrobbleTask(metadata, currentUser.getSession()), REQUEST_PERIOD, TimeUnit.MICROSECONDS);
+				return future.get();
+			} catch (ExecutionException eex) {
+				log.error(eex, eex);
+				return ActionResult.FAILURE;
 			}
+			
 		} else {
-			System.err.println("error at scrobbling");
-			log.error(ApplicationState.HAND_SHAKE_FAIL);
-			return ApplicationState.FAILURE;
+			log.error("There isn't a valid session");
+			return ActionResult.SESSIONLESS;
 		}
 	}
 
-	public int send(Metadata metadata) throws IOException, InterruptedException {
-		int result = ApplicationState.FAILURE;
-		long time = (System.currentTimeMillis() / 1000);
+	public ActionResult send(Metadata metadata) throws IOException, InterruptedException {
+		long time = (System.currentTimeMillis() / ONE_THOUSAND);
 
 		// According to submission rules http://www.last.fm/api/submissions
-		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle()) && metadata.getLength() > 240) {
+		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle()) && metadata.getLength() > MIN_LENGHT) {
 			long startTime = time - (metadataMap.size() * DELTA);
 			metadataMap.put(metadata, startTime);
-			result = scrobbling(metadata);
-			if (result == ApplicationState.ERROR) {
-				return result;
-			}
+			return scrobbling(metadata);
 		}
-		return result;
+		return ActionResult.NOT_SCROBBLEABLE;
 	}
 
 	public void setControlEngine(ControlEngine controlEngine) {
 		this.controlEngine = controlEngine;
+	}
+	
+	private class ScrobbleTask implements Callable<ActionResult> {
+		private final Metadata metadata;
+		private final Session session;
+
+		public ScrobbleTask(Metadata metadata, Session session) {
+			this.metadata = metadata;
+			this.session = session;
+		}
+
+		@Override
+		public ActionResult call() throws Exception {
+			ScrobbleResult result = lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), session);
+			if (result.isSuccessful() && !result.isIgnored()) {
+				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
+				return ActionResult.SUCCESS;
+			} else {
+				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + result);
+				return ActionResult.FAILURE;
+			}
+		}
 	}
 }
