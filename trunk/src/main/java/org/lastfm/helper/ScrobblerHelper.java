@@ -1,14 +1,8 @@
 package org.lastfm.helper;
 
 import java.io.IOException;
-import java.net.ConnectException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
-
-import net.roarsoftware.lastfm.scrobble.ResponseStatus;
-import net.roarsoftware.lastfm.scrobble.Scrobbler;
-import net.roarsoftware.lastfm.scrobble.Source;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -19,6 +13,8 @@ import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 
+import de.umass.lastfm.scrobble.ScrobbleResult;
+
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who knows how to send scrobblings
@@ -26,40 +22,29 @@ import org.lastfm.model.User;
 
 public class ScrobblerHelper {
 	private Map<Metadata, Long> metadataMap = new HashMap<Metadata, Long>();
-	private ScrobblerSingleton factory = new ScrobblerSingleton();
+	private LastFMTrackHelper lastFMTrackHelper = new LastFMTrackHelper();
 	private static final int DELTA = 120;
 
 	private Log log = LogFactory.getLog(this.getClass());
-	private ControlEngine controlEngine; 
+	private ControlEngine controlEngine;
 
 	private int scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);
-		if(StringUtils.isEmpty(currentUser.getUsername())){
+		if (StringUtils.isEmpty(currentUser.getUsername())) {
 			return ApplicationState.LOGGED_OUT;
 		}
-		Scrobbler scrobbler = factory.getScrobbler(ApplicationState.CLIENT_SCROBBLER_ID, ApplicationState.CLIENT_SCROBBLER_VERSION, currentUser.getUsername());
-		ResponseStatus status = scrobbler.handshake(currentUser.getPassword());
 
-		if (status.getStatus() == ResponseStatus.OK) {
+		if (currentUser.getSession() != null) {
 			// According to Caching Rule (http://www.u-mass.de/lastfm/doc)
 			Thread.sleep(200);
 
-			try{
-				status = scrobbler.submit(metadata.getArtist(), metadata.getTitle(), metadata.getAlbum(), metadata
-						.getLength(), metadata.getTrackNumber(), Source.USER, metadataMap.get(metadata).longValue());
-				if (status.getStatus() == ResponseStatus.OK) {
-					log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
-					return ApplicationState.OK;
-				} else {
-					log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + status.getStatus());
-					return ApplicationState.FAILURE;
-				}
-			} catch (UnknownHostException uhe){
-				log.error(uhe, uhe);
-				return ApplicationState.ERROR;
-			} catch (ConnectException coe){
-				log.error(coe, coe);
-				return ApplicationState.ERROR;
+			ScrobbleResult result = lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession());
+			if (result.isSuccessful() && !result.isIgnored()) {
+				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
+				return ApplicationState.OK;
+			} else {
+				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + result);
+				return ApplicationState.FAILURE;
 			}
 		} else {
 			System.err.println("error at scrobbling");
@@ -73,12 +58,11 @@ public class ScrobblerHelper {
 		long time = (System.currentTimeMillis() / 1000);
 
 		// According to submission rules http://www.last.fm/api/submissions
-		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())
-				&& metadata.getLength() > 240) {
+		if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle()) && metadata.getLength() > 240) {
 			long startTime = time - (metadataMap.size() * DELTA);
 			metadataMap.put(metadata, startTime);
 			result = scrobbling(metadata);
-			if(result == ApplicationState.ERROR){
+			if (result == ApplicationState.ERROR) {
 				return result;
 			}
 		}

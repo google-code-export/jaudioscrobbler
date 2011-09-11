@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.ControlEngineConfigurator;
@@ -15,6 +14,8 @@ import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import de.umass.lastfm.Session;
 
 
 /**
@@ -32,12 +33,12 @@ public class LoginController {
 
 	@ActionMethod(Actions.LOGIN_ID)
 	public void login(User user) {
-		int result = ApplicationState.ERROR;
 		String username = user.getUsername();
 		String password = user.getPassword();
 		try {
-			result = lastfmAuthenticator.login(username, password);
-			if (result == ApplicationState.OK) {
+			Session session = lastfmAuthenticator.login(username, password);
+			if (session != null) {
+				user.setSession(session);
 				configurator.getControlEngine().set(Model.CURRENT_USER, user, null);
 				configurator.getControlEngine().fireEvent(Events.LOGGED, new ValueEvent<User>(user));
 			} else {
