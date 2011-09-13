@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
+import org.lastfm.action.ActionResult;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
@@ -42,26 +42,26 @@ public class TestCompleteController {
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
 		when(service.getAlbum(artist, title)).thenReturn(album);
-		int result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeMetadata(metadata);
 		
 		verify(service).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
-		assertEquals(ApplicationState.OK, result);
+		assertEquals(ActionResult.METADATA_SUCCESS, result);
 	}
 	
 	@Test
 	public void shouldDetectAnErrorInService() throws Exception {
 		when(service.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
-		int result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeMetadata(metadata);
 		
-		assertEquals(ApplicationState.ERROR, result);
+		assertEquals(ActionResult.METADATA_ERROR, result);
 	}
 	
 	@Test
 	public void shouldNotFoundAlbum() throws Exception {
-		int result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeMetadata(metadata);
 		
 		verify(metadata, never()).setAlbum(album);
-		assertEquals(ApplicationState.OK, result);
+		assertEquals(ActionResult.METADATA_NOT_FOUND, result);
 	}
 }

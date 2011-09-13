@@ -8,10 +8,6 @@ package org.lastfm;
  */
 
 public interface ApplicationState {
-	static int ERROR = -1;
-	static int OK = 0;
-	static int FAILURE = 2;
-	
 	static final String KEY = "250d02d1a21e78488d79ad1a73e88c72";
 	static final String SECRET = "97dc72bff4e218c9cd41501a35f4493d";
 

@@ -6,7 +6,7 @@ import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ActionResult;
+import org.lastfm.action.ActionResult;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
