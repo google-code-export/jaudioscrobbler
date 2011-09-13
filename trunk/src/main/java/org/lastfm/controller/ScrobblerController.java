@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ActionResult;
+import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.RequestMethod;

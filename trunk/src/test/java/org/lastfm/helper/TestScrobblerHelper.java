@@ -11,7 +11,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ActionResult;
+import org.lastfm.action.ActionResult;
 import org.lastfm.action.control.ControlEngine;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;

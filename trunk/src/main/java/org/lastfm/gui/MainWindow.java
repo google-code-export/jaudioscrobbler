@@ -32,8 +32,8 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ActionResult;
 import org.lastfm.ApplicationState;
+import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
 import org.lastfm.action.control.ViewEngineConfigurator;
@@ -353,10 +353,10 @@ public class MainWindow {
 							if (StringUtils.isEmpty(albumName)) {
 								String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
 								String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
-								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<Integer>() {
+								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
 
 									@Override
-									public void onResponse(Integer reponse) {
+									public void onResponse(ActionResult reponse) {
 										log.info("response on complete " + metadata.getTitle() + ": " + reponse);
 										if (StringUtils.isNotEmpty(metadata.getAlbum())) {
 											getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);

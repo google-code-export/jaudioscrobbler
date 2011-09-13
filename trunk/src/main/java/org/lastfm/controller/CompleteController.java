@@ -3,7 +3,7 @@ package org.lastfm.controller;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
+import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.RequestMethod;
 import org.lastfm.helper.MusicBrainzDelegator;
@@ -23,7 +23,7 @@ public class CompleteController {
 	private MusicBrainzDelegator service = new MusicBrainzDelegator();
 	
 	@RequestMethod(Actions.COMPLETE_METADATA)
-	public Integer completeMetadata(Metadata metadata){
+	public ActionResult completeMetadata(Metadata metadata){
 		try {
 			String album = service.getAlbum(metadata.getArtist(), metadata.getTitle());
 			if(StringUtils.isNotEmpty(album)){
@@ -31,12 +31,13 @@ public class CompleteController {
 				metadata.setAlbum(album);
 			} else {
 				log.info("No album found for track: " + metadata.getTitle());
+				return ActionResult.METADATA_NOT_FOUND;
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
-			return ApplicationState.ERROR;
+			return ActionResult.METADATA_ERROR;
 		}
-		return ApplicationState.OK;
+		return ActionResult.METADATA_SUCCESS;
 	}
 	
 }
