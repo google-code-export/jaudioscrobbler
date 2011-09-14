@@ -12,10 +12,8 @@ import org.lastfm.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**
- * 
  * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who knows how to launch ALL the process
- *
  */
 
 public class Launcher {
