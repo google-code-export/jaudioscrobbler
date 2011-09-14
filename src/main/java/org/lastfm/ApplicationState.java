@@ -1,7 +1,5 @@
 package org.lastfm;
 
-
-
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
  * @understands define ALL constants on JaudioScrobbler
@@ -17,14 +15,8 @@ public interface ApplicationState {
 	static final String NETWORK_ERROR = "Internet Connection Error";
 	static final String OPEN_ERROR = "Error on importing Music";
 	static final String NEW_METADATA = "New";
-	static final String METADATA_UPDATED = "Updated";
 	static final String WORKING = "Working";
 	static final int ALBUM_COLUMN = 2;
 	static final int TRACK_NUMBER_COLUMN = 3;
 	static final int STATUS_COLUMN = 5;
-	static final int LOGGED_OUT = 0;
-	
-	static final String CLIENT_SCROBBLER_ID = "tst"; 
-	static final String CLIENT_SCROBBLER_VERSION = "1.0"; 
-	static final String DELIMITER = "|";
 }
