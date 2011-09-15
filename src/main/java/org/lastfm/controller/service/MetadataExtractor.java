@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -33,7 +31,6 @@ import org.springframework.stereotype.Service;
 public class MetadataExtractor {
 	private List<Metadata> metadataList = new ArrayList<Metadata>();
 	private FileUtils fileUtils = new FileUtils();
-	private Log log = LogFactory.getLog(this.getClass());
 	
 	@Autowired
 	private ControlEngineConfigurator configurator;
@@ -55,7 +52,7 @@ public class MetadataExtractor {
 			}
 
 			if (metadata == null) {
-				log.error(file.getAbsoluteFile() + " is not a valid Audio File");
+				throw new MetadataException(file.getAbsoluteFile() + " is not a valid Audio File");
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
