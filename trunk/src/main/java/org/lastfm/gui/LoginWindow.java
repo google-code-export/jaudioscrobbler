@@ -60,6 +60,13 @@ public class LoginWindow {
 				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
 			}
 		});
+		
+		getPasswordTextfield().addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
+			}
+		});
 	}
 	
 	@SuppressWarnings("unused")
@@ -71,8 +78,8 @@ public class LoginWindow {
 	private JPanel getPanel() {
 		if(panel == null){
 			panel = new JPanel(new BorderLayout());
-			panel.add(getUsername(), BorderLayout.NORTH);
-			panel.add(getPassword(), BorderLayout.CENTER);
+			panel.add(getUsernameTextfield(), BorderLayout.NORTH);
+			panel.add(getPasswordTextfield(), BorderLayout.CENTER);
 			panel.add(getSendButton(), BorderLayout.SOUTH);
 		}
 		return panel;
@@ -86,7 +93,7 @@ public class LoginWindow {
 		passwordTextfield.addKeyListener(keyListener);
 	}
 
-	private JTextField getUsername() {
+	private JTextField getUsernameTextfield() {
 		if(usernameTextfield == null){
 			usernameTextfield = new JTextField();
 			usernameTextfield.setName(USERNAME_TEXTFIELD_NAME);
@@ -94,7 +101,7 @@ public class LoginWindow {
 		return usernameTextfield;
 	}
 
-	private JTextField getPassword() {
+	private JTextField getPasswordTextfield() {
 		if(passwordTextfield == null){
 			passwordTextfield = new JPasswordField();
 			passwordTextfield.setName(PASSWORD_TEXTFIELD_NAME);

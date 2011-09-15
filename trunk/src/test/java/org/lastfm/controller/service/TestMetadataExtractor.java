@@ -1,7 +1,11 @@
 package org.lastfm.controller.service;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +18,7 @@ import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
 import org.lastfm.event.ValueEvent;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataException;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,18 +40,19 @@ public class TestMetadataExtractor {
 	
 	private List<File> fileList;
 	private static final int FIRST_ELEMENT = 0;
-
+	private File audioFile = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+	private File checkStyleFile = new File("src/test/resources/checkstyle/checkstyle.xml");
 	
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
 		fileList = new ArrayList<File>();
-		fileList.add(new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3"));
 	}
 	
 	@Test
 	public void shouldExtractMetadata() throws Exception {
+		fileList.add(audioFile);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
@@ -55,5 +61,17 @@ public class TestMetadataExtractor {
 		verify(fileUtils).getFileList(root);
 		assertEquals("Jaytech", metadata.getArtist());
 		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
+	}
+	
+	@Test (expected=MetadataException.class)
+	public void shouldDetectANotValidAudioFile() throws Exception {
+		fileList.add(checkStyleFile);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
+		
+		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		
+		assertTrue(metadatas.isEmpty());
+		verify(fileUtils).getFileList(root);
+		verify(controlEngine, never()).fireEvent(Events.LOAD, new ValueEvent<Metadata>(isA(Metadata.class)));
 	}
 }
