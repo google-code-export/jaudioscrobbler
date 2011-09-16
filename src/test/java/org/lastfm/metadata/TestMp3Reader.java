@@ -1,6 +1,7 @@
-package org.lastfm.metadata;
 
+package org.lastfm.metadata;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -134,6 +135,12 @@ public class TestMp3Reader{
 	public void shouldGetArtwork() throws Exception {
 		reader.getMetadata(file);
 		verify(artwork).getImage();
+	}
+	
+	@Test
+	public void shouldGetFile() throws Exception {
+		Metadata metadata = reader.getMetadata(file);
+		assertNotNull(metadata.getFile());
 	}
 	
 }
