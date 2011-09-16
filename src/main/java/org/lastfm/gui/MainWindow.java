@@ -8,7 +8,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
@@ -45,7 +43,6 @@ import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,7 +87,6 @@ public class MainWindow {
 	private JMenuItem menuItem;
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
-	private MetadataWriter metadataWriter = new MetadataWriter();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
@@ -383,14 +379,7 @@ public class MainWindow {
 					} else {
 						List<Metadata> metadataWithArtistList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
 						for (Metadata metadata : metadataWithArtistList) {
-							File file = metadata.getFile();
-							log.info("File: " + ToStringBuilder.reflectionToString(file));
-							metadataWriter.setFile(file);
-							metadataWriter.writeArtist(metadata.getArtist());
-							metadataWriter.writeTrackName(metadata.getTitle());
-							metadataWriter.writeAlbum(metadata.getAlbum());
-							Integer trackNumber = metadata.getTrackNumber();
-							metadataWriter.writeTrackNumber(trackNumber.toString());
+							viewEngineConfigurator.getViewEngine().sendValueAction(Actions.COMPLETE_ALBUM, metadata);
 							getDescriptionTable().getModel().setValueAt(ApplicationState.UPDATED, getRow(metadata), ApplicationState.STATUS_COLUMN);
 						}
 					}
