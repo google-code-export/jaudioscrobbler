@@ -378,9 +378,16 @@ public class MainWindow {
 						}
 					} else {
 						List<Metadata> metadataWithArtistList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
-						for (Metadata metadata : metadataWithArtistList) {
-							viewEngineConfigurator.getViewEngine().sendValueAction(Actions.COMPLETE_ALBUM, metadata);
-							getDescriptionTable().getModel().setValueAt(ApplicationState.UPDATED, getRow(metadata), ApplicationState.STATUS_COLUMN);
+						for (final Metadata metadata : metadataWithArtistList) {
+							viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
+
+								@Override
+								public void onResponse(ActionResult result) {
+									log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
+									getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								}
+								
+							});
 						}
 					}
 					return true;

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.lastfm.action.ActionResult;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,7 +22,8 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 
 
 public class TestCompleteController {
-	
+	private static final String ERROR = "Error";
+
 	@InjectMocks
 	private CompleteController controller = new CompleteController();
 	
@@ -81,12 +83,21 @@ public class TestCompleteController {
 	public void shouldCompleteAlbumInMetadata() throws Exception {
 		when(metadata.getFile()).thenReturn(file);
 		
-		controller.completeAlbum(metadata);
+		ActionResult result = controller.completeAlbum(metadata);
 		
 		verify(metadataWriter).setFile(file);
-		verify(metadataWriter).writeArtist(artist);
-		verify(metadataWriter).writeTrackName(title);
 		verify(metadataWriter).writeAlbum(album);
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
+		assertEquals(ActionResult.UPDATED, result);
+	}
+	
+	@Test
+	public void shouldNotUpdateMetadata() throws Exception {
+		when(metadata.getFile()).thenReturn(file);
+		when(metadataWriter.writeAlbum(album)).thenThrow(new MetadataException(ERROR));
+		
+		ActionResult result = controller.completeAlbum(metadata);
+		
+		assertEquals(ActionResult.WRITE_METADATA_ERROR, result);
 	}
 }

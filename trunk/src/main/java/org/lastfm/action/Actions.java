@@ -19,5 +19,5 @@ public interface Actions {
 	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE = cm(COMPLETE_METADATA);
 	
 	String COMPLETE_ALBUM_METADATA = "completeAlbumMetadata";
-	ActionType<ValueAction<Metadata>> COMPLETE_ALBUM = cm(COMPLETE_ALBUM_METADATA);
+	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE_ALBUM = cm(COMPLETE_ALBUM_METADATA);
 }

@@ -7,10 +7,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
-import org.lastfm.action.control.ActionMethod;
 import org.lastfm.action.control.RequestMethod;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.springframework.stereotype.Controller;
 
@@ -45,15 +45,19 @@ public class CompleteController {
 		return ActionResult.METADATA_SUCCESS;
 	}
 	
-	@ActionMethod(Actions.COMPLETE_ALBUM_METADATA)
-	public void completeAlbum(Metadata metadata){
-		File file = metadata.getFile();
-		metadataWriter.setFile(file);
-		metadataWriter.writeArtist(metadata.getArtist());
-		metadataWriter.writeTrackName(metadata.getTitle());
-		metadataWriter.writeAlbum(metadata.getAlbum());
-		Integer trackNumber = metadata.getTrackNumber();
-		metadataWriter.writeTrackNumber(trackNumber.toString());
+	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
+	public ActionResult completeAlbum(Metadata metadata){
+		try{
+			File file = metadata.getFile();
+			metadataWriter.setFile(file);
+			metadataWriter.writeAlbum(metadata.getAlbum());
+			Integer trackNumber = metadata.getTrackNumber();
+			metadataWriter.writeTrackNumber(trackNumber.toString());
+			return ActionResult.UPDATED;
+		} catch (MetadataException mde){
+			log.error(mde, mde);
+			return ActionResult.WRITE_METADATA_ERROR;
+		}
 	}
 	
 }

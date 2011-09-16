@@ -70,28 +70,30 @@ public class MetadataWriter {
 		}
 	}
 
-	public void writeAlbum(String album) {
+	public boolean writeAlbum(String album) throws MetadataException {
 		try {
 			tag.setField(FieldKey.ALBUM, album);
 			audioFile.commit();
+			return true;
 		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
+			throw new MetadataException(kne.getMessage());
 		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
+			throw new MetadataException(fie.getMessage());
 		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
+			throw new MetadataException(nwe.getMessage());
 		}
 	}
-	public void writeTrackNumber(String trackNumber) {
+	public boolean writeTrackNumber(String trackNumber) throws MetadataException {
 		try {
 			tag.setField(FieldKey.TRACK, trackNumber);
 			audioFile.commit();
+			return true;
 		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
+			throw new MetadataException(kne.getMessage());
 		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
+			throw new MetadataException(fie.getMessage());
 		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
+			throw new MetadataException(nwe.getMessage());
 		}
 	}
 }
