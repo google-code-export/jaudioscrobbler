@@ -89,6 +89,7 @@ public abstract class MetadataReader {
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setBitRate(getBitRate());
+		metadata.setFile(file);
 		return metadata;
 	}
 }
