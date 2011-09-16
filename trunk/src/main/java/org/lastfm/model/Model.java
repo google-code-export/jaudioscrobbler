@@ -13,5 +13,8 @@ public interface Model {
 	
 	String METADATA_LIST = "application.metadataList";
 	ModelType<List<Metadata>> METADATA = readOnly(METADATA_LIST);
+	
+	String METADATA_ARTIST_LIST = "application.metadataArtistList";
+	ModelType<List<Metadata>> METADATA_ARTIST = readOnly(METADATA_ARTIST_LIST);
 
 }

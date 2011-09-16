@@ -8,6 +8,8 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -28,18 +30,22 @@ import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,7 +72,7 @@ public class MainWindow {
 	private static final String APPLY = "Apply";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
-	
+
 	private JFrame frame;
 	private JPanel panel;
 	private JButton openButton;
@@ -84,12 +90,15 @@ public class MainWindow {
 	private JMenuItem menuItem;
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
+	private MetadataWriter metadataWriter = new MetadataWriter();
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	@Autowired
 	private LoginWindow loginWindow;
 	@Autowired
-	private ViewEngineConfigurator configurator;
+	private ViewEngineConfigurator viewEngineConfigurator;
+	@Autowired
+	private ControlEngineConfigurator controlEngineConfigurator;
 
 	public MainWindow() {
 		doLayout();
@@ -262,7 +271,7 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					 new CompleteWorker();
+					new CompleteWorker();
 				}
 			});
 		}
@@ -294,7 +303,7 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					configurator.getViewEngine().send(Actions.METADATA);
+					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
 		}
@@ -334,18 +343,19 @@ public class MainWindow {
 	}
 
 	private class CompleteWorker {
-		
+
 		public CompleteWorker() {
 			work();
 		}
-		
+
 		private void work() {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
+					List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						List<Metadata> metadataList = configurator.getViewEngine().get(Model.METADATA);
+						final List<Metadata> metadataWithOutArtist = new ArrayList<Metadata>();
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
 							updateStatus(i, metadataList.size());
@@ -353,12 +363,13 @@ public class MainWindow {
 							if (StringUtils.isEmpty(albumName)) {
 								String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
 								String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
-								MainWindow.this.configurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
+								MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
 
 									@Override
 									public void onResponse(ActionResult reponse) {
 										log.info("response on complete " + metadata.getTitle() + ": " + reponse);
 										if (StringUtils.isNotEmpty(metadata.getAlbum())) {
+											metadataWithOutArtist.add(metadata);
 											getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 											getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 											getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
@@ -367,11 +378,25 @@ public class MainWindow {
 
 								});
 							}
+							controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
+						}
+					} else {
+						List<Metadata> metadataWithArtistList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
+						for (Metadata metadata : metadataWithArtistList) {
+							File file = metadata.getFile();
+							log.info("File: " + ToStringBuilder.reflectionToString(file));
+							metadataWriter.setFile(file);
+							metadataWriter.writeArtist(metadata.getArtist());
+							metadataWriter.writeTrackName(metadata.getTitle());
+							metadataWriter.writeAlbum(metadata.getAlbum());
+							Integer trackNumber = metadata.getTrackNumber();
+							metadataWriter.writeTrackNumber(trackNumber.toString());
+							getDescriptionTable().getModel().setValueAt(ApplicationState.UPDATED, getRow(metadata), ApplicationState.STATUS_COLUMN);
 						}
 					}
 					return true;
 				}
-				
+
 				@Override
 				public void done() {
 					getLabel().setText(ApplicationState.DONE);
@@ -381,18 +406,18 @@ public class MainWindow {
 					getCompleteMetadataButton().setText(MainWindow.APPLY);
 				}
 			};
-			
+
 			MainWindow.this.getCompleteMetadataButton().setEnabled(false);
 			getOpenButton().setEnabled(false);
 			swingWorker.execute();
 		}
 	}
-	
+
 	private void updateStatus(final int i, int size) {
 		int progress = ((i + 1) * 100) / size;
 		getProgressBar().setValue(progress);
 	};
-	
+
 	private class SendWorker {
 		public SendWorker() {
 			work();
@@ -403,24 +428,24 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					List<Metadata> metadataList = configurator.getViewEngine().get(Model.METADATA);
+					List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					for (final Metadata metadata : metadataList) {
-						updateStatus(metadataList.indexOf(metadata),metadataList.size());
-						MainWindow.this.configurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
+						updateStatus(metadataList.indexOf(metadata), metadataList.size());
+						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
 							public void onResponse(ActionResult reponse) {
 								log.info("response on sending " + metadata.getTitle() + ": " + reponse);
-								if(reponse == ActionResult.ERROR){
+								if (reponse == ActionResult.ERROR) {
 									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
 								}
 							}
-							
+
 						});
 					}
 					return true;
 				}
-				
+
 				@Override
 				public void done() {
 					getLabel().setText(ApplicationState.DONE);
@@ -438,6 +463,21 @@ public class MainWindow {
 		}
 	}
 
+	private int getRow(Metadata metadataTarget) {
+		TableModel model = getDescriptionTable().getModel();
+		List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+
+		for (int i = 0; i < model.getRowCount(); i++) {
+			String artist = (String) model.getValueAt(i, 0);
+			String title = (String) model.getValueAt(i, 1);
+			if (artist.equals(metadataTarget.getArtist()) && title.equals(metadataTarget.getTitle())) {
+				return i;
+			}
+		}
+
+		return 0;
+	}
+
 	private class ClickAction extends AbstractAction {
 		private static final long serialVersionUID = 1L;
 		private JButton button;
@@ -450,13 +490,12 @@ public class MainWindow {
 			button.doClick();
 		}
 	}
-	
+
 	private class DescriptionTableModelListener implements TableModelListener {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-			if (MainWindow.this.getCompleteMetadataButton().getText().equals(MainWindow.APPLY)
-					&& e.getColumn() != ApplicationState.STATUS_COLUMN) {
+			if (MainWindow.this.getCompleteMetadataButton().getText().equals(MainWindow.APPLY) && e.getColumn() != ApplicationState.STATUS_COLUMN) {
 				int lastRow = e.getLastRow();
 				DefaultTableModel model = (DefaultTableModel) e.getSource();
 				String artist = (String) model.getValueAt(lastRow, 0);
