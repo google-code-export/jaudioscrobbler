@@ -2,6 +2,7 @@ package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -18,7 +19,6 @@ import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
 import org.lastfm.event.ValueEvent;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataException;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -63,7 +63,7 @@ public class TestMetadataExtractor {
 		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 	}
 	
-	@Test (expected=MetadataException.class)
+	@Test
 	public void shouldDetectANotValidAudioFile() throws Exception {
 		fileList.add(checkStyleFile);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
@@ -72,6 +72,6 @@ public class TestMetadataExtractor {
 		
 		assertTrue(metadatas.isEmpty());
 		verify(fileUtils).getFileList(root);
-		verify(controlEngine, never()).fireEvent(Events.LOAD, new ValueEvent<Metadata>(isA(Metadata.class)));
+		verify(controlEngine, never()).fireEvent(Events.LOAD, new ValueEvent<Metadata>(eq(isA(Metadata.class))));
 	}
 }
