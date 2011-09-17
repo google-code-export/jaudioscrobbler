@@ -384,7 +384,11 @@ public class MainWindow {
 								@Override
 								public void onResponse(ActionResult result) {
 									log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
-									getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
+									String message = ApplicationState.UPDATED;
+									if(result != ActionResult.UPDATED){
+										message = ApplicationState.ERROR;
+									} 
+									getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								}
 								
 							});

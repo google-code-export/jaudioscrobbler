@@ -17,6 +17,7 @@ public interface ApplicationState {
 	static final String NEW_METADATA = "New";
 	static final String WORKING = "Working";
 	static final String UPDATED = "Updated";
+	static final String ERROR = "Error";
 	static final int ALBUM_COLUMN = 2;
 	static final int TRACK_NUMBER_COLUMN = 3;
 	static final int STATUS_COLUMN = 5;
