@@ -69,6 +69,7 @@ public class MainWindow {
 	private static final String APPLY = "Apply";
 	private static final int WINDOW_WIDTH = 750;
 	private static final int WINDOW_HEIGHT = 500;
+	private int counter=0;
 
 	private JFrame frame;
 	private JPanel panel;
@@ -385,12 +386,12 @@ public class MainWindow {
 								public void onResponse(ActionResult result) {
 									log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 									String message = ApplicationState.UPDATED;
-									if(result != ActionResult.UPDATED){
+									if (result != ActionResult.UPDATED) {
 										message = ApplicationState.ERROR;
-									} 
+									}
 									getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								}
-								
+
 							});
 						}
 					}
@@ -428,17 +429,31 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+					counter=0;
 					for (final Metadata metadata : metadataList) {
-						updateStatus(metadataList.indexOf(metadata), metadataList.size());
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
-							public void onResponse(ActionResult reponse) {
-								log.info("response on sending " + metadata.getTitle() + ": " + reponse);
-								if (reponse == ActionResult.ERROR) {
+							public void onResponse(ActionResult response) {
+								log.info("response on sending " + metadata.getTitle() + ": " + response);
+								updateStatus(counter++, metadataList.size());
+								String message;
+								switch (response) {
+								case SUCCESS:
+									message = ApplicationState.SENT;
+									break;
+								case LOGGED_OUT:
+									message = ApplicationState.LOGGED_OUT;
+									break;	
+								case SESSIONLESS:
+									message = ApplicationState.SESSIONLESS;
+									break;
+								default:
+									message = ApplicationState.ERROR;
 									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
 								}
+								getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
 							}
 
 						});
