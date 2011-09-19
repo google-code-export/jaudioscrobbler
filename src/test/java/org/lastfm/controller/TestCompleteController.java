@@ -56,6 +56,7 @@ public class TestCompleteController {
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
 		when(service.getAlbum(artist, title)).thenReturn(album);
+		when(metadata.getAlbum()).thenReturn("");
 		ActionResult result = controller.completeMetadata(metadata);
 		
 		verify(service).getAlbum(artist, title);
@@ -73,8 +74,10 @@ public class TestCompleteController {
 	
 	@Test
 	public void shouldNotFoundAlbum() throws Exception {
-		ActionResult result = controller.completeMetadata(metadata);
+		when(metadata.getAlbum()).thenReturn("");
 		
+		ActionResult result = controller.completeMetadata(metadata);
+
 		verify(metadata, never()).setAlbum(album);
 		assertEquals(ActionResult.METADATA_NOT_FOUND, result);
 	}

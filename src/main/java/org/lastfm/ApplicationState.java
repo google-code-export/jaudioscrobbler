@@ -6,6 +6,7 @@ package org.lastfm;
  */
 
 public interface ApplicationState {
+	static final String DEFAULT_IMAGE = "http://userserve-ak.last.fm/serve/300x300/66072700.png";
 	static final String KEY = "250d02d1a21e78488d79ad1a73e88c72";
 	static final String SECRET = "97dc72bff4e218c9cd41501a35f4493d";
 
@@ -24,4 +25,6 @@ public interface ApplicationState {
 	static final String SENT = "Sent";
 	static final String SESSIONLESS = "SessionLess";
 	static final String LOGGED_OUT = "NotLogged";
+	static final int WIDTH = 850;
+	static final int HEIGHT = 600;
 }

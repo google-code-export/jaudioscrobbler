@@ -1,17 +1,24 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Frame;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,12 +33,15 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.SwingWorker;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
@@ -54,6 +64,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("unused")
 public class MainWindow {
+	private static final int ONE_HUNDRED = 100;
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
 	private static final String JMENU_LABEL = "Last.fm";
 	private static final int DIRECTORY_SELECTED_LENGHT = 20;
@@ -67,9 +78,7 @@ public class MainWindow {
 	private static final String LOG_OUT = "logged out";
 	private static final String COMPLETE_BUTTON = "Complete";
 	private static final String APPLY = "Apply";
-	private static final int WINDOW_WIDTH = 750;
-	private static final int WINDOW_HEIGHT = 500;
-	private int counter=0;
+	private int counter = 0;
 
 	private JFrame frame;
 	private JPanel panel;
@@ -82,7 +91,9 @@ public class MainWindow {
 	private JProgressBar progressBar;
 	private JLabel label;
 	private JLabel loginLabel;
+	private JPanel middlePanel;
 	private JPanel topPanel;
+	private JPanel imagePanel;
 	private JMenuBar menuBar;
 	private JMenu menu;
 	private JMenuItem menuItem;
@@ -215,10 +226,35 @@ public class MainWindow {
 			panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			panel.add(getTopPanel(), BorderLayout.NORTH);
-			panel.add(getScrollPane(), BorderLayout.CENTER);
+			panel.add(getMiddlePanel(), BorderLayout.CENTER);
 			panel.add(getBottomPanel(), BorderLayout.SOUTH);
 		}
 		return panel;
+	}
+
+	private JPanel getMiddlePanel() {
+		if (middlePanel == null) {
+			middlePanel = new JPanel();
+			middlePanel.add(getImagePanel());
+			middlePanel.add(getScrollPane());
+		}
+		return middlePanel;
+	}
+
+	private JPanel getImagePanel() {
+		if (imagePanel == null) {
+			imagePanel = new JPanel();
+			try {
+				Image image = ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
+				ImageIcon imageIcon = new ImageIcon(image);
+				imagePanel.add(new JLabel(imageIcon));
+			} catch (MalformedURLException mfe) {
+				log.error(mfe, mfe);
+			} catch (IOException ioe) {
+				log.error(ioe, ioe);
+			}
+		}
+		return imagePanel;
 	}
 
 	private JPanel getTopPanel() {
@@ -322,17 +358,42 @@ public class MainWindow {
 				public void mouseEntered(MouseEvent e) {
 					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
 				}
+				
+			});
+			
+			descriptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+				
+				@Override
+				public void valueChanged(ListSelectionEvent e) {
+					updateImage(descriptionTable.getSelectedRow());
+				}
 			});
 		}
+		
 		return descriptionTable;
 	}
 
+	private void updateImage(int selectedRow) {
+		TableModel model = getDescriptionTable().getModel();
+		List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+
+		log.info("selectedRow: " + selectedRow);
+		
+		Metadata metadata = metadataList.get(selectedRow);
+		
+		log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
+		imagePanel.removeAll();
+		imagePanel.add(new JLabel(metadata.getCoverArt()));
+		getPanel().invalidate();
+		getPanel().revalidate();
+	}
+	
 	private Frame getFrame() {
 		if (frame == null) {
 			frame = new JFrame(APPLICATION_NAME);
 			frame.add(getPanel());
 			frame.setJMenuBar(getMenubar());
-			frame.setBounds(100, 100, WINDOW_WIDTH, WINDOW_HEIGHT);
+			frame.setBounds(ONE_HUNDRED, ONE_HUNDRED, ApplicationState.WIDTH, ApplicationState.HEIGHT);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 		}
@@ -357,24 +418,23 @@ public class MainWindow {
 							final int i = metadataList.indexOf(metadata);
 							updateStatus(i, metadataList.size());
 							String albumName = getDescriptionTable().getModel().getValueAt(i, 2).toString();
-							if (StringUtils.isEmpty(albumName)) {
-								String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
-								String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
-								MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
+							String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
+							String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
+							MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
 
-									@Override
-									public void onResponse(ActionResult reponse) {
-										log.info("response on complete " + metadata.getTitle() + ": " + reponse);
-										if (StringUtils.isNotEmpty(metadata.getAlbum())) {
-											metadataWithOutArtist.add(metadata);
-											getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-											getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
-											getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
-										}
+								@Override
+								public void onResponse(ActionResult reponse) {
+									log.info("response on complete " + metadata.getTitle() + ": " + reponse);
+									if (StringUtils.isNotEmpty(metadata.getAlbum())) {
+										metadataWithOutArtist.add(metadata);
+										getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
+										getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
+										getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 									}
+								}
 
-								});
-							}
+							});
+
 							controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
 						}
 					} else {
@@ -430,7 +490,7 @@ public class MainWindow {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
-					counter=0;
+					counter = 0;
 					for (final Metadata metadata : metadataList) {
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
 
@@ -445,7 +505,7 @@ public class MainWindow {
 									break;
 								case LOGGED_OUT:
 									message = ApplicationState.LOGGED_OUT;
-									break;	
+									break;
 								case SESSIONLESS:
 									message = ApplicationState.SESSIONLESS;
 									break;
