@@ -7,6 +7,7 @@ import java.awt.Image;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.controller.service.CoverArtService;
 import org.lastfm.helper.LastFMAlbumHelper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -16,9 +17,9 @@ import de.umass.lastfm.Album;
 import de.umass.lastfm.ImageSize;
 
 
-public class TestLastfmController {
+public class TestCoverArtService {
 	@InjectMocks
-	private LastfmController lastfmController = new LastfmController();
+	private CoverArtService lastfmController = new CoverArtService();
 	
 	@Mock
 	private LastFMAlbumHelper helper;

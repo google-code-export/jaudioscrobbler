@@ -1,10 +1,6 @@
 package org.lastfm.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-
-import javax.swing.ImageIcon;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
@@ -12,10 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.RequestMethod;
+import org.lastfm.controller.service.CoverArtService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
@@ -30,7 +28,9 @@ public class CompleteController {
 	private Log log = LogFactory.getLog(this.getClass());
 	private MusicBrainzDelegator service = new MusicBrainzDelegator();
 	private MetadataWriter metadataWriter = new MetadataWriter();
-	private LastfmController lastfmController = new LastfmController();
+	
+	@Autowired
+	private CoverArtService coverArtService;
 
 	@RequestMethod(Actions.COMPLETE_METADATA)
 	public ActionResult completeMetadata(Metadata metadata) {
@@ -45,23 +45,11 @@ public class CompleteController {
 					return ActionResult.METADATA_NOT_FOUND;
 				}
 			}
-			if(metadata.getCoverArt() == null){
-				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
-					log.info("Getting Cover Art for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
-					ImageIcon coverArt = lastfmController.getCoverArt(metadata.getArtist(), metadata.getAlbum());
-					metadata.setLastfmCoverArt(coverArt);
-				}
-			}
+			coverArtService.completeCoverArt(metadata);
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
 			return ActionResult.METADATA_ERROR;
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
-			return ActionResult.METADATA_ERROR;
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-			return ActionResult.METADATA_ERROR;
-		}
+		} 
 		return ActionResult.METADATA_SUCCESS;
 	}
 

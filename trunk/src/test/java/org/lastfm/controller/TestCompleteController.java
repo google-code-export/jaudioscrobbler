@@ -10,6 +10,7 @@ import java.io.File;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
+import org.lastfm.controller.service.CoverArtService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -28,13 +29,15 @@ public class TestCompleteController {
 	private CompleteController controller = new CompleteController();
 	
 	@Mock
-	private MusicBrainzDelegator service;
+	private MusicBrainzDelegator musicBrainzDelegator;
 	@Mock
 	private MetadataWriter metadataWriter;
 	@Mock
 	private Metadata metadata;
 	@Mock
 	private File file;
+	@Mock
+	private CoverArtService coverArtService;
 
 	private String artist = "Dave Deen";
 	private String title = "Footprints (Original Mix)";
@@ -55,18 +58,21 @@ public class TestCompleteController {
 	
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
-		when(service.getAlbum(artist, title)).thenReturn(album);
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(album);
 		when(metadata.getAlbum()).thenReturn("");
 		ActionResult result = controller.completeMetadata(metadata);
 		
-		verify(service).getAlbum(artist, title);
+		verify(coverArtService).completeCoverArt(metadata);
+		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
 		assertEquals(ActionResult.METADATA_SUCCESS, result);
 	}
 	
 	@Test
 	public void shouldDetectAnErrorInService() throws Exception {
-		when(service.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
+		when(metadata.getAlbum()).thenReturn("");
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
+		
 		ActionResult result = controller.completeMetadata(metadata);
 		
 		assertEquals(ActionResult.METADATA_ERROR, result);
