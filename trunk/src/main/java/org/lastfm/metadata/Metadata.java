@@ -3,6 +3,8 @@ package org.lastfm.metadata;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.swing.ImageIcon;
+
 public class Metadata {
 	private String title;
 	private String artist;
@@ -13,6 +15,7 @@ public class Metadata {
 	private int length;
 	private int bitRate;
 	private File file;
+	private ImageIcon coverArt;
 	
 	public File getFile() {
 		return file;
@@ -69,5 +72,11 @@ public class Metadata {
 	}
 	public void setFile(File file) {
 		this.file = file;
+	}
+	public void setCoverArt(ImageIcon coverArt) {
+		this.coverArt = coverArt;
+	}
+	public ImageIcon getCoverArt() {
+		return coverArt;
 	}
 }
