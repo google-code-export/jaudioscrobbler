@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.jaudiotagger.audio.AudioFile;
@@ -38,6 +39,8 @@ public class TestMp4Reader{
 	private Artwork artwork;
 	@Mock
 	private AudioFileHelper audioFileHelper;
+	@Mock
+	private BufferedImage bufferedImage;
 	
 	@Before
 	public void setup() throws Exception {
@@ -45,6 +48,7 @@ public class TestMp4Reader{
 		when(audioFileHelper.read(file)).thenReturn(audioFile);
 		when(audioFile.getTag()).thenReturn(tag);
 		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(artwork.getImage()).thenReturn(bufferedImage);
 		when(tag.getFirstArtwork()).thenReturn(artwork);
 		when(header.getBitRate()).thenReturn("64");
 	}

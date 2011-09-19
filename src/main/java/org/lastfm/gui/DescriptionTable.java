@@ -37,7 +37,15 @@ public class DescriptionTable extends JTable{
 			case 0:
 			case 1:
 			case 2:	
+				this.getColumnModel().getColumn(i).setPreferredWidth(380);
+				break;
+			case 3:	
+			case 4:	
 				this.getColumnModel().getColumn(i).setPreferredWidth(180);
+				break;
+			case 5:	
+				this.getColumnModel().getColumn(i).setPreferredWidth(280);
+				break;	
 			}
 		}
 	}

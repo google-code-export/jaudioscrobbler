@@ -2,7 +2,10 @@ package org.lastfm.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +58,7 @@ import org.lastfm.event.Events;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
+import org.lastfm.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -64,6 +68,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings("unused")
 public class MainWindow {
+	private static final int THREE_HUNDRED = 300;
 	private static final int ONE_HUNDRED = 100;
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
 	private static final String JMENU_LABEL = "Last.fm";
@@ -74,10 +79,8 @@ public class MainWindow {
 	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
-	private static final String APPLICATION_NAME = "JAudioScrobbler";
 	private static final String LOG_OUT = "logged out";
 	private static final String COMPLETE_BUTTON = "Complete";
-	private static final String APPLY = "Apply";
 	private int counter = 0;
 
 	private JFrame frame;
@@ -90,6 +93,7 @@ public class MainWindow {
 	private JTable descriptionTable;
 	private JProgressBar progressBar;
 	private JLabel label;
+	private JLabel imageLabel;
 	private JLabel loginLabel;
 	private JPanel middlePanel;
 	private JPanel topPanel;
@@ -99,6 +103,7 @@ public class MainWindow {
 	private JMenuItem menuItem;
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
+	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
@@ -234,9 +239,20 @@ public class MainWindow {
 
 	private JPanel getMiddlePanel() {
 		if (middlePanel == null) {
-			middlePanel = new JPanel();
-			middlePanel.add(getImagePanel());
-			middlePanel.add(getScrollPane());
+			middlePanel = new JPanel(new GridBagLayout());
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			middlePanel.add(getImageLabel(),c);
+			c.fill = GridBagConstraints.VERTICAL;
+			c.gridx = 0;
+			c.gridy = 1;
+			middlePanel.add(getImagePanel(),c);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 1;
+			c.gridy = 1;
+			middlePanel.add(getScrollPane(),c);
 		}
 		return middlePanel;
 	}
@@ -244,17 +260,30 @@ public class MainWindow {
 	private JPanel getImagePanel() {
 		if (imagePanel == null) {
 			imagePanel = new JPanel();
-			try {
-				Image image = ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
-				ImageIcon imageIcon = new ImageIcon(image);
-				imagePanel.add(new JLabel(imageIcon));
-			} catch (MalformedURLException mfe) {
-				log.error(mfe, mfe);
-			} catch (IOException ioe) {
-				log.error(ioe, ioe);
-			}
+			imagePanel.add(new JLabel(getDefaultImage()));
 		}
 		return imagePanel;
+	}
+
+	private ImageIcon getDefaultImage() {
+		try {
+			Image image = ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
+			ImageIcon imageIcon = new ImageIcon(image);
+			return imageIcon;
+		} catch (MalformedURLException mfe) {
+			log.error(mfe, mfe);
+			return new ImageIcon();
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+			return new ImageIcon();
+		}
+	}
+
+	private JLabel getImageLabel() {
+		if (imageLabel == null) {
+			imageLabel = new JLabel();
+		}
+		return imageLabel;
 	}
 
 	private JPanel getTopPanel() {
@@ -358,18 +387,18 @@ public class MainWindow {
 				public void mouseEntered(MouseEvent e) {
 					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
 				}
-				
+
 			});
-			
+
 			descriptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-				
+
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					updateImage(descriptionTable.getSelectedRow());
 				}
 			});
 		}
-		
+
 		return descriptionTable;
 	}
 
@@ -378,23 +407,31 @@ public class MainWindow {
 		List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 
 		log.info("selectedRow: " + selectedRow);
-		
 		Metadata metadata = metadataList.get(selectedRow);
-		
 		log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
+
 		imagePanel.removeAll();
-		imagePanel.add(new JLabel(metadata.getCoverArt()));
+		if (metadata.getCoverArt() != null) {
+			imagePanel.add(new JLabel(imageUtils.resize(metadata.getCoverArt(), THREE_HUNDRED, THREE_HUNDRED)));
+			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
+		} else if (metadata.getLastfmCoverArt() != null) {
+			imagePanel.add(new JLabel(metadata.getLastfmCoverArt()));
+			imageLabel.setText(ApplicationState.COVER_ART_FROM_LASTFM);
+		} else {
+			imagePanel.add(new JLabel(getDefaultImage()));
+			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
+		}
 		getPanel().invalidate();
 		getPanel().revalidate();
 	}
-	
+
 	private Frame getFrame() {
 		if (frame == null) {
-			frame = new JFrame(APPLICATION_NAME);
-			frame.add(getPanel());
-			frame.setJMenuBar(getMenubar());
-			frame.setBounds(ONE_HUNDRED, ONE_HUNDRED, ApplicationState.WIDTH, ApplicationState.HEIGHT);
+			frame = new JFrame(ApplicationState.APPLICATION_NAME);
+			frame.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setJMenuBar(getMenubar());
+			frame.add(getPanel());
 			frame.setVisible(true);
 		}
 		return frame;
@@ -464,7 +501,7 @@ public class MainWindow {
 					getCompleteMetadataButton().setEnabled(true);
 					getOpenButton().setEnabled(true);
 					getDescriptionTable().setEnabled(true);
-					getCompleteMetadataButton().setText(MainWindow.APPLY);
+					getCompleteMetadataButton().setText(ApplicationState.APPLY);
 				}
 			};
 
@@ -570,7 +607,7 @@ public class MainWindow {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-			if (MainWindow.this.getCompleteMetadataButton().getText().equals(MainWindow.APPLY) && e.getColumn() != ApplicationState.STATUS_COLUMN) {
+			if (MainWindow.this.getCompleteMetadataButton().getText().equals(ApplicationState.APPLY) && e.getColumn() != ApplicationState.STATUS_COLUMN) {
 				int lastRow = e.getLastRow();
 				DefaultTableModel model = (DefaultTableModel) e.getSource();
 				String artist = (String) model.getValueAt(lastRow, 0);
