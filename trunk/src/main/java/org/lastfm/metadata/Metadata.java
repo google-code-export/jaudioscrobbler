@@ -1,6 +1,5 @@
 package org.lastfm.metadata;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -11,7 +10,7 @@ public class Metadata {
 	private String album;
 	private String genre;
 	private int trackNumber;
-	private BufferedImage artwork;
+	private ImageIcon artwork;
 	private int length;
 	private int bitRate;
 	private File file;
@@ -50,10 +49,10 @@ public class Metadata {
 	public void setTrackNumber(int trackNumber) {
 		this.trackNumber = trackNumber;
 	}
-	public BufferedImage getArtwork() {
+	public ImageIcon getCoverArt() {
 		return artwork;
 	}
-	public void setArtwork(BufferedImage artwork) {
+	public void setCoverArt(ImageIcon artwork) {
 		this.artwork = artwork;
 	}
 	public void setLenght(int length) {
@@ -73,10 +72,10 @@ public class Metadata {
 	public void setFile(File file) {
 		this.file = file;
 	}
-	public void setCoverArt(ImageIcon coverArt) {
+	public void setLastfmCoverArt(ImageIcon coverArt) {
 		this.coverArt = coverArt;
 	}
-	public ImageIcon getCoverArt() {
+	public ImageIcon getLastfmCoverArt() {
 		return coverArt;
 	}
 }

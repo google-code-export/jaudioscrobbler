@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.jaudiotagger.audio.AudioHeader;
@@ -42,6 +43,8 @@ public class TestMp3Reader{
 	private AudioHeader header;
 	@Mock
 	private AudioFileHelper audioFileHelper;
+	@Mock
+	private BufferedImage bufferedImage;
 	
 	private String artist = "Armin Van Buuren";
 	private String title = "Control Freak (Sander Van Doorn Remix)";
@@ -52,6 +55,7 @@ public class TestMp3Reader{
 		when(audioFileHelper.read(file)).thenReturn(audioFile);
 		when(audioFile.getTag()).thenReturn(tag);
 		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(artwork.getImage()).thenReturn(bufferedImage);
 		when(tag.getFirstArtwork()).thenReturn(artwork);
 		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		when(header.getBitRate()).thenReturn("64");

@@ -45,9 +45,12 @@ public class CompleteController {
 					return ActionResult.METADATA_NOT_FOUND;
 				}
 			}
-			if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
-				ImageIcon coverArt = lastfmController.getCoverArt(metadata.getArtist(), metadata.getAlbum());
-				metadata.setCoverArt(coverArt);
+			if(metadata.getCoverArt() == null){
+				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
+					log.info("Getting Cover Art for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
+					ImageIcon coverArt = lastfmController.getCoverArt(metadata.getArtist(), metadata.getAlbum());
+					metadata.setLastfmCoverArt(coverArt);
+				}
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);

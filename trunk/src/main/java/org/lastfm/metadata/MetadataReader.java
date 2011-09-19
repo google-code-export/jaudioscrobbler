@@ -1,11 +1,12 @@
 package org.lastfm.metadata;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -73,15 +74,15 @@ public abstract class MetadataReader {
 		return trackNumber;
 	}
 
-	private BufferedImage getArtwork() throws IOException, MetadataException {
+	private ImageIcon getCoverArt() throws IOException, MetadataException {
 		Artwork artwork = tag.getFirstArtwork();
 		log.info(getTitle() + " has cover art?: " + (artwork != null));
-		return artwork==null ? null: artwork.getImage();
+		return artwork==null ? null: new ImageIcon(artwork.getImage());
 	}
 	
 	protected Metadata generateMetadata(File file) throws IOException, MetadataException {
 		Metadata metadata = new Metadata();
-		metadata.setArtwork(getArtwork());
+		metadata.setCoverArt(getCoverArt());
 		metadata.setTitle(getTitle());
 		metadata.setArtist(getArtist());
 		metadata.setAlbum(getAlbum());
