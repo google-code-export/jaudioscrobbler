@@ -160,7 +160,7 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getTitle(), row, 1);
 		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
-		descriptionTable.setValueAt(metadata.getLength(), row, 4);
+		descriptionTable.setValueAt(metadata.getTotalTracksNumber(), row, 4);
 		descriptionTable.setValueAt("Ready", row, 5);
 	}
 
@@ -305,7 +305,7 @@ public class MainWindow {
 	private JProgressBar getProgressBar() {
 		if (progressBar == null) {
 			progressBar = new JProgressBar();
-			progressBar.setVisible(false);
+			progressBar.setVisible(true);
 		}
 		return progressBar;
 	}
@@ -448,12 +448,12 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
 						final List<Metadata> metadataWithOutArtist = new ArrayList<Metadata>();
+						counter = 0;
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
-							updateStatus(i, metadataList.size());
 							String albumName = getDescriptionTable().getModel().getValueAt(i, 2).toString();
 							String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
 							String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
@@ -461,18 +461,21 @@ public class MainWindow {
 
 								@Override
 								public void onResponse(ActionResult reponse) {
+									updateStatus(counter++, metadataList.size());
 									log.info("response on complete " + metadata.getTitle() + ": " + reponse);
 									if (StringUtils.isNotEmpty(metadata.getAlbum())) {
 										metadataWithOutArtist.add(metadata);
 										getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 										getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
+										getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 										getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+									}
+									if(counter >= metadataList.size()){
+										afterComplete(metadataWithOutArtist);
 									}
 								}
 
 							});
-
-							controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
 						}
 					} else {
 						List<Metadata> metadataWithArtistList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
@@ -497,11 +500,7 @@ public class MainWindow {
 
 				@Override
 				public void done() {
-					getLabel().setText(ApplicationState.DONE);
-					getCompleteMetadataButton().setEnabled(true);
-					getOpenButton().setEnabled(true);
-					getDescriptionTable().setEnabled(true);
-					getCompleteMetadataButton().setText(ApplicationState.APPLY);
+					getLabel().setText(ApplicationState.WORKING);
 				}
 			};
 
@@ -509,6 +508,15 @@ public class MainWindow {
 			getOpenButton().setEnabled(false);
 			swingWorker.execute();
 		}
+	}
+	
+	private void afterComplete(List<Metadata> metadataWithOutArtist) {
+		controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
+		getLabel().setText(ApplicationState.DONE);
+		getCompleteMetadataButton().setEnabled(true);
+		getOpenButton().setEnabled(true);
+		getDescriptionTable().setEnabled(true);
+		getCompleteMetadataButton().setText(ApplicationState.APPLY);
 	}
 
 	private void updateStatus(final int i, int size) {

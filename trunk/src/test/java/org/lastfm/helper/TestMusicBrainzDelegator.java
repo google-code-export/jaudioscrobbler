@@ -1,14 +1,17 @@
 package org.lastfm.helper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.helper.TrackFinder;
+import org.lastfm.model.MusicBrainzTrack;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -34,21 +37,30 @@ public class TestMusicBrainzDelegator {
 	
 	@Test
 	public void shouldNotGetAlbumIfNoArtistOrTrackName() throws Exception {
-		assertEquals("", service.getAlbum(artistName, trackName));
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoArtist() throws Exception {
-		artistName = "Tiesto";
-		assertEquals("", service.getAlbum(artistName, trackName));
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(-1, result.getTrackNumber());
 		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
 	@Test
 	public void shouldNotGetAlbumIfNoTrackname() throws Exception {
+		artistName = "Tiesto";
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(-1, result.getTrackNumber());
+		verify(trackService, never()).getAlbum(artistName, trackName);
+	}
+	
+	@Test
+	public void shouldNotGetAlbumIfNoArtist() throws Exception {
 		trackName = "Here on Earth";
-		assertEquals("", service.getAlbum(artistName, trackName));
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(-1, result.getTrackNumber());
 		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
@@ -56,9 +68,14 @@ public class TestMusicBrainzDelegator {
 	public void shouldGetAlbum() throws Exception {
 		artistName = "Deadmau5";
 		trackName = "Faxing Berlin";
-		when(trackService.getAlbum(artistName, trackName)).thenReturn("Some Kind Of Blue");
+		String album = "Some Kind Of Blue";
+		MusicBrainzTrack track = new MusicBrainzTrack();
+		track.setAlbum(album);
+		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
+
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
 		
-		assertEquals("Some Kind Of Blue", service.getAlbum(artistName, trackName));
+		assertEquals(album, result.getAlbum());
 	}
 	
 	@Test
@@ -66,11 +83,16 @@ public class TestMusicBrainzDelegator {
 		artistName = "Above & Beyond";
 		trackName = "Anjunabeach";
 		String album = "Anjunabeach";
+		int trackNumber = 12;
 		
-		when(trackService.getAlbum(artistName, trackName)).thenReturn(album);
-		when(trackService.getTrackNumber(album)).thenReturn(12);
+		MusicBrainzTrack track = new MusicBrainzTrack();
+		track.setAlbum(album);
+		track.setTrackNumber(trackNumber);
 		
-		assertEquals(album, service.getAlbum(artistName, trackName));
-		assertEquals(12, service.getTrackNumber(album));
+		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertEquals(album, result.getAlbum());
+		assertEquals(trackNumber, result.getTrackNumber());
 	}
 }

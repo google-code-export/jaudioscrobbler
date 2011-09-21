@@ -10,6 +10,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.model.MusicBrainzTrack;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -19,6 +20,8 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 
 public class TestTrackFinder {
+	private static final int TOTAL_TRACKS = 10;
+
 	@InjectMocks
 	private TrackFinder trackFinder = new TrackFinder();
 	
@@ -42,36 +45,30 @@ public class TestTrackFinder {
 	
 	@Test
 	public void shouldNotFindAnyAlbum() throws Exception {
-		String result = trackFinder.getAlbum(artistname, trackname);
+		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
-		assertTrue(StringUtils.isEmpty(result));
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(-1, result.getTrackNumber());
 	}
 	
 	@Test
 	public void shouldGetAlbum() throws Exception {
-		setTrackHelperExpectations();
-
-		String result = trackFinder.getAlbum(artistname, trackname);
-		
-		assertEquals(album, result);
-	}
-	
-	@Test
-	public void shouldGetTracknumber() throws Exception {
 		int expectedTrack = 2;
 		setTrackHelperExpectations();
 
-		String albumFromFinder = trackFinder.getAlbum(artistname, trackname);
-		int trackNumber = trackFinder.getTrackNumber(albumFromFinder);
+		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
-		assertEquals(album, albumFromFinder);
-		assertEquals(expectedTrack, trackNumber);
+		assertEquals(album, result.getAlbum());
+		assertEquals(expectedTrack, result.getTrackNumber());
+		assertEquals(TOTAL_TRACKS, result.getTotalTrackNumber());
 	}
+	
 
 	private void setTrackHelperExpectations() throws ServerUnavailableException {
 		when(trackHelper.findByTitle(trackname)).thenReturn(trackList);
 		when(trackHelper.getArtist(track)).thenReturn(artistname);
 		when(trackHelper.getTrackNumber(track)).thenReturn("1");
 		when(trackHelper.getAlbum(track)).thenReturn(album);
+		when(trackHelper.getTotalTrackNumber(track)).thenReturn(TOTAL_TRACKS);
 	}
 }

@@ -15,6 +15,7 @@ public class Metadata {
 	private int bitRate;
 	private File file;
 	private ImageIcon coverArt;
+	private int totalTracksNumber;
 	
 	public File getFile() {
 		return file;
@@ -77,5 +78,11 @@ public class Metadata {
 	}
 	public ImageIcon getLastfmCoverArt() {
 		return coverArt;
+	}
+	public int getTotalTracksNumber() {
+		return totalTracksNumber;
+	}
+	public void setTotalTracksNumber(int totalTracksNumber) {
+		this.totalTracksNumber = totalTracksNumber;
 	}
 }
