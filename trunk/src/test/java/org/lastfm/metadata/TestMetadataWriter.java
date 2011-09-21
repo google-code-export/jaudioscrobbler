@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
  */
 
 
-public class TestWriteMetadata {
+public class TestMetadataWriter {
 	@InjectMocks
 	MetadataWriter metadataWriter = new MetadataWriter();
 	
@@ -78,6 +78,16 @@ public class TestWriteMetadata {
 		String trackNumber = "1";
 		
 		metadataWriter.writeTrackNumber(trackNumber);
+		verify(tag).setField(FieldKey.TRACK, trackNumber);
+		verify(audioFile).commit();
+	}
+	
+	@Test
+	public void shouldWriteTotalTracksNumber() throws Exception {
+		String totalTracksNumber = "10";
+		
+		metadataWriter.writeTotalTracksNumber(totalTracksNumber);
+		verify(tag).setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
 		verify(audioFile).commit();
 	}
 }

@@ -44,11 +44,8 @@ public class TestCompleteController {
 	private String title = "Footprints (Original Mix)";
 	private String album = "Footprints EP";
 	private Integer trackNumber = 10;
-	private int totalTracksNumber = 25;
+	private Integer totalTracksNumber = 25;
 
-
-
-	
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -56,6 +53,7 @@ public class TestCompleteController {
 		when(metadata.getTitle()).thenReturn(title);
 		when(metadata.getAlbum()).thenReturn(album);
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
+		when(metadata.getTotalTracksNumber()).thenReturn(totalTracksNumber);
 	}
 	
 	
@@ -114,6 +112,7 @@ public class TestCompleteController {
 		verify(metadataWriter).setFile(file);
 		verify(metadataWriter).writeAlbum(album);
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
+		verify(metadataWriter).writeTotalTracksNumber(totalTracksNumber.toString());
 		assertEquals(ActionResult.UPDATED, result);
 	}
 	

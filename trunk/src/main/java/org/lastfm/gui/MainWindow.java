@@ -491,7 +491,6 @@ public class MainWindow {
 									}
 									getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								}
-
 							});
 						}
 					}
