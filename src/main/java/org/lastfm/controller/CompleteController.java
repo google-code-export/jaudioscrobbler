@@ -13,6 +13,7 @@ import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
+import org.lastfm.model.MusicBrainzTrack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -35,11 +36,14 @@ public class CompleteController {
 	@RequestMethod(Actions.COMPLETE_METADATA)
 	public ActionResult completeMetadata(Metadata metadata) {
 		try {
+			log.info(metadata.getArtist() + " / " + metadata.getTitle() + " album: " + metadata.getAlbum());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
-				String album = service.getAlbum(metadata.getArtist(), metadata.getTitle());
-				if (StringUtils.isNotEmpty(album)) {
-					log.info("Album found: " + album + " for track: " + metadata.getTitle());
-					metadata.setAlbum(album);
+				MusicBrainzTrack musicBrainzTrack = service.getAlbum(metadata.getArtist(), metadata.getTitle());
+				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
+					log.info("Album found: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
+					metadata.setAlbum(musicBrainzTrack.getAlbum());
+					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
+					metadata.setTotalTracksNumber(musicBrainzTrack.getTotalTrackNumber());
 				} else {
 					log.info("No album found for track: " + metadata.getTitle());
 					return ActionResult.METADATA_NOT_FOUND;

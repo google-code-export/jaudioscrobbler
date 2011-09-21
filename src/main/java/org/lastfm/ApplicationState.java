@@ -22,6 +22,7 @@ public interface ApplicationState {
 	static final String ERROR = "Error";
 	static final int ALBUM_COLUMN = 2;
 	static final int TRACK_NUMBER_COLUMN = 3;
+	static final int TOTAL_TRACKS_NUMBER_COLUMN = 4;
 	static final int STATUS_COLUMN = 5;
 	static final String SENT = "Sent";
 	static final String SESSIONLESS = "SessionLess";

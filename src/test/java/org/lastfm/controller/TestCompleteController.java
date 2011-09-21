@@ -15,6 +15,7 @@ import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
+import org.lastfm.model.MusicBrainzTrack;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -43,6 +44,8 @@ public class TestCompleteController {
 	private String title = "Footprints (Original Mix)";
 	private String album = "Footprints EP";
 	private Integer trackNumber = 10;
+	private int totalTracksNumber = 25;
+
 
 
 	
@@ -58,14 +61,26 @@ public class TestCompleteController {
 	
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(album);
+		MusicBrainzTrack musicBrainzTrack = setExpectations();
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		when(metadata.getAlbum()).thenReturn("");
 		ActionResult result = controller.completeMetadata(metadata);
 		
 		verify(coverArtService).completeCoverArt(metadata);
 		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
+		verify(metadata).setTrackNumber(trackNumber);
+		verify(metadata).setTotalTracksNumber(totalTracksNumber);
 		assertEquals(ActionResult.METADATA_SUCCESS, result);
+	}
+
+
+	private MusicBrainzTrack setExpectations() {
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		musicBrainzTrack.setAlbum(album);
+		musicBrainzTrack.setTrackNumber(trackNumber);
+		musicBrainzTrack.setTotalTrackNumber(totalTracksNumber);
+		return musicBrainzTrack;
 	}
 	
 	@Test
@@ -81,6 +96,8 @@ public class TestCompleteController {
 	@Test
 	public void shouldNotFoundAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn("");
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		
 		ActionResult result = controller.completeMetadata(metadata);
 

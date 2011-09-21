@@ -20,6 +20,11 @@ public class TrackHelper {
 		List<Release> releases = getReleases(track);
 		return (releases.get(0).getTrackList().getOffset()).trim();
 	}
+	
+	public int getTotalTrackNumber(Track track) throws ServerUnavailableException{
+		List<Release> releases = getReleases(track);
+		return releases.get(0).getTracks().size();
+	}
 
 	public String getAlbum(Track track) {
 		List<Release> releases = getReleases(track);

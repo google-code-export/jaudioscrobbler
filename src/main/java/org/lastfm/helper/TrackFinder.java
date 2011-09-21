@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.model.MusicBrainzTrack;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Track;
@@ -15,11 +16,12 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 public class TrackFinder extends Track {
 	private List<Track> trackList;
-	private int tracknumber;
+	private int trackNumber;
 	private TrackHelper trackHelper = new TrackHelper();
 	private static final Log log = LogFactory.getLog(TrackFinder.class);
 
-	public String getAlbum(String artist, String trackname) throws ServerUnavailableException {
+	public synchronized MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException {
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
 		String album = new String();
 		trackList = trackHelper.findByTitle(trackname);
 		if (!trackList.isEmpty()) {
@@ -28,18 +30,19 @@ public class TrackFinder extends Track {
 				String artistFromMusicBrainz = trackHelper.getArtist(track);
 				if (artist.equals(artistFromMusicBrainz)) {
 					log.debug("Artist: " + artistFromMusicBrainz);
-					String trackNumber = trackHelper.getTrackNumber(track);
-					log.debug("trackNumber: " + Integer.parseInt(trackNumber) + 1);
-					tracknumber = Integer.parseInt(trackNumber) + 1;
-					album = trackHelper.getAlbum(track); 
+					String trackNumberAsString = trackHelper.getTrackNumber(track);
+					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
+					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
+					album = trackHelper.getAlbum(track);
+					int totalTrackNumber = trackHelper.getTotalTrackNumber(track);
+					log.debug("totalTrackNumber: " + totalTrackNumber);
+					musicBrainzTrack.setAlbum(album);
+					musicBrainzTrack.setTrackNumber(trackNumber);
+					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
 					break;
 				}
 			}
 		}
-		return album;
-	}
-
-	public int getTrackNumber(String album) {
-		return tracknumber;
+		return musicBrainzTrack;
 	}
 }

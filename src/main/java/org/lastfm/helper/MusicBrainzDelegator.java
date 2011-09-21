@@ -1,6 +1,7 @@
 package org.lastfm.helper;
 
 import org.apache.commons.lang.StringUtils;
+import org.lastfm.model.MusicBrainzTrack;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 
@@ -12,16 +13,11 @@ import com.slychief.javamusicbrainz.ServerUnavailableException;
 public class MusicBrainzDelegator {
 	private TrackFinder trackFinder = new TrackFinder();
 
-	public String getAlbum(String artistName, String trackName) throws ServerUnavailableException {
+	public MusicBrainzTrack getAlbum(String artistName, String trackName) throws ServerUnavailableException {
 		if(StringUtils.isEmpty(artistName) || StringUtils.isEmpty(trackName)){
-			return "";
+			return new MusicBrainzTrack();
 		} else {
 			return trackFinder.getAlbum(artistName, trackName);
 		}
 	}
-
-	public int getTrackNumber(String album) {
-		return trackFinder.getTrackNumber(album);
-	}
-
 }
