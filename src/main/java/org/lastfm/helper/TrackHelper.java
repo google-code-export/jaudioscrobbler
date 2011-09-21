@@ -34,5 +34,4 @@ public class TrackHelper {
 	public String getArtist(Track track) {
 		return track.getArtist().getName();
 	}
-
 }

@@ -58,13 +58,15 @@ public class CompleteController {
 	}
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
-	public ActionResult completeAlbum(Metadata metadata) {
+	public synchronized ActionResult completeAlbum(Metadata metadata) {
 		try {
 			File file = metadata.getFile();
 			metadataWriter.setFile(file);
 			metadataWriter.writeAlbum(metadata.getAlbum());
 			Integer trackNumber = metadata.getTrackNumber();
 			metadataWriter.writeTrackNumber(trackNumber.toString());
+			Integer totalTracksNumber = metadata.getTotalTracksNumber();
+			metadataWriter.writeTotalTracksNumber(totalTracksNumber.toString());
 			return ActionResult.UPDATED;
 		} catch (MetadataException mde) {
 			log.error(mde, mde);

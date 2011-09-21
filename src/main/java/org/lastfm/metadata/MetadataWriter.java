@@ -43,7 +43,7 @@ public class MetadataWriter {
 			log.error(iae, iae);
 		}
 	}
-	
+
 	public void writeArtist(String artist) {
 		try {
 			tag.setField(FieldKey.ARTIST, artist);
@@ -56,7 +56,7 @@ public class MetadataWriter {
 			log.error(nwe, nwe);
 		}
 	}
-	
+
 	public void writeTrackName(String trackName) {
 		try {
 			tag.setField(FieldKey.TITLE, trackName);
@@ -83,9 +83,24 @@ public class MetadataWriter {
 			throw new MetadataException(nwe.getMessage());
 		}
 	}
+
 	public boolean writeTrackNumber(String trackNumber) throws MetadataException {
 		try {
 			tag.setField(FieldKey.TRACK, trackNumber);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		}
+	}
+
+	public boolean writeTotalTracksNumber(String totalTracksNumber) throws MetadataException {
+		try {
+			tag.setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
 			audioFile.commit();
 			return true;
 		} catch (KeyNotFoundException kne) {
