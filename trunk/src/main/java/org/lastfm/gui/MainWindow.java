@@ -260,24 +260,11 @@ public class MainWindow {
 	private JPanel getImagePanel() {
 		if (imagePanel == null) {
 			imagePanel = new JPanel();
-			imagePanel.add(new JLabel(getDefaultImage()));
+			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 		}
 		return imagePanel;
 	}
 
-	private ImageIcon getDefaultImage() {
-		try {
-			Image image = ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
-			ImageIcon imageIcon = new ImageIcon(image);
-			return imageIcon;
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
-			return new ImageIcon();
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-			return new ImageIcon();
-		}
-	}
 
 	private JLabel getImageLabel() {
 		if (imageLabel == null) {
@@ -416,13 +403,20 @@ public class MainWindow {
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
 		} else if (metadata.getLastfmCoverArt() != null) {
 			imagePanel.add(new JLabel(metadata.getLastfmCoverArt()));
+			JFrame frame = new JFrame();
+			JPanel panel = new JPanel();
+			panel.add(new JLabel(metadata.getLastfmCoverArt()));
+			frame.add(panel);
+			frame.setBounds(0, 0, 300, 300);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true);
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_LASTFM);
 		} else {
-			imagePanel.add(new JLabel(getDefaultImage()));
+			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
 		}
-		getPanel().invalidate();
-		getPanel().revalidate();
+		getImagePanel().invalidate();
+		getImagePanel().revalidate();
 	}
 
 	private Frame getFrame() {

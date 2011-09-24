@@ -8,8 +8,8 @@ package org.lastfm;
 
 public interface ApplicationState {
 	static final String DEFAULT_IMAGE = "http://userserve-ak.last.fm/serve/300x300/66072700.png";
-	static final String KEY = "250d02d1a21e78488d79ad1a73e88c72";
-	static final String SECRET = "97dc72bff4e218c9cd41501a35f4493d";
+	static final String KEY = "KEY";
+	static final String SECRET = "SECRET";
 
 	static final String LOGIN_FAIL = "Login fail";
 	static final String LOGGED_AS = "Logged as : ";

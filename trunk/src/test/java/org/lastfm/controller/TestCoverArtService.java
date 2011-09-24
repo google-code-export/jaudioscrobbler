@@ -1,5 +1,6 @@
 package org.lastfm.controller;
 
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,6 +19,8 @@ import de.umass.lastfm.ImageSize;
 
 
 public class TestCoverArtService {
+	private static final String EMPTY_STRING = "";
+
 	@InjectMocks
 	private CoverArtService lastfmController = new CoverArtService();
 	
@@ -48,5 +51,13 @@ public class TestCoverArtService {
 		verify(album).getImageURL(ImageSize.EXTRALARGE);
 		verify(helper).readImage(imageURL);
 		verify(helper).getImageIcon(image);
+	}
+	
+	@Test
+	public void shouldGetDefaultCoverArtIfNoValidURL() throws Exception {
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(EMPTY_STRING);
+		
+		assertNull(lastfmController.getCoverArt(artistName, albumName));
 	}
 }
