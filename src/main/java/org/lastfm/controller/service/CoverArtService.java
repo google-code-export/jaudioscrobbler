@@ -25,6 +25,10 @@ public class CoverArtService {
 	public ImageIcon getCoverArt(String artist, String album) throws MalformedURLException, IOException{
 		Album info = helper.getAlbum(artist, album);
 		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
+		log.info("imageURL: " + imageURL);
+		if(StringUtils.isEmpty(imageURL)){
+			return null;
+		}
 		Image image = helper.readImage(imageURL);
 		return helper.getImageIcon(image);
 	}
