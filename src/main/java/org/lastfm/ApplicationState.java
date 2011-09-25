@@ -1,5 +1,7 @@
 package org.lastfm;
 
+import java.io.File;
+
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -8,8 +10,7 @@ package org.lastfm;
 
 public interface ApplicationState {
 	static final String DEFAULT_IMAGE = "http://userserve-ak.last.fm/serve/300x300/66072700.png";
-	static final String KEY = "KEY";
-	static final String SECRET = "SECRET";
+	static String DESTFILE_PATH = System.getProperty("java.io.tmpdir") + File.separator;
 
 	static final String LOGIN_FAIL = "Login fail";
 	static final String LOGGED_AS = "Logged as : ";
@@ -34,4 +35,6 @@ public interface ApplicationState {
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
+	static final String IMAGE_EXT = "PNG";
+	static final String PREFIX = "JAS_";
 }

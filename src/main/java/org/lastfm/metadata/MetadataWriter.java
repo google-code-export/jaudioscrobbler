@@ -3,6 +3,8 @@ package org.lastfm.metadata;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.ImageIcon;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
@@ -15,6 +17,8 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
+import org.jaudiotagger.tag.datatype.Artwork;
+import org.lastfm.util.ImageUtils;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -25,6 +29,7 @@ public class MetadataWriter {
 	private Tag tag;
 	private AudioFile audioFile;
 	private AudioFileHelper audioFileIOHelper = new AudioFileHelper();
+	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public void setFile(File file) {
@@ -109,6 +114,25 @@ public class MetadataWriter {
 			throw new MetadataException(fie.getMessage());
 		} catch (CannotWriteException nwe) {
 			throw new MetadataException(nwe.getMessage());
+		}
+	}
+
+	public boolean writeCoverArt(ImageIcon lastfmCoverArt) throws MetadataException {
+		try {
+			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt.getImage());
+			Artwork artwork = new Artwork();
+			artwork.setFromFile(coverArtFile);
+			tag.setField(artwork);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		} catch (IOException ioe) {
+			throw new MetadataException(ioe.getMessage());
 		}
 	}
 }
