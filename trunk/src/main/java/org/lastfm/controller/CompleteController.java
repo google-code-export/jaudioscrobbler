@@ -67,6 +67,9 @@ public class CompleteController {
 			metadataWriter.writeTrackNumber(trackNumber.toString());
 			Integer totalTracksNumber = metadata.getTotalTracksNumber();
 			metadataWriter.writeTotalTracksNumber(totalTracksNumber.toString());
+			if(metadata.getLastfmCoverArt() != null){
+				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
+			}
 			return ActionResult.UPDATED;
 		} catch (MetadataException mde) {
 			log.error(mde, mde);

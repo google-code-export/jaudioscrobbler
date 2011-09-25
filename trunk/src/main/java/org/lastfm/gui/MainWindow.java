@@ -403,13 +403,6 @@ public class MainWindow {
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
 		} else if (metadata.getLastfmCoverArt() != null) {
 			imagePanel.add(new JLabel(metadata.getLastfmCoverArt()));
-			JFrame frame = new JFrame();
-			JPanel panel = new JPanel();
-			panel.add(new JLabel(metadata.getLastfmCoverArt()));
-			frame.add(panel);
-			frame.setBounds(0, 0, 300, 300);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setVisible(true);
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_LASTFM);
 		} else {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));

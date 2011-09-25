@@ -8,14 +8,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import org.lastfm.ApplicationState;
+import org.lastfm.Auth;
 
 import de.umass.lastfm.Album;
 
 public class LastFMAlbumHelper {
 
 	public Album getAlbum(String artist, String album) {
-		return Album.getInfo(artist, album, ApplicationState.KEY);
+		return Album.getInfo(artist, album, Auth.KEY);
 	}
 
 	public Image readImage(String imageURL) throws MalformedURLException, IOException {
