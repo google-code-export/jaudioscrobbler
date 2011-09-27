@@ -1,6 +1,6 @@
 package org.lastfm.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 
 import java.awt.Image;
 

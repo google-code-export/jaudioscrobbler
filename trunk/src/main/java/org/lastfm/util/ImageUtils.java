@@ -23,7 +23,7 @@ import org.lastfm.helper.ImageHelper;
 public class ImageUtils {
 	private Log log = LogFactory.getLog(this.getClass());
 	private ImageIcon imageIcon;
-	private ImageHelper imageHelper;
+	private ImageHelper imageHelper = new ImageHelper();
 
 	public ImageIcon resize(ImageIcon imageIcon, int width, int height) {
 		BufferedImage image = (BufferedImage) imageIcon.getImage();
