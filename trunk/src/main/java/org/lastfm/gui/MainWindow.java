@@ -1,27 +1,19 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -408,8 +400,6 @@ public class MainWindow {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
 		}
-		getImagePanel().invalidate();
-		getImagePanel().revalidate();
 	}
 
 	private Frame getFrame() {
