@@ -113,7 +113,6 @@ public class LoginWindow {
 		if(frame == null){
 			frame = new JFrame();
 			frame.setBounds(300, 300, 300, 122);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 		return frame;
 	}
