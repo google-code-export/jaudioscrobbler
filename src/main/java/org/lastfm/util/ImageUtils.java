@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -14,6 +13,7 @@ import javax.swing.ImageIcon;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
+import org.lastfm.helper.ImageHelper;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -22,6 +22,8 @@ import org.lastfm.ApplicationState;
 
 public class ImageUtils {
 	private Log log = LogFactory.getLog(this.getClass());
+	private ImageIcon imageIcon;
+	private ImageHelper imageHelper;
 
 	public ImageIcon resize(ImageIcon imageIcon, int width, int height) {
 		BufferedImage image = (BufferedImage) imageIcon.getImage();
@@ -33,17 +35,20 @@ public class ImageUtils {
 	}
 
 	public ImageIcon getDefaultImage() {
+		return imageIcon == null ? getDeafaultIcon() : imageIcon;
+	}
+
+	private ImageIcon getDeafaultIcon() {
 		try {
-			Image image = ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
-			ImageIcon imageIcon = new ImageIcon(image);
+			Image image = imageHelper.read();
+			imageIcon = new ImageIcon(image);
 			return imageIcon;
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
-			return new ImageIcon();
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
-			return new ImageIcon();
 		}
+		return imageIcon;
 	}
 
 	private void write(BufferedImage bufferedImage, String ext, File file) throws IOException {
@@ -52,7 +57,7 @@ public class ImageUtils {
 
 	public File saveCoverArtToFile(Image image) throws IOException {
 		File file = File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
-		write((BufferedImage)image, ApplicationState.IMAGE_EXT, file);
+		write((BufferedImage) image, ApplicationState.IMAGE_EXT, file);
 		return file;
 	}
 
