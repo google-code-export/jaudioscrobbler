@@ -125,4 +125,12 @@ public class TestCompleteController {
 		
 		assertEquals(ActionResult.WRITE_METADATA_ERROR, result);
 	}
+	
+	@Test
+	public void shouldReturnMetadataCompleteIfHasAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn(album);
+		ActionResult result = controller.completeMetadata(metadata);
+		
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
 }
