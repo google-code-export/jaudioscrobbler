@@ -44,17 +44,20 @@ public class CompleteController {
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
 					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
 					metadata.setTotalTracksNumber(musicBrainzTrack.getTotalTrackNumber());
+					//TODO: This should be their own completeRequest
+					coverArtService.completeCoverArt(metadata);
+					return ActionResult.METADATA_SUCCESS;
 				} else {
 					log.info("No album found for track: " + metadata.getTitle());
 					return ActionResult.METADATA_NOT_FOUND;
 				}
+			} else {
+				return ActionResult.METADATA_COMPLETE;
 			}
-			coverArtService.completeCoverArt(metadata);
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
 			return ActionResult.METADATA_ERROR;
 		} 
-		return ActionResult.METADATA_SUCCESS;
 	}
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
@@ -67,6 +70,7 @@ public class CompleteController {
 			metadataWriter.writeTrackNumber(trackNumber.toString());
 			Integer totalTracksNumber = metadata.getTotalTracksNumber();
 			metadataWriter.writeTotalTracksNumber(totalTracksNumber.toString());
+			//This should be in another process
 			if(metadata.getLastfmCoverArt() != null){
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
 			}

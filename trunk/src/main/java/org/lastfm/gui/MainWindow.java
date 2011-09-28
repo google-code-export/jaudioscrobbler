@@ -427,7 +427,7 @@ public class MainWindow {
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						final List<Metadata> metadataWithOutArtist = new ArrayList<Metadata>();
+						final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 						counter = 0;
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
@@ -440,23 +440,23 @@ public class MainWindow {
 								public void onResponse(ActionResult reponse) {
 									updateStatus(counter++, metadataList.size());
 									log.info("response on complete " + metadata.getTitle() + ": " + reponse);
-									if (StringUtils.isNotEmpty(metadata.getAlbum())) {
-										metadataWithOutArtist.add(metadata);
+									if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+										metadataWithAlbum.add(metadata);
 										getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 										getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 										getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 										getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 									}
 									if(counter >= metadataList.size()){
-										afterComplete(metadataWithOutArtist);
+										afterComplete(metadataWithAlbum);
 									}
 								}
 
 							});
 						}
 					} else {
-						List<Metadata> metadataWithArtistList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
-						for (final Metadata metadata : metadataWithArtistList) {
+						List<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
+						for (final Metadata metadata : metadataWithAlbumList) {
 							viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
 
 								@Override
