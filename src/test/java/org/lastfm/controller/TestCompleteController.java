@@ -54,6 +54,7 @@ public class TestCompleteController {
 		when(metadata.getAlbum()).thenReturn(album);
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
 		when(metadata.getTotalTracksNumber()).thenReturn(totalTracksNumber);
+		when(coverArtService.completeCoverArt(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
 	}
 	
 	

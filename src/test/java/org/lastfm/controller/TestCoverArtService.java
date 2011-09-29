@@ -89,4 +89,12 @@ public class TestCoverArtService {
 		ActionResult result = lastfmController.completeCoverArt(metadata);
 		assertEquals(ActionResult.COVER_ART_ERROR, result);
 	}
+	
+	@Test
+	public void shouldGetMetadataCompleteIfNoAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn(EMPTY_STRING);
+		
+		ActionResult result = lastfmController.completeCoverArt(metadata);
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
 }

@@ -484,12 +484,14 @@ public class MainWindow {
 	}
 	
 	private void afterComplete(List<Metadata> metadataWithOutArtist) {
-		controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
+		if(!metadataWithOutArtist.isEmpty()){
+			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
+			getCompleteMetadataButton().setText(ApplicationState.APPLY);
+		}
 		getLabel().setText(ApplicationState.DONE);
 		getCompleteMetadataButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
 		getDescriptionTable().setEnabled(true);
-		getCompleteMetadataButton().setText(ApplicationState.APPLY);
 	}
 
 	private void updateStatus(final int i, int size) {

@@ -43,6 +43,9 @@ public class CoverArtService {
 						return ActionResult.COVER_ART_ERROR;
 					}
 					metadata.setLastfmCoverArt(coverArt);
+					return ActionResult.COVER_ART_SUCCESS;
+				} else {
+					return ActionResult.METADATA_COMPLETE;
 				}
 			} else {
 				return ActionResult.METADATA_COMPLETE;
@@ -57,7 +60,6 @@ public class CoverArtService {
 			log.error(npe, npe);
 			return ActionResult.COVER_ART_ERROR;
 		}
-		return ActionResult.COVER_ART_SUCCESS;
 	}
 }
  
