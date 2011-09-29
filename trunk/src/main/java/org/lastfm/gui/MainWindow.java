@@ -431,9 +431,6 @@ public class MainWindow {
 						counter = 0;
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
-							String albumName = getDescriptionTable().getModel().getValueAt(i, 2).toString();
-							String artistName = getDescriptionTable().getModel().getValueAt(i, 0).toString();
-							String trackName = getDescriptionTable().getModel().getValueAt(i, 1).toString();
 							MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
 
 								@Override

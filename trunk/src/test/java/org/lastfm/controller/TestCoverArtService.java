@@ -1,15 +1,20 @@
 package org.lastfm.controller;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.action.ActionResult;
 import org.lastfm.controller.service.CoverArtService;
 import org.lastfm.helper.LastFMAlbumHelper;
+import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -30,6 +35,10 @@ public class TestCoverArtService {
 	private Album album;
 	@Mock
 	private Image image;
+	@Mock
+	private Metadata metadata;
+	@Mock
+	private ImageIcon imageIcon;
 
 	private String artistName = "Daft Punk";
 	private String albumName = "Discovery";
@@ -59,5 +68,25 @@ public class TestCoverArtService {
 		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(EMPTY_STRING);
 		
 		assertNull(lastfmController.getCoverArt(artistName, albumName));
+	}
+	
+	@Test
+	public void shouldReturnMetadataCompleteIfHasCoverArt() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		
+		ActionResult result = lastfmController.completeCoverArt(metadata);
+		
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
+	
+	@Test
+	public void shouldGetMetadataErrorIfNoValidURL() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(EMPTY_STRING);
+		
+		ActionResult result = lastfmController.completeCoverArt(metadata);
+		assertEquals(ActionResult.COVER_ART_ERROR, result);
 	}
 }
