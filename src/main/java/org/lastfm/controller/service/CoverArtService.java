@@ -39,14 +39,22 @@ public class CoverArtService {
 				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
 					log.info("Getting Cover Art for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
 					ImageIcon coverArt = getCoverArt(metadata.getArtist(), metadata.getAlbum());
+					if(coverArt == null){
+						return ActionResult.COVER_ART_ERROR;
+					}
 					metadata.setLastfmCoverArt(coverArt);
 				}
+			} else {
+				return ActionResult.METADATA_COMPLETE;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
 			return ActionResult.COVER_ART_ERROR;
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
+			return ActionResult.COVER_ART_ERROR;
+		} catch (NullPointerException npe) {
+			log.error(npe, npe);
 			return ActionResult.COVER_ART_ERROR;
 		}
 		return ActionResult.COVER_ART_SUCCESS;

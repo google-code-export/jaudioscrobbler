@@ -44,18 +44,30 @@ public class CompleteController {
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
 					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
 					metadata.setTotalTracksNumber(musicBrainzTrack.getTotalTrackNumber());
-					//TODO: This should be their own completeRequest
 					coverArtService.completeCoverArt(metadata);
 					return ActionResult.METADATA_SUCCESS;
 				} else {
+					ActionResult completeCoverArt = coverArtService.completeCoverArt(metadata);
+					if(completeCoverArt.equals(ActionResult.COVER_ART_SUCCESS)){
+						return ActionResult.METADATA_SUCCESS;
+					}
 					log.info("No album found for track: " + metadata.getTitle());
 					return ActionResult.METADATA_NOT_FOUND;
 				}
 			} else {
-				return ActionResult.METADATA_COMPLETE;
+				ActionResult completeCoverArt = coverArtService.completeCoverArt(metadata);
+				if(completeCoverArt.equals(ActionResult.COVER_ART_SUCCESS)){
+					return ActionResult.METADATA_SUCCESS;
+				} else {
+					return ActionResult.METADATA_COMPLETE;
+				}
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
+			ActionResult completeCoverArt = coverArtService.completeCoverArt(metadata);
+			if(completeCoverArt.equals(ActionResult.COVER_ART_SUCCESS)){
+				return ActionResult.METADATA_SUCCESS;
+			}
 			return ActionResult.METADATA_ERROR;
 		} 
 	}
@@ -70,8 +82,7 @@ public class CompleteController {
 			metadataWriter.writeTrackNumber(trackNumber.toString());
 			Integer totalTracksNumber = metadata.getTotalTracksNumber();
 			metadataWriter.writeTotalTracksNumber(totalTracksNumber.toString());
-			//This should be in another process
-			if(metadata.getLastfmCoverArt() != null){
+			if(metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null){
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
 			}
 			return ActionResult.UPDATED;
