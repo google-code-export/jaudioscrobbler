@@ -1,8 +1,11 @@
 package org.lastfm.util;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -27,8 +30,17 @@ public class ImageUtils {
 
 	public ImageIcon resize(ImageIcon imageIcon, int width, int height) {
 		BufferedImage image = (BufferedImage) imageIcon.getImage();
-		BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+		int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image.getType();
+		BufferedImage resizedImage = new BufferedImage(width, height, type);
 		Graphics2D g = resizedImage.createGraphics();
+		g.setComposite(AlphaComposite.Src);
+
+		g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+
+		g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
 		g.drawImage(image, 0, 0, width, height, null);
 		g.dispose();
 		return new ImageIcon(resizedImage);
@@ -57,6 +69,13 @@ public class ImageUtils {
 
 	public File saveCoverArtToFile(Image image) throws IOException {
 		File file = File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
+		log.info("image height: " + image.getHeight(new ImageObserver() {
+			
+			@Override
+			public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
+				return false;
+			}
+		}));
 		write((BufferedImage) image, ApplicationState.IMAGE_EXT, file);
 		return file;
 	}
