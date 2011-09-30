@@ -427,6 +427,7 @@ public class MainWindow {
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
+						//change to set
 						final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 						getLabel().setText(ApplicationState.GETTING_ALBUM);
 						counter = 0;
@@ -463,9 +464,9 @@ public class MainWindow {
 												log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
 												if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
 													metadataWithAlbum.add(metadata);
-													getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-													getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
-													getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+													for (Metadata metadata2 : metadataWithAlbum) {
+														log.info("metadata: " + ToStringBuilder.reflectionToString(metadata2));
+													}
 													getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 												}
 												if(counter >= metadataList.size()){
@@ -502,7 +503,7 @@ public class MainWindow {
 
 				@Override
 				public void done() {
-					getLabel().setText(ApplicationState.WORKING);
+					getLabel().setText(ApplicationState.GETTING_ALBUM);
 				}
 			};
 

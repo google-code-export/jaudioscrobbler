@@ -65,8 +65,12 @@ public class TestCoverArtService {
 	@Test
 	public void shouldGetDefaultCoverArtIfNoValidURL() throws Exception {
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
-		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(EMPTY_STRING);
 		
+		assertNull(lastfmController.getCoverArt(artistName, albumName));
+	}
+	
+	@Test
+	public void shouldNotGetCoverArtIfNoAlbum() throws Exception {
 		assertNull(lastfmController.getCoverArt(artistName, albumName));
 	}
 	
