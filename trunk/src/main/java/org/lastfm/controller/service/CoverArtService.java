@@ -24,13 +24,17 @@ public class CoverArtService {
 	
 	public ImageIcon getCoverArt(String artist, String album) throws MalformedURLException, IOException{
 		Album info = helper.getAlbum(artist, album);
-		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
-		log.info("imageURL: " + imageURL);
-		if(StringUtils.isEmpty(imageURL)){
+		if(info != null){
+			String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
+			log.info("imageURL: " + imageURL + " from album: " + info.getName());
+			if(StringUtils.isEmpty(imageURL)){
+				return null;
+			}
+			Image image = helper.readImage(imageURL);
+			return helper.getImageIcon(image);
+		} else {
 			return null;
 		}
-		Image image = helper.readImage(imageURL);
-		return helper.getImageIcon(image);
 	}
 
 	public ActionResult completeCoverArt(Metadata metadata) {
