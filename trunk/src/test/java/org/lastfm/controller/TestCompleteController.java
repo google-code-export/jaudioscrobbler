@@ -63,9 +63,8 @@ public class TestCompleteController {
 		MusicBrainzTrack musicBrainzTrack = setExpectations();
 		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		when(metadata.getAlbum()).thenReturn("");
-		ActionResult result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
-		verify(coverArtService).completeCoverArt(metadata);
 		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
 		verify(metadata).setTrackNumber(trackNumber);
@@ -87,7 +86,7 @@ public class TestCompleteController {
 		when(metadata.getAlbum()).thenReturn("");
 		when(musicBrainzDelegator.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
 		
-		ActionResult result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
 		assertEquals(ActionResult.METADATA_ERROR, result);
 	}
@@ -98,7 +97,7 @@ public class TestCompleteController {
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
 		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		
-		ActionResult result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeAlbumMetadata(metadata);
 
 		verify(metadata, never()).setAlbum(album);
 		assertEquals(ActionResult.METADATA_NOT_FOUND, result);
@@ -130,8 +129,15 @@ public class TestCompleteController {
 	@Test
 	public void shouldReturnMetadataCompleteIfHasAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn(album);
-		ActionResult result = controller.completeMetadata(metadata);
+		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
+	
+	@Test
+	public void shouldCompleteCoverArtMetadata() throws Exception {
+		controller.completeCoverArtMetadata(metadata);
+		
+		verify(coverArtService).completeCoverArt(metadata);
 	}
 }
