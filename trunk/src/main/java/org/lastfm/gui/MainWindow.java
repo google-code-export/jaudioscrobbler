@@ -145,7 +145,7 @@ public class MainWindow {
 	@EventMethod(Events.LOAD_METADATA)
 	private void onLoadMetadata(Metadata metadata) {
 		JTable descriptionTable = getDescriptionTable();
-		int row = descriptionTable.getRowCount() - 1;
+		int row = descriptionTable.getRowCount();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 		model.addRow(new Object[] { "", "", "", "", "", "" });
 		descriptionTable.setValueAt(metadata.getArtist(), row, 0);
@@ -154,6 +154,13 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
 		descriptionTable.setValueAt(metadata.getTotalTracksNumber(), row, 4);
 		descriptionTable.setValueAt("Ready", row, 5);
+	}
+
+	private void deleteALLRows(JTable descriptionTable) {
+		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+		for(int i = model.getRowCount() - 1; i >= 0; i--){
+			model.removeRow(i);
+		}
 	}
 
 	@EventMethod(Events.OPEN_ERROR)
@@ -344,6 +351,7 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					deleteALLRows(descriptionTable);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
@@ -400,6 +408,8 @@ public class MainWindow {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
 		}
+		imagePanel.invalidate();
+		imagePanel.revalidate();
 	}
 
 	private Frame getFrame() {
