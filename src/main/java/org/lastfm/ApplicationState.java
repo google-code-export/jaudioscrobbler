@@ -29,7 +29,7 @@ public interface ApplicationState {
 	static final String SESSIONLESS = "SessionLess";
 	static final String LOGGED_OUT = "NotLogged";
 	static final int WIDTH = 1024;
-	static final int HEIGHT = 550;
+	static final int HEIGHT = 600;
 	static final String COVER_ART_FROM_FILE = "Cover Art from File";
 	static final String COVER_ART_FROM_LASTFM = "Cover Art from Lastfm";
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
