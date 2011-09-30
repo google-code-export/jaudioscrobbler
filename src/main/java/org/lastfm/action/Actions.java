@@ -15,9 +15,12 @@ public interface Actions {
 	String SEND_METADATA = "sendMetadata";
 	ActionType<RequestAction<Metadata, ActionResult>> SEND = cm(SEND_METADATA);
 	
-	String COMPLETE_METADATA = "completeMetadata";
-	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE = cm(COMPLETE_METADATA);
-	
 	String COMPLETE_ALBUM_METADATA = "completeAlbumMetadata";
 	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE_ALBUM = cm(COMPLETE_ALBUM_METADATA);
+	
+	String COMPLETE_COVER_ART_METADATA = "completeCoverArtMetadata";
+	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE_COVER_ART = cm(COMPLETE_COVER_ART_METADATA);
+	
+	String WRITE_METADATA = "writeMetadata";
+	ActionType<RequestAction<Metadata, ActionResult>> WRITE = cm(WRITE_METADATA);
 }

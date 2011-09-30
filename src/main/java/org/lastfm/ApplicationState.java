@@ -37,4 +37,6 @@ public interface ApplicationState {
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
 	static final String PREFIX = "JAS_";
+	static final String GETTING_ALBUM = "Getting Album";
+	static final String GETTING_COVER_ART = "Getting CoverArt";
 }

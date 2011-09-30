@@ -428,15 +428,16 @@ public class MainWindow {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
 						final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
+						getLabel().setText(ApplicationState.GETTING_ALBUM);
 						counter = 0;
 						for (final Metadata metadata : metadataList) {
 							final int i = metadataList.indexOf(metadata);
-							MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE, metadata, new ResponseCallback<ActionResult>() {
+							MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
 
 								@Override
 								public void onResponse(ActionResult reponse) {
 									updateStatus(counter++, metadataList.size());
-									log.info("response on complete " + metadata.getTitle() + ": " + reponse);
+									log.info("response in getting album " + metadata.getTitle() + ": " + reponse);
 									if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
 										metadataWithAlbum.add(metadata);
 										getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
@@ -445,8 +446,36 @@ public class MainWindow {
 										getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 									}
 									if(counter >= metadataList.size()){
-										afterComplete(metadataWithAlbum);
+										getCoverArt();
 									}
+								}
+
+								private void getCoverArt() {
+									getLabel().setText(ApplicationState.GETTING_COVER_ART);
+									counter = 0;
+									for (final Metadata metadata : metadataList) {
+										final int i = metadataList.indexOf(metadata);
+										MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_COVER_ART, metadata, new ResponseCallback<ActionResult>() {
+
+											@Override
+											public void onResponse(ActionResult reponse) {
+												updateStatus(counter++, metadataList.size());
+												log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
+												if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+													metadataWithAlbum.add(metadata);
+													getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
+													getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
+													getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+													getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+												}
+												if(counter >= metadataList.size()){
+													afterComplete(metadataWithAlbum);
+												}
+											}
+
+										});
+									}
+									
 								}
 
 							});
@@ -454,7 +483,7 @@ public class MainWindow {
 					} else {
 						List<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
 						for (final Metadata metadata : metadataWithAlbumList) {
-							viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
+							viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
 
 								@Override
 								public void onResponse(ActionResult result) {
