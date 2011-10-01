@@ -49,6 +49,7 @@ public class MetadataController {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
 				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
+				configurator.getControlEngine().remove(Model.METADATA);
 				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
 				configurator.getControlEngine().fireEvent(Events.LOADED);
 			} catch (IOException e) {

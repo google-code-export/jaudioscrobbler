@@ -153,4 +153,9 @@ public class DefaultEngine implements ViewEngine, ControlEngine {
 		actionDelegate.removeActionHandler(action);
 	}
 
+	@Override
+	public <T> void remove(ModelType<T> type) {
+		modelDelegate.remove(type);
+	}
+
 }

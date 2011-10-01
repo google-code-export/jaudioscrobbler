@@ -8,7 +8,9 @@ public interface ModelDelegate {
 	<T> T forceGet(ModelType<T> type);
 
 	<T> void set(ModelType<T> type, T value);
-
+	
+	<T> void remove(ModelType<T> type);
+	
 	void start();
 
 	void stop();
