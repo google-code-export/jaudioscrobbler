@@ -7,6 +7,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 
@@ -17,6 +19,8 @@ import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.controller.service.MetadataExtractor;
 import org.lastfm.event.Events;
 import org.lastfm.event.ValueEvent;
+import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Model;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -38,6 +42,8 @@ public class TestMetadataController {
 	@Mock
 	private ControlEngine controlEngine;
 
+	private List<Metadata> metadataList = new ArrayList<Metadata>();
+
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -48,12 +54,15 @@ public class TestMetadataController {
 	public void shouldGetMetadata() throws Exception {
 		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
 		when(fileChooser.getSelectedFile()).thenReturn(root);
+		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
 		
 		controller.getMetadata();
 		
 		fileChooserSetupExpectations();
 		verify(fileChooser).getSelectedFile();
 		verify(controlEngine).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
+		verify(controlEngine).remove(Model.METADATA);
+		verify(controlEngine).set(Model.METADATA, metadataList, null);
 		verify(metadataExtractor).extractMetadata(root);
 		verify(controlEngine).fireEvent(Events.LOADED);
 	}

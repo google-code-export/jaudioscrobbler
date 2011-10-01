@@ -22,6 +22,8 @@ public interface ControlEngine {
 	<T> T get(ModelType<T> type);
 
 	<T> void set(ModelType<T> type, T value, EventType<ValueEvent<T>> event);
+	
+	<T> void remove(ModelType<T> type);
 
 	<T extends ActionObject> void addActionHandler(ActionType<T> actionType, ActionHandler<T> actionHandler);
 

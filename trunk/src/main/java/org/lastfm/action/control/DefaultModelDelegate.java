@@ -68,4 +68,9 @@ public class DefaultModelDelegate implements ModelDelegate {
 		return (T) model.get(type);
 	}
 
+	@Override
+	public <T> void remove(ModelType<T> type) {
+		model.remove(type);
+	}
+
 }
