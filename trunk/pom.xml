@@ -6,6 +6,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>jaudioscrobbler</name>
 	<description>This project is based on last.fm API bindings for Java &amp; MusicBrainz our goal is create a complete stand alone that keep a good Metadata Quality &amp; Music Taste Analyzer. </description>
+	<profiles>
+		<profile>
+			<id>linux</id>
+			<activation>
+				<os>
+					<family>linux</family>
+				</os>
+			</activation>
+			<properties>
+				<distribution.descriptor>src/main/os/linux/assemble/distribution.xml</distribution.descriptor>
+			</properties>
+		</profile>
+	</profiles>
 	<build>
 		<plugins>
 			<plugin>
@@ -41,7 +54,7 @@
 						JAudioScrobbler
 					</finalName>
 					<descriptors>
-						<descriptor>distribution.xml</descriptor>
+						<descriptor>${distribution.descriptor}</descriptor>
 					</descriptors>
 			  </configuration>
 			</plugin>
