@@ -11,8 +11,7 @@
 			<outputDirectory>/System/Jar</outputDirectory>
 		</file>
 		<file>
-			<source>JAudioScrobbler.bat
-			</source>
+			<source>src/main/os/windows/scripts/JAudioScrobbler.bat</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
 	</files>
