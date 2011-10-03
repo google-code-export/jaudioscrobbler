@@ -18,6 +18,17 @@
 				<distribution.descriptor>src/main/os/linux/assemble/distribution.xml</distribution.descriptor>
 			</properties>
 		</profile>
+		<profile>
+			<id>windows</id>
+			<activation>
+				<os>
+					<family>windows</family>
+				</os>
+			</activation>
+			<properties>
+				<distribution.descriptor>src/main/os/windows/assemble/distribution.xml</distribution.descriptor>
+			</properties>
+		</profile>
 	</profiles>
 	<build>
 		<plugins>
