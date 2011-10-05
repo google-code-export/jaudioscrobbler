@@ -1,6 +1,8 @@
 package org.lastfm.gui;
 
-import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -9,10 +11,12 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
@@ -35,6 +39,10 @@ public class LoginWindow {
 	private static final String PASSWORD_TEXTFIELD_NAME = "password";
 	private static final String SEND_BUTTON_LABEL = "Login";
 	private static final String SEND_BUTTON_NAME = "sendButton";
+	private static final Rectangle FRAME_BOUNDS = new Rectangle(300, 300, 300, 122);
+	private static final int TEXT_COLUMNS = 10;
+	private JLabel usernameLabel;
+	private JLabel passwordLabel;
 	
 	@Autowired
 	private ViewEngineConfigurator configurator;
@@ -63,7 +71,7 @@ public class LoginWindow {
 		});
 		
 		getPasswordTextfield().addKeyListener(new KeyAdapter() {
-			
+
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int key = e.getKeyCode();
@@ -82,12 +90,47 @@ public class LoginWindow {
 	
 	private JPanel getPanel() {
 		if(panel == null){
-			panel = new JPanel(new BorderLayout());
-			panel.add(getUsernameTextfield(), BorderLayout.NORTH);
-			panel.add(getPasswordTextfield(), BorderLayout.CENTER);
-			panel.add(getSendButton(), BorderLayout.SOUTH);
+			panel = new JPanel(new GridBagLayout());
+			GridBagConstraints c = new GridBagConstraints();
+			c.fill = GridBagConstraints.VERTICAL;
+			c.gridx = 0;
+			c.gridy = 0;
+			panel.add(getUserNameLabel(), c);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 1;
+			c.gridy = 0;
+			panel.add(getUsernameTextfield(), c);
+			c.fill = GridBagConstraints.VERTICAL;
+			c.gridx = 0;
+			c.gridy = 1;
+			panel.add(getPasswordLabel(), c);
+			c.fill = GridBagConstraints.HORIZONTAL;
+			c.gridx = 1;
+			c.gridy = 1;
+			panel.add(getPasswordTextfield(), c);
+			c.fill = GridBagConstraints.VERTICAL;
+			c.gridx = 1;
+			c.gridy = 2;
+			panel.add(getSendButton(), c);
 		}
 		return panel;
+	}
+
+	private JLabel getPasswordLabel() {
+		if(passwordLabel == null){
+			passwordLabel = new JLabel();
+			passwordLabel.setText(ApplicationState.PASSWORD_LABEL);
+		}
+		return passwordLabel;
+	}
+
+	private JLabel getUserNameLabel() {
+		if(usernameLabel == null){
+			usernameLabel = new JLabel();
+			usernameLabel.setText(ApplicationState.USERNAME_LABEL);
+			
+		}
+		return usernameLabel;
 	}
 
 	public void addLoginListener(ActionListener loginListener){
@@ -100,7 +143,7 @@ public class LoginWindow {
 
 	private JTextField getUsernameTextfield() {
 		if(usernameTextfield == null){
-			usernameTextfield = new JTextField();
+			usernameTextfield = new JTextField(TEXT_COLUMNS);
 			usernameTextfield.setName(USERNAME_TEXTFIELD_NAME);
 		}
 		return usernameTextfield;
@@ -108,7 +151,7 @@ public class LoginWindow {
 
 	private JTextField getPasswordTextfield() {
 		if(passwordTextfield == null){
-			passwordTextfield = new JPasswordField();
+			passwordTextfield = new JPasswordField(TEXT_COLUMNS);
 			passwordTextfield.setName(PASSWORD_TEXTFIELD_NAME);
 		}
 		return passwordTextfield;
@@ -117,7 +160,7 @@ public class LoginWindow {
 	public JFrame getFrame() {
 		if(frame == null){
 			frame = new JFrame();
-			frame.setBounds(300, 300, 300, 122);
+			frame.setBounds(FRAME_BOUNDS);
 		}
 		return frame;
 	}
