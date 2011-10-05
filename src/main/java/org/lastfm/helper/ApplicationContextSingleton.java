@@ -1,7 +1,5 @@
 package org.lastfm.helper;
 
-import java.io.File;
-
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -16,8 +14,6 @@ public class ApplicationContextSingleton {
 	
 	public static ConfigurableApplicationContext getApplicationContext(){
 		if (applicationContext == null) {
-			File file = new File("simpleFile.txt");
-			System.err.println(file.getAbsolutePath());
 			applicationContext = new ClassPathXmlApplicationContext( "spring/applicationContext.xml" );
 		}
 		return applicationContext;
