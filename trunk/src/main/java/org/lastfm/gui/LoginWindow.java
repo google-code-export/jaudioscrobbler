@@ -55,6 +55,7 @@ public class LoginWindow {
 		});
 		
 		getSendButton().addKeyListener(new KeyAdapter() {
+			
 			@Override
 			public void keyPressed(KeyEvent e) {
 				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
@@ -62,9 +63,13 @@ public class LoginWindow {
 		});
 		
 		getPasswordTextfield().addKeyListener(new KeyAdapter() {
+			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
+				int key = e.getKeyCode();
+				if(key == KeyEvent.VK_ENTER){
+					configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
+				}
 			}
 		});
 	}

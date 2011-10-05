@@ -35,6 +35,7 @@ public class LoginController {
 	public void login(User user) {
 		String username = user.getUsername();
 		String password = user.getPassword();
+		log.info("username: " + username + " password: " + password);
 		try {
 			Session session = lastfmAuthenticator.login(username, password);
 			if (session != null) {
