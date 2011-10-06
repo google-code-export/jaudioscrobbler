@@ -2,6 +2,7 @@ package org.lastfm.gui;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -92,23 +93,19 @@ public class LoginWindow {
 		if(panel == null){
 			panel = new JPanel(new GridBagLayout());
 			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.VERTICAL;
 			c.gridx = 0;
 			c.gridy = 0;
 			panel.add(getUserNameLabel(), c);
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 0;
 			panel.add(getUsernameTextfield(), c);
-			c.fill = GridBagConstraints.VERTICAL;
 			c.gridx = 0;
 			c.gridy = 1;
 			panel.add(getPasswordLabel(), c);
-			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 1;
 			panel.add(getPasswordTextfield(), c);
-			c.fill = GridBagConstraints.VERTICAL;
+			c.insets = new Insets(0, 40, 0, 0);
 			c.gridx = 1;
 			c.gridy = 2;
 			panel.add(getSendButton(), c);
@@ -161,6 +158,7 @@ public class LoginWindow {
 		if(frame == null){
 			frame = new JFrame();
 			frame.setBounds(FRAME_BOUNDS);
+			frame.setResizable(false);
 		}
 		return frame;
 	}
