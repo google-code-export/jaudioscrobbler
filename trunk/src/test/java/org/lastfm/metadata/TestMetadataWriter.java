@@ -58,7 +58,7 @@ public class TestMetadataWriter {
 	@Test
 	public void shouldWriteTrackName() throws Exception {
 		String trackName = "Nowhere";
-		metadataWriter.writeTrackName(trackName);
+		metadataWriter.writeTitle(trackName);
 		
 		verify(tag).setField(FieldKey.TITLE, trackName);
 		verify(audioFile).commit();

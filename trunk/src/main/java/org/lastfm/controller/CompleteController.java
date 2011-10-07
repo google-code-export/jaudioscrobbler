@@ -67,7 +67,10 @@ public class CompleteController {
 	public synchronized ActionResult completeAlbum(Metadata metadata) {
 		try {
 			File file = metadata.getFile();
+			log.info("writting: " + metadata.getTitle());
 			metadataWriter.setFile(file);
+			metadataWriter.writeArtist(metadata.getArtist());
+			metadataWriter.writeTitle(metadata.getTitle());
 			metadataWriter.writeAlbum(metadata.getAlbum());
 			Integer trackNumber = metadata.getTrackNumber();
 			metadataWriter.writeTrackNumber(trackNumber.toString());

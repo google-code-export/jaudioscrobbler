@@ -62,7 +62,7 @@ public class MetadataWriter {
 		}
 	}
 
-	public void writeTrackName(String trackName) {
+	public void writeTitle(String trackName) {
 		try {
 			tag.setField(FieldKey.TITLE, trackName);
 			audioFile.commit();
@@ -135,4 +135,6 @@ public class MetadataWriter {
 			throw new MetadataException(ioe.getMessage());
 		}
 	}
+
+	
 }

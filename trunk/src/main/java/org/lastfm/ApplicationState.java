@@ -21,6 +21,8 @@ public interface ApplicationState {
 	static final String WORKING = "Working";
 	static final String UPDATED = "Updated";
 	static final String ERROR = "Error";
+	static final int ARTIST_COLUMN = 0;
+	static final int TITLE_COLUMN = 1;
 	static final int ALBUM_COLUMN = 2;
 	static final int TRACK_NUMBER_COLUMN = 3;
 	static final int TOTAL_TRACKS_NUMBER_COLUMN = 4;
