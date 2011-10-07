@@ -47,6 +47,7 @@ import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
+import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -97,6 +98,10 @@ public class MainWindow {
 	private JScrollPane scrollPane;
 	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
+	//change to set
+	private final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
+	private MetadataAdapter metadataAdapter = new MetadataAdapter();
+	private boolean tableLoaded;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -134,6 +139,7 @@ public class MainWindow {
 	@EventMethod(Events.TRACKS_LOADED)
 	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
+		tableLoaded = true;
 	}
 
 	@EventMethod(Events.READY_TO_COMPLETE_METADATA)
@@ -352,6 +358,8 @@ public class MainWindow {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					deleteALLRows(descriptionTable);
+					metadataWithAlbum.clear();
+					tableLoaded = false;
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
@@ -383,7 +391,36 @@ public class MainWindow {
 				public void valueChanged(ListSelectionEvent e) {
 					updateImage(descriptionTable.getSelectedRow());
 				}
+				
 			});
+			
+			descriptionTable.getModel().addTableModelListener(new TableModelListener() {
+				
+				@Override
+				public void tableChanged(TableModelEvent e) {
+					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != 5) {
+						log.info("tableChanged");
+				        int column = e.getColumn();
+				        int row = e.getFirstRow();
+				        String value = getDescriptionTable().getModel().getValueAt(row, column).toString();
+				        log.info("value: " + value);
+				        List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+				        Metadata metadata = metadataList.get(row);
+				        metadataAdapter.update(metadata, column, value);
+				        metadataWithAlbum.add(metadata);
+				        getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
+				        printMetadataWithAlbum();
+				    }
+				}
+
+				private void printMetadataWithAlbum() {
+					for (Metadata metadata : metadataWithAlbum) {
+						log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
+					}
+				}
+			});
+			
+			
 		}
 
 		return descriptionTable;
@@ -437,8 +474,6 @@ public class MainWindow {
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						//change to set
-						final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 						getLabel().setText(ApplicationState.GETTING_ALBUM);
 						counter = 0;
 						for (final Metadata metadata : metadataList) {
