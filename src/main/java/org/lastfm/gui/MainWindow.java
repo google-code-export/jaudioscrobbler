@@ -408,8 +408,13 @@ public class MainWindow {
 				        Metadata metadata = metadataList.get(row);
 				        metadataAdapter.update(metadata, column, value);
 				        metadataWithAlbum.add(metadata);
+				        
 				        getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
 				        printMetadataWithAlbum();
+				        
+				        controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
+				        controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+						getCompleteMetadataButton().setText(ApplicationState.APPLY);
 				    }
 				}
 
@@ -560,6 +565,7 @@ public class MainWindow {
 	
 	private void afterComplete(List<Metadata> metadataWithOutArtist) {
 		if(!metadataWithOutArtist.isEmpty()){
+			controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
 			getCompleteMetadataButton().setText(ApplicationState.APPLY);
 		}
