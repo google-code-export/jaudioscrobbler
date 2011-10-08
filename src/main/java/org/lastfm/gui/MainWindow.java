@@ -1,6 +1,7 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -73,13 +74,13 @@ public class MainWindow {
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
-	private static final String COMPLETE_BUTTON = "Complete";
 	private int counter = 0;
 
 	private JFrame frame;
 	private JPanel panel;
 	private JButton openButton;
 	private JButton sendButton;
+	private JButton applyButton;
 	private JButton completeMetadataButton;
 	private JTextField directorySelected;
 	private JPanel bottomPanel;
@@ -98,7 +99,7 @@ public class MainWindow {
 	private JScrollPane scrollPane;
 	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
-	//change to set
+	// change to set
 	private final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	private boolean tableLoaded;
@@ -159,12 +160,12 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
 		descriptionTable.setValueAt(metadata.getTotalTracksNumber(), row, 4);
-		descriptionTable.setValueAt("Ready", row, 5);
+		descriptionTable.setValueAt(ApplicationState.READY, row, 5);
 	}
 
 	private void deleteALLRows(JTable descriptionTable) {
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-		for(int i = model.getRowCount() - 1; i >= 0; i--){
+		for (int i = model.getRowCount() - 1; i >= 0; i--) {
 			model.removeRow(i);
 		}
 	}
@@ -217,6 +218,7 @@ public class MainWindow {
 			bottomPanel.add(getOpenButton());
 			bottomPanel.add(getSendButton());
 			bottomPanel.add(getCompleteMetadataButton());
+			bottomPanel.add(getApplyButton());
 		}
 		return bottomPanel;
 	}
@@ -249,15 +251,15 @@ public class MainWindow {
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 0;
 			c.gridy = 0;
-			middlePanel.add(getImageLabel(),c);
+			middlePanel.add(getImageLabel(), c);
 			c.fill = GridBagConstraints.VERTICAL;
 			c.gridx = 0;
 			c.gridy = 1;
-			middlePanel.add(getImagePanel(),c);
+			middlePanel.add(getImagePanel(), c);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
 			c.gridy = 1;
-			middlePanel.add(getScrollPane(),c);
+			middlePanel.add(getScrollPane(), c);
 		}
 		return middlePanel;
 	}
@@ -269,7 +271,6 @@ public class MainWindow {
 		}
 		return imagePanel;
 	}
-
 
 	private JLabel getImageLabel() {
 		if (imageLabel == null) {
@@ -318,18 +319,43 @@ public class MainWindow {
 
 	private JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
-			completeMetadataButton = new JButton(COMPLETE_BUTTON);
+			completeMetadataButton = new JButton(ApplicationState.COMPLETE);
 			completeMetadataButton.setEnabled(false);
 
 			completeMetadataButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					resetStatus();
 					new CompleteWorker();
+				}
+
+				private void resetStatus() {
+					metadataWithAlbum.clear();
+					for (int i = 0; i < getDescriptionTable().getModel().getRowCount(); i++) {
+						getDescriptionTable().getModel().setValueAt(ApplicationState.READY, i, ApplicationState.STATUS_COLUMN);
+					}
 				}
 			});
 		}
 		return completeMetadataButton;
+	}
+
+	private JButton getApplyButton() {
+		if (applyButton == null) {
+			applyButton = new JButton(ApplicationState.APPLY);
+			applyButton.setEnabled(false);
+
+			applyButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new WriteWorker();
+				}
+
+			});
+		}
+		return applyButton;
 	}
 
 	private JButton getSendButton() {
@@ -357,9 +383,9 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					tableLoaded = false;
 					deleteALLRows(descriptionTable);
 					metadataWithAlbum.clear();
-					tableLoaded = false;
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
@@ -389,33 +415,35 @@ public class MainWindow {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					updateImage(descriptionTable.getSelectedRow());
+					if(tableLoaded){
+						updateImage(descriptionTable.getSelectedRow());
+					}
 				}
-				
+
 			});
-			
+
 			descriptionTable.getModel().addTableModelListener(new TableModelListener() {
-				
+
 				@Override
 				public void tableChanged(TableModelEvent e) {
 					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != 5) {
 						log.info("tableChanged");
-				        int column = e.getColumn();
-				        int row = e.getFirstRow();
-				        String value = getDescriptionTable().getModel().getValueAt(row, column).toString();
-				        log.info("value: " + value);
-				        List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
-				        Metadata metadata = metadataList.get(row);
-				        metadataAdapter.update(metadata, column, value);
-				        metadataWithAlbum.add(metadata);
-				        
-				        getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
-				        printMetadataWithAlbum();
-				        
-				        controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
-				        controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-						getCompleteMetadataButton().setText(ApplicationState.APPLY);
-				    }
+						int column = e.getColumn();
+						int row = e.getFirstRow();
+						String value = getDescriptionTable().getModel().getValueAt(row, column).toString();
+						log.info("value: " + value);
+						List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+						Metadata metadata = metadataList.get(row);
+						metadataAdapter.update(metadata, column, value);
+						metadataWithAlbum.add(metadata);
+
+						getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
+						printMetadataWithAlbum();
+
+						controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
+						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+						getApplyButton().setEnabled(true);
+					}
 				}
 
 				private void printMetadataWithAlbum() {
@@ -424,8 +452,7 @@ public class MainWindow {
 					}
 				}
 			});
-			
-			
+
 		}
 
 		return descriptionTable;
@@ -466,6 +493,54 @@ public class MainWindow {
 		return frame;
 	}
 
+	private class WriteWorker {
+
+		public WriteWorker() {
+			work();
+		}
+
+		private void work() {
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+				@Override
+				protected Boolean doInBackground() throws Exception {
+					final List<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
+					getLabel().setText(ApplicationState.WRITTING_METADATA);
+					counter = 0;
+					for (final Metadata metadata : metadataWithAlbumList) {
+						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
+
+							@Override
+							public void onResponse(ActionResult result) {
+								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
+								counter++;
+								String message = ApplicationState.UPDATED;
+								if (result != ActionResult.UPDATED) {
+									message = ApplicationState.ERROR;
+								}
+								getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								if (counter >= metadataWithAlbumList.size()) {
+									resetButtonsState();
+									finishingWorker();
+								}
+							}
+
+							private void finishingWorker() {
+								getApplyButton().setEnabled(false);
+							}
+						});
+					}
+					return true;
+				}
+
+			};
+			MainWindow.this.getCompleteMetadataButton().setEnabled(false);
+			getOpenButton().setEnabled(false);
+			swingWorker.execute();
+		}
+
+	}
+
 	private class CompleteWorker {
 
 		public CompleteWorker() {
@@ -478,82 +553,59 @@ public class MainWindow {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
-					if (getCompleteMetadataButton().getText().equals(MainWindow.COMPLETE_BUTTON)) {
-						getLabel().setText(ApplicationState.GETTING_ALBUM);
-						counter = 0;
-						for (final Metadata metadata : metadataList) {
-							final int i = metadataList.indexOf(metadata);
-							MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
+					getLabel().setText(ApplicationState.GETTING_ALBUM);
+					counter = 0;
+					for (final Metadata metadata : metadataList) {
+						final int i = metadataList.indexOf(metadata);
+						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
 
-								@Override
-								public void onResponse(ActionResult reponse) {
-									updateStatus(counter++, metadataList.size());
-									log.info("response in getting album " + metadata.getTitle() + ": " + reponse);
-									if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
-										metadataWithAlbum.add(metadata);
-										getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
-										getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
-										getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-										getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
-									}
-									if(counter >= metadataList.size()){
-										getCoverArt();
-									}
+							@Override
+							public void onResponse(ActionResult reponse) {
+								updateStatus(counter++, metadataList.size());
+								log.info("response in getting album " + metadata.getTitle() + ": " + reponse);
+								if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+									metadataWithAlbum.add(metadata);
+									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
+								if (counter >= metadataList.size()) {
+									getCoverArt();
+								}
+							}
 
-								private void getCoverArt() {
-									getLabel().setText(ApplicationState.GETTING_COVER_ART);
-									counter = 0;
-									for (final Metadata metadata : metadataList) {
-										final int i = metadataList.indexOf(metadata);
-										MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_COVER_ART, metadata, new ResponseCallback<ActionResult>() {
+							private void getCoverArt() {
+								getLabel().setText(ApplicationState.GETTING_COVER_ART);
+								counter = 0;
+								for (final Metadata metadata : metadataList) {
+									final int i = metadataList.indexOf(metadata);
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_COVER_ART, metadata, new ResponseCallback<ActionResult>() {
 
-											@Override
-											public void onResponse(ActionResult reponse) {
-												updateStatus(counter++, metadataList.size());
-												log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
-												if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
-													metadataWithAlbum.add(metadata);
-													for (Metadata metadata2 : metadataWithAlbum) {
-														log.info("metadata: " + ToStringBuilder.reflectionToString(metadata2));
-													}
-													getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+										@Override
+										public void onResponse(ActionResult reponse) {
+											updateStatus(counter++, metadataList.size());
+											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
+											if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+												metadataWithAlbum.add(metadata);
+												for (Metadata metadata2 : metadataWithAlbum) {
+													log.info("metadata: " + ToStringBuilder.reflectionToString(metadata2));
 												}
-												if(counter >= metadataList.size()){
-													afterComplete(metadataWithAlbum);
-												}
+												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
+											if (counter >= metadataList.size()) {
+												afterComplete(metadataWithAlbum);
+											}
+										}
 
-										});
-									}
-									
+									});
 								}
 
-							});
-						}
-					} else {
-						List<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
-						for (final Metadata metadata : metadataWithAlbumList) {
-							viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
+							}
 
-								@Override
-								public void onResponse(ActionResult result) {
-									log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
-									String message = ApplicationState.UPDATED;
-									if (result != ActionResult.UPDATED) {
-										message = ApplicationState.ERROR;
-									}
-									getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
-								}
-							});
-						}
+						});
 					}
 					return true;
-				}
-
-				@Override
-				public void done() {
-					getLabel().setText(ApplicationState.GETTING_ALBUM);
 				}
 			};
 
@@ -562,13 +614,17 @@ public class MainWindow {
 			swingWorker.execute();
 		}
 	}
-	
+
 	private void afterComplete(List<Metadata> metadataWithOutArtist) {
-		if(!metadataWithOutArtist.isEmpty()){
+		if (!metadataWithOutArtist.isEmpty()) {
 			controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
-			getCompleteMetadataButton().setText(ApplicationState.APPLY);
+			getApplyButton().setEnabled(true);
 		}
+		resetButtonsState();
+	}
+
+	private void resetButtonsState() {
 		getLabel().setText(ApplicationState.DONE);
 		getCompleteMetadataButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
