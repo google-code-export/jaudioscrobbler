@@ -36,11 +36,14 @@ public interface ApplicationState {
 	static final String COVER_ART_FROM_LASTFM = "Cover Art from Lastfm";
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
+	static final Object READY = "Ready";
+	static final String COMPLETE = "Complete";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
 	static final String PREFIX = "JAS_";
 	static final String GETTING_ALBUM = "Getting Album from Musicbrainz";
 	static final String GETTING_COVER_ART = "Getting CoverArt from Last.fm";
+	static final String WRITTING_METADATA = "Writting Metadata";
 	static final String USERNAME_LABEL = "username:";
 	static final String PASSWORD_LABEL = "password:";
 }
