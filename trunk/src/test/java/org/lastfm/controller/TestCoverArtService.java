@@ -6,6 +6,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.net.MalformedURLException;
 
 import javax.swing.ImageIcon;
 
@@ -27,7 +29,7 @@ public class TestCoverArtService {
 	private static final String EMPTY_STRING = "";
 
 	@InjectMocks
-	private CoverArtService lastfmController = new CoverArtService();
+	private CoverArtService coverArtService = new CoverArtService();
 	
 	@Mock
 	private LastFMAlbumHelper helper;
@@ -51,34 +53,52 @@ public class TestCoverArtService {
 	
 	@Test
 	public void shouldGetCoverArt() throws Exception {
-		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
-		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
-		when(helper.readImage(imageURL)).thenReturn(image);
+		setCoverArtExpectations();
 		
-		lastfmController.getCoverArt(artistName, albumName);
+		coverArtService.getCoverArt(artistName, albumName);
 		
 		verify(album).getImageURL(ImageSize.EXTRALARGE);
 		verify(helper).readImage(imageURL);
 		verify(helper).getImageIcon(image);
+	}
+
+	private void setCoverArtExpectations() throws MalformedURLException, IOException {
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
+		when(helper.readImage(imageURL)).thenReturn(image);
+	}
+	
+	
+	@Test
+	public void shouldCompleteCoverArt() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		setCoverArtExpectations();
+		when(helper.getImageIcon(image)).thenReturn(imageIcon);
+		
+		ActionResult result = coverArtService.completeCoverArt(metadata);
+		
+		verify(metadata).setLastfmCoverArt(imageIcon);
+		assertEquals(ActionResult.COVER_ART_SUCCESS, result);
 	}
 	
 	@Test
 	public void shouldGetDefaultCoverArtIfNoValidURL() throws Exception {
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
 		
-		assertNull(lastfmController.getCoverArt(artistName, albumName));
+		assertNull(coverArtService.getCoverArt(artistName, albumName));
 	}
 	
 	@Test
 	public void shouldNotGetCoverArtIfNoAlbum() throws Exception {
-		assertNull(lastfmController.getCoverArt(artistName, albumName));
+		assertNull(coverArtService.getCoverArt(artistName, albumName));
 	}
 	
 	@Test
 	public void shouldReturnMetadataCompleteIfHasCoverArt() throws Exception {
 		when(metadata.getCoverArt()).thenReturn(imageIcon);
 		
-		ActionResult result = lastfmController.completeCoverArt(metadata);
+		ActionResult result = coverArtService.completeCoverArt(metadata);
 		
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
@@ -90,7 +110,7 @@ public class TestCoverArtService {
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
 		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(EMPTY_STRING);
 		
-		ActionResult result = lastfmController.completeCoverArt(metadata);
+		ActionResult result = coverArtService.completeCoverArt(metadata);
 		assertEquals(ActionResult.COVER_ART_ERROR, result);
 	}
 	
@@ -98,7 +118,7 @@ public class TestCoverArtService {
 	public void shouldGetMetadataCompleteIfNoAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn(EMPTY_STRING);
 		
-		ActionResult result = lastfmController.completeCoverArt(metadata);
+		ActionResult result = coverArtService.completeCoverArt(metadata);
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 }

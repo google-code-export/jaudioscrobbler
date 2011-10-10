@@ -10,7 +10,7 @@ public class MetadataAdapter {
 			metadata.setArtist(value);
 		}
 		if (column == ApplicationState.TITLE_COLUMN){
-			metadata.setArtist(value);
+			metadata.setTitle(value);
 		}
 		if (column == ApplicationState.ALBUM_COLUMN){
 			metadata.setAlbum(value);

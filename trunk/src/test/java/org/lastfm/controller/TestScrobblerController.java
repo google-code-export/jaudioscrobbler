@@ -7,6 +7,8 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
+import org.lastfm.action.control.ControlEngine;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
@@ -21,10 +23,15 @@ public class TestScrobblerController {
 	private ScrobblerHelper helperScrobbler;
 	@Mock
 	private Metadata metadata;
+	@Mock
+	private ControlEngineConfigurator configurator;
+	@Mock
+	private ControlEngine controlEngine;
 
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		when(configurator.getControlEngine()).thenReturn(controlEngine);
 	}
 
 	@Test
@@ -45,5 +52,11 @@ public class TestScrobblerController {
 
 		verify(helperScrobbler).send(metadata);
 		assertEquals(ActionResult.ERROR, result);
+	}
+	
+	@Test
+	public void shouldSetup() throws Exception {
+		controller.setup();
+		verify(helperScrobbler).setControlEngine(controlEngine);
 	}
 }

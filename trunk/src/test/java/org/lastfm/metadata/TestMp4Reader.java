@@ -14,6 +14,7 @@ import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.helper.AudioFileHelper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
