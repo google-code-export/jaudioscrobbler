@@ -9,6 +9,7 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
+import org.lastfm.helper.AudioFileHelper;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)

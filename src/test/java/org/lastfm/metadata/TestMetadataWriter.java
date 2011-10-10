@@ -1,15 +1,23 @@
 package org.lastfm.metadata;
 
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
 import java.io.File;
+
+import javax.swing.ImageIcon;
 
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.datatype.Artwork;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.helper.ArtworkHelper;
+import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.util.ImageUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -31,6 +39,16 @@ public class TestMetadataWriter {
 	private File file;
 	@Mock
 	private AudioFileHelper audioFileHelper;
+	@Mock
+	private ImageIcon imageIcon;
+	@Mock
+	private Image image;
+	@Mock
+	private ImageUtils imageUtils;
+	@Mock
+	private ArtworkHelper artworkHelper;
+	@Mock
+	private Artwork artwork;
 	
 	@Before
 	public void initialize() {
@@ -88,6 +106,20 @@ public class TestMetadataWriter {
 		
 		metadataWriter.writeTotalTracksNumber(totalTracksNumber);
 		verify(tag).setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
+		verify(audioFile).commit();
+	}
+
+	@Test
+	public void shouldWriteCoverArt() throws Exception {
+		when(imageIcon.getImage()).thenReturn(image);
+		when(imageUtils.saveCoverArtToFile(image)).thenReturn(file);
+		when(artworkHelper.createArtwork()).thenReturn(artwork);
+		
+		metadataWriter.writeCoverArt(imageIcon);
+		
+		verify(imageUtils).saveCoverArtToFile(image);
+		verify(artwork).setFromFile(file);
+		verify(tag).setField(isA(Artwork.class));
 		verify(audioFile).commit();
 	}
 }

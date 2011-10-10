@@ -10,7 +10,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
@@ -63,12 +62,12 @@ public class ImageUtils {
 		return imageIcon;
 	}
 
-	private void write(BufferedImage bufferedImage, String ext, File file) throws IOException {
-		ImageIO.write(bufferedImage, ext, file);
+	private void write(Image bufferedImage, String ext, File file) throws IOException {
+		imageHelper.write(bufferedImage, ext, file);
 	}
 
 	public File saveCoverArtToFile(Image image) throws IOException {
-		File file = File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
+		File file = imageHelper.createTempFile();
 		log.info("image height: " + image.getHeight(new ImageObserver() {
 			
 			@Override
@@ -76,7 +75,7 @@ public class ImageUtils {
 				return false;
 			}
 		}));
-		write((BufferedImage) image, ApplicationState.IMAGE_EXT, file);
+		write(image, ApplicationState.IMAGE_EXT, file);
 		return file;
 	}
 

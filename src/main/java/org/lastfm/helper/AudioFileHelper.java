@@ -1,4 +1,4 @@
-package org.lastfm.metadata;
+package org.lastfm.helper;
 
 import java.io.File;
 import java.io.IOException;

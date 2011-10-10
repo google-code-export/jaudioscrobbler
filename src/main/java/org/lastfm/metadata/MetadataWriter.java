@@ -18,6 +18,8 @@ import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.lastfm.helper.ArtworkHelper;
+import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.util.ImageUtils;
 
 /**
@@ -30,6 +32,7 @@ public class MetadataWriter {
 	private AudioFile audioFile;
 	private AudioFileHelper audioFileIOHelper = new AudioFileHelper();
 	private ImageUtils imageUtils = new ImageUtils();
+	private ArtworkHelper artworkHelper = new ArtworkHelper();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public void setFile(File file) {
@@ -120,7 +123,7 @@ public class MetadataWriter {
 	public boolean writeCoverArt(ImageIcon lastfmCoverArt) throws MetadataException {
 		try {
 			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt.getImage());
-			Artwork artwork = new Artwork();
+			Artwork artwork = artworkHelper.createArtwork();
 			artwork.setFromFile(coverArtFile);
 			tag.setField(artwork);
 			audioFile.commit();
