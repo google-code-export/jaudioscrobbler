@@ -1,6 +1,11 @@
 package org.lastfm.gui;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.awt.event.KeyEvent;
 
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
@@ -40,10 +45,30 @@ public class TestLoginWindow {
 	}
 	
 	@Test
-	public void shouldLogin() throws Exception {
+	public void shouldLoginByActionListener() throws Exception {
+		setUsernameAndPassword();
+		window.button(SEND_BUTTON_NAME).click();
+		
+		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
+	}
+
+	private void setUsernameAndPassword() {
 		window.textBox(USERNAME_TEXTFIELD_NAME).enterText(user);
 		window.textBox(PASSWORD_TEXTFIELD_NAME).enterText(password);
-		window.button(SEND_BUTTON_NAME).click();
+	}
+	
+	@Test
+	public void shouldLoginByKeyListenerInSendButton() throws Exception {
+		setUsernameAndPassword();
+		window.button(SEND_BUTTON_NAME).pressKey(KeyEvent.VK_ENTER);
+		
+		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
+	}
+	
+	@Test
+	public void shouldLoginByKeyListenerInPasswordField() throws Exception {
+		setUsernameAndPassword();
+		window.textBox(PASSWORD_TEXTFIELD_NAME).pressKey(KeyEvent.VK_ENTER);
 		
 		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
 	}
