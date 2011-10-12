@@ -74,6 +74,7 @@ public class MainWindow {
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
+	private static final String OPEN_BUTTON_NAME = "openButton";
 	private int counter = 0;
 
 	private JFrame frame;
@@ -317,7 +318,7 @@ public class MainWindow {
 		return loginLabel;
 	}
 
-	private JButton getCompleteMetadataButton() {
+	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ApplicationState.COMPLETE);
 			completeMetadataButton.setEnabled(false);
@@ -341,7 +342,7 @@ public class MainWindow {
 		return completeMetadataButton;
 	}
 
-	private JButton getApplyButton() {
+	public JButton getApplyButton() {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
 			applyButton.setEnabled(false);
@@ -358,7 +359,7 @@ public class MainWindow {
 		return applyButton;
 	}
 
-	private JButton getSendButton() {
+	public JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setEnabled(false);
@@ -377,6 +378,7 @@ public class MainWindow {
 	private JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
+			openButton.setName(OPEN_BUTTON_NAME);
 			openButton.setMnemonic(KeyEvent.VK_O);
 
 			openButton.addActionListener(new ActionListener() {
@@ -481,7 +483,7 @@ public class MainWindow {
 		imagePanel.revalidate();
 	}
 
-	private Frame getFrame() {
+	public Frame getFrame() {
 		if (frame == null) {
 			frame = new JFrame(ApplicationState.APPLICATION_NAME);
 			frame.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
