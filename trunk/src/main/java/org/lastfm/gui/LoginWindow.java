@@ -36,8 +36,8 @@ public class LoginWindow {
 	private JTextField passwordTextfield;
 	private JFrame frame;
 	private JPanel panel;
-	private static final String USERNAME_TEXTFIELD_NAME = "username";
-	private static final String PASSWORD_TEXTFIELD_NAME = "password";
+	private static final String USERNAME_TEXTFIELD_NAME = "usernameTextfield";
+	private static final String PASSWORD_TEXTFIELD_NAME = "passwordTextfield";
 	private static final String SEND_BUTTON_LABEL = "Login";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final Rectangle FRAME_BOUNDS = new Rectangle(300, 300, 300, 122);
@@ -52,7 +52,7 @@ public class LoginWindow {
 		doLayout();
 	}
 	
-	private void doLayout() {
+	private void doLayout(){
 		getFrame().add(getPanel());
 		getFrame().setVisible(false);
 		
