@@ -75,6 +75,8 @@ public class MainWindow {
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
 	private static final String OPEN_BUTTON_NAME = "openButton";
+	private static final String SEND_BUTTON_NAME = "sendButton";
+	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private int counter = 0;
 
 	private JFrame frame;
@@ -345,6 +347,7 @@ public class MainWindow {
 	public JButton getApplyButton() {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
+			applyButton.setName(APPLY_BUTTON_NAME);
 			applyButton.setEnabled(false);
 
 			applyButton.addActionListener(new ActionListener() {
@@ -362,6 +365,7 @@ public class MainWindow {
 	public JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
+			sendButton.setName(SEND_BUTTON_NAME);
 			sendButton.setEnabled(false);
 
 			sendButton.addActionListener(new ActionListener() {
