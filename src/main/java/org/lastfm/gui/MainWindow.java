@@ -77,6 +77,7 @@ public class MainWindow {
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private int counter = 0;
 
 	private JFrame frame;
@@ -323,6 +324,7 @@ public class MainWindow {
 	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ApplicationState.COMPLETE);
+			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
 			completeMetadataButton.setEnabled(false);
 
 			completeMetadataButton.addActionListener(new ActionListener() {
