@@ -30,6 +30,7 @@ public class TestMainWindow {
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	
 	@Mock
 	private ViewEngineConfigurator configurator;
@@ -78,6 +79,18 @@ public class TestMainWindow {
 		window.button(APPLY_BUTTON_NAME).click();
 		
 		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), isA(ResponseCallback.class));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void shouldComplete() throws Exception {
+		List<Metadata> metadatas = setMetadataListExpectations();
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+		mainWindow.getCompleteMetadataButton().setEnabled(true);
+		
+		window.button(COMPLETE_BUTTON_NAME).click();
+		
+		verify(viewEngine).request(eq(Actions.COMPLETE_ALBUM), eq(metadata), isA(ResponseCallback.class));
 	}
 
 	private List<Metadata> setMetadataListExpectations() {
