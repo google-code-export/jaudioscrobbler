@@ -1,0 +1,16 @@
+#labels Featured,Phase-Implementation,Phase-Support
+#Here you can find ALL information regarding how configure JAudioScrobbler code in your environment.
+
+= Introduction =
+
+Usually it's not enough only download the source code and running, and is my intention that you can take advantage coding or getting this code as a resource to your technical development.
+
+
+= Details =
+
+In order to set up you environment I recommend you
+  * Eclipse
+      * Maven plugin
+      * EMMA plugin
+      * SVN plugin
+  * install manually jar in your .m2 repository
