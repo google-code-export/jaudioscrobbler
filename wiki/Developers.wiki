@@ -1,9 +1,15 @@
-#labels Featured,Phase-Implementation,Phase-Support
 Here you can find ALL information regarding how configure JAudioScrobbler code in your environment.
 
 === Introduction ===
 
-Usually it's not enough only download the source code and running, and is my intention that you can take advantage coding or getting this code as a resource to your technical development.
+Usually it's not enough only download the source code and running, so this section was created by supporting ALL issues regarding running JAudioScrobbler from eclipse IDE as application and as a Unit or Integration testing.
+
+=== Developers ===
+
+* Is my intention that you can take advantage from this code using it as a example resource.
+* I'll be honored if you would like to extend this code or do some advice.
+* JAudioScrobbler is still work in progress so, there are some issues that I'm working on.
+* I was trying to reduce the number of bugs using JUnit and Integration test, but certainly there are some bugs detected, those are in the issues section, but feel free to add a new one.
 
 
 === Details ===
@@ -13,4 +19,16 @@ In order to set up you environment I recommend you
       * Maven plugin
       * EMMA plugin
       * SVN plugin
-  * install third party jar's manually in your .m2 repository
+  * install Musicbrainz and LastFM third party jar's manually in your .m2 repository 
+
+{{{
+   mvn install:install-file -Dfile=<path-to-file> -DgroupId=de.umass.lastfm -DartifactId=lastfm_bindings -Dversion=0.1.0 -Dpackaging=jar
+
+   mvn install:install-file -Dfile=<path-to-file> -DgroupId=com.skychief.javamusicbrainz -DartifactId=javamusicbrainz -Dversion=1.0 -Dpackaging=jar
+}}}
+
+=== Create Installers ===
+
+   * Maven in your system environment path is required [http://maven.apache.org/download.html]
+   * From your command line: mvn clean assembly:assembly
+    
