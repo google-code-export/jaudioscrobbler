@@ -661,7 +661,6 @@ public class MainWindow {
 
 							@Override
 							public void onResponse(ActionResult response) {
-								System.err.println("im here");
 								log.info("response on sending " + metadata.getTitle() + ": " + response);
 								updateStatus(counter++, metadataList.size());
 								String message;
