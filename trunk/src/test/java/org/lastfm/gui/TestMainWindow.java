@@ -1,5 +1,6 @@
 package org.lastfm.gui;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -76,7 +77,7 @@ public class TestMainWindow {
 		verify(viewEngine).request(eq(Actions.SEND), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.SUCCESS);
-		mainWindow.getDescriptionTable().getModel().setValueAt(ApplicationState.SENT, FIRST_ROW, ApplicationState.STATUS_COLUMN);
+		assertEquals(ApplicationState.SENT, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 	
 	@SuppressWarnings("unchecked")
