@@ -2,6 +2,7 @@ package org.lastfm.gui;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
@@ -19,6 +20,8 @@ import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
 import org.lastfm.action.ViewEngine;
+import org.lastfm.action.control.ControlEngine;
+import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
@@ -38,13 +41,22 @@ public class TestMainWindow {
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
+	private static final String ALBUM = "Mirage";
+	private static final Integer TRACK_NUMBER = 5;
+	private static final Integer TOTAL_TRACKS_NUMBER = 16;
 	
 	@Mock
-	private ViewEngineConfigurator configurator;
+	private ViewEngineConfigurator viewEngineConfigurator;
+	@Mock
+	private ControlEngineConfigurator controlEngineConfigurator;
 	@Mock
 	private ViewEngine viewEngine;
 	@Mock
+	private ControlEngine controlEngine;
+	@Mock
 	private Metadata metadata;
+	@Mock
+	private List<Metadata> metadataWithAlbum;
 	
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -53,7 +65,8 @@ public class TestMainWindow {
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(configurator.getViewEngine()).thenReturn(viewEngine);
+		when(viewEngineConfigurator.getViewEngine()).thenReturn(viewEngine);
+		when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
 		window = new FrameFixture(mainWindow.getFrame());
 		window.show();
 		metadatas = new ArrayList<Metadata>();
@@ -137,15 +150,48 @@ public class TestMainWindow {
 		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), isA(ResponseCallback.class));
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldComplete() throws Exception {
-		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+		setMetadataExpectations();
 		mainWindow.getCompleteMetadataButton().setEnabled(true);
 		
 		window.button(COMPLETE_BUTTON_NAME).click();
 		
-		verify(viewEngine).request(eq(Actions.COMPLETE_ALBUM), eq(metadata), isA(ResponseCallback.class));
+		verify(viewEngine).request(eq(Actions.COMPLETE_ALBUM), eq(metadata), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.METADATA_SUCCESS);
+		
+		verifyCompleteAssertions();
+		
+		verify(viewEngine).request(eq(Actions.COMPLETE_COVER_ART), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.METADATA_SUCCESS);
+		
+		verify(controlEngine).remove(Model.METADATA_ARTIST);
+		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+		verifyButtonsAssertions();
+	}
+
+	private void verifyButtonsAssertions() {
+		assertTrue(mainWindow.getApplyButton().isEnabled());
+		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
+		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
+		assertTrue(mainWindow.getOpenButton().isEnabled());
+		assertTrue(mainWindow.getDescriptionTable().isEnabled());
+	}
+
+	private void verifyCompleteAssertions() {
+		assertEquals(ALBUM, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
+		assertEquals(TRACK_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TRACK_NUMBER_COLUMN));
+		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
+		assertEquals(ApplicationState.NEW_METADATA, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+	}
+
+	private void setMetadataExpectations() {
+		when(metadata.getAlbum()).thenReturn(ALBUM);
+		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
+		when(metadata.getTotalTracksNumber()).thenReturn(TOTAL_TRACKS_NUMBER);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
 
 	@After

@@ -104,7 +104,7 @@ public class MainWindow {
 	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
 	// change to set
-	private final List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
+	private List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	private boolean tableLoaded;
 
@@ -307,7 +307,7 @@ public class MainWindow {
 		return progressBar;
 	}
 
-	private JLabel getLabel() {
+	public JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel(STATUS_LABEL);
 		}
@@ -381,7 +381,7 @@ public class MainWindow {
 		return sendButton;
 	}
 
-	private JButton getOpenButton() {
+	public JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
 			openButton.setName(OPEN_BUTTON_NAME);
@@ -596,9 +596,6 @@ public class MainWindow {
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
 											if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
-												for (Metadata metadata2 : metadataWithAlbum) {
-													log.info("metadata: " + ToStringBuilder.reflectionToString(metadata2));
-												}
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {
