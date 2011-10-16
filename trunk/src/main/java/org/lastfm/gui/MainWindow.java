@@ -408,7 +408,7 @@ public class MainWindow {
 		return scrollPane;
 	}
 
-	private JTable getDescriptionTable() {
+	public JTable getDescriptionTable() {
 		if (descriptionTable == null) {
 			descriptionTable = new DescriptionTable();
 			descriptionTable.addMouseListener(new MouseAdapter() {
@@ -661,6 +661,7 @@ public class MainWindow {
 
 							@Override
 							public void onResponse(ActionResult response) {
+								System.err.println("im here");
 								log.info("response on sending " + metadata.getTitle() + ": " + response);
 								updateStatus(counter++, metadataList.size());
 								String message;

@@ -13,17 +13,22 @@ import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
+import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.ResponseCallback;
 import org.lastfm.action.ViewEngine;
 import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestMainWindow {
+	private static final int FIRST_ROW = 0;
 	@InjectMocks
 	private MainWindow mainWindow = new MainWindow();
 	private FrameFixture window;
@@ -38,6 +43,9 @@ public class TestMainWindow {
 	private ViewEngine viewEngine;
 	@Mock
 	private Metadata metadata;
+	
+	@Captor
+	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
 	
 	@Before
 	public void setup() throws Exception {
@@ -57,7 +65,6 @@ public class TestMainWindow {
 		assertFalse(mainWindow.getApplyButton().isEnabled());
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldSend() throws Exception {
 		List<Metadata> metadatas = setMetadataListExpectations();
@@ -66,7 +73,10 @@ public class TestMainWindow {
 		
 		window.button(SEND_BUTTON_NAME).click();
 		
-		verify(viewEngine).request(eq(Actions.SEND), eq(metadata), isA(ResponseCallback.class));
+		verify(viewEngine).request(eq(Actions.SEND), eq(metadata), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.SUCCESS);
+		mainWindow.getDescriptionTable().getModel().setValueAt(ApplicationState.SENT, FIRST_ROW, ApplicationState.STATUS_COLUMN);
 	}
 	
 	@SuppressWarnings("unchecked")
