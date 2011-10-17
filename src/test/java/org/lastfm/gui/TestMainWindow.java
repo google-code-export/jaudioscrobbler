@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -139,7 +138,6 @@ public class TestMainWindow {
 		assertEquals(ApplicationState.ERROR, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test
 	public void shouldApply() throws Exception {
 		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatas);
@@ -147,7 +145,24 @@ public class TestMainWindow {
 		
 		window.button(APPLY_BUTTON_NAME).click();
 		
-		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), isA(ResponseCallback.class));
+		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.UPDATED);
+		assertEquals(ApplicationState.UPDATED, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		verifyButtonsAssertions();
+	}
+	
+	@Test
+	public void shouldNotApplyDueToErrorActionResult() throws Exception {
+		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatas);
+		mainWindow.getApplyButton().setEnabled(true);
+		
+		window.button(APPLY_BUTTON_NAME).click();
+		
+		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.ERROR);
+		assertEquals(ApplicationState.ERROR, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 	
 	@Test
@@ -169,11 +184,11 @@ public class TestMainWindow {
 		
 		verify(controlEngine).remove(Model.METADATA_ARTIST);
 		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+		assertTrue(mainWindow.getApplyButton().isEnabled());
 		verifyButtonsAssertions();
 	}
 
 	private void verifyButtonsAssertions() {
-		assertTrue(mainWindow.getApplyButton().isEnabled());
 		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
 		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
 		assertTrue(mainWindow.getOpenButton().isEnabled());
