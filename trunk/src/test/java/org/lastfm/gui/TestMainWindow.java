@@ -7,6 +7,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -208,6 +209,19 @@ public class TestMainWindow {
 		when(metadata.getTotalTracksNumber()).thenReturn(TOTAL_TRACKS_NUMBER);
 		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
+	
+	@Test
+    public void shouldKnowWhenRowChanged() throws Exception {
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+		
+		mainWindow.getDescriptionTable().setEnabled(true);
+		window.robot.doubleClick(mainWindow.getDescriptionTable());
+        window.robot.enterText(ALBUM);
+        mainWindow.tableLoaded=true;
+        window.robot.pressKey(KeyEvent.VK_ENTER);
+        
+        assertEquals(ApplicationState.NEW_METADATA, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+    }
 
 	@After
 	public void tearDown() throws Exception {

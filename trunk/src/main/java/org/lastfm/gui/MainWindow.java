@@ -106,7 +106,7 @@ public class MainWindow {
 	// change to set
 	private List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
-	private boolean tableLoaded;
+	boolean tableLoaded;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -446,17 +446,10 @@ public class MainWindow {
 						metadataWithAlbum.add(metadata);
 
 						getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
-						printMetadataWithAlbum();
 
 						controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 						getApplyButton().setEnabled(true);
-					}
-				}
-
-				private void printMetadataWithAlbum() {
-					for (Metadata metadata : metadataWithAlbum) {
-						log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
 					}
 				}
 			});
