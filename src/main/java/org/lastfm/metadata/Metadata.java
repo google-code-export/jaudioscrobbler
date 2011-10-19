@@ -9,13 +9,13 @@ public class Metadata {
 	private String artist;
 	private String album;
 	private String genre;
-	private int trackNumber;
+	private String trackNumber;
+	private String totalTracks;
 	private ImageIcon artwork;
 	private int length;
 	private int bitRate;
 	private File file;
 	private ImageIcon coverArt;
-	private int totalTracks;
 	
 	public File getFile() {
 		return file;
@@ -73,16 +73,16 @@ public class Metadata {
 	public ImageIcon getLastfmCoverArt() {
 		return coverArt;
 	}
-	public int getTrackNumber() {
+	public String getTrackNumber() {
 		return trackNumber;
 	}
-	public void setTrackNumber(int trackNumber) {
+	public void setTrackNumber(String trackNumber) {
 		this.trackNumber = trackNumber;
 	}
-	public int getTotalTracks() {
+	public String getTotalTracks() {
 		return totalTracks;
 	}
-	public void setTotalTracks(int totalTracks) {
+	public void setTotalTracks(String totalTracks) {
 		this.totalTracks = totalTracks;
 	}
 }

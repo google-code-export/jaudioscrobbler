@@ -62,28 +62,12 @@ public abstract class MetadataReader {
 		return Integer.parseInt(bitRate);
 	}
 
-	private int getTrackNumber(){
-		int trackNumber = -1;
-		try {
-			trackNumber = Integer.parseInt(tag.getFirst(FieldKey.TRACK));
-		} catch (NullPointerException nue) {
-		} catch (NumberFormatException nfe) {
-			trackNumber = -1;
-			log.warn(getTitle() + " has a not valid Track Number");
-		}
-		return trackNumber;
+	private String getTrackNumber(){
+		return tag.getFirst(FieldKey.TRACK);
 	}
 	
-	private int getTotalTracks(){
-		int trackNumber = -1;
-		try {
-			trackNumber = Integer.parseInt(tag.getFirst(FieldKey.TRACK_TOTAL));
-		} catch (NullPointerException nue) {
-		} catch (NumberFormatException nfe) {
-			trackNumber = -1;
-			log.warn(getTitle() + " has a not valid total album tracks");
-		}
-		return trackNumber;
+	private String getTotalTracks(){
+		return tag.getFirst(FieldKey.TRACK_TOTAL);
 	}
 
 	private ImageIcon getCoverArt() throws IOException, MetadataException {

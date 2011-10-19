@@ -120,7 +120,7 @@ public class TestMp3Reader{
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(11, metadata.getTrackNumber());
+		assertEquals(trackNumber, metadata.getTrackNumber());
 	}
 	
 	@Test
@@ -129,7 +129,7 @@ public class TestMp3Reader{
 		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(20, metadata.getTotalTracks());
+		assertEquals(totalTracks, metadata.getTotalTracks());
 	}
 	
 	@Test

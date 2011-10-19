@@ -16,10 +16,10 @@ public class MetadataAdapter {
 			metadata.setAlbum(value);
 		}
 		if (column == ApplicationState.TRACK_NUMBER_COLUMN){
-			metadata.setTrackNumber(Integer.valueOf(value));
+			metadata.setTrackNumber(value);
 		}
 		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
-			metadata.setTotalTracks(Integer.valueOf(value));
+			metadata.setTotalTracks(value);
 		}
 	}
 
