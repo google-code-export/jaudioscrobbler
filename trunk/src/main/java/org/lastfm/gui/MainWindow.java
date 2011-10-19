@@ -163,7 +163,7 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getTitle(), row, 1);
 		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
-		descriptionTable.setValueAt(metadata.getTotalTracksNumber(), row, 4);
+		descriptionTable.setValueAt(metadata.getTotalTracks(), row, 4);
 		descriptionTable.setValueAt(ApplicationState.READY, row, 5);
 	}
 
@@ -568,7 +568,7 @@ public class MainWindow {
 									metadataWithAlbum.add(metadata);
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
-									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracksNumber(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
 								if (counter >= metadataList.size()) {

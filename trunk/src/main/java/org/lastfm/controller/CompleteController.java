@@ -43,7 +43,7 @@ public class CompleteController {
 					log.info("Album found: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
 					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
-					metadata.setTotalTracksNumber(musicBrainzTrack.getTotalTrackNumber());
+					metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
 					return ActionResult.METADATA_SUCCESS;
 				} else {
 					log.info("No album found for track: " + metadata.getTitle());
@@ -74,7 +74,7 @@ public class CompleteController {
 			metadataWriter.writeAlbum(metadata.getAlbum());
 			Integer trackNumber = metadata.getTrackNumber();
 			metadataWriter.writeTrackNumber(trackNumber.toString());
-			Integer totalTracksNumber = metadata.getTotalTracksNumber();
+			Integer totalTracksNumber = metadata.getTotalTracks();
 			metadataWriter.writeTotalTracksNumber(totalTracksNumber.toString());
 			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());

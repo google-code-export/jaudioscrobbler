@@ -15,7 +15,7 @@ public class Metadata {
 	private int bitRate;
 	private File file;
 	private ImageIcon coverArt;
-	private int totalTracksNumber;
+	private int totalTracks;
 	
 	public File getFile() {
 		return file;
@@ -43,12 +43,6 @@ public class Metadata {
 	}
 	public void setGenre(String genre) {
 		this.genre = genre;
-	}
-	public int getTrackNumber() {
-		return trackNumber;
-	}
-	public void setTrackNumber(int trackNumber) {
-		this.trackNumber = trackNumber;
 	}
 	public ImageIcon getCoverArt() {
 		return artwork;
@@ -79,10 +73,16 @@ public class Metadata {
 	public ImageIcon getLastfmCoverArt() {
 		return coverArt;
 	}
-	public int getTotalTracksNumber() {
-		return totalTracksNumber;
+	public int getTrackNumber() {
+		return trackNumber;
 	}
-	public void setTotalTracksNumber(int totalTracksNumber) {
-		this.totalTracksNumber = totalTracksNumber;
+	public void setTrackNumber(int trackNumber) {
+		this.trackNumber = trackNumber;
+	}
+	public int getTotalTracks() {
+		return totalTracks;
+	}
+	public void setTotalTracks(int totalTracks) {
+		this.totalTracks = totalTracks;
 	}
 }

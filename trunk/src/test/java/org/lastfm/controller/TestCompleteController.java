@@ -44,7 +44,7 @@ public class TestCompleteController {
 	private String title = "Footprints (Original Mix)";
 	private String album = "Footprints EP";
 	private Integer trackNumber = 10;
-	private Integer totalTracksNumber = 25;
+	private Integer totalTracks = 25;
 
 	@Before
 	public void setup() throws Exception {
@@ -53,7 +53,7 @@ public class TestCompleteController {
 		when(metadata.getTitle()).thenReturn(title);
 		when(metadata.getAlbum()).thenReturn(album);
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
-		when(metadata.getTotalTracksNumber()).thenReturn(totalTracksNumber);
+		when(metadata.getTotalTracks()).thenReturn(totalTracks);
 		when(coverArtService.completeCoverArt(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
 	}
 	
@@ -68,7 +68,7 @@ public class TestCompleteController {
 		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
 		verify(metadata).setTrackNumber(trackNumber);
-		verify(metadata).setTotalTracksNumber(totalTracksNumber);
+		verify(metadata).setTotalTracks(totalTracks);
 		assertEquals(ActionResult.METADATA_SUCCESS, result);
 	}
 
@@ -77,7 +77,7 @@ public class TestCompleteController {
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
 		musicBrainzTrack.setAlbum(album);
 		musicBrainzTrack.setTrackNumber(trackNumber);
-		musicBrainzTrack.setTotalTrackNumber(totalTracksNumber);
+		musicBrainzTrack.setTotalTrackNumber(totalTracks);
 		return musicBrainzTrack;
 	}
 	
@@ -112,7 +112,7 @@ public class TestCompleteController {
 		verify(metadataWriter).setFile(file);
 		verify(metadataWriter).writeAlbum(album);
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
-		verify(metadataWriter).writeTotalTracksNumber(totalTracksNumber.toString());
+		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
 		assertEquals(ActionResult.UPDATED, result);
 	}
 	
