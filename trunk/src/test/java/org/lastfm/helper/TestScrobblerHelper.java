@@ -28,6 +28,7 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
  */
 
 public class TestScrobblerHelper {
+	private static final String TRACK_NUMBER = "1";
 	private static final String EMPTY_STRING = "";
 
 	@InjectMocks
@@ -132,7 +133,7 @@ public class TestScrobblerHelper {
 	private void setExpectations() {
 		when(metadata.getAlbum()).thenReturn(EMPTY_STRING);
 		when(metadata.getLength()).thenReturn(1);
-		when(metadata.getTrackNumber()).thenReturn(1);
+		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
 	}
 
 	

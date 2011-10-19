@@ -42,8 +42,8 @@ public class TestMainWindow {
 	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String ALBUM = "Mirage";
-	private static final Integer TRACK_NUMBER = 5;
-	private static final Integer TOTAL_TRACKS_NUMBER = 16;
+	private static final String TRACK_NUMBER = "5";
+	private static final String TOTAL_TRACKS_NUMBER = "16";
 	
 	@Mock
 	private ViewEngineConfigurator viewEngineConfigurator;

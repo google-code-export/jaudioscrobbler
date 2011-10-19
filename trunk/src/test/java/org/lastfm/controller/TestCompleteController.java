@@ -52,8 +52,8 @@ public class TestCompleteController {
 		when(metadata.getArtist()).thenReturn(artist);
 		when(metadata.getTitle()).thenReturn(title);
 		when(metadata.getAlbum()).thenReturn(album);
-		when(metadata.getTrackNumber()).thenReturn(trackNumber);
-		when(metadata.getTotalTracks()).thenReturn(totalTracks);
+		when(metadata.getTrackNumber()).thenReturn("" + trackNumber);
+		when(metadata.getTotalTracks()).thenReturn("" + totalTracks);
 		when(coverArtService.completeCoverArt(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
 	}
 	
@@ -67,8 +67,8 @@ public class TestCompleteController {
 		
 		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
-		verify(metadata).setTrackNumber(trackNumber);
-		verify(metadata).setTotalTracks(totalTracks);
+		verify(metadata).setTrackNumber("" + trackNumber);
+		verify(metadata).setTotalTracks("" + totalTracks);
 		assertEquals(ActionResult.METADATA_SUCCESS, result);
 	}
 

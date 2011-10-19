@@ -105,16 +105,16 @@ public class TestMp4Reader{
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(11, metadata.getTrackNumber());
+		assertEquals(trackNumber, metadata.getTrackNumber());
 	}
 	
 	@Test
 	public void shouldGetNotTrackNumber() throws Exception {
-		String trackNumber = "";
+		String trackNumber = "-1";
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(-1, metadata.getTrackNumber());
+		assertEquals(trackNumber, metadata.getTrackNumber());
 	}
 	
 	@Test
@@ -123,7 +123,7 @@ public class TestMp4Reader{
 		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(20, metadata.getTotalTracks());
+		assertEquals(totalTracks, metadata.getTotalTracks());
 	}
 
 	@Test

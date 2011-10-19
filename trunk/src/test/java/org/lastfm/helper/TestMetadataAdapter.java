@@ -55,7 +55,7 @@ public class TestMetadataAdapter {
 		String value = trackNumber;
 		adapter.update(metadata, ApplicationState.TRACK_NUMBER_COLUMN, value);
 		
-		verify(metadata).setTrackNumber(Integer.valueOf(trackNumber));
+		verify(metadata).setTrackNumber(trackNumber);
 	}
 	
 	@Test
@@ -63,6 +63,6 @@ public class TestMetadataAdapter {
 		String value = totalTracks;
 		adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, value);
 		
-		verify(metadata).setTotalTracks(Integer.valueOf(totalTracks));
+		verify(metadata).setTotalTracks(totalTracks);
 	}
 }
