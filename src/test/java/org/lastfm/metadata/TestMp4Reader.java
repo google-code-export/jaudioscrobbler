@@ -116,6 +116,15 @@ public class TestMp4Reader{
 		
 		assertEquals(-1, metadata.getTrackNumber());
 	}
+	
+	@Test
+	public void shouldGetTotalTracks() throws Exception {
+		String totalTracks = "20";
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(20, metadata.getTotalTracks());
+	}
 
 	@Test
 	public void shouldGetArtwork() throws Exception {

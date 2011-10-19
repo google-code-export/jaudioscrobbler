@@ -19,7 +19,7 @@ public class MetadataAdapter {
 			metadata.setTrackNumber(Integer.valueOf(value));
 		}
 		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
-			metadata.setTotalTracksNumber(Integer.valueOf(value));
+			metadata.setTotalTracks(Integer.valueOf(value));
 		}
 	}
 

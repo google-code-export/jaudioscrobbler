@@ -206,7 +206,7 @@ public class TestMainWindow {
 	private void setMetadataExpectations() {
 		when(metadata.getAlbum()).thenReturn(ALBUM);
 		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
-		when(metadata.getTotalTracksNumber()).thenReturn(TOTAL_TRACKS_NUMBER);
+		when(metadata.getTotalTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
 		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
 	

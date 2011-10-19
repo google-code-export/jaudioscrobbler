@@ -73,6 +73,18 @@ public abstract class MetadataReader {
 		}
 		return trackNumber;
 	}
+	
+	private int getTotalTracks(){
+		int trackNumber = -1;
+		try {
+			trackNumber = Integer.parseInt(tag.getFirst(FieldKey.TRACK_TOTAL));
+		} catch (NullPointerException nue) {
+		} catch (NumberFormatException nfe) {
+			trackNumber = -1;
+			log.warn(getTitle() + " has a not valid total album tracks");
+		}
+		return trackNumber;
+	}
 
 	private ImageIcon getCoverArt() throws IOException, MetadataException {
 		Artwork artwork = tag.getFirstArtwork();
@@ -89,6 +101,7 @@ public abstract class MetadataReader {
 		metadata.setGenre(getGenre());
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
+		metadata.setTotalTracks(getTotalTracks());
 		metadata.setBitRate(getBitRate());
 		metadata.setFile(file);
 		return metadata;

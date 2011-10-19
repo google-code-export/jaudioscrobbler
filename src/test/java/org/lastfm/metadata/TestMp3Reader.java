@@ -124,6 +124,15 @@ public class TestMp3Reader{
 	}
 	
 	@Test
+	public void shouldGetTotalTracks() throws Exception {
+		String totalTracks = "20";
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(20, metadata.getTotalTracks());
+	}
+	
+	@Test
 	public void shouldGetLength() throws Exception {
 		int length = 325;
 		AudioHeader header = mock(AudioHeader.class);

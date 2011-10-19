@@ -19,7 +19,7 @@ public class TestMetadataAdapter {
 	private String title = "Make Me Believe";
 	private String album = "Anjunabeats 5";
 	private String trackNumber = "5";
-	private String totalTracksNumber = "13";
+	private String totalTracks = "13";
 	
 	@Before
 	public void setup() throws Exception {
@@ -60,9 +60,9 @@ public class TestMetadataAdapter {
 	
 	@Test
 	public void shouldUpdateTotalTracksNumber() throws Exception {
-		String value = totalTracksNumber;
+		String value = totalTracks;
 		adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, value);
 		
-		verify(metadata).setTotalTracksNumber(Integer.valueOf(totalTracksNumber));
+		verify(metadata).setTotalTracks(Integer.valueOf(totalTracks));
 	}
 }
