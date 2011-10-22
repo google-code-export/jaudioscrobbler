@@ -46,11 +46,11 @@ public class MetadataExtractor {
 	private List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
 			InvalidId3VersionException, MetadataException {
 
-		Metadata metadata = null;
 		for (File file : fileList) {
-			if (file.getPath().endsWith("mp3")) {
+			Metadata metadata = null;
+			if (fileUtils.isMp3File(file)) {
 				metadata = new Mp3Reader().getMetadata(file);
-			} else if (file.getPath().endsWith("m4a")) {
+			} else if (fileUtils.isM4aFile(file)) {
 				metadata = new Mp4Reader().getMetadata(file);
 			}
 

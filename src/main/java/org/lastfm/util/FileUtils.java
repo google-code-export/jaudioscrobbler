@@ -37,5 +37,13 @@ public class FileUtils {
 			}
 		}
 	}
+	
+	public boolean isMp3File(File file) {
+		return file.getPath().toLowerCase().endsWith("mp3");
+	}
+
+	public boolean isM4aFile(File file) {
+		return file.getPath().toLowerCase().endsWith("m4a");
+	}
 }
 
