@@ -36,11 +36,11 @@ public class CompleteController {
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
-			log.info(metadata.getArtist() + " / " + metadata.getTitle() + " album: " + metadata.getAlbum());
+			log.info("trying to complete metadata for: " + metadata.getArtist() + " - " + metadata.getTitle());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
 				MusicBrainzTrack musicBrainzTrack = service.getAlbum(metadata.getArtist(), metadata.getTitle());
 				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
-					log.info("Album found: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
+					log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
 					metadata.setTrackNumber("" + musicBrainzTrack.getTrackNumber());
 					metadata.setTotalTracks("" + musicBrainzTrack.getTotalTrackNumber());
@@ -50,6 +50,7 @@ public class CompleteController {
 					return ActionResult.METADATA_NOT_FOUND;
 				}
 			} else {
+				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" there is no need in complete by MusicBrainz");
 				return ActionResult.METADATA_COMPLETE;
 			}
 		} catch (ServerUnavailableException sue) {

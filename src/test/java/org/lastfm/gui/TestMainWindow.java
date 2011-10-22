@@ -33,11 +33,11 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestMainWindow {
-	private static final String TRACK_TITLE = "I Don't Own You";
-	private static final int FIRST_ROW = 0;
 	@InjectMocks
 	private MainWindow mainWindow = new MainWindow();
-	private FrameFixture window;
+
+	private static final String TRACK_TITLE = "I Don't Own You";
+	private static final int FIRST_ROW = 0;
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
@@ -45,6 +45,7 @@ public class TestMainWindow {
 	private static final String ALBUM = "Mirage";
 	private static final String TRACK_NUMBER = "5";
 	private static final String TOTAL_TRACKS_NUMBER = "16";
+	private FrameFixture window;
 
 	@Mock
 	private ViewEngineConfigurator viewEngineConfigurator;
