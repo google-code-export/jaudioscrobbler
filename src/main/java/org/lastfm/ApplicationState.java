@@ -9,7 +9,7 @@ import java.io.File;
  */
 
 public interface ApplicationState {
-	static final String DEFAULT_IMAGE = "http://userserve-ak.last.fm/serve/300x300/66072700.png";
+	static final String DEFAULT_IMAGE = "src/main/resources/images/daft_punk.png";
 	static String DESTFILE_PATH = System.getProperty("java.io.tmpdir") + File.separator;
 
 	static final String LOGIN_FAIL = "Login fail";
@@ -26,7 +26,9 @@ public interface ApplicationState {
 	static final int ALBUM_COLUMN = 2;
 	static final int TRACK_NUMBER_COLUMN = 3;
 	static final int TOTAL_TRACKS_NUMBER_COLUMN = 4;
-	static final int STATUS_COLUMN = 5;
+	static final int CD_NUMBER_COLUMN = 5;
+	static final int TOTAL_CDS_NUMBER_COLUMN = 6;
+	static final int STATUS_COLUMN = 7;
 	static final String SENT = "Sent";
 	static final String SESSIONLESS = "SessionLess";
 	static final String LOGGED_OUT = "NotLogged";

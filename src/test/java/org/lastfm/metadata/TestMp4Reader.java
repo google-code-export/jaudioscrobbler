@@ -109,15 +109,6 @@ public class TestMp4Reader{
 	}
 	
 	@Test
-	public void shouldGetNotTrackNumber() throws Exception {
-		String trackNumber = "-1";
-		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
-		Metadata metadata = reader.getMetadata(file);
-		
-		assertEquals(trackNumber, metadata.getTrackNumber());
-	}
-	
-	@Test
 	public void shouldGetTotalTracks() throws Exception {
 		String totalTracks = "20";
 		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
@@ -125,7 +116,61 @@ public class TestMp4Reader{
 		
 		assertEquals(totalTracks, metadata.getTotalTracks());
 	}
+	
+	@Test
+	public void shouldReturnZEROInTrackNumberWhenTagIsNull() throws Exception {
+		String trackNumber = "0";
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(null);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(trackNumber, metadata.getTrackNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTotalTracksWhenTagIsNull() throws Exception {
+		String totalTracks = "0";
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(null);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(totalTracks, metadata.getTotalTracks());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTrackNumberWhenNullPointer() throws Exception {
+		String trackNumber = "0";
+		when(tag.getFirst(FieldKey.TRACK)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(trackNumber, metadata.getTrackNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTotalTracksWhenNullPointer() throws Exception {
+		String totalTracks = "0";
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(totalTracks, metadata.getTotalTracks());
+	}
 
+	@Test
+	public void shouldReturnZEROInGettingCdNumberWhenNullPointer() throws Exception {
+		String cdNumber = "0";
+		when(tag.getFirst(FieldKey.DISC_NO)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(cdNumber, metadata.getCdNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInGettingTotalCdsWhenNullPointer() throws Exception {
+		String totalCds = "0";
+		when(tag.getFirst(FieldKey.DISC_TOTAL)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(totalCds, metadata.getTotalCds());
+	}
+	
 	@Test
 	public void shouldGetArtwork() throws Exception {
 		reader.getMetadata(file);

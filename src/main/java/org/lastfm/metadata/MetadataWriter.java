@@ -139,5 +139,36 @@ public class MetadataWriter {
 		}
 	}
 
+	public boolean writeCdNumber(String cdNumber) throws MetadataException {
+		try {
+			tag.setField(FieldKey.DISC_NO, cdNumber);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		} catch (NullPointerException nue){
+			throw new MetadataException(nue.getMessage());
+		}
+	}
+
+	public boolean writeTotalCds(String totalCds) throws MetadataException {
+		try {
+			tag.setField(FieldKey.DISC_TOTAL, totalCds);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		} catch (NullPointerException nue){
+			throw new MetadataException(nue.getMessage());
+		}
+	}
 	
 }

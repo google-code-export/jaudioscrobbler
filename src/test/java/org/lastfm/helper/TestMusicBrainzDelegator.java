@@ -21,6 +21,8 @@ import org.mockito.MockitoAnnotations;
  */
 
 public class TestMusicBrainzDelegator {
+	private static final Object ZERO = "0";
+
 	@InjectMocks
 	MusicBrainzDelegator service = new MusicBrainzDelegator();
 	
@@ -40,7 +42,7 @@ public class TestMusicBrainzDelegator {
 		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
 		
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(-1, result.getTrackNumber());
+		assertEquals(ZERO, result.getTrackNumber());
 		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
@@ -50,7 +52,7 @@ public class TestMusicBrainzDelegator {
 		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
 		
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(-1, result.getTrackNumber());
+		assertEquals(ZERO, result.getTrackNumber());
 		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
@@ -60,7 +62,7 @@ public class TestMusicBrainzDelegator {
 		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
 		
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(-1, result.getTrackNumber());
+		assertEquals(ZERO, result.getTrackNumber());
 		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
 	
@@ -83,7 +85,7 @@ public class TestMusicBrainzDelegator {
 		artistName = "Above & Beyond";
 		trackName = "Anjunabeach";
 		String album = "Anjunabeach";
-		int trackNumber = 12;
+		String trackNumber = "12";
 		
 		MusicBrainzTrack track = new MusicBrainzTrack();
 		track.setAlbum(album);

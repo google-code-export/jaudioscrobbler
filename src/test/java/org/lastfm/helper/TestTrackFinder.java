@@ -21,6 +21,7 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 public class TestTrackFinder {
 	private static final int TOTAL_TRACKS = 10;
+	private static final Object ZERO = "0";
 
 	@InjectMocks
 	private TrackFinder trackFinder = new TrackFinder();
@@ -48,19 +49,19 @@ public class TestTrackFinder {
 		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
 		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(-1, result.getTrackNumber());
+		assertEquals(ZERO, result.getTrackNumber());
 	}
 	
 	@Test
 	public void shouldGetAlbum() throws Exception {
-		int expectedTrack = 2;
+		String expectedTrack = "2";
 		setTrackHelperExpectations();
 
 		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
 		assertEquals(album, result.getAlbum());
 		assertEquals(expectedTrack, result.getTrackNumber());
-		assertEquals(TOTAL_TRACKS, result.getTotalTrackNumber());
+		assertEquals(String.valueOf(TOTAL_TRACKS), result.getTotalTrackNumber());
 	}
 	
 
