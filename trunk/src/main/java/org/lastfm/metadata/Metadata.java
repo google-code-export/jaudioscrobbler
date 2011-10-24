@@ -16,6 +16,8 @@ public class Metadata {
 	private int bitRate;
 	private File file;
 	private ImageIcon coverArt;
+	private String cdNumber;
+	private String totalCds;
 	
 	public File getFile() {
 		return file;
@@ -84,5 +86,17 @@ public class Metadata {
 	}
 	public void setTotalTracks(String totalTracks) {
 		this.totalTracks = totalTracks;
+	}
+	public void setCdNumber(String cdNumber) {
+		this.cdNumber = cdNumber;
+	}
+	public String getCdNumber() {
+		return cdNumber;
+	}
+	public void setTotalCds(String totalCds) {
+		this.totalCds = totalCds;
+	}
+	public String getTotalCds() {
+		return totalCds;
 	}
 }

@@ -158,13 +158,15 @@ public class MainWindow {
 		JTable descriptionTable = getDescriptionTable();
 		int row = descriptionTable.getRowCount();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-		model.addRow(new Object[] { "", "", "", "", "", "" });
+		model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
 		descriptionTable.setValueAt(metadata.getArtist(), row, 0);
 		descriptionTable.setValueAt(metadata.getTitle(), row, 1);
 		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
 		descriptionTable.setValueAt(metadata.getTotalTracks(), row, 4);
-		descriptionTable.setValueAt(ApplicationState.READY, row, 5);
+		descriptionTable.setValueAt(metadata.getCdNumber(), row, 5);
+		descriptionTable.setValueAt(metadata.getTotalCds(), row, 6);
+		descriptionTable.setValueAt(ApplicationState.READY, row, 7);
 	}
 
 	private void deleteALLRows(JTable descriptionTable) {
@@ -434,7 +436,7 @@ public class MainWindow {
 
 				@Override
 				public void tableChanged(TableModelEvent e) {
-					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != 5) {
+					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != ApplicationState.STATUS_COLUMN) {
 						log.info("tableChanged");
 						int column = e.getColumn();
 						int row = e.getFirstRow();
@@ -569,6 +571,8 @@ public class MainWindow {
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
+									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
 								if (counter >= metadataList.size()) {

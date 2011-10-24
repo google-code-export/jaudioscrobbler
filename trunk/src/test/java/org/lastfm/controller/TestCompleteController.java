@@ -43,8 +43,8 @@ public class TestCompleteController {
 	private String artist = "Dave Deen";
 	private String title = "Footprints (Original Mix)";
 	private String album = "Footprints EP";
-	private Integer trackNumber = 10;
-	private Integer totalTracks = 25;
+	private String trackNumber = "10";
+	private String totalTracks = "25";
 
 	@Before
 	public void setup() throws Exception {

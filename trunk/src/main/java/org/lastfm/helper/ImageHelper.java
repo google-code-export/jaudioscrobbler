@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 
 import javax.imageio.ImageIO;
 
@@ -14,7 +13,7 @@ import org.lastfm.ApplicationState;
 public class ImageHelper {
 
 	public Image read() throws MalformedURLException, IOException {
-		return ImageIO.read(new URL(ApplicationState.DEFAULT_IMAGE));
+		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
 	}
 
 	public File createTempFile() throws IOException {

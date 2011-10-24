@@ -29,16 +29,23 @@ public class TrackFinder extends Track {
 			for (Track track : trackList) {
 				String artistFromMusicBrainz = trackHelper.getArtist(track);
 				if (artist.equals(artistFromMusicBrainz)) {
+					log.info("MusicBrainz Id: " + trackHelper.getMusicBrainzID(track));
 					log.debug("Artist: " + artistFromMusicBrainz);
 					String trackNumberAsString = trackHelper.getTrackNumber(track);
 					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
 					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
 					album = trackHelper.getAlbum(track);
-					int totalTrackNumber = trackHelper.getTotalTrackNumber(track);
+					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
 					log.debug("totalTrackNumber: " + totalTrackNumber);
+					String cdNumber = trackHelper.getCdNumber(track);
+					log.debug("cdNumber: " + cdNumber);
+					String totalCds = trackHelper.getTotalCds(track);
+					log.debug("totalCds: " + totalCds);
 					musicBrainzTrack.setAlbum(album);
-					musicBrainzTrack.setTrackNumber(trackNumber);
+					musicBrainzTrack.setTrackNumber(String.valueOf(trackNumber));
 					musicBrainzTrack.setTotalTrackNumber(totalTrackNumber);
+					musicBrainzTrack.setCdNumber(cdNumber);
+					musicBrainzTrack.setTotalCds(totalCds);
 					break;
 				}
 			}

@@ -23,6 +23,7 @@ import org.jaudiotagger.tag.datatype.Artwork;
 public abstract class MetadataReader {
 	protected Tag tag;
 	protected AudioHeader header;
+	private static final String ZERO = "0";
 	protected Log log = LogFactory.getLog(this.getClass());
 	
 	public MetadataReader() { 
@@ -63,11 +64,43 @@ public abstract class MetadataReader {
 	}
 
 	private String getTrackNumber(){
-		return tag.getFirst(FieldKey.TRACK);
+		try{
+			String trackNumber = tag.getFirst(FieldKey.TRACK);
+			return trackNumber == null ? ZERO : trackNumber;
+		} catch (NullPointerException nue){
+			log.warn("NullPointer Exception in getting TrackNumber at: " + getTitle());
+			return ZERO;
+		}
 	}
 	
 	private String getTotalTracks(){
-		return tag.getFirst(FieldKey.TRACK_TOTAL);
+		try{
+			String totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
+			return totalTracks == null ? ZERO : totalTracks;
+		} catch(NullPointerException nue){
+			log.warn("NullPointer Exception in getting Total Tracks at: " + getTitle());
+			return ZERO;
+		}
+	}
+	
+	private String getCdNumber() {
+		try{
+			String cdNumber = tag.getFirst(FieldKey.DISC_NO);
+			return cdNumber == null ? ZERO : cdNumber;
+		} catch (NullPointerException nue){
+			log.warn("NullPointer Exception in getting CD Number at: " + getTitle());
+			return ZERO;
+		}
+	}
+	
+	private String getTotalCds() {
+		try{
+			String cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
+			return cdsTotal == null ? ZERO : cdsTotal;
+		} catch (NullPointerException nue){
+			log.warn("NullPointer Exception in getting Total CDs Number at: " + getTitle());
+			return ZERO;
+		}
 	}
 
 	private ImageIcon getCoverArt() throws IOException, MetadataException {
@@ -86,6 +119,8 @@ public abstract class MetadataReader {
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setTotalTracks(getTotalTracks());
+		metadata.setCdNumber(getCdNumber());
+		metadata.setTotalCds(getTotalCds());
 		metadata.setBitRate(getBitRate());
 		metadata.setFile(file);
 		return metadata;
