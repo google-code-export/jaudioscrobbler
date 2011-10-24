@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
@@ -141,6 +142,7 @@ public class MetadataWriter {
 
 	public boolean writeCdNumber(String cdNumber) throws MetadataException {
 		try {
+			log.info("cdNumber: " + cdNumber + " tag:" + ToStringBuilder.reflectionToString(tag));
 			tag.setField(FieldKey.DISC_NO, cdNumber);
 			audioFile.commit();
 			return true;

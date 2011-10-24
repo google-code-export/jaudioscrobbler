@@ -9,7 +9,9 @@ import static org.mockito.Mockito.when;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
@@ -58,11 +60,13 @@ public class TestMainWindow {
 	@Mock
 	private Metadata metadata;
 	@Mock
-	private List<Metadata> metadataWithAlbum;
+	private Set<Metadata> metadataWithAlbum;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
 	private List<Metadata> metadatas;
+	private Set<Metadata> metadatasWaitingForMetadata;
+	
 
 	@Before
 	public void setup() throws Exception {
@@ -72,7 +76,9 @@ public class TestMainWindow {
 		window = new FrameFixture(mainWindow.getFrame());
 		window.show();
 		metadatas = new ArrayList<Metadata>();
+		metadatasWaitingForMetadata = new HashSet<Metadata>();
 		metadatas.add(metadata);
+		metadatasWaitingForMetadata.add(metadata);
 		when(metadata.getTitle()).thenReturn(TRACK_TITLE);
 	}
 
@@ -143,7 +149,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldApply() throws Exception {
-		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatas);
+		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatasWaitingForMetadata);
 		mainWindow.getApplyButton().setEnabled(true);
 
 		window.button(APPLY_BUTTON_NAME).click();
@@ -157,7 +163,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldNotApplyDueToErrorActionResult() throws Exception {
-		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatas);
+		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatasWaitingForMetadata);
 		mainWindow.getApplyButton().setEnabled(true);
 
 		window.button(APPLY_BUTTON_NAME).click();
