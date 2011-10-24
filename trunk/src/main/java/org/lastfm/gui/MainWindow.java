@@ -12,7 +12,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -103,8 +105,7 @@ public class MainWindow {
 	private JScrollPane scrollPane;
 	private ImageUtils imageUtils = new ImageUtils();
 	private Log log = LogFactory.getLog(this.getClass());
-	// change to set
-	private List<Metadata> metadataWithAlbum = new ArrayList<Metadata>();
+	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
 
@@ -159,14 +160,14 @@ public class MainWindow {
 		int row = descriptionTable.getRowCount();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 		model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
-		descriptionTable.setValueAt(metadata.getArtist(), row, 0);
-		descriptionTable.setValueAt(metadata.getTitle(), row, 1);
-		descriptionTable.setValueAt(metadata.getAlbum(), row, 2);
-		descriptionTable.setValueAt(metadata.getTrackNumber(), row, 3);
-		descriptionTable.setValueAt(metadata.getTotalTracks(), row, 4);
-		descriptionTable.setValueAt(metadata.getCdNumber(), row, 5);
-		descriptionTable.setValueAt(metadata.getTotalCds(), row, 6);
-		descriptionTable.setValueAt(ApplicationState.READY, row, 7);
+		descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
+		descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
+		descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
+		descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
+		descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+		descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
+		descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+		descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
 	}
 
 	private void deleteALLRows(JTable descriptionTable) {
@@ -507,7 +508,7 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					final List<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
+					final Set<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
 					for (final Metadata metadata : metadataWithAlbumList) {
@@ -617,7 +618,7 @@ public class MainWindow {
 		}
 	}
 
-	private void afterComplete(List<Metadata> metadataWithOutArtist) {
+	private void afterComplete(Set<Metadata> metadataWithOutArtist) {
 		if (!metadataWithOutArtist.isEmpty()) {
 			controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);

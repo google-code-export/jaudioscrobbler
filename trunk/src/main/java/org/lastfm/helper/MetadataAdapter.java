@@ -21,6 +21,12 @@ public class MetadataAdapter {
 		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
 			metadata.setTotalTracks(value);
 		}
+		if (column == ApplicationState.CD_NUMBER_COLUMN){
+			metadata.setCdNumber(value);
+		}
+		if (column == ApplicationState.TOTAL_CDS_NUMBER_COLUMN){
+			metadata.setTotalCds(value);
+		}
 	}
 
 }

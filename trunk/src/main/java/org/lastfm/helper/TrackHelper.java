@@ -11,7 +11,7 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 public class TrackHelper {
 	private static final int FIRST_RELEASE = 21;
-	private static final String ZERO = "0";
+	private static final String ONE = "1";
 	private final Log log = LogFactory.getLog(this.getClass());
 
 	public List<Track> findByTitle(String trackName) throws ServerUnavailableException {
@@ -46,11 +46,11 @@ public class TrackHelper {
 	}
 
 	public String getCdNumber(Track track) {
-		return ZERO;
+		return ONE;
 	}
 
 	public String getTotalCds(Track track) {
-		return ZERO;
+		return ONE;
 	}
 	public String getMusicBrainzID(Track track) {
 		return track.getId();
