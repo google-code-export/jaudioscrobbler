@@ -11,6 +11,10 @@
 			<outputDirectory>/System/Jar</outputDirectory>
 		</file>
 		<file>
+			<source>src/main/resources/images/daft_punk.png</source>
+			<outputDirectory>/src/main/resources/images/</outputDirectory>
+		</file>
+		<file>
 			<source>src/main/os/linux/scripts/JAudioScrobbler.sh</source>
 			<outputDirectory>/</outputDirectory>
 		</file>
