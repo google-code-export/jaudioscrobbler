@@ -1,5 +1,6 @@
 package org.lastfm.metadata;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -122,4 +123,27 @@ public class TestMetadataWriter {
 		verify(tag).setField(isA(Artwork.class));
 		verify(audioFile).commit();
 	}
+	
+	@Test
+	public void shouldWriteCdNumber() throws Exception {
+		String cdNumber = "1";
+		
+		boolean result = metadataWriter.writeCdNumber(cdNumber);
+		
+		verify(tag).setField(FieldKey.DISC_NO, cdNumber);
+		verify(audioFile).commit();
+		assertTrue(result);
+	}
+	
+	@Test
+	public void shouldWriteTotalCds() throws Exception {
+		String totalCds = "2";
+		
+		boolean result = metadataWriter.writeTotalCds(totalCds);
+		
+		verify(tag).setField(FieldKey.DISC_TOTAL, totalCds);
+		verify(audioFile).commit();
+		assertTrue(result);
+	}
+	
 }

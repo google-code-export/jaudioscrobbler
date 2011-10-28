@@ -20,8 +20,10 @@ import com.slychief.javamusicbrainz.entities.Track;
 
 
 public class TestTrackFinder {
-	private static final int TOTAL_TRACKS = 10;
+	private static final String TOTAL_TRACKS = "10";
 	private static final Object ZERO = "0";
+	private static final String CD_NUMBER = "1";
+	private static final String TOTAL_CDS = "2";
 
 	@InjectMocks
 	private TrackFinder trackFinder = new TrackFinder();
@@ -59,9 +61,15 @@ public class TestTrackFinder {
 
 		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
+		verifyTrackHelperExpectations(expectedTrack, result);
+	}
+
+	private void verifyTrackHelperExpectations(String expectedTrack, MusicBrainzTrack result) {
 		assertEquals(album, result.getAlbum());
 		assertEquals(expectedTrack, result.getTrackNumber());
-		assertEquals(String.valueOf(TOTAL_TRACKS), result.getTotalTrackNumber());
+		assertEquals(TOTAL_TRACKS, result.getTotalTrackNumber());
+		assertEquals(CD_NUMBER, result.getCdNumber());
+		assertEquals(TOTAL_CDS, result.getTotalCds());
 	}
 	
 
@@ -70,6 +78,8 @@ public class TestTrackFinder {
 		when(trackHelper.getArtist(track)).thenReturn(artistname);
 		when(trackHelper.getTrackNumber(track)).thenReturn("1");
 		when(trackHelper.getAlbum(track)).thenReturn(album);
-		when(trackHelper.getTotalTrackNumber(track)).thenReturn(TOTAL_TRACKS);
+		when(trackHelper.getTotalTrackNumber(track)).thenReturn(Integer.valueOf(TOTAL_TRACKS));
+		when(trackHelper.getCdNumber(track)).thenReturn(CD_NUMBER);
+		when(trackHelper.getTotalCds(track)).thenReturn(TOTAL_CDS);
 	}
 }
