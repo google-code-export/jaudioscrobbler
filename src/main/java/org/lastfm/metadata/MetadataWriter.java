@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
@@ -95,6 +95,9 @@ public class MetadataWriter {
 
 	public boolean writeTrackNumber(String trackNumber) throws MetadataException {
 		try {
+			if(StringUtils.isEmpty(trackNumber)){
+				return false;
+			}
 			tag.setField(FieldKey.TRACK, trackNumber);
 			audioFile.commit();
 			return true;
@@ -109,6 +112,9 @@ public class MetadataWriter {
 
 	public boolean writeTotalTracksNumber(String totalTracksNumber) throws MetadataException {
 		try {
+			if(StringUtils.isEmpty(totalTracksNumber)){
+				return false;
+			}
 			tag.setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
 			audioFile.commit();
 			return true;
@@ -142,7 +148,9 @@ public class MetadataWriter {
 
 	public boolean writeCdNumber(String cdNumber) throws MetadataException {
 		try {
-			log.info("cdNumber: " + cdNumber + " tag:" + ToStringBuilder.reflectionToString(tag));
+			if(StringUtils.isEmpty(cdNumber)){
+				return false;
+			}
 			tag.setField(FieldKey.DISC_NO, cdNumber);
 			audioFile.commit();
 			return true;
@@ -159,6 +167,9 @@ public class MetadataWriter {
 
 	public boolean writeTotalCds(String totalCds) throws MetadataException {
 		try {
+			if(StringUtils.isEmpty(totalCds)){
+				return false;
+			}
 			tag.setField(FieldKey.DISC_TOTAL, totalCds);
 			audioFile.commit();
 			return true;

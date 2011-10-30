@@ -2,9 +2,6 @@ package org.lastfm.helper;
 
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 import com.slychief.javamusicbrainz.entities.Release;
 import com.slychief.javamusicbrainz.entities.Track;
@@ -12,7 +9,6 @@ import com.slychief.javamusicbrainz.entities.Track;
 public class TrackHelper {
 	private static final int FIRST_RELEASE = 0;
 	private static final String ONE = "1";
-	private final Log log = LogFactory.getLog(this.getClass());
 
 	public List<Track> findByTitle(String trackName) throws ServerUnavailableException {
 		return Track.findByTitle(trackName);
@@ -20,9 +16,6 @@ public class TrackHelper {
 
 	public List<Release> getReleases(Track track) {
 		List<Release> releases = track.getReleases().getReleases();
-		for (Release release : releases) {
-			log.debug("release: " + release.getTitle() + " # : " + releases.indexOf(release));
-		}
 		return releases;
 	}
 
@@ -30,8 +23,8 @@ public class TrackHelper {
 		List<Release> releases = getReleases(track);
 		return (releases.get(FIRST_RELEASE).getTrackList().getOffset()).trim();
 	}
-	
-	public int getTotalTrackNumber(Track track) throws ServerUnavailableException{
+
+	public int getTotalTrackNumber(Track track) throws ServerUnavailableException {
 		List<Release> releases = getReleases(track);
 		return releases.get(FIRST_RELEASE).getTracks().size();
 	}
@@ -52,6 +45,7 @@ public class TrackHelper {
 	public String getTotalCds(Track track) {
 		return ONE;
 	}
+
 	public String getMusicBrainzID(Track track) {
 		return track.getId();
 	}
