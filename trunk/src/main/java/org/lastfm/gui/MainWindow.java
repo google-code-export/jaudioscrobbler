@@ -592,7 +592,7 @@ public class MainWindow {
 										public void onResponse(ActionResult reponse) {
 											updateStatus(counter++, metadataList.size());
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
-											if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+											if (reponse.equals(ActionResult.COVER_ART_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}

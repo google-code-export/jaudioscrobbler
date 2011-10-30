@@ -146,4 +146,23 @@ public class TestMetadataWriter {
 		assertTrue(result);
 	}
 	
+	@Test
+	public void shouldNotWriteTrackNumberIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeTrackNumber(""));
+	}
+	
+	@Test
+	public void shouldNotWriteTotalTracksNumberIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeTotalTracksNumber(""));
+	}
+	
+	@Test
+	public void shouldNotWriteCdNumberIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeCdNumber(""));
+	}
+	
+	@Test
+	public void shouldNotWriteTotalCdsIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeTotalCds(""));
+	}
 }

@@ -33,6 +33,7 @@ public class TrackFinder extends Track {
 					log.debug("Artist: " + artistFromMusicBrainz);
 					String trackNumberAsString = trackHelper.getTrackNumber(track);
 					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
+					log.debug("trackHelper: " + trackHelper.hashCode());
 					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
 					album = trackHelper.getAlbum(track);
 					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
