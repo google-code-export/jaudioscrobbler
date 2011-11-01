@@ -52,6 +52,10 @@ public abstract class MetadataReader {
 	private String getGenre(){
 		return tag.getFirst(FieldKey.GENRE);
 	}
+	
+	private String getYear() {
+		return tag.getFirst(FieldKey.YEAR);
+	}
 
 	private int getLength(){
 		return header.getTrackLength();
@@ -116,6 +120,7 @@ public abstract class MetadataReader {
 		metadata.setArtist(getArtist());
 		metadata.setAlbum(getAlbum());
 		metadata.setGenre(getGenre());
+		metadata.setYear(getYear());
 		metadata.setLenght(getLength());
 		metadata.setTrackNumber(getTrackNumber());
 		metadata.setTotalTracks(getTotalTracks());

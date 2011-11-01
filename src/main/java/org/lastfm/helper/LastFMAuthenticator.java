@@ -2,7 +2,7 @@ package org.lastfm.helper;
 
 import java.io.IOException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import de.umass.lastfm.Session;
 

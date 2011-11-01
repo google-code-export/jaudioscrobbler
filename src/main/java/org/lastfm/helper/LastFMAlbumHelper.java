@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,6 +25,11 @@ public class LastFMAlbumHelper {
 
 	public ImageIcon getImageIcon(Image image) {
 		return new ImageIcon(image);
+	}
+
+	public String getYear(Date releaseDate) {
+		String dateAsString = releaseDate.toString();
+		return dateAsString.substring(dateAsString.length()-4, dateAsString.length());
 	}
 
 }

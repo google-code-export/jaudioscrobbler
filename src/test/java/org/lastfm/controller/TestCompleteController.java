@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
@@ -45,6 +46,7 @@ public class TestCompleteController {
 	private String album = "Footprints EP";
 	private String trackNumber = "10";
 	private String totalTracks = "25";
+	private String year = "1990";
 
 	@Before
 	public void setup() throws Exception {
@@ -52,8 +54,9 @@ public class TestCompleteController {
 		when(metadata.getArtist()).thenReturn(artist);
 		when(metadata.getTitle()).thenReturn(title);
 		when(metadata.getAlbum()).thenReturn(album);
-		when(metadata.getTrackNumber()).thenReturn("" + trackNumber);
-		when(metadata.getTotalTracks()).thenReturn("" + totalTracks);
+		when(metadata.getTrackNumber()).thenReturn(trackNumber);
+		when(metadata.getTotalTracks()).thenReturn(totalTracks);
+		when(metadata.getYear()).thenReturn(year);
 		when(coverArtService.completeCoverArt(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
 	}
 	
@@ -62,13 +65,13 @@ public class TestCompleteController {
 	public void shouldCompleteMetadata() throws Exception {
 		MusicBrainzTrack musicBrainzTrack = setExpectations();
 		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
-		when(metadata.getAlbum()).thenReturn("");
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
 		verify(musicBrainzDelegator).getAlbum(artist, title);
 		verify(metadata).setAlbum(album);
-		verify(metadata).setTrackNumber("" + trackNumber);
-		verify(metadata).setTotalTracks("" + totalTracks);
+		verify(metadata).setTrackNumber(trackNumber);
+		verify(metadata).setTotalTracks(totalTracks);
 		assertEquals(ActionResult.METADATA_SUCCESS, result);
 	}
 
@@ -113,6 +116,7 @@ public class TestCompleteController {
 		verify(metadataWriter).writeAlbum(album);
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
 		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
+		verify(metadataWriter).writeYear(year);
 		assertEquals(ActionResult.UPDATED, result);
 	}
 	
@@ -140,4 +144,5 @@ public class TestCompleteController {
 		
 		verify(coverArtService).completeCoverArt(metadata);
 	}
+	
 }

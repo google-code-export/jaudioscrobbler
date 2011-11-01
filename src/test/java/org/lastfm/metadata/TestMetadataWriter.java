@@ -1,6 +1,7 @@
 package org.lastfm.metadata;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -10,6 +11,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
@@ -147,22 +149,36 @@ public class TestMetadataWriter {
 	}
 	
 	@Test
-	public void shouldNotWriteTrackNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTrackNumber(""));
+	public void shouldNotWritetotalTracksNumberTrackNumberIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeTrackNumber(StringUtils.EMPTY));
 	}
 	
 	@Test
 	public void shouldNotWriteTotalTracksNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTotalTracksNumber(""));
+		assertFalse(metadataWriter.writeTotalTracksNumber(StringUtils.EMPTY));
 	}
 	
 	@Test
 	public void shouldNotWriteCdNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeCdNumber(""));
+		assertFalse(metadataWriter.writeCdNumber(StringUtils.EMPTY));
 	}
 	
 	@Test
 	public void shouldNotWriteTotalCdsIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTotalCds(""));
+		assertFalse(metadataWriter.writeTotalCds(StringUtils.EMPTY));
+	}
+	
+	@Test
+	public void shouldWriteYear() throws Exception {
+		String year = "1990";
+		
+		metadataWriter.writeYear(year);
+		verify(tag).setField(FieldKey.YEAR, year);
+		verify(audioFile).commit();
+	}
+	
+	@Test
+	public void shouldNotWriteYearIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeYear(StringUtils.EMPTY));
 	}
 }

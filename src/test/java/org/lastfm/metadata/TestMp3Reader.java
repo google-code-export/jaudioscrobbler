@@ -49,6 +49,7 @@ public class TestMp3Reader{
 	
 	private String artist = "Armin Van Buuren";
 	private String title = "Control Freak (Sander Van Doorn Remix)";
+	private String year = "2011";
 	
 	@Before
 	public void setup() throws Exception {
@@ -209,6 +210,13 @@ public class TestMp3Reader{
 	public void shouldGetFile() throws Exception {
 		Metadata metadata = reader.getMetadata(file);
 		assertNotNull(metadata.getFile());
+	}
+	
+	@Test
+	public void shouldGetYear() throws Exception {
+		when(tag.getFirst(FieldKey.YEAR)).thenReturn(year);
+		Metadata metadata = reader.getMetadata(file);
+		assertEquals(year, metadata.getYear());
 	}
 	
 }

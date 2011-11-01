@@ -1,14 +1,17 @@
 package org.lastfm.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MusicBrainzTrack {
 	private String album;
 	private String trackNumber;
 	private String totalTrackNumber;
 	private String cdNumber;
 	private String totalCds;
+	private String year;
 
 	public MusicBrainzTrack() {
-		album = "";
+		album = StringUtils.EMPTY;
 		trackNumber = "0";
 	}
 	
@@ -41,5 +44,11 @@ public class MusicBrainzTrack {
 	}
 	public String getTotalCds() {
 		return totalCds;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getYear() {
+		return year;
 	}
 }

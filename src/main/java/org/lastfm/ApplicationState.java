@@ -24,11 +24,12 @@ public interface ApplicationState {
 	static final int ARTIST_COLUMN = 0;
 	static final int TITLE_COLUMN = 1;
 	static final int ALBUM_COLUMN = 2;
-	static final int TRACK_NUMBER_COLUMN = 3;
-	static final int TOTAL_TRACKS_NUMBER_COLUMN = 4;
-	static final int CD_NUMBER_COLUMN = 5;
-	static final int TOTAL_CDS_NUMBER_COLUMN = 6;
-	static final int STATUS_COLUMN = 7;
+	static final int YEAR_COLUMN = 3;
+	static final int TRACK_NUMBER_COLUMN = 4;
+	static final int TOTAL_TRACKS_NUMBER_COLUMN = 5;
+	static final int CD_NUMBER_COLUMN = 6;
+	static final int TOTAL_CDS_NUMBER_COLUMN = 7;
+	static final int STATUS_COLUMN = 8;
 	static final String SENT = "Sent";
 	static final String SESSIONLESS = "SessionLess";
 	static final String LOGGED_OUT = "NotLogged";

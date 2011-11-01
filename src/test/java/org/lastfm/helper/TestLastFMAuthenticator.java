@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -45,15 +46,15 @@ public class TestLastFMAuthenticator {
 	
 	@Test
 	public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
-		String username = "";
-		String password = "";
+		String username = StringUtils.EMPTY;
+		String password = StringUtils.EMPTY;
 		
 		assertNull(controller.login(username, password));
 	}
 
 	@Test
 	public void shouldFailAtLoginIfNoUsername() throws Exception {
-		String username = "";
+		String username = StringUtils.EMPTY;
 		String password = "somePassword";
 		
 		assertNull(controller.login(username, password));
@@ -62,7 +63,7 @@ public class TestLastFMAuthenticator {
 	@Test
 	public void shouldFailAtLoginIfNoPassword() throws Exception {
 		String username = "someUsername";
-		String password = "";
+		String password = StringUtils.EMPTY;
 		
 		assertNull(controller.login(username, password));
 	}

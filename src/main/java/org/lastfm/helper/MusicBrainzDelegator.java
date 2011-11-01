@@ -1,6 +1,6 @@
 package org.lastfm.helper;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.lastfm.model.MusicBrainzTrack;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;

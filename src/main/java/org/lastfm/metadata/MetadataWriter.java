@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioFile;
@@ -171,6 +171,25 @@ public class MetadataWriter {
 				return false;
 			}
 			tag.setField(FieldKey.DISC_TOTAL, totalCds);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		} catch (NullPointerException nue){
+			throw new MetadataException(nue.getMessage());
+		}
+	}
+
+	public boolean writeYear(String year) throws MetadataException {
+		try {
+			if(StringUtils.isEmpty(year)){
+				return false;
+			}
+			tag.setField(FieldKey.YEAR, year);
 			audioFile.commit();
 			return true;
 		} catch (KeyNotFoundException kne) {

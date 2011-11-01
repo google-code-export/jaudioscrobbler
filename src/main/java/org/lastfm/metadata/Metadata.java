@@ -18,6 +18,7 @@ public class Metadata {
 	private ImageIcon coverArt;
 	private String cdNumber;
 	private String totalCds;
+	private String year;
 	
 	public File getFile() {
 		return file;
@@ -98,5 +99,11 @@ public class Metadata {
 	}
 	public String getTotalCds() {
 		return totalCds;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getYear() {
+		return year;
 	}
 }

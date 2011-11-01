@@ -2,7 +2,7 @@ package org.lastfm.controller;
 
 import java.io.File;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
@@ -42,13 +42,14 @@ public class CompleteController {
 				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
 					log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
+					metadata.setYear(musicBrainzTrack.getYear());
 					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
 					metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
 					metadata.setCdNumber(musicBrainzTrack.getCdNumber());
 					metadata.setTotalCds(musicBrainzTrack.getTotalCds());
 					return ActionResult.METADATA_SUCCESS;
 				} else {
-					log.info("No album found for track: " + metadata.getTitle());
+					log.info("There is no need to find an album for track: " + metadata.getTitle());
 					return ActionResult.METADATA_NOT_FOUND;
 				}
 			} else {
@@ -79,6 +80,7 @@ public class CompleteController {
 			metadataWriter.writeTotalTracksNumber(metadata.getTotalTracks());
 			metadataWriter.writeCdNumber(metadata.getCdNumber());
 			metadataWriter.writeTotalCds(metadata.getTotalCds());
+			metadataWriter.writeYear(metadata.getYear());
 			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
 			}

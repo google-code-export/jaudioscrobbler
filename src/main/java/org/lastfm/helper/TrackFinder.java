@@ -2,6 +2,7 @@ package org.lastfm.helper;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.model.MusicBrainzTrack;
@@ -22,7 +23,7 @@ public class TrackFinder extends Track {
 
 	public synchronized MusicBrainzTrack getAlbum(String artist, String trackname) throws ServerUnavailableException {
 		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-		String album = new String();
+		String album = StringUtils.EMPTY;
 		trackList = trackHelper.findByTitle(trackname);
 		if (!trackList.isEmpty()) {
 			log.debug("Getting album for track: " + trackname);
@@ -33,7 +34,6 @@ public class TrackFinder extends Track {
 					log.debug("Artist: " + artistFromMusicBrainz);
 					String trackNumberAsString = trackHelper.getTrackNumber(track);
 					log.debug("trackNumber: " + Integer.parseInt(trackNumberAsString) + 1);
-					log.debug("trackHelper: " + trackHelper.hashCode());
 					trackNumber = Integer.parseInt(trackNumberAsString) + 1;
 					album = trackHelper.getAlbum(track);
 					String totalTrackNumber = String.valueOf(trackHelper.getTotalTrackNumber(track));
