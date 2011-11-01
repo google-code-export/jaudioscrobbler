@@ -38,8 +38,8 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
@@ -163,6 +163,7 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
 		descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
 		descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
+		descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
 		descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 		descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
@@ -594,6 +595,7 @@ public class MainWindow {
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
 											if (reponse.equals(ActionResult.COVER_ART_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
@@ -29,7 +30,6 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
 
 public class TestScrobblerHelper {
 	private static final String TRACK_NUMBER = "1";
-	private static final String EMPTY_STRING = "";
 
 	@InjectMocks
 	private ScrobblerHelper helperScrobbler = new ScrobblerHelper();
@@ -75,7 +75,7 @@ public class TestScrobblerHelper {
 	@Test
 	public void shouldNotAddAScrobblingIfNoArtist() throws Exception {
 		setExpectations();
-		when(metadata.getArtist()).thenReturn(EMPTY_STRING);
+		when(metadata.getArtist()).thenReturn(StringUtils.EMPTY);
 		when(metadata.getTitle()).thenReturn("Anjunabeach");
 
 		result = helperScrobbler.send(metadata);
@@ -93,7 +93,7 @@ public class TestScrobblerHelper {
 	public void shouldNotAddAScrobblingIfNoTitle() throws Exception {
 		setExpectations();
 		when(metadata.getArtist()).thenReturn("Above & Beyond");
-		when(metadata.getTitle()).thenReturn(EMPTY_STRING);
+		when(metadata.getTitle()).thenReturn(StringUtils.EMPTY);
 
 		result = helperScrobbler.send(metadata);
 		notSendToScrobblingMapAssertion();
@@ -131,7 +131,7 @@ public class TestScrobblerHelper {
 	}
 	
 	private void setExpectations() {
-		when(metadata.getAlbum()).thenReturn(EMPTY_STRING);
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		when(metadata.getLength()).thenReturn(1);
 		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
 	}
@@ -140,7 +140,7 @@ public class TestScrobblerHelper {
 	@Test
 	public void shouldReturnIfNoLogin() throws Exception {
 		setMetadataTrackExpectations();
-		when(currentUser.getUsername()).thenReturn(EMPTY_STRING);
+		when(currentUser.getUsername()).thenReturn(StringUtils.EMPTY);
 		
 		assertEquals(ActionResult.LOGGED_OUT, helperScrobbler.send(metadata));
 	}
