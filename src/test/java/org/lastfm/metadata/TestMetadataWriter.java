@@ -181,4 +181,18 @@ public class TestMetadataWriter {
 	public void shouldNotWriteYearIfEmptyString() throws Exception {
 		assertFalse(metadataWriter.writeYear(StringUtils.EMPTY));
 	}
+	
+	@Test
+	public void shouldWriteGenre() throws Exception {
+		String genre = "Minimal Techno";
+		
+		metadataWriter.writeGenre(genre);
+		verify(tag).setField(FieldKey.GENRE, genre);
+		verify(audioFile).commit();
+	}
+	
+	@Test
+	public void shouldNotWriteGenreIfEmptyString() throws Exception {
+		assertFalse(metadataWriter.writeGenre(StringUtils.EMPTY));
+	}
 }

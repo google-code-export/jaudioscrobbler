@@ -145,4 +145,17 @@ public class TestCompleteController {
 		verify(coverArtService).completeCoverArt(metadata);
 	}
 	
+	@Test
+	public void shouldCompleteYearMetadata() throws Exception {
+		controller.completeYearLastfmMetadata(metadata);
+		
+		verify(coverArtService).completeYearLastfmMetadata(metadata);
+	}
+	
+	@Test
+	public void shouldCompleteGenreMetadata() throws Exception {
+		controller.completeGenreLastfmMetadata(metadata);
+		
+		verify(coverArtService).completeGenreLastfmMetadata(metadata);
+	}
 }
