@@ -56,15 +56,14 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldGetAlbumFromLastfm() throws Exception {
+	public void shouldGetCoverArtFromLastfm() throws Exception {
 		setCoverArtExpectations();
 		
-		LastfmAlbum albumFromLastfm = coverArtService.getAlbumFromLastfm(artistName, albumName);
+		LastfmAlbum albumFromLastfm = coverArtService.getCoverArtFromLastfm(artistName, albumName);
 		
 		verify(album).getImageURL(ImageSize.EXTRALARGE);
 		verify(helper).readImage(imageURL);
 		verify(helper).getImageIcon(image);
-		assertEquals(year, albumFromLastfm.getYear());
 		assertEquals(imageIcon, albumFromLastfm.getImageIcon());
 	}
 
@@ -88,7 +87,6 @@ public class TestCoverArtService {
 		ActionResult result = coverArtService.completeCoverArt(metadata);
 		
 		verify(metadata).setLastfmCoverArt(imageIcon);
-		verify(metadata).setYear(year);
 		assertEquals(ActionResult.COVER_ART_SUCCESS, result);
 	}
 	
@@ -96,12 +94,12 @@ public class TestCoverArtService {
 	public void shouldGetDefaultCoverArtIfNoValidURL() throws Exception {
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
 		
-		assertNull(coverArtService.getAlbumFromLastfm(artistName, albumName));
+		assertNull(coverArtService.getCoverArtFromLastfm(artistName, albumName));
 	}
 	
 	@Test
 	public void shouldNotGetCoverArtIfNoAlbum() throws Exception {
-		assertNull(coverArtService.getAlbumFromLastfm(artistName, albumName));
+		assertNull(coverArtService.getCoverArtFromLastfm(artistName, albumName));
 	}
 	
 	@Test

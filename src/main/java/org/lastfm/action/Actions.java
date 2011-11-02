@@ -21,6 +21,9 @@ public interface Actions {
 	String COMPLETE_COVER_ART_METADATA = "completeCoverArtMetadata";
 	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE_COVER_ART = cm(COMPLETE_COVER_ART_METADATA);
 	
+	String COMPLETE_LAST_FM_METADATA = "completeLastfmMetadata";
+	ActionType<RequestAction<Metadata, ActionResult>> COMPLETE_LAST_FM = cm(COMPLETE_LAST_FM_METADATA);
+	
 	String WRITE_METADATA = "writeMetadata";
 	ActionType<RequestAction<Metadata, ActionResult>> WRITE = cm(WRITE_METADATA);
 }
