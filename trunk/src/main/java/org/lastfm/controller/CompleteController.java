@@ -67,9 +67,14 @@ public class CompleteController {
 		return coverArtService.completeCoverArt(metadata);
 	}
 	
-	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
-	public ActionResult completeLastfmMetadata(Metadata metadata) {
-		return coverArtService.completeLastfmMetadata(metadata);
+	@RequestMethod(Actions.COMPLETE_YEAR_LAST_FM_METADATA)
+	public ActionResult completeYearLastfmMetadata(Metadata metadata) {
+		return coverArtService.completeYearLastfmMetadata(metadata);
+	}
+	
+	@RequestMethod(Actions.COMPLETE_GENRE_LAST_FM_METADATA)
+	public ActionResult completeGenreLastfmMetadata(Metadata metadata) {
+		return coverArtService.completeGenreLastfmMetadata(metadata);
 	}
 
 	@RequestMethod(Actions.WRITE_METADATA)
@@ -86,6 +91,7 @@ public class CompleteController {
 			metadataWriter.writeCdNumber(metadata.getCdNumber());
 			metadataWriter.writeTotalCds(metadata.getTotalCds());
 			metadataWriter.writeYear(metadata.getYear());
+			metadataWriter.writeGenre(metadata.getGenre());
 			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
 			}

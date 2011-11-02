@@ -163,6 +163,7 @@ public class MainWindow {
 		descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
 		descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
 		descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
+		descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
 		descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
 		descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
 		descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
@@ -612,7 +613,7 @@ public class MainWindow {
 								counter = 0;
 								for (final Metadata metadata : metadataList) {
 									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_YEAR_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
 
 										@Override
 										public void onResponse(ActionResult reponse) {
@@ -621,6 +622,32 @@ public class MainWindow {
 											if (reponse.equals(ActionResult.YEAR_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
+												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+											}
+											if (counter >= metadataList.size()) {
+												getGenre();
+											}
+										}
+
+									});
+								}
+
+							}
+							
+							private void getGenre() {
+								getLabel().setText(ApplicationState.GETTING_GENRE);
+								counter = 0;
+								for (final Metadata metadata : metadataList) {
+									final int i = metadataList.indexOf(metadata);
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_GENRE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
+
+										@Override
+										public void onResponse(ActionResult reponse) {
+											updateStatus(counter++, metadataList.size());
+											log.info("response in getting Genre " + metadata.getTitle() + ": " + reponse);
+											if (reponse.equals(ActionResult.GENRE_SUCCESS)) {
+												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {

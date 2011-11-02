@@ -191,9 +191,13 @@ public class TestMainWindow {
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.COVER_ART_SUCCESS);
 		
-		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
+		verify(viewEngine).request(eq(Actions.COMPLETE_YEAR_LAST_FM), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.YEAR_SUCCESS);
+		
+		verify(viewEngine).request(eq(Actions.COMPLETE_GENRE_LAST_FM), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.GENRE_SUCCESS);
 
 		verify(controlEngine).remove(Model.METADATA_ARTIST);
 		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);

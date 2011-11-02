@@ -203,4 +203,23 @@ public class MetadataWriter {
 		}
 	}
 	
+	public boolean writeGenre(String genre) throws MetadataException {
+		try {
+			if(StringUtils.isEmpty(genre)){
+				return false;
+			}
+			tag.setField(FieldKey.GENRE, genre);
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (FieldDataInvalidException fie) {
+			throw new MetadataException(fie.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		} catch (NullPointerException nue){
+			throw new MetadataException(nue.getMessage());
+		}
+	}
+	
 }

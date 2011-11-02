@@ -123,7 +123,7 @@ public class TestCoverArtService {
 		when(album.getReleaseDate()).thenReturn(date);
 		when(helper.getYear(isA(Date.class))).thenReturn(year);
 		
-		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
 		
 		verify(metadata).setYear(year);
 		assertEquals(ActionResult.YEAR_SUCCESS, result);
@@ -133,7 +133,7 @@ public class TestCoverArtService {
 	public void shouldNotCompleteLastfmMetadataDueToNotEnoughArguments() throws Exception {
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		
-		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
 		assertEquals(ActionResult.NOT_ENOUGH_ARGUMENTS, result);
 	}
 	
@@ -143,7 +143,7 @@ public class TestCoverArtService {
 		when(metadata.getArtist()).thenReturn(artistName);
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
 		
-		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
 		assertEquals(ActionResult.YEAR_ERROR, result);
 	}
 	
@@ -151,7 +151,7 @@ public class TestCoverArtService {
 	public void shouldNotCompleteLastfmMetadataDueToMetadataComplete() throws Exception {
 		when(metadata.getYear()).thenReturn(year);
 		
-		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 }

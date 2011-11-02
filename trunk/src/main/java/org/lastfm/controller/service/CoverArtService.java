@@ -80,7 +80,7 @@ public class CoverArtService {
 		}
 	}
 
-	public ActionResult completeLastfmMetadata(Metadata metadata) {
+	public ActionResult completeYearLastfmMetadata(Metadata metadata) {
 		try{
 			if(StringUtils.isEmpty(metadata.getYear())){
 				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
@@ -106,6 +106,47 @@ public class CoverArtService {
 		} catch (NullPointerException npe) {
 			log.error(npe, npe);
 			return ActionResult.YEAR_ERROR;
+		}
+	}
+	
+	private LastfmAlbum getGenreFromLastfm(String artist, String album) throws MalformedURLException, IOException{
+		Album info = helper.getAlbum(artist, album);
+		if(info != null){
+			LastfmAlbum lastfmAlbum = new LastfmAlbum();
+			lastfmAlbum.setGenre(helper.getGenre(info));
+			log.info("Genre from lastFM: " + lastfmAlbum.getGenre());
+			return lastfmAlbum;
+		} else {
+			return null;
+		}
+	}
+
+	public ActionResult completeGenreLastfmMetadata(Metadata metadata) {
+		try{
+			if(StringUtils.isEmpty(metadata.getGenre())){
+				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
+					log.info("Getting Year for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
+					LastfmAlbum lastfmAlbum = getGenreFromLastfm(metadata.getArtist(), metadata.getAlbum());
+					if(StringUtils.isEmpty(lastfmAlbum.getGenre())){
+						return ActionResult.GENRE_ERROR;
+					}
+					metadata.setGenre(lastfmAlbum.getGenre());
+					return ActionResult.GENRE_SUCCESS;
+				} else {
+					return ActionResult.NOT_ENOUGH_ARGUMENTS;
+				}
+			} else {
+				return ActionResult.METADATA_COMPLETE;
+			}
+		} catch (MalformedURLException mfe) {
+			log.error(mfe, mfe);
+			return ActionResult.GENRE_ERROR;
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+			return ActionResult.GENRE_ERROR;
+		} catch (NullPointerException npe) {
+			log.error(npe, npe);
+			return ActionResult.GENRE_ERROR;
 		}
 	}
 }
