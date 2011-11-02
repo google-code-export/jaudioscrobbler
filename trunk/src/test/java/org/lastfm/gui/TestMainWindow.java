@@ -175,7 +175,6 @@ public class TestMainWindow {
 	}
 
 	@Test
-	//TODO FIXME
 	public void shouldComplete() throws Exception {
 		setMetadataExpectations();
 		mainWindow.getCompleteMetadataButton().setEnabled(true);
@@ -186,16 +185,20 @@ public class TestMainWindow {
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.METADATA_SUCCESS);
 
-		verifyCompleteAssertions();
+		verifyCompleteAlbumAssertions();
 
 		verify(viewEngine).request(eq(Actions.COMPLETE_COVER_ART), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.METADATA_SUCCESS);
+		callback.onResponse(ActionResult.COVER_ART_SUCCESS);
+		
+		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.YEAR_SUCCESS);
 
-		//verify(controlEngine).remove(Model.METADATA_ARTIST);
-//		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-//		assertTrue(mainWindow.getApplyButton().isEnabled());
-//		verifyButtonsAssertions();
+		verify(controlEngine).remove(Model.METADATA_ARTIST);
+		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+		assertTrue(mainWindow.getApplyButton().isEnabled());
+		verifyButtonsAssertions();
 	}
 
 	private void verifyButtonsAssertions() {
@@ -205,7 +208,7 @@ public class TestMainWindow {
 		assertTrue(mainWindow.getDescriptionTable().isEnabled());
 	}
 
-	private void verifyCompleteAssertions() {
+	private void verifyCompleteAlbumAssertions() {
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 		assertEquals(TRACK_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TRACK_NUMBER_COLUMN));
 		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
