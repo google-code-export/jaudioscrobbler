@@ -21,7 +21,7 @@ public class CoverArtService {
 	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
 	private Log log = LogFactory.getLog(this.getClass());
 	
-	public LastfmAlbum getCoverArtFromLastfm(String artist, String album) throws MalformedURLException, IOException{
+	private LastfmAlbum getCoverArtFromLastfm(String artist, String album) throws MalformedURLException, IOException{
 		Album info = helper.getAlbum(artist, album);
 		if(info != null){
 			LastfmAlbum lastfmAlbum = new LastfmAlbum();
@@ -67,7 +67,7 @@ public class CoverArtService {
 		}
 	}
 	
-	public LastfmAlbum getYearFromLastfm(String artist, String album) throws MalformedURLException, IOException{
+	private LastfmAlbum getYearFromLastfm(String artist, String album) throws MalformedURLException, IOException{
 		Album info = helper.getAlbum(artist, album);
 		if(info != null){
 			LastfmAlbum lastfmAlbum = new LastfmAlbum();
@@ -87,7 +87,7 @@ public class CoverArtService {
 					log.info("Getting Year for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
 					LastfmAlbum lastfmAlbum = getYearFromLastfm(metadata.getArtist(), metadata.getAlbum());
 					if(StringUtils.isEmpty(lastfmAlbum.getYear())){
-						return ActionResult.COVER_ART_ERROR;
+						return ActionResult.YEAR_ERROR;
 					}
 					metadata.setYear(lastfmAlbum.getYear());
 					return ActionResult.YEAR_SUCCESS;
@@ -99,13 +99,13 @@ public class CoverArtService {
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.YEAR_ERROR;
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.YEAR_ERROR;
 		} catch (NullPointerException npe) {
 			log.error(npe, npe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.YEAR_ERROR;
 		}
 	}
 }

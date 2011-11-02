@@ -1,9 +1,9 @@
 package org.lastfm.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import java.awt.Image;
 import java.io.IOException;
@@ -19,7 +19,6 @@ import org.lastfm.action.ActionResult;
 import org.lastfm.controller.service.CoverArtService;
 import org.lastfm.helper.LastFMAlbumHelper;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -59,47 +58,42 @@ public class TestCoverArtService {
 	public void shouldGetCoverArtFromLastfm() throws Exception {
 		setCoverArtExpectations();
 		
-		LastfmAlbum albumFromLastfm = coverArtService.getCoverArtFromLastfm(artistName, albumName);
+		ActionResult result = coverArtService.completeCoverArt(metadata);
 		
 		verify(album).getImageURL(ImageSize.EXTRALARGE);
 		verify(helper).readImage(imageURL);
 		verify(helper).getImageIcon(image);
-		assertEquals(imageIcon, albumFromLastfm.getImageIcon());
-	}
-
-	private void setCoverArtExpectations() throws MalformedURLException, IOException {
-		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
-		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
-		when(helper.readImage(imageURL)).thenReturn(image);
-		when(album.getReleaseDate()).thenReturn(date);
-		when(helper.getYear(isA(Date.class))).thenReturn(year);
-		when(helper.getImageIcon(image)).thenReturn(imageIcon);
-	}
-	
-	
-	@Test
-	public void shouldWithLastfm() throws Exception {
-		when(metadata.getAlbum()).thenReturn(albumName);
-		when(metadata.getArtist()).thenReturn(artistName);
-		setCoverArtExpectations();
-		when(helper.getImageIcon(image)).thenReturn(imageIcon);
-		
-		ActionResult result = coverArtService.completeCoverArt(metadata);
-		
 		verify(metadata).setLastfmCoverArt(imageIcon);
 		assertEquals(ActionResult.COVER_ART_SUCCESS, result);
 	}
+
+	private void setCoverArtExpectations() throws MalformedURLException, IOException {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(album.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
+		when(helper.readImage(imageURL)).thenReturn(image);
+		when(helper.getImageIcon(image)).thenReturn(imageIcon);
+	}
+	
 	
 	@Test
 	public void shouldGetDefaultCoverArtIfNoValidURL() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
 		
-		assertNull(coverArtService.getCoverArtFromLastfm(artistName, albumName));
+		ActionResult result = coverArtService.completeCoverArt(metadata);
+		
+		assertEquals(ActionResult.COVER_ART_ERROR, result);
 	}
 	
 	@Test
-	public void shouldNotGetCoverArtIfNoAlbum() throws Exception {
-		assertNull(coverArtService.getCoverArtFromLastfm(artistName, albumName));
+	public void shouldNotGetCoverArtDueToNotEnoughArguments() throws Exception {
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		
+		ActionResult result = coverArtService.completeCoverArt(metadata);
+		assertEquals(ActionResult.NOT_ENOUGH_ARGUMENTS, result);
 	}
 	
 	@Test
@@ -107,7 +101,6 @@ public class TestCoverArtService {
 		when(metadata.getCoverArt()).thenReturn(imageIcon);
 		
 		ActionResult result = coverArtService.completeCoverArt(metadata);
-		
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 	
@@ -123,10 +116,42 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldGetMetadataCompleteIfNoAlbum() throws Exception {
+	public void shouldCompleteLastfmMetadata() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(album.getReleaseDate()).thenReturn(date);
+		when(helper.getYear(isA(Date.class))).thenReturn(year);
+		
+		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		
+		verify(metadata).setYear(year);
+		assertEquals(ActionResult.YEAR_SUCCESS, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteLastfmMetadataDueToNotEnoughArguments() throws Exception {
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		
-		ActionResult result = coverArtService.completeCoverArt(metadata);
+		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
 		assertEquals(ActionResult.NOT_ENOUGH_ARGUMENTS, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteLastfmMetadataDueToError() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		
+		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		assertEquals(ActionResult.YEAR_ERROR, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteLastfmMetadataDueToMetadataComplete() throws Exception {
+		when(metadata.getYear()).thenReturn(year);
+		
+		ActionResult result = coverArtService.completeLastfmMetadata(metadata);
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 }
