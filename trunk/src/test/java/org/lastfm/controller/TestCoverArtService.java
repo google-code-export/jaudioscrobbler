@@ -48,6 +48,8 @@ public class TestCoverArtService {
 	private String albumName = "Discovery";
 	private String imageURL = "http://userserve-ak.last.fm/serve/300x300/66072700.png";
 	private String year = "1990";
+	private String genre = "French house";
+
 	
 	@Before
 	public void setup() throws Exception {
@@ -116,7 +118,7 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldCompleteLastfmMetadata() throws Exception {
+	public void shouldCompleteYearLastfmMetadata() throws Exception {
 		when(metadata.getAlbum()).thenReturn(albumName);
 		when(metadata.getArtist()).thenReturn(artistName);
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
@@ -130,7 +132,7 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldNotCompleteLastfmMetadataDueToNotEnoughArguments() throws Exception {
+	public void shouldNotCompleteYearLastfmMetadataDueToNotEnoughArguments() throws Exception {
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
 		
 		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
@@ -138,7 +140,7 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldNotCompleteLastfmMetadataDueToError() throws Exception {
+	public void shouldNotCompleteLastfmYearMetadataDueToError() throws Exception {
 		when(metadata.getAlbum()).thenReturn(albumName);
 		when(metadata.getArtist()).thenReturn(artistName);
 		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
@@ -148,10 +150,49 @@ public class TestCoverArtService {
 	}
 	
 	@Test
-	public void shouldNotCompleteLastfmMetadataDueToMetadataComplete() throws Exception {
+	public void shouldNotCompleteLastfmYearMetadataDueToMetadataComplete() throws Exception {
 		when(metadata.getYear()).thenReturn(year);
 		
 		ActionResult result = coverArtService.completeYearLastfmMetadata(metadata);
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
+	
+	@Test
+	public void shouldCompleteGenreLastfmMetadata() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		when(helper.getGenre(album)).thenReturn(genre);
+		
+		ActionResult result = coverArtService.completeGenreLastfmMetadata(metadata);
+		
+		verify(metadata).setGenre(genre);
+		assertEquals(ActionResult.GENRE_SUCCESS, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteGenreLastfmMetadataDueToNotEnoughArguments() throws Exception {
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		
+		ActionResult result = coverArtService.completeGenreLastfmMetadata(metadata);
+		assertEquals(ActionResult.NOT_ENOUGH_ARGUMENTS, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteLastfmGenreMetadataDueToError() throws Exception {
+		when(metadata.getAlbum()).thenReturn(albumName);
+		when(metadata.getArtist()).thenReturn(artistName);
+		when(helper.getAlbum(artistName, albumName)).thenReturn(album);
+		
+		ActionResult result = coverArtService.completeGenreLastfmMetadata(metadata);
+		assertEquals(ActionResult.GENRE_ERROR, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteLastfmGenreMetadataDueToMetadataComplete() throws Exception {
+		when(metadata.getGenre()).thenReturn(genre);
+		
+		ActionResult result = coverArtService.completeGenreLastfmMetadata(metadata);
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 }
