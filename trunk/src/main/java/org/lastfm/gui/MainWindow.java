@@ -595,6 +595,31 @@ public class MainWindow {
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
 											if (reponse.equals(ActionResult.COVER_ART_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+											}
+											if (counter >= metadataList.size()) {
+												getYear();
+											}
+										}
+
+									});
+								}
+
+							}
+							
+							private void getYear() {
+								getLabel().setText(ApplicationState.GETTING_YEAR);
+								counter = 0;
+								for (final Metadata metadata : metadataList) {
+									final int i = metadataList.indexOf(metadata);
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
+
+										@Override
+										public void onResponse(ActionResult reponse) {
+											updateStatus(counter++, metadataList.size());
+											log.info("response in getting Year " + metadata.getTitle() + ": " + reponse);
+											if (reponse.equals(ActionResult.YEAR_SUCCESS)) {
+												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}

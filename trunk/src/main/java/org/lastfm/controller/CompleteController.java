@@ -66,6 +66,11 @@ public class CompleteController {
 	public ActionResult completeCoverArtMetadata(Metadata metadata) {
 		return coverArtService.completeCoverArt(metadata);
 	}
+	
+	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
+	public ActionResult completeLastfmMetadata(Metadata metadata) {
+		return coverArtService.completeLastfmMetadata(metadata);
+	}
 
 	@RequestMethod(Actions.WRITE_METADATA)
 	public synchronized ActionResult completeAlbum(Metadata metadata) {
