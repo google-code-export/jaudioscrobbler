@@ -15,6 +15,7 @@ public class DescriptionTable extends JTable{
 	static String[] columnNames = {"Artist",
             "Track",
             "Album",
+            "Genre",
             "Year",
             "# Track",
             "# Tracks",
@@ -23,7 +24,7 @@ public class DescriptionTable extends JTable{
             "Status"};
 	
 	static Object[][] data = {
-		    {"", "", "", "", "", "", "", "", ""},
+		    {"", "", "", "", "", "", "", "", "", ""},
 		};
 
 
@@ -40,16 +41,17 @@ public class DescriptionTable extends JTable{
 			case 0:
 			case 1:
 			case 2:	
+			case 3:	
 				this.getColumnModel().getColumn(i).setPreferredWidth(380);
 				break;
-			case 3:	
 			case 4:
 			case 5:
 			case 6:
-			case 7:	
+			case 7:
+			case 8:	
 				this.getColumnModel().getColumn(i).setPreferredWidth(180);
 				break;
-			case 8:	
+			case 9:	
 				this.getColumnModel().getColumn(i).setPreferredWidth(280);
 				break;	
 			}

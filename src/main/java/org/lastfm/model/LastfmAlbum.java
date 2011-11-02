@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 public class LastfmAlbum {
 	private ImageIcon imageIcon;
 	private String year;
+	private String genre;
 
 	public ImageIcon getImageIcon() {
 		return imageIcon;
@@ -20,5 +21,13 @@ public class LastfmAlbum {
 
 	public void setYear(String year) {
 		this.year = year;
+	}
+	
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getGenre() {
+		return genre;
 	}
 }
