@@ -114,7 +114,6 @@ public class CoverArtService {
 		if(info != null){
 			LastfmAlbum lastfmAlbum = new LastfmAlbum();
 			lastfmAlbum.setGenre(helper.getGenre(info));
-			log.info("Genre from lastFM: " + lastfmAlbum.getGenre());
 			return lastfmAlbum;
 		} else {
 			return null;
@@ -125,7 +124,7 @@ public class CoverArtService {
 		try{
 			if(StringUtils.isEmpty(metadata.getGenre())){
 				if(!StringUtils.isEmpty(metadata.getAlbum()) && !StringUtils.isEmpty(metadata.getArtist())){
-					log.info("Getting Year for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
+					log.info("Getting Genre for Album: " + metadata.getAlbum() + " by " + metadata.getArtist());
 					LastfmAlbum lastfmAlbum = getGenreFromLastfm(metadata.getArtist(), metadata.getAlbum());
 					if(StringUtils.isEmpty(lastfmAlbum.getGenre())){
 						return ActionResult.GENRE_ERROR;
