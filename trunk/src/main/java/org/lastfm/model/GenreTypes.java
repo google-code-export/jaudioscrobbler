@@ -53,7 +53,7 @@ public enum GenreTypes {
 	
 	public static GenreTypes getGenreByName(String name) {
 		for (GenreTypes item : GenreTypes.values()) {
-			if (item.getName().toLowerCase().equals(name)) {
+			if (item.getName().toLowerCase().equals(name.toLowerCase())) {
 				return item;
 			}
 		}
