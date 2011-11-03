@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.Auth;
+import org.lastfm.model.GenreTypes;
 
 import de.umass.lastfm.Album;
 
@@ -39,14 +40,17 @@ public class LastFMAlbumHelper {
 	}
 
 	public String getGenre(Album info) {
-		String genre = StringUtils.EMPTY;
 		Collection<String> tags = info.getTags();
 		Iterator<String> iterator = tags.iterator();
 		while(iterator.hasNext()){
-			genre = (String) iterator.next();
-			log.info("genre: " + genre);
+			String lastFmTag = (String) iterator.next().toLowerCase();
+			log.info("lastFmTag: " + lastFmTag);
+			if(GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN){
+				log.info("lastFmTag matched in GenreTypes: " + GenreTypes.getGenreByName(lastFmTag).getName());
+				return GenreTypes.getGenreByName(lastFmTag).getName();
+			}
 		}
-		return genre;
+		return StringUtils.EMPTY;
 	}
 
 }

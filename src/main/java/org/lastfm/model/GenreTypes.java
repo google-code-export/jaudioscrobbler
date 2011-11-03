@@ -3,7 +3,7 @@ package org.lastfm.model;
 import org.apache.commons.lang3.StringUtils;
 
 public enum GenreTypes {
-
+	
 	BLUES(0, "Blues"), CLASSIC_ROCK(1, "Classic Rock"), COUNTRY(2, "Country"), DANCE(3, "Dance"), DISCO(4, "Disco"), FUNK(5, "Funk"), GRUNGE(6, "Grunge"), HIP_HOP(7, "Hip-Hop"), JAZZ(8, "Jazz"), METAL(
 			9, "Metal"), NEW_AGE(10, "New Age"), OLDIES(11, "Oldies"), OTHER(12, "Other"), POP(13, "Pop"), R_and_B(14, "R&B"), RAP(15, "Rap"), REGGAE(16, "Reggae"), ROCK(17, "Rock"), TECHNO(18,
 			"Techno"), INDUSTRIAL(19, "Industrial"), ALTERNATIVE(20, "Alternative"), SKA(21, "Ska"), DEATH_METAL(22, "Death Metal"), PRANKS(23, "Pranks"), SOUNDTRACK(24, "Soundtrack"), EURO_TECHNO(
@@ -49,5 +49,14 @@ public enum GenreTypes {
 			}
 		}
 		return StringUtils.EMPTY;
+	}
+	
+	public static GenreTypes getGenreByName(String name) {
+		for (GenreTypes item : GenreTypes.values()) {
+			if (item.getName().toLowerCase().equals(name)) {
+				return item;
+			}
+		}
+		return UNKNOWN;
 	}
 }
