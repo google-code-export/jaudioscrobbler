@@ -116,6 +116,16 @@ public class TestMp3Reader{
 	}
 	
 	@Test
+	public void shouldGetGenreByCode() throws Exception {
+		String genreAsCode = "(18)";
+		String genre = "Techno";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genreAsCode);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(genre, metadata.getGenre());
+	}
+	
+	@Test
 	public void shouldGetTrackNumber() throws Exception {
 		String trackNumber = "11";
 		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);

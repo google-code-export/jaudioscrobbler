@@ -9,24 +9,25 @@ import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.audio.mp3.MP3File;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.model.GenreTypes;
 
 /**
  * 
  * @author josdem (joseluis.delacruz@gmail.com)
  * @undestands This class knows how to read metadata from a mp3 file
- *
+ * 
  */
 
 public class Mp3Reader extends MetadataReader {
 	private AudioFile audioFile;
 	private AudioFileHelper audioFileHelper = new AudioFileHelper();
 
-	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException,
-			ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
+	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
 		audioFile = audioFileHelper.read(file);
 		if (audioFile instanceof MP3File) {
 			MP3File audioMP3 = (MP3File) audioFile;
@@ -45,5 +46,24 @@ public class Mp3Reader extends MetadataReader {
 			return generateMetadata(file);
 		}
 		return new Metadata();
+	}
+
+	@Override
+	public String getGenre() {
+		String tmpGenre = "";
+		int index = 0;
+		tmpGenre = tag.getFirst(FieldKey.GENRE);
+		try {
+			index = Integer.valueOf(tmpGenre);
+			return GenreTypes.getGenreByCode(index);
+		} catch (NumberFormatException nfe) {
+			if (tmpGenre != null && tmpGenre.startsWith("(")) {
+				index = Integer.valueOf(tmpGenre.substring(tmpGenre.indexOf('(') + 1, tmpGenre.indexOf(')')));
+
+				return GenreTypes.getGenreByCode(index);
+			} else {
+				return tag.getFirst(FieldKey.GENRE);
+			}
+		}
 	}
 }

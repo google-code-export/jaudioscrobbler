@@ -26,6 +26,8 @@ public abstract class MetadataReader {
 	private static final String ZERO = "0";
 	protected Log log = LogFactory.getLog(this.getClass());
 	
+	public abstract String getGenre();
+
 	public MetadataReader() { 
 		turnOffLogMessages();
 	}
@@ -49,9 +51,6 @@ public abstract class MetadataReader {
 		return tag.getFirst(FieldKey.ALBUM);
 	}
 	
-	private String getGenre(){
-		return tag.getFirst(FieldKey.GENRE);
-	}
 	
 	private String getYear() {
 		return tag.getFirst(FieldKey.YEAR);

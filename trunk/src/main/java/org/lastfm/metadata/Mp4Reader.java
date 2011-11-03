@@ -7,6 +7,7 @@ import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.lastfm.helper.AudioFileHelper;
@@ -17,12 +18,17 @@ import org.lastfm.helper.AudioFileHelper;
  */
 
 public class Mp4Reader extends MetadataReader {
-private AudioFileHelper audioFileHelper = new AudioFileHelper();
-	
+	private AudioFileHelper audioFileHelper = new AudioFileHelper();
+
 	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
 		AudioFile audioFile = audioFileHelper.read(file);
-		tag = (Mp4Tag)audioFile.getTag();	
+		tag = (Mp4Tag) audioFile.getTag();
 		header = audioFile.getAudioHeader();
 		return generateMetadata(file);
+	}
+
+	@Override
+	public String getGenre() {
+		return tag.getFirst(FieldKey.GENRE);
 	}
 }
