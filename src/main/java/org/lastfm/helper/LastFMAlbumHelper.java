@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -35,8 +36,10 @@ public class LastFMAlbumHelper {
 	}
 
 	public String getYear(Date releaseDate) {
-		String dateAsString = releaseDate.toString();
-		return dateAsString.substring(dateAsString.length()-4, dateAsString.length());
+		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
+		String year = simpleDateformat.format(releaseDate);
+		log.info("Year: " + year);
+		return year;
 	}
 
 	public String getGenre(Album info) {
