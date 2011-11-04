@@ -3,6 +3,7 @@ package org.lastfm.helper;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -43,9 +44,12 @@ public class CompleteHelper {
 
 	public LastfmAlbum getYear(Metadata metadata) {
 		LastfmAlbum lastfmAlbum = new LastfmAlbum();
-		log.info("Year date format: " + info.getReleaseDate());
-		lastfmAlbum.setYear(helper.getYear(info.getReleaseDate()));
-		log.info("Year metadata format: " + lastfmAlbum.getYear());
+		Date release = info.getReleaseDate();
+		log.info("Year date format: " + release);
+		if(release != null){
+			lastfmAlbum.setYear(helper.getYear(release));
+			log.info("Year metadata format: " + lastfmAlbum.getYear());
+		}
 		return lastfmAlbum;
 	}
 

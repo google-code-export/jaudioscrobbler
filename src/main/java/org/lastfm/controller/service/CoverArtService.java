@@ -19,7 +19,7 @@ public class CoverArtService {
 
 	public ActionResult completeCoverArt(Metadata metadata) {
 		try {
-			if (completeHelper.canLastFMHelpToComplete(metadata)) {
+			if (metadata.getCoverArt() == null && completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getCoverArt(metadata);
 				if (lastfmAlbum.getImageIcon() == null) {
 					return ActionResult.COVER_ART_ERROR;
@@ -43,7 +43,7 @@ public class CoverArtService {
 
 	public ActionResult completeYearLastfmMetadata(Metadata metadata) {
 		try {
-			if (completeHelper.canLastFMHelpToComplete(metadata)) {
+			if (StringUtils.isEmpty(metadata.getYear()) && completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getYear(metadata);
 				if (StringUtils.isEmpty(lastfmAlbum.getYear())) {
 					return ActionResult.YEAR_ERROR;
@@ -61,7 +61,7 @@ public class CoverArtService {
 
 	public ActionResult completeGenreLastfmMetadata(Metadata metadata) {
 		try {
-			if (completeHelper.canLastFMHelpToComplete(metadata)) {
+			if (StringUtils.isEmpty(metadata.getGenre()) && completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getGenre(metadata);
 				if (StringUtils.isEmpty(lastfmAlbum.getGenre())) {
 					return ActionResult.GENRE_ERROR;
