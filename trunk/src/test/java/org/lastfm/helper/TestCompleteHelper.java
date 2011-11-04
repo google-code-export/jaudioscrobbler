@@ -1,15 +1,23 @@
 package org.lastfm.helper;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -112,6 +120,27 @@ public class TestCompleteHelper {
 		setYearGenreCoverExpectations();
 		
 		assertFalse(completeHelper.canLastFMHelpToComplete(metadata));
+	}
+	
+	@Test
+	public void shouldGetYear() throws Exception {
+		Date date = new Date();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy");
+		String year = simpleDateFormat.format(date);
+		when(info.getReleaseDate()).thenReturn(date);
+		when(helper.getYear(date)).thenReturn(year);
+		
+		LastfmAlbum lastfmAlbum = completeHelper.getYear(metadata);
+		
+		assertEquals(year, lastfmAlbum.getYear());
+	}
+
+	@Test
+	public void shouldNotSetYearIfNoInfoRelease() throws Exception {
+		LastfmAlbum lastfmAlbum = completeHelper.getYear(metadata);
+
+		verify(helper, never()).getYear(isA(Date.class));
+		assertNull(lastfmAlbum.getYear());
 	}
 	
 }
