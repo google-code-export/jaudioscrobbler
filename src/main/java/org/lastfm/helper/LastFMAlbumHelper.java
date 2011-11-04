@@ -42,8 +42,8 @@ public class LastFMAlbumHelper {
 		return year;
 	}
 
-	public String getGenre(Album info) {
-		Collection<String> tags = info.getTags();
+	public String getGenre(Album album) {
+		Collection<String> tags = album.getTags();
 		Iterator<String> iterator = tags.iterator();
 		while(iterator.hasNext()){
 			String lastFmTag = (String) iterator.next().toLowerCase();
