@@ -108,6 +108,7 @@ public class MainWindow {
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
+	private int DELTA = 1;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -578,7 +579,7 @@ public class MainWindow {
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
-								if (counter >= metadataList.size()) {
+								if (counter >= metadataList.size() - DELTA) {
 									getCoverArt();
 								}
 							}
@@ -598,7 +599,7 @@ public class MainWindow {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
-											if (counter >= metadataList.size()) {
+											if (counter >= metadataList.size() - DELTA) {
 												getYear();
 											}
 										}
@@ -623,8 +624,9 @@ public class MainWindow {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+												log.info("counter: " + counter + " / " + " metadataList size: " + metadataList.size());
 											}
-											if (counter >= metadataList.size()) {
+											if (counter >= metadataList.size() - DELTA) {
 												getGenre();
 											}
 										}
@@ -634,6 +636,8 @@ public class MainWindow {
 
 							}
 							
+							
+							//TODO Avoid delta vale, change it by TimeOut validation
 							private void getGenre() {
 								getLabel().setText(ApplicationState.GETTING_GENRE);
 								counter = 0;
@@ -650,7 +654,7 @@ public class MainWindow {
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
-											if (counter >= metadataList.size()) {
+											if (counter >= metadataList.size() - DELTA) {
 												afterComplete(metadataWithAlbum);
 											}
 										}
