@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jaudiotagger.audio.AudioHeader;
@@ -21,9 +22,9 @@ import org.jaudiotagger.tag.datatype.Artwork;
  */
 
 public abstract class MetadataReader {
+	private static final String NULL = "null";
 	protected Tag tag;
 	protected AudioHeader header;
-	private static final String ZERO = "0";
 	protected Log log = LogFactory.getLog(this.getClass());
 	
 	public abstract String getGenre();
@@ -69,40 +70,40 @@ public abstract class MetadataReader {
 	private String getTrackNumber(){
 		try{
 			String trackNumber = tag.getFirst(FieldKey.TRACK);
-			return trackNumber == null ? ZERO : trackNumber;
+			return trackNumber == NULL ? StringUtils.EMPTY : trackNumber;
 		} catch (NullPointerException nue){
 			log.warn("NullPointer Exception in getting TrackNumber at: " + getTitle());
-			return ZERO;
+			return StringUtils.EMPTY;
 		}
 	}
 	
 	private String getTotalTracks(){
 		try{
 			String totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
-			return totalTracks == null ? ZERO : totalTracks;
+			return totalTracks == NULL ? StringUtils.EMPTY : totalTracks;
 		} catch(NullPointerException nue){
 			log.warn("NullPointer Exception in getting Total Tracks at: " + getTitle());
-			return ZERO;
+			return StringUtils.EMPTY;
 		}
 	}
 	
 	private String getCdNumber() {
 		try{
 			String cdNumber = tag.getFirst(FieldKey.DISC_NO);
-			return cdNumber == null ? ZERO : cdNumber;
+			return cdNumber == NULL ? StringUtils.EMPTY : cdNumber;
 		} catch (NullPointerException nue){
 			log.warn("NullPointer Exception in getting CD Number at: " + getTitle());
-			return ZERO;
+			return StringUtils.EMPTY;
 		}
 	}
 	
 	private String getTotalCds() {
 		try{
 			String cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
-			return cdsTotal == null ? ZERO : cdsTotal;
+			return cdsTotal == NULL ? StringUtils.EMPTY : cdsTotal;
 		} catch (NullPointerException nue){
 			log.warn("NullPointer Exception in getting Total CDs Number at: " + getTitle());
-			return ZERO;
+			return StringUtils.EMPTY;
 		}
 	}
 
