@@ -62,4 +62,14 @@ public class CompleteHelper {
 		log.info("Year metadata format: " + lastfmAlbum.getYear());
 	}
 
+	public void completeMetadata(LastfmAlbum lastfmAlbum, Metadata metadata) {
+		metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
+		if(StringUtils.isEmpty(metadata.getYear())){
+			metadata.setYear(lastfmAlbum.getYear());
+		}
+		if(StringUtils.isEmpty(metadata.getGenre())){
+			metadata.setGenre(lastfmAlbum.getGenre());
+		}
+	}
+
 }
