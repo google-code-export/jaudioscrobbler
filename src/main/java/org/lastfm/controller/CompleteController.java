@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.action.control.RequestMethod;
-import org.lastfm.controller.service.CoverArtService;
+import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -31,7 +31,7 @@ public class CompleteController {
 	private MetadataWriter metadataWriter = new MetadataWriter();
 
 	@Autowired
-	private CoverArtService coverArtService;
+	private LastfmService coverArtService;
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public ActionResult completeAlbumMetadata(Metadata metadata) {

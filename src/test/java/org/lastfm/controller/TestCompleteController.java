@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
-import org.lastfm.controller.service.CoverArtService;
+import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -39,7 +39,7 @@ public class TestCompleteController {
 	@Mock
 	private File file;
 	@Mock
-	private CoverArtService coverArtService;
+	private LastfmService coverArtService;
 
 	private String artist = "Dave Deen";
 	private String title = "Footprints (Original Mix)";

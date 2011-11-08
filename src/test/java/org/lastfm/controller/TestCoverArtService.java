@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
-import org.lastfm.controller.service.CoverArtService;
+import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.CompleteHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestCoverArtService {
 	@InjectMocks
-	private CoverArtService coverArtService = new CoverArtService();
+	private LastfmService coverArtService = new LastfmService();
 	
 	@Mock
 	private Metadata metadata;

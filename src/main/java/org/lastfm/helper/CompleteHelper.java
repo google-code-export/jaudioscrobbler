@@ -42,8 +42,10 @@ public class CompleteHelper {
 		LastfmAlbum lastfmAlbum = new LastfmAlbum();
 		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
 		log.info("imageURL: " + imageURL + " from album: " + info.getName());
-		Image image = helper.readImage(imageURL);
-		lastfmAlbum.setImageIcon(helper.getImageIcon(image));
+		if (!StringUtils.isEmpty(imageURL)) {
+			Image image = helper.readImage(imageURL);
+			lastfmAlbum.setImageIcon(helper.getImageIcon(image));
+		}
 		setYear(lastfmAlbum);
 		setGenre(lastfmAlbum);
 		return lastfmAlbum;
@@ -56,10 +58,8 @@ public class CompleteHelper {
 	private void setYear(LastfmAlbum lastfmAlbum) {
 		Date release = info.getReleaseDate();
 		log.info("Year date format: " + release);
-		if(release != null){
-			lastfmAlbum.setYear(helper.getYear(release));
-			log.info("Year metadata format: " + lastfmAlbum.getYear());
-		}
+		lastfmAlbum.setYear(helper.getYear(release));
+		log.info("Year metadata format: " + lastfmAlbum.getYear());
 	}
 
 }
