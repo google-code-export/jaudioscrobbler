@@ -20,9 +20,7 @@ public class LastfmService {
 		try {
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
-				metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
-				metadata.setYear(lastfmAlbum.getYear());
-				metadata.setGenre(lastfmAlbum.getGenre());
+				completeHelper.completeMetadata(lastfmAlbum, metadata);
 				return ActionResult.LAST_FM_SUCCESS;
 			} else {
 				return ActionResult.METADATA_COMPLETE;

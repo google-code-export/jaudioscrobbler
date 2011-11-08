@@ -1,6 +1,8 @@
 package org.lastfm.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 
-public class TestCoverArtService {
+public class TestLastfmService {
 	@InjectMocks
 	private LastfmService coverArtService = new LastfmService();
 	
@@ -30,6 +32,8 @@ public class TestCoverArtService {
 	private CompleteHelper completeHelper;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
+
+	private String genre = "Minimal Techno";
 
 	@Before
 	public void setup() throws Exception {
@@ -44,7 +48,7 @@ public class TestCoverArtService {
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		
-		verify(metadata).setLastfmCoverArt(imageIcon);
+		verify(completeHelper).completeMetadata(lastfmAlbum, metadata);
 		assertEquals(ActionResult.LAST_FM_SUCCESS, result);
 	}
 	
@@ -54,5 +58,16 @@ public class TestCoverArtService {
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		assertEquals(ActionResult.METADATA_COMPLETE, result);
+	}
+	
+	@Test
+	public void shouldNotCompleteGenreIfAlredyHasOne() throws Exception {
+		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
+		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
+		when(metadata.getGenre()).thenReturn(genre );
+		
+		coverArtService.completeLastFM(metadata);
+		
+		verify(metadata, never()).setGenre(isA(String.class));
 	}
 }
