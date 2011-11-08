@@ -17,63 +17,32 @@ public class CoverArtService {
 	private CompleteHelper completeHelper = new CompleteHelper();
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public ActionResult completeCoverArt(Metadata metadata) {
+	public ActionResult completeLastFM(Metadata metadata) {
 		try {
-			if (metadata.getCoverArt() == null && completeHelper.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeHelper.getCoverArt(metadata);
-				if (lastfmAlbum.getImageIcon() == null) {
-					return ActionResult.COVER_ART_ERROR;
+			if (completeHelper.canLastFMHelpToComplete(metadata)) {
+				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
+				if (lastfmAlbum.getImageIcon() != null) {
+					metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
 				}
-				metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
-				return ActionResult.COVER_ART_SUCCESS;
+				if(!StringUtils.isEmpty(lastfmAlbum.getYear())){
+					metadata.setYear(lastfmAlbum.getYear());
+				}
+				if(!StringUtils.isEmpty(lastfmAlbum.getGenre())){
+					metadata.setGenre(lastfmAlbum.getGenre());
+				}
+				return ActionResult.LAST_FM_SUCCESS;
 			} else {
 				return ActionResult.METADATA_COMPLETE;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.LAST_FM_ERROR;
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.LAST_FM_ERROR;
 		} catch (NullPointerException npe) {
 			log.error(npe, npe);
-			return ActionResult.COVER_ART_ERROR;
-		}
-	}
-
-	public ActionResult completeYearLastfmMetadata(Metadata metadata) {
-		try {
-			if (StringUtils.isEmpty(metadata.getYear()) && completeHelper.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeHelper.getYear(metadata);
-				if (StringUtils.isEmpty(lastfmAlbum.getYear())) {
-					return ActionResult.YEAR_ERROR;
-				}
-				metadata.setYear(lastfmAlbum.getYear());
-				return ActionResult.YEAR_SUCCESS;
-			} else {
-				return ActionResult.METADATA_COMPLETE;
-			}
-		} catch (NullPointerException npe) {
-			log.error(npe, npe);
-			return ActionResult.COVER_ART_ERROR;
-		}
-	}
-
-	public ActionResult completeGenreLastfmMetadata(Metadata metadata) {
-		try {
-			if (StringUtils.isEmpty(metadata.getGenre()) && completeHelper.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeHelper.getGenre(metadata);
-				if (StringUtils.isEmpty(lastfmAlbum.getGenre())) {
-					return ActionResult.GENRE_ERROR;
-				}
-				metadata.setGenre(lastfmAlbum.getGenre());
-				return ActionResult.GENRE_SUCCESS;
-			} else {
-				return ActionResult.METADATA_COMPLETE;
-			}
-		} catch (NullPointerException npe) {
-			log.error(npe, npe);
-			return ActionResult.COVER_ART_ERROR;
+			return ActionResult.LAST_FM_ERROR;
 		}
 	}
 }

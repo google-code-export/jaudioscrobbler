@@ -57,7 +57,7 @@ public class TestCompleteController {
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
 		when(metadata.getTotalTracks()).thenReturn(totalTracks);
 		when(metadata.getYear()).thenReturn(year);
-		when(coverArtService.completeCoverArt(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
+		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
 	}
 	
 	
@@ -142,20 +142,6 @@ public class TestCompleteController {
 	public void shouldCompleteCoverArtMetadata() throws Exception {
 		controller.completeCoverArtMetadata(metadata);
 		
-		verify(coverArtService).completeCoverArt(metadata);
-	}
-	
-	@Test
-	public void shouldCompleteYearMetadata() throws Exception {
-		controller.completeYearLastfmMetadata(metadata);
-		
-		verify(coverArtService).completeYearLastfmMetadata(metadata);
-	}
-	
-	@Test
-	public void shouldCompleteGenreMetadata() throws Exception {
-		controller.completeGenreLastfmMetadata(metadata);
-		
-		verify(coverArtService).completeGenreLastfmMetadata(metadata);
+		verify(coverArtService).completeLastFM(metadata);
 	}
 }

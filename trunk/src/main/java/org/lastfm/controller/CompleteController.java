@@ -62,21 +62,11 @@ public class CompleteController {
 		}
 	}
 	
-	@RequestMethod(Actions.COMPLETE_COVER_ART_METADATA)
+	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
 	public ActionResult completeCoverArtMetadata(Metadata metadata) {
-		return coverArtService.completeCoverArt(metadata);
+		return coverArtService.completeLastFM(metadata);
 	}
 	
-	@RequestMethod(Actions.COMPLETE_YEAR_LAST_FM_METADATA)
-	public ActionResult completeYearLastfmMetadata(Metadata metadata) {
-		return coverArtService.completeYearLastfmMetadata(metadata);
-	}
-	
-	@RequestMethod(Actions.COMPLETE_GENRE_LAST_FM_METADATA)
-	public ActionResult completeGenreLastfmMetadata(Metadata metadata) {
-		return coverArtService.completeGenreLastfmMetadata(metadata);
-	}
-
 	@RequestMethod(Actions.WRITE_METADATA)
 	public synchronized ActionResult completeAlbum(Metadata metadata) {
 		try {

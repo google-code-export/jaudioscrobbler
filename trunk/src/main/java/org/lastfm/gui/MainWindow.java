@@ -584,73 +584,21 @@ public class MainWindow {
 								}
 							}
 
+							//TODO Avoid delta vale, change it by TimeOut validation
 							private void getCoverArt() {
-								getLabel().setText(ApplicationState.GETTING_COVER_ART);
+								getLabel().setText(ApplicationState.GETTING_LAST_FM);
 								counter = 0;
 								for (final Metadata metadata : metadataList) {
 									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_COVER_ART, metadata, new ResponseCallback<ActionResult>() {
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
 
 										@Override
 										public void onResponse(ActionResult reponse) {
 											updateStatus(counter++, metadataList.size());
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
-											if (reponse.equals(ActionResult.COVER_ART_SUCCESS)) {
-												metadataWithAlbum.add(metadata);
-												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
-											}
-											if (counter >= metadataList.size() - DELTA) {
-												getYear();
-											}
-										}
-
-									});
-								}
-
-							}
-							
-							private void getYear() {
-								getLabel().setText(ApplicationState.GETTING_YEAR);
-								counter = 0;
-								for (final Metadata metadata : metadataList) {
-									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_YEAR_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
-
-										@Override
-										public void onResponse(ActionResult reponse) {
-											updateStatus(counter++, metadataList.size());
-											log.info("response in getting Year " + metadata.getTitle() + ": " + reponse);
-											if (reponse.equals(ActionResult.YEAR_SUCCESS)) {
+											if (reponse.equals(ActionResult.LAST_FM_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
-												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
-												log.info("counter: " + counter + " / " + " metadataList size: " + metadataList.size());
-											}
-											if (counter >= metadataList.size() - DELTA) {
-												getGenre();
-											}
-										}
-
-									});
-								}
-
-							}
-							
-							
-							//TODO Avoid delta vale, change it by TimeOut validation
-							private void getGenre() {
-								getLabel().setText(ApplicationState.GETTING_GENRE);
-								counter = 0;
-								for (final Metadata metadata : metadataList) {
-									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_GENRE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
-
-										@Override
-										public void onResponse(ActionResult reponse) {
-											updateStatus(counter++, metadataList.size());
-											log.info("response in getting Genre " + metadata.getTitle() + ": " + reponse);
-											if (reponse.equals(ActionResult.GENRE_SUCCESS)) {
-												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
@@ -663,7 +611,6 @@ public class MainWindow {
 								}
 
 							}
-
 						});
 					}
 					return true;

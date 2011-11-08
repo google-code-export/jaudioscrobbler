@@ -23,40 +23,43 @@ public class CompleteHelper {
 		String artist = metadata.getArtist();
 		String album = metadata.getAlbum();
 
-		if ((metadata.getCoverArt() == null || StringUtils.isEmpty(metadata.getYear()) || StringUtils.isEmpty(metadata.getGenre())) && (!StringUtils.isEmpty(album) && !StringUtils.isEmpty(artist))) {
+		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
 			info = helper.getAlbum(artist, album);
 			return info == null ? false : true;
 		}
 		return false;
 	}
 
-	public LastfmAlbum getCoverArt(Metadata metadata) throws MalformedURLException, IOException {
+	private boolean hasAlbumAndArtist(String artist, String album) {
+		return (!StringUtils.isEmpty(album) && !StringUtils.isEmpty(artist));
+	}
+
+	private boolean isMetadataIncomplete(Metadata metadata) {
+		return (metadata.getCoverArt() == null || StringUtils.isEmpty(metadata.getYear()) || StringUtils.isEmpty(metadata.getGenre()));
+	}
+
+	public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
 		LastfmAlbum lastfmAlbum = new LastfmAlbum();
 		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
 		log.info("imageURL: " + imageURL + " from album: " + info.getName());
-		if (StringUtils.isEmpty(imageURL)) {
-			return null;
-		}
 		Image image = helper.readImage(imageURL);
 		lastfmAlbum.setImageIcon(helper.getImageIcon(image));
+		setYear(lastfmAlbum);
+		setGenre(lastfmAlbum);
 		return lastfmAlbum;
 	}
 
-	public LastfmAlbum getYear(Metadata metadata) {
-		LastfmAlbum lastfmAlbum = new LastfmAlbum();
+	private void setGenre(LastfmAlbum lastfmAlbum) {
+		lastfmAlbum.setGenre(helper.getGenre(info));
+	}
+
+	private void setYear(LastfmAlbum lastfmAlbum) {
 		Date release = info.getReleaseDate();
 		log.info("Year date format: " + release);
 		if(release != null){
 			lastfmAlbum.setYear(helper.getYear(release));
 			log.info("Year metadata format: " + lastfmAlbum.getYear());
 		}
-		return lastfmAlbum;
-	}
-
-	public LastfmAlbum getGenre(Metadata metadata) {
-		LastfmAlbum lastfmAlbum = new LastfmAlbum();
-		lastfmAlbum.setGenre(helper.getGenre(info));
-		return lastfmAlbum;
 	}
 
 }
