@@ -37,6 +37,11 @@ public class TestLastFMAlbumHelper {
 	}
 	
 	@Test
+	public void shouldGetEmptyYear() throws Exception {
+		assertEquals(StringUtils.EMPTY, lastFMAlbumHelper.getYear(null));
+	}
+	
+	@Test
 	public void shouldMatchAGenre() throws Exception {
 		Collection<String> tags = new ArrayList<String>();
 		String tag = "House";

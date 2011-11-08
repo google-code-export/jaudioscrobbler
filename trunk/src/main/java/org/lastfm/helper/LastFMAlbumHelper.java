@@ -36,6 +36,9 @@ public class LastFMAlbumHelper {
 	}
 
 	public String getYear(Date releaseDate) {
+		if(releaseDate == null){
+			return StringUtils.EMPTY;
+		}
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
 		String year = simpleDateformat.format(releaseDate);
 		log.info("Year: " + year);

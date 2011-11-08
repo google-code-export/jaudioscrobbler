@@ -2,10 +2,14 @@ package org.lastfm.helper;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -19,6 +23,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import de.umass.lastfm.Album;
+import de.umass.lastfm.ImageSize;
 
 
 public class TestCompleteHelper {
@@ -32,11 +37,14 @@ public class TestCompleteHelper {
 	private LastFMAlbumHelper helper;
 	@Mock
 	private Album info;
+	@Mock
+	private Image image;
 
 	private String year = "2011";
 	private String genre = "Minimal Techno";
 	private String artist = "Linas";
 	private String album = "Time Lapse";
+	private String imageURL = "http://userserve-ak.last.fm/serve/300x300/35560281.png";
 	
 	@Before
 	public void setup() throws Exception {
@@ -118,17 +126,45 @@ public class TestCompleteHelper {
 		assertFalse(completeHelper.canLastFMHelpToComplete(metadata));
 	}
 	
-	
 	@Test
-	public void shouldGetLastfmEvenThoughThereisNoCoverArt() throws Exception {
-		Date date = new Date();
-		when(info.getReleaseDate()).thenReturn(date);
-		when(helper.getYear(date)).thenReturn(year);
-		when(helper.getGenre(info)).thenReturn(genre);
+	public void shouldGetLastfm() throws Exception {
+		setYearAndGenreExpectations();
+		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
+		when(helper.readImage(imageURL)).thenReturn(image);
+		when(helper.getImageIcon(image)).thenReturn(imageIcon);
 		
 		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
 		
 		assertEquals(year, lastFMalbum.getYear());
 		assertEquals(genre, lastFMalbum.getGenre());
+		assertEquals(imageIcon, lastFMalbum.getImageIcon());
+	}
+	
+	
+	@Test
+	public void shouldGetLastfmEvenThoughThereisNoCoverArt() throws Exception {
+		setYearAndGenreExpectations();
+		
+		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		
+		assertEquals(year, lastFMalbum.getYear());
+		assertEquals(genre, lastFMalbum.getGenre());
+		assertNull(lastFMalbum.getImageIcon());
+	}
+	
+	@Test
+	public void shouldNotReadImageIfNoValidURL() throws Exception {
+		setYearAndGenreExpectations();
+		
+		completeHelper.getLastFM(metadata);
+		
+		verify(helper, never()).getImageIcon((Image) anyObject());
+	}
+
+	private void setYearAndGenreExpectations() {
+		Date date = new Date();
+		when(info.getReleaseDate()).thenReturn(date);
+		when(helper.getYear(date)).thenReturn(year);
+		when(helper.getGenre(info)).thenReturn(genre);
 	}
 }

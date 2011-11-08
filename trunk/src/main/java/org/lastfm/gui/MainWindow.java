@@ -108,7 +108,6 @@ public class MainWindow {
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
-	private int DELTA = 1;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -579,12 +578,11 @@ public class MainWindow {
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
-								if (counter >= metadataList.size() - DELTA) {
+								if (counter >= metadataList.size()) {
 									getCoverArt();
 								}
 							}
 
-							//TODO Avoid delta vale, change it by TimeOut validation
 							private void getCoverArt() {
 								getLabel().setText(ApplicationState.GETTING_LAST_FM);
 								counter = 0;
@@ -602,7 +600,7 @@ public class MainWindow {
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 											}
-											if (counter >= metadataList.size() - DELTA) {
+											if (counter >= metadataList.size()) {
 												afterComplete(metadataWithAlbum);
 											}
 										}
