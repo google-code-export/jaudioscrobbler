@@ -46,9 +46,7 @@ public interface ApplicationState {
 	static final String IMAGE_EXT = "PNG";
 	static final String PREFIX = "JAS_";
 	static final String GETTING_ALBUM = "Getting Album from Musicbrainz";
-	static final String GETTING_COVER_ART = "Getting CoverArt from Last.fm";
-	static final String GETTING_YEAR = "Getting Year from Last.fm";
-	static final String GETTING_GENRE = "Getting Genre from Last.fm";
+	static final String GETTING_LAST_FM = "Getting Last.fm Metadata";
 	static final String WRITTING_METADATA = "Writting Metadata";
 	static final String USERNAME_LABEL = "username:";
 	static final String PASSWORD_LABEL = "password:";
