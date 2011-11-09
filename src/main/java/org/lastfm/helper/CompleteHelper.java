@@ -40,19 +40,28 @@ public class CompleteHelper {
 
 	public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
 		LastfmAlbum lastfmAlbum = new LastfmAlbum();
+		setCoverArt(metadata, lastfmAlbum);
+		setYear(lastfmAlbum);
+		setGenre(lastfmAlbum);
+		return lastfmAlbum;
+	}
+
+	private void setCoverArt(Metadata metadata, LastfmAlbum lastfmAlbum) throws MalformedURLException, IOException {
+		if(metadata.getCoverArt() != null){
+			return;
+		}
 		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
 		log.info("imageURL: " + imageURL + " from album: " + info.getName());
 		if (!StringUtils.isEmpty(imageURL)) {
 			Image image = helper.readImage(imageURL);
 			lastfmAlbum.setImageIcon(helper.getImageIcon(image));
 		}
-		setYear(lastfmAlbum);
-		setGenre(lastfmAlbum);
-		return lastfmAlbum;
 	}
 
 	private void setGenre(LastfmAlbum lastfmAlbum) {
-		lastfmAlbum.setGenre(helper.getGenre(info));
+		String genre = helper.getGenre(info);
+		log.info("Genre from lastFM: " + genre);
+		lastfmAlbum.setGenre(genre);
 	}
 
 	private void setYear(LastfmAlbum lastfmAlbum) {

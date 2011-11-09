@@ -55,8 +55,7 @@ public class TestMetadataExtractor {
 
 	@Test
 	public void shouldExtractMetadata() throws Exception {
-		fileList.add(audioFile);
-		when(fileUtils.getFileList(root)).thenReturn(fileList);
+		setFileListExpectations();
 
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
@@ -85,4 +84,21 @@ public class TestMetadataExtractor {
 		verify(controlEngine, times(1)).fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 	}
 
+	@Test
+	public void shouldCleanMetadataList() throws Exception {
+		setFileListExpectations();
+
+		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+
+		assertEquals(1, metadatas.size());
+		
+		metadatas = metadataExtractor.extractMetadata(root);
+		
+		assertEquals(1, metadatas.size());
+	}
+
+	private void setFileListExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+		fileList.add(audioFile);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
+	}
 }
