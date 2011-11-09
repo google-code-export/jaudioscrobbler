@@ -20,8 +20,12 @@ public class LastfmService {
 		try {
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
-				completeHelper.completeMetadata(lastfmAlbum, metadata);
-				return ActionResult.LAST_FM_SUCCESS;
+				boolean somethingNew = completeHelper.completeMetadata(lastfmAlbum, metadata);
+				if(somethingNew){
+					return ActionResult.LAST_FM_SUCCESS;
+				} else {
+					return ActionResult.METADATA_COMPLETE;
+				}
 			} else {
 				return ActionResult.METADATA_COMPLETE;
 			}
