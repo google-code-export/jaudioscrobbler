@@ -31,7 +31,7 @@ public class CompleteController {
 	private MetadataWriter metadataWriter = new MetadataWriter();
 
 	@Autowired
-	private LastfmService coverArtService;
+	private LastfmService lastfmService;
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public ActionResult completeAlbumMetadata(Metadata metadata) {
@@ -64,7 +64,7 @@ public class CompleteController {
 	
 	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
 	public ActionResult completeCoverArtMetadata(Metadata metadata) {
-		return coverArtService.completeLastFM(metadata);
+		return lastfmService.completeLastFM(metadata);
 	}
 	
 	@RequestMethod(Actions.WRITE_METADATA)

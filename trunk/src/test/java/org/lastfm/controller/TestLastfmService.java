@@ -45,6 +45,7 @@ public class TestLastfmService {
 		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
 		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
 		when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
+		when(completeHelper.completeMetadata(lastfmAlbum, metadata)).thenReturn(true);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		
@@ -69,5 +70,14 @@ public class TestLastfmService {
 		coverArtService.completeLastFM(metadata);
 		
 		verify(metadata, never()).setGenre(isA(String.class));
+	}
+	
+	@Test
+	public void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
+		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
+		when(completeHelper.completeMetadata(lastfmAlbum, metadata)).thenReturn(false);
+		
+		ActionResult result = coverArtService.completeLastFM(metadata);
+		assertEquals(ActionResult.METADATA_COMPLETE, result);
 	}
 }

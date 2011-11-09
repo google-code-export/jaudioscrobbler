@@ -32,6 +32,8 @@ public class TestCompleteHelper {
 	@Mock
 	private Metadata metadata;
 	@Mock
+	private LastfmAlbum lastfmAlbum;
+	@Mock
 	private ImageIcon imageIcon;
 	@Mock
 	private LastFMAlbumHelper helper;
@@ -166,5 +168,18 @@ public class TestCompleteHelper {
 		when(info.getReleaseDate()).thenReturn(date);
 		when(helper.getYear(date)).thenReturn(year);
 		when(helper.getGenre(info)).thenReturn(genre);
+	}
+	
+	@Test
+	public void shouldDetectWhenNothingChanged() throws Exception {
+		boolean somethingDifferent = completeHelper.completeMetadata(lastfmAlbum, metadata);
+		assertFalse(somethingDifferent);
+	}
+	
+	@Test
+	public void shouldDetectLastfmHasNewValues() throws Exception {
+		when(lastfmAlbum.getYear()).thenReturn(year);
+		boolean somethingDifferent = completeHelper.completeMetadata(lastfmAlbum, metadata);
+		assertTrue(somethingDifferent);
 	}
 }

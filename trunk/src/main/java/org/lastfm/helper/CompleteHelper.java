@@ -62,7 +62,10 @@ public class CompleteHelper {
 		log.info("Year metadata format: " + lastfmAlbum.getYear());
 	}
 
-	public void completeMetadata(LastfmAlbum lastfmAlbum, Metadata metadata) {
+	public boolean completeMetadata(LastfmAlbum lastfmAlbum, Metadata metadata) {
+		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
+			return false;
+		}
 		metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
 		if(StringUtils.isEmpty(metadata.getYear())){
 			metadata.setYear(lastfmAlbum.getYear());
@@ -70,6 +73,7 @@ public class CompleteHelper {
 		if(StringUtils.isEmpty(metadata.getGenre())){
 			metadata.setGenre(lastfmAlbum.getGenre());
 		}
+		return true;
 	}
 
 }
