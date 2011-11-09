@@ -31,7 +31,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MetadataExtractor {
-	private List<Metadata> metadataList = new ArrayList<Metadata>();
+	private List<Metadata> metadataList;
 	private FileUtils fileUtils = new FileUtils();
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -39,6 +39,7 @@ public class MetadataExtractor {
 	private ControlEngineConfigurator configurator;
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
+		metadataList = new ArrayList<Metadata>();
 		List<File> fileList = fileUtils.getFileList(root);
 		return getMetadataList(fileList);
 	}

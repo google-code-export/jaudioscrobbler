@@ -18,6 +18,7 @@ public interface ApplicationState {
 	static final String NETWORK_ERROR = "Internet Connection Error";
 	static final String OPEN_ERROR = "Error on importing Music";
 	static final String NEW_METADATA = "New";
+	static final String COMPLETE = "Complete";
 	static final String WORKING = "Working";
 	static final String UPDATED = "Updated";
 	static final String ERROR = "Error";
@@ -41,7 +42,6 @@ public interface ApplicationState {
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
 	static final Object READY = "Ready";
-	static final String COMPLETE = "Complete";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
 	static final String PREFIX = "JAS_";

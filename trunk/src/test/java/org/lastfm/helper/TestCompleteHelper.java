@@ -10,6 +10,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Image;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
@@ -131,9 +133,7 @@ public class TestCompleteHelper {
 	@Test
 	public void shouldGetLastfm() throws Exception {
 		setYearAndGenreExpectations();
-		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
-		when(helper.readImage(imageURL)).thenReturn(image);
-		when(helper.getImageIcon(image)).thenReturn(imageIcon);
+		setImageExpectations();
 		
 		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
 		
@@ -181,5 +181,21 @@ public class TestCompleteHelper {
 		when(lastfmAlbum.getYear()).thenReturn(year);
 		boolean somethingDifferent = completeHelper.completeMetadata(lastfmAlbum, metadata);
 		assertTrue(somethingDifferent);
+	}
+	
+	@Test
+	public void shouldNotSetCoverArtIfAnyInFile() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		setImageExpectations();
+		
+		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		
+		assertNull(lastFMalbum.getImageIcon());
+	}
+
+	private void setImageExpectations() throws MalformedURLException, IOException {
+		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
+		when(helper.readImage(imageURL)).thenReturn(image);
+		when(helper.getImageIcon(image)).thenReturn(imageIcon);
 	}
 }

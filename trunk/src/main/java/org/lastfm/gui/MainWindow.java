@@ -399,6 +399,8 @@ public class MainWindow {
 					tableLoaded = false;
 					deleteALLRows(descriptionTable);
 					metadataWithAlbum.clear();
+					controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
+					controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
@@ -428,7 +430,7 @@ public class MainWindow {
 
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
-					if(tableLoaded){
+					if (tableLoaded) {
 						updateImage(descriptionTable.getSelectedRow());
 					}
 				}
@@ -579,11 +581,11 @@ public class MainWindow {
 									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
 								if (counter >= metadataList.size()) {
-									getCoverArt();
+									getLastfmData();
 								}
 							}
 
-							private void getCoverArt() {
+							private void getLastfmData() {
 								getLabel().setText(ApplicationState.GETTING_LAST_FM);
 								counter = 0;
 								for (final Metadata metadata : metadataList) {
@@ -591,14 +593,19 @@ public class MainWindow {
 									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
 
 										@Override
-										public void onResponse(ActionResult reponse) {
+										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
-											log.info("response in getting coverArt " + metadata.getTitle() + ": " + reponse);
-											if (reponse.equals(ActionResult.LAST_FM_SUCCESS)) {
+											log.info("response in getting coverArt " + metadata.getTitle() + ": " + response);
+											if (response.equals(ActionResult.LAST_FM_SUCCESS)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
+											} else if (response.equals(ActionResult.METADATA_COMPLETE)
+													&& !getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ApplicationState.NEW_METADATA)) {
+												getDescriptionTable().getModel().setValueAt(ApplicationState.COMPLETE, i, ApplicationState.STATUS_COLUMN);
+											} else {
+												getDescriptionTable().getModel().setValueAt(ApplicationState.ERROR, i, ApplicationState.STATUS_COLUMN);
 											}
 											if (counter >= metadataList.size()) {
 												afterComplete(metadataWithAlbum);
