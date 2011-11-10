@@ -42,7 +42,7 @@ public class ScrobblerHelper {
 	private ActionResult scrobbling(Metadata metadata) throws IOException, InterruptedException {
 		User currentUser = controlEngine.get(Model.CURRENT_USER);
 		if (StringUtils.isEmpty(currentUser.getUsername())) {
-			return ActionResult.LOGGED_OUT;
+			return ActionResult.NotLogged;
 		}
 
 		if (currentUser.getSession() != null) {
@@ -52,12 +52,12 @@ public class ScrobblerHelper {
 				return future.get();
 			} catch (ExecutionException eex) {
 				log.error(eex, eex);
-				return ActionResult.FAILURE;
+				return ActionResult.Error;
 			}
 			
 		} else {
 			log.error("There isn't a valid session");
-			return ActionResult.SESSIONLESS;
+			return ActionResult.Sessionless;
 		}
 	}
 
@@ -70,7 +70,7 @@ public class ScrobblerHelper {
 			metadataMap.put(metadata, startTime);
 			return scrobbling(metadata);
 		}
-		return ActionResult.NOT_SCROBBLEABLE;
+		return ActionResult.Not_Scrobbleable;
 	}
 
 	public void setControlEngine(ControlEngine controlEngine) {
@@ -91,10 +91,10 @@ public class ScrobblerHelper {
 			ScrobbleResult result = lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), session);
 			if (result.isSuccessful() && !result.isIgnored()) {
 				log.debug(metadata.getArtist() + " - " + metadata.getTitle() + " scrobbling to Last.fm was Successful");
-				return ActionResult.SUCCESS;
+				return ActionResult.Sent;
 			} else {
 				log.error("Submitting track " + metadata.getTitle() + " to Last.fm failed: " + result);
-				return ActionResult.FAILURE;
+				return ActionResult.Error;
 			}
 		}
 	}

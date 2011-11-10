@@ -57,7 +57,7 @@ public class TestCompleteController {
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
 		when(metadata.getTotalTracks()).thenReturn(totalTracks);
 		when(metadata.getYear()).thenReturn(year);
-		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.METADATA_COMPLETE);
+		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
 	}
 	
 	
@@ -72,7 +72,7 @@ public class TestCompleteController {
 		verify(metadata).setAlbum(album);
 		verify(metadata).setTrackNumber(trackNumber);
 		verify(metadata).setTotalTracks(totalTracks);
-		assertEquals(ActionResult.METADATA_SUCCESS, result);
+		assertEquals(ActionResult.New, result);
 	}
 
 
@@ -91,7 +91,7 @@ public class TestCompleteController {
 		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
-		assertEquals(ActionResult.METADATA_ERROR, result);
+		assertEquals(ActionResult.Error, result);
 	}
 	
 	@Test
@@ -103,7 +103,7 @@ public class TestCompleteController {
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 
 		verify(metadata, never()).setAlbum(album);
-		assertEquals(ActionResult.METADATA_NOT_FOUND, result);
+		assertEquals(ActionResult.Not_Found, result);
 	}
 	
 	@Test
@@ -117,7 +117,7 @@ public class TestCompleteController {
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
 		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
 		verify(metadataWriter).writeYear(year);
-		assertEquals(ActionResult.UPDATED, result);
+		assertEquals(ActionResult.Updated, result);
 	}
 	
 	@Test
@@ -127,7 +127,7 @@ public class TestCompleteController {
 		
 		ActionResult result = controller.completeAlbum(metadata);
 		
-		assertEquals(ActionResult.WRITE_METADATA_ERROR, result);
+		assertEquals(ActionResult.Error, result);
 	}
 	
 	@Test
@@ -135,7 +135,7 @@ public class TestCompleteController {
 		when(metadata.getAlbum()).thenReturn(album);
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
-		assertEquals(ActionResult.METADATA_COMPLETE, result);
+		assertEquals(ActionResult.Complete, result);
 	}
 	
 	@Test

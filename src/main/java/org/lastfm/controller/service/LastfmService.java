@@ -22,22 +22,22 @@ public class LastfmService {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
 				boolean somethingNew = completeHelper.completeMetadata(lastfmAlbum, metadata);
 				if(somethingNew){
-					return ActionResult.LAST_FM_SUCCESS;
+					return ActionResult.New;
 				} else {
-					return ActionResult.METADATA_COMPLETE;
+					return ActionResult.Complete;
 				}
 			} else {
-				return ActionResult.METADATA_COMPLETE;
+				return ActionResult.Complete;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
-			return ActionResult.LAST_FM_ERROR;
+			return ActionResult.Error;
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
-			return ActionResult.LAST_FM_ERROR;
+			return ActionResult.Error;
 		} catch (NullPointerException npe) {
 			log.error(npe, npe);
-			return ActionResult.LAST_FM_ERROR;
+			return ActionResult.Error;
 		}
 	}
 }

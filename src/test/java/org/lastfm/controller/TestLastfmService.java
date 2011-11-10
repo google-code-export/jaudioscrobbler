@@ -50,7 +50,7 @@ public class TestLastfmService {
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		
 		verify(completeHelper).completeMetadata(lastfmAlbum, metadata);
-		assertEquals(ActionResult.LAST_FM_SUCCESS, result);
+		assertEquals(ActionResult.New, result);
 	}
 	
 	@Test
@@ -58,7 +58,7 @@ public class TestLastfmService {
 		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(false);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
-		assertEquals(ActionResult.METADATA_COMPLETE, result);
+		assertEquals(ActionResult.Complete, result);
 	}
 	
 	@Test
@@ -78,6 +78,6 @@ public class TestLastfmService {
 		when(completeHelper.completeMetadata(lastfmAlbum, metadata)).thenReturn(false);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
-		assertEquals(ActionResult.METADATA_COMPLETE, result);
+		assertEquals(ActionResult.Complete, result);
 	}
 }

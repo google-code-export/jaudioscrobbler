@@ -36,22 +36,22 @@ public class TestScrobblerController {
 
 	@Test
 	public void shouldSendMetadata() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.SUCCESS);
+		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.New);
 
 		ActionResult result = controller.sendMetadata(metadata);
 
 		verify(helperScrobbler).send(metadata);
-		assertEquals(ActionResult.SUCCESS, result);
+		assertEquals(ActionResult.New, result);
 	}
 
 	@Test
 	public void shouldDetectWhenErrorInScrobbling() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.ERROR);
+		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.Error);
 
 		ActionResult result = controller.sendMetadata(metadata);
 
 		verify(helperScrobbler).send(metadata);
-		assertEquals(ActionResult.ERROR, result);
+		assertEquals(ActionResult.Error, result);
 	}
 	
 	@Test

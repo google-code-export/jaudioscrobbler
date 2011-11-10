@@ -110,8 +110,8 @@ public class TestMainWindow {
 		window.button(SEND_BUTTON_NAME).click();
 
 		ResponseCallback<ActionResult> callback = verifySendExpectations();
-		callback.onResponse(ActionResult.SUCCESS);
-		assertEquals(ApplicationState.SENT, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.Sent);
+		assertEquals(ActionResult.Sent, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
@@ -121,8 +121,8 @@ public class TestMainWindow {
 		window.button(SEND_BUTTON_NAME).click();
 
 		ResponseCallback<ActionResult> callback = verifySendExpectations();
-		callback.onResponse(ActionResult.LOGGED_OUT);
-		assertEquals(ApplicationState.LOGGED_OUT, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.NotLogged);
+		assertEquals(ActionResult.NotLogged, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
@@ -132,8 +132,8 @@ public class TestMainWindow {
 		window.button(SEND_BUTTON_NAME).click();
 
 		ResponseCallback<ActionResult> callback = verifySendExpectations();
-		callback.onResponse(ActionResult.SESSIONLESS);
-		assertEquals(ApplicationState.SESSIONLESS, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.Sessionless);
+		assertEquals(ActionResult.Sessionless, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
@@ -143,8 +143,8 @@ public class TestMainWindow {
 		window.button(SEND_BUTTON_NAME).click();
 
 		ResponseCallback<ActionResult> callback = verifySendExpectations();
-		callback.onResponse(ActionResult.ERROR);
-		assertEquals(ApplicationState.ERROR, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.Error);
+		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
@@ -156,8 +156,8 @@ public class TestMainWindow {
 
 		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.UPDATED);
-		assertEquals(ApplicationState.UPDATED, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.Updated);
+		assertEquals(ActionResult.Updated, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 		verifyButtonsAssertions();
 	}
 
@@ -170,8 +170,8 @@ public class TestMainWindow {
 
 		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.ERROR);
-		assertEquals(ApplicationState.ERROR, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		callback.onResponse(ActionResult.Error);
+		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
@@ -183,13 +183,13 @@ public class TestMainWindow {
 
 		verify(viewEngine).request(eq(Actions.COMPLETE_ALBUM), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.METADATA_SUCCESS);
+		callback.onResponse(ActionResult.New);
 
 		verifyCompleteAlbumAssertions();
 
 		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.LAST_FM_SUCCESS);
+		callback.onResponse(ActionResult.New);
 		
 		verify(controlEngine).remove(Model.METADATA_ARTIST);
 		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
@@ -208,7 +208,7 @@ public class TestMainWindow {
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 		assertEquals(TRACK_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TRACK_NUMBER_COLUMN));
 		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
-		assertEquals(ApplicationState.NEW_METADATA, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	private void setMetadataExpectations() {
@@ -230,7 +230,7 @@ public class TestMainWindow {
 			mainWindow.tableLoaded = true;
 			window.robot.pressKey(KeyEvent.VK_ENTER);
 
-			assertEquals(ApplicationState.NEW_METADATA, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+			assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 		}
 	}
 

@@ -47,18 +47,18 @@ public class CompleteController {
 					metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
 					metadata.setCdNumber(musicBrainzTrack.getCdNumber());
 					metadata.setTotalCds(musicBrainzTrack.getTotalCds());
-					return ActionResult.METADATA_SUCCESS;
+					return ActionResult.New;
 				} else {
 					log.info("There is no need to find an album for track: " + metadata.getTitle());
-					return ActionResult.METADATA_NOT_FOUND;
+					return ActionResult.Not_Found;
 				}
 			} else {
 				log.info(metadata.getArtist() + " - " + metadata.getTitle() + " has an album: \"" + metadata.getAlbum() + "\" there is no need in complete by MusicBrainz");
-				return ActionResult.METADATA_COMPLETE;
+				return ActionResult.Complete;
 			}
 		} catch (ServerUnavailableException sue) {
 			log.error(sue, sue);
-			return ActionResult.METADATA_ERROR;
+			return ActionResult.Error;
 		}
 	}
 	
@@ -85,10 +85,10 @@ public class CompleteController {
 			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
 			}
-			return ActionResult.UPDATED;
+			return ActionResult.Updated;
 		} catch (MetadataException mde) {
 			log.error(mde, mde);
-			return ActionResult.WRITE_METADATA_ERROR;
+			return ActionResult.Error;
 		}
 	}
 
