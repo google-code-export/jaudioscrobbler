@@ -172,14 +172,14 @@ public class TestCompleteHelper {
 	
 	@Test
 	public void shouldDetectWhenNothingChanged() throws Exception {
-		boolean somethingDifferent = completeHelper.completeMetadata(lastfmAlbum, metadata);
+		boolean somethingDifferent = completeHelper.isSomethingNew(lastfmAlbum, metadata);
 		assertFalse(somethingDifferent);
 	}
 	
 	@Test
 	public void shouldDetectLastfmHasNewValues() throws Exception {
 		when(lastfmAlbum.getYear()).thenReturn(year);
-		boolean somethingDifferent = completeHelper.completeMetadata(lastfmAlbum, metadata);
+		boolean somethingDifferent = completeHelper.isSomethingNew(lastfmAlbum, metadata);
 		assertTrue(somethingDifferent);
 	}
 	
