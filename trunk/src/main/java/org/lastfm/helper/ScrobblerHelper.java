@@ -54,7 +54,6 @@ public class ScrobblerHelper {
 				log.error(eex, eex);
 				return ActionResult.Error;
 			}
-			
 		} else {
 			log.error("There isn't a valid session");
 			return ActionResult.Sessionless;

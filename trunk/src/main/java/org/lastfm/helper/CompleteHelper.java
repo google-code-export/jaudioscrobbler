@@ -71,7 +71,7 @@ public class CompleteHelper {
 		log.info("Year metadata format: " + lastfmAlbum.getYear());
 	}
 
-	public boolean completeMetadata(LastfmAlbum lastfmAlbum, Metadata metadata) {
+	public boolean isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
 		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
 			return false;
 		}
