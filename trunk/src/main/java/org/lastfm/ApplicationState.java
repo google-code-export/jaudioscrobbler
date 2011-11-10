@@ -17,11 +17,7 @@ public interface ApplicationState {
 	static final String DONE = "Done";
 	static final String NETWORK_ERROR = "Internet Connection Error";
 	static final String OPEN_ERROR = "Error on importing Music";
-	static final String NEW_METADATA = "New";
-	static final String COMPLETE = "Complete";
 	static final String WORKING = "Working";
-	static final String UPDATED = "Updated";
-	static final String ERROR = "Error";
 	static final int ARTIST_COLUMN = 0;
 	static final int TITLE_COLUMN = 1;
 	static final int ALBUM_COLUMN = 2;
@@ -32,9 +28,6 @@ public interface ApplicationState {
 	static final int CD_NUMBER_COLUMN = 7;
 	static final int TOTAL_CDS_NUMBER_COLUMN = 8;
 	static final int STATUS_COLUMN = 9;
-	static final String SENT = "Sent";
-	static final String SESSIONLESS = "SessionLess";
-	static final String LOGGED_OUT = "NotLogged";
 	static final int WIDTH = 1024;
 	static final int HEIGHT = 600;
 	static final String COVER_ART_FROM_FILE = "Cover Art from File";

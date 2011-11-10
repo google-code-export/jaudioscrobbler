@@ -328,7 +328,7 @@ public class MainWindow {
 
 	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
-			completeMetadataButton = new JButton(ApplicationState.COMPLETE);
+			completeMetadataButton = new JButton(ActionResult.Complete.toString());
 			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
 			completeMetadataButton.setEnabled(false);
 
@@ -452,7 +452,7 @@ public class MainWindow {
 						metadataAdapter.update(metadata, column, value);
 						metadataWithAlbum.add(metadata);
 
-						getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, row, ApplicationState.STATUS_COLUMN);
+						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
 
 						controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
@@ -522,11 +522,7 @@ public class MainWindow {
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								counter++;
-								String message = ApplicationState.UPDATED;
-								if (result != ActionResult.UPDATED) {
-									message = ApplicationState.ERROR;
-								}
-								getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								if (counter >= metadataWithAlbumList.size()) {
 									resetButtonsState();
 									finishingWorker();
@@ -568,18 +564,18 @@ public class MainWindow {
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
-							public void onResponse(ActionResult reponse) {
+							public void onResponse(ActionResult response) {
 								updateStatus(counter++, metadataList.size());
-								log.info("response in getting album " + metadata.getTitle() + ": " + reponse);
-								if (reponse.equals(ActionResult.METADATA_SUCCESS)) {
+								log.info("response in getting album " + metadata.getTitle() + ": " + response);
+								if (response.equals(ActionResult.New)) {
 									metadataWithAlbum.add(metadata);
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
-									getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
 								}
+								getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 								if (counter >= metadataList.size()) {
 									getLastfmData();
 								}
@@ -596,17 +592,14 @@ public class MainWindow {
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
 											log.info("response in getting coverArt " + metadata.getTitle() + ": " + response);
-											if (response.equals(ActionResult.LAST_FM_SUCCESS)) {
+											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
-												getDescriptionTable().getModel().setValueAt(ApplicationState.NEW_METADATA, i, ApplicationState.STATUS_COLUMN);
-											} else if (response.equals(ActionResult.METADATA_COMPLETE)
-													&& !getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ApplicationState.NEW_METADATA)) {
-												getDescriptionTable().getModel().setValueAt(ApplicationState.COMPLETE, i, ApplicationState.STATUS_COLUMN);
-											} else {
-												getDescriptionTable().getModel().setValueAt(ApplicationState.ERROR, i, ApplicationState.STATUS_COLUMN);
-											}
+												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
+												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+											} 
 											if (counter >= metadataList.size()) {
 												afterComplete(metadataWithAlbum);
 											}
@@ -668,22 +661,7 @@ public class MainWindow {
 							public void onResponse(ActionResult response) {
 								log.info("response on sending " + metadata.getTitle() + ": " + response);
 								updateStatus(counter++, metadataList.size());
-								String message;
-								switch (response) {
-								case SUCCESS:
-									message = ApplicationState.SENT;
-									break;
-								case LOGGED_OUT:
-									message = ApplicationState.LOGGED_OUT;
-									break;
-								case SESSIONLESS:
-									message = ApplicationState.SESSIONLESS;
-									break;
-								default:
-									message = ApplicationState.ERROR;
-									MainWindow.this.getLabel().setText(ApplicationState.NETWORK_ERROR);
-								}
-								getDescriptionTable().getModel().setValueAt(message, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationState.STATUS_COLUMN);
 							}
 
 						});

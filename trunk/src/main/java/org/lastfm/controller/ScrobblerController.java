@@ -44,7 +44,7 @@ public class ScrobblerController {
 		} catch (InterruptedException ine) {
 			log.error(ine, ine);
 		}
-		return ActionResult.FAILURE;
+		return ActionResult.Error;
 	}
 
 }
