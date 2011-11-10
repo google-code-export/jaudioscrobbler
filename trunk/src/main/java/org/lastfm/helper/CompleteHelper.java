@@ -41,8 +41,8 @@ public class CompleteHelper {
 	public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
 		LastfmAlbum lastfmAlbum = new LastfmAlbum();
 		setCoverArt(metadata, lastfmAlbum);
-		setYear(lastfmAlbum);
-		setGenre(lastfmAlbum);
+		setYear(metadata, lastfmAlbum);
+		setGenre(metadata, lastfmAlbum);
 		return lastfmAlbum;
 	}
 
@@ -58,13 +58,19 @@ public class CompleteHelper {
 		}
 	}
 
-	private void setGenre(LastfmAlbum lastfmAlbum) {
+	private void setGenre(Metadata metadata, LastfmAlbum lastfmAlbum) {
+		if(!StringUtils.isEmpty(metadata.getGenre())){
+			return;
+		}
 		String genre = helper.getGenre(info);
 		log.info("Genre from lastFM: " + genre);
 		lastfmAlbum.setGenre(genre);
 	}
 
-	private void setYear(LastfmAlbum lastfmAlbum) {
+	private void setYear(Metadata metadata, LastfmAlbum lastfmAlbum) {
+		if(!StringUtils.isEmpty(metadata.getYear())){
+			return;
+		}
 		Date release = info.getReleaseDate();
 		log.info("Year date format: " + release);
 		lastfmAlbum.setYear(helper.getYear(release));
