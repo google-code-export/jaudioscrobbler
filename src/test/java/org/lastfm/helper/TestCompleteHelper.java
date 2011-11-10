@@ -16,6 +16,7 @@ import java.util.Date;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
@@ -197,5 +198,25 @@ public class TestCompleteHelper {
 		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
 		when(helper.readImage(imageURL)).thenReturn(image);
 		when(helper.getImageIcon(image)).thenReturn(imageIcon);
+	}
+	
+	@Test
+	public void shouldNotAskForGenreIfAlreadyHasOne() throws Exception {
+		when(metadata.getGenre()).thenReturn(genre);
+		
+		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		
+		verify(helper, never()).getGenre(info);
+		assertTrue(StringUtils.isEmpty(lastFMalbum.getGenre()));
+	}
+	
+	@Test
+	public void shouldNotAskForYearIfAlreadyHasOne() throws Exception {
+		when(metadata.getYear()).thenReturn(year);
+		
+		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		
+		verify(info, never()).getReleaseDate();
+		assertTrue(StringUtils.isEmpty(lastFMalbum.getYear()));
 	}
 }
