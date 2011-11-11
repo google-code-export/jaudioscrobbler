@@ -1,0 +1,17 @@
+In this section we will gather ALL future features as they will come in my mind
+
+=== Introduction ===
+
+Features in development and those which are still in ready for analysis.
+
+
+=== Details ===
+
+_Features in Development:_
+  * Expand Description table, so user can see columns widely
+
+_Features in Ready Analysis:_
+  * When a track doesn't have artist & title, then it wont show in description table, then we need a pop up dialog w/that information.
+  * Look & Feel
+  * Logo
+  * Video tutorials how to use JAudioScrobbler
