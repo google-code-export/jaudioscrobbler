@@ -8,6 +8,7 @@ import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.action.ActionResult;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 
@@ -77,9 +78,9 @@ public class CompleteHelper {
 		log.info("Year metadata format: " + lastfmAlbum.getYear());
 	}
 
-	public boolean isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
+	public ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
 		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
-			return false;
+			return ActionResult.Complete;
 		}
 		metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
 		if(StringUtils.isEmpty(metadata.getYear())){
@@ -88,7 +89,7 @@ public class CompleteHelper {
 		if(StringUtils.isEmpty(metadata.getGenre())){
 			metadata.setGenre(lastfmAlbum.getGenre());
 		}
-		return true;
+		return ActionResult.New;
 	}
 
 }
