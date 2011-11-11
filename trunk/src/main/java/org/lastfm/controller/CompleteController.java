@@ -64,6 +64,7 @@ public class CompleteController {
 	
 	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
 	public ActionResult completeCoverArtMetadata(Metadata metadata) {
+		log.info("trying to complete LastFM metadata for: " + metadata.getArtist() + " - " + metadata.getTitle());
 		return lastfmService.completeLastFM(metadata);
 	}
 	

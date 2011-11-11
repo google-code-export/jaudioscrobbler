@@ -16,7 +16,7 @@ public class LastfmService {
 	private CompleteHelper completeHelper = new CompleteHelper();
 	private Log log = LogFactory.getLog(this.getClass());
 
-	public ActionResult completeLastFM(Metadata metadata) {
+	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
