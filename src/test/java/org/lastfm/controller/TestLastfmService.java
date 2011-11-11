@@ -45,7 +45,7 @@ public class TestLastfmService {
 		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
 		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
 		when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
-		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(true);
+		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		
@@ -75,7 +75,8 @@ public class TestLastfmService {
 	@Test
 	public void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
 		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
-		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(false);
+		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
+		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Complete);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		assertEquals(ActionResult.Complete, result);

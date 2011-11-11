@@ -19,6 +19,7 @@ import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.action.ActionResult;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
@@ -173,15 +174,15 @@ public class TestCompleteHelper {
 	
 	@Test
 	public void shouldDetectWhenNothingChanged() throws Exception {
-		boolean somethingDifferent = completeHelper.isSomethingNew(lastfmAlbum, metadata);
-		assertFalse(somethingDifferent);
+		ActionResult actionResult = completeHelper.isSomethingNew(lastfmAlbum, metadata);
+		assertEquals(ActionResult.Complete, actionResult);
 	}
 	
 	@Test
 	public void shouldDetectLastfmHasNewValues() throws Exception {
 		when(lastfmAlbum.getYear()).thenReturn(year);
-		boolean somethingDifferent = completeHelper.isSomethingNew(lastfmAlbum, metadata);
-		assertTrue(somethingDifferent);
+		ActionResult actionResult = completeHelper.isSomethingNew(lastfmAlbum, metadata);
+		assertEquals(ActionResult.New, actionResult);
 	}
 	
 	@Test
