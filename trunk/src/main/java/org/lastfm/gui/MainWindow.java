@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -246,9 +247,9 @@ public class MainWindow {
 		if (panel == null) {
 			panel = new JPanel();
 			panel.setLayout(new BorderLayout());
-			panel.add(getTopPanel(), BorderLayout.NORTH);
+			panel.add(getTopPanel(), BorderLayout.PAGE_START);
 			panel.add(getMiddlePanel(), BorderLayout.CENTER);
-			panel.add(getBottomPanel(), BorderLayout.SOUTH);
+			panel.add(getBottomPanel(), BorderLayout.PAGE_END);
 		}
 		return panel;
 	}
@@ -267,7 +268,12 @@ public class MainWindow {
 			middlePanel.add(getImagePanel(), c);
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = 1;
-			c.gridy = 1;
+			c.gridy = 0;
+			c.ipadx = 240;
+			c.ipady = 40;
+			c.weightx = 1.0;
+			c.weighty = 1.0;
+			c.gridheight = 2;
 			middlePanel.add(getScrollPane(), c);
 		}
 		return middlePanel;
