@@ -140,6 +140,9 @@ public class MainWindow {
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED)
 	private void onMusicDirectorySelected(String path) {
+		tableLoaded = false;
+		deleteALLRows(descriptionTable);
+		metadataWithAlbum.clear();
 		getDirectoryField().setText(path);
 	}
 
@@ -402,11 +405,6 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					tableLoaded = false;
-					deleteALLRows(descriptionTable);
-					metadataWithAlbum.clear();
-					controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
-					controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
