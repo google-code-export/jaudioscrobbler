@@ -108,6 +108,7 @@ public abstract class MetadataReader {
 	}
 
 	private ImageIcon getCoverArt() throws IOException, MetadataException {
+		if(tag == null) return null;
 		Artwork artwork = tag.getFirstArtwork();
 		log.info(getTitle() + " has cover art?: " + (artwork != null));
 		return artwork==null ? null: new ImageIcon(artwork.getImage());
