@@ -2,6 +2,7 @@ package org.lastfm.model;
 
 import static org.lastfm.model.ModelType.readOnly;
 
+import java.io.File;
 import java.util.List;
 import java.util.Set;
 
@@ -17,5 +18,7 @@ public interface Model {
 	
 	String METADATA_ARTIST_LIST = "application.metadataArtistList";
 	ModelType<Set<Metadata>> METADATA_ARTIST = readOnly(METADATA_ARTIST_LIST);
-
+	
+	String FILES_WITHOUT_MINIMUM_METADATA_LIST = "application.filesWithoutMinimumMetadata";
+	ModelType<Set<File>> FILES_WITHOUT_MINIMUM_METADATA = readOnly(FILES_WITHOUT_MINIMUM_METADATA_LIST);
 }

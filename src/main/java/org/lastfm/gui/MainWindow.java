@@ -12,6 +12,7 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -149,6 +150,8 @@ public class MainWindow {
 	@EventMethod(Events.TRACKS_LOADED)
 	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
+		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
+		log.info(filesWithoutMinimumMetadata.size() + " files were not loaded due to not enough metadata");
 		tableLoaded = true;
 	}
 

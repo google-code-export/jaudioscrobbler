@@ -1,6 +1,8 @@
 package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -42,14 +44,15 @@ public class TestMetadataExtractor {
 
 	private List<File> fileList;
 	private static final int FIRST_ELEMENT = 0;
-	private File audioFile = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+	private File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+	private File signalRunners = new File("src/test/resources/audio/Signalrunners And Julie Thompson - These Shoulders (Andy Moor Remix).mp3");
 	private File checkStyleFile = new File("src/test/resources/checkstyle/checkstyle.xml");
 
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
-		when(fileUtils.isMp3File(audioFile)).thenReturn(true);
+		when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
 		fileList = new ArrayList<File>();
 	}
 
@@ -65,7 +68,7 @@ public class TestMetadataExtractor {
 
 	@Test
 	public void shouldDetectANotValidAudioFile() throws Exception {
-		fileList.add(audioFile);
+		fileList.add(pepeGarden);
 		fileList.add(checkStyleFile);
 		when(fileUtils.isMp3File(checkStyleFile)).thenReturn(false);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
@@ -98,7 +101,19 @@ public class TestMetadataExtractor {
 	}
 
 	private void setFileListExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
-		fileList.add(audioFile);
+		fileList.add(pepeGarden);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
+	}
+	
+	@Test
+	public void shouldDetectAFileWithoutMinimumMetadata() throws Exception {
+		when(fileUtils.isMp3File(signalRunners)).thenReturn(true);
+		fileList.add(signalRunners);
+		when(fileUtils.getFileList(root)).thenReturn(fileList);
+		
+		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+
+		assertTrue(metadatas.isEmpty());
+		verify(fileUtils, never()).isM4aFile(signalRunners);
 	}
 }
