@@ -3,7 +3,9 @@ package org.lastfm.controller.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -20,6 +22,7 @@ import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
+import org.lastfm.model.Model;
 import org.lastfm.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +35,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MetadataExtractor {
 	private List<Metadata> metadataList;
+	private Set<File> filesWithoutMinimumMetadata;
 	private FileUtils fileUtils = new FileUtils();
 	private Log log = LogFactory.getLog(this.getClass());
 	
@@ -40,7 +44,9 @@ public class MetadataExtractor {
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
 		metadataList = new ArrayList<Metadata>();
+		filesWithoutMinimumMetadata = new HashSet<File>();
 		List<File> fileList = fileUtils.getFileList(root);
+		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
 		return getMetadataList(fileList);
 	}
 
@@ -60,6 +66,9 @@ public class MetadataExtractor {
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
+			} else {
+				log.info("I can not load the file: " + file.getName() + " because it doesn't contain miminum metadata");
+				filesWithoutMinimumMetadata.add(file);
 			}
 		}
 		return metadataList;
