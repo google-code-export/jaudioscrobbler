@@ -272,7 +272,7 @@ public class MainWindow {
 			c.gridx = 0;
 			c.gridy = 1;
 			middlePanel.add(getImagePanel(), c);
-			c.fill = GridBagConstraints.HORIZONTAL;
+			c.fill = GridBagConstraints.BOTH;
 			c.gridx = 1;
 			c.gridy = 0;
 			c.ipadx = 240;
