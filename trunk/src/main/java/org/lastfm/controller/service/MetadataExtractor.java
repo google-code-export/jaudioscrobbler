@@ -46,6 +46,7 @@ public class MetadataExtractor {
 		metadataList = new ArrayList<Metadata>();
 		filesWithoutMinimumMetadata = new HashSet<File>();
 		List<File> fileList = fileUtils.getFileList(root);
+		configurator.getControlEngine().remove(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
 		return getMetadataList(fileList);
 	}
@@ -67,7 +68,6 @@ public class MetadataExtractor {
 				metadataList.add(metadata);
 				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 			} else {
-				log.info("I can not load the file: " + file.getName() + " because it doesn't contain miminum metadata");
 				filesWithoutMinimumMetadata.add(file);
 			}
 		}

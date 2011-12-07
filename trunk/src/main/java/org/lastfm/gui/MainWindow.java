@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -26,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -151,7 +153,19 @@ public class MainWindow {
 	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
-		log.info(filesWithoutMinimumMetadata.size() + " files were not loaded due to not enough metadata");
+		if(!filesWithoutMinimumMetadata.isEmpty()){
+			File file = new File("Music File");
+			Iterator<File> iterator = filesWithoutMinimumMetadata.iterator();
+			while(iterator.hasNext()){
+				file = iterator.next();
+			}
+			if(filesWithoutMinimumMetadata.size()==1){
+				JOptionPane.showMessageDialog(frame, file.getName() + " was not loaded due to not enough metadata");
+			} else {
+				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
+				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " were not loaded due to not enough metadata");
+			}
+		}
 		tableLoaded = true;
 	}
 

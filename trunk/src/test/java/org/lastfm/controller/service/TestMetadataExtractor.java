@@ -24,6 +24,7 @@ import org.lastfm.event.Events;
 import org.lastfm.event.ValueEvent;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Model;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -84,6 +85,7 @@ public class TestMetadataExtractor {
 		assertEquals(1, metadatas.size());
 		verify(fileUtils).getFileList(root);
 		assertEquals("Jaytech", metadata.getArtist());
+		verify(controlEngine).remove(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		verify(controlEngine, times(1)).fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 	}
 
