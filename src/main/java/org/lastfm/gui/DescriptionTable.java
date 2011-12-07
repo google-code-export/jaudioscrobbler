@@ -32,7 +32,6 @@ public class DescriptionTable extends JTable{
 		DefaultTableModel model = new DefaultTableModel(data,columnNames);
 		this.setModel(model);
 		this.setEnabled(false);
-		this.setAutoCreateRowSorter(true);
 		setPreferredWidth();
 	}
 
