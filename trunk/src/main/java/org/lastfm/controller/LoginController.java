@@ -207,11 +207,11 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asmatron.messengine.annotations.ActionMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.lastfm.action.Actions;
-import org.lastfm.action.control.ActionMethod;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.helper.LastFMAuthenticator;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;

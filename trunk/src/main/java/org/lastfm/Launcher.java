@@ -204,7 +204,7 @@
 
 package org.lastfm;
 
-import org.lastfm.action.control.DefaultEngine;
+import org.asmatron.messengine.engines.DefaultEngine;
 import org.lastfm.controller.ScrobblerController;
 import org.lastfm.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;

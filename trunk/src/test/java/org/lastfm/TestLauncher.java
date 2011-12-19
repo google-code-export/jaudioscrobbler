@@ -206,9 +206,9 @@ package org.lastfm;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.asmatron.messengine.engines.DefaultEngine;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.control.DefaultEngine;
 import org.lastfm.controller.ScrobblerController;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

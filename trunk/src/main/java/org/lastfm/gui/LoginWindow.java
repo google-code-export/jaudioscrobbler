@@ -220,10 +220,10 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import org.asmatron.messengine.annotations.EventMethod;
+import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.Actions;
-import org.lastfm.action.control.ViewEngineConfigurator;
-import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

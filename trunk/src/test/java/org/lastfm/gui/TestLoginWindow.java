@@ -210,13 +210,13 @@ import static org.mockito.Mockito.when;
 
 import java.awt.event.KeyEvent;
 
+import org.asmatron.messengine.ViewEngine;
+import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.Actions;
-import org.lastfm.action.ViewEngine;
-import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.model.User;
 import org.lastfm.util.Environment;
 import org.mockito.InjectMocks;

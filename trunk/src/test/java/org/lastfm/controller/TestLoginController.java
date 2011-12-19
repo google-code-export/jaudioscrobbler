@@ -209,12 +209,12 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.control.ControlEngine;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.helper.LastFMAuthenticator;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
