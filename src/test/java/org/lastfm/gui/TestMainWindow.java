@@ -216,6 +216,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.ViewEngine;
+import org.asmatron.messengine.action.ResponseCallback;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.fest.swing.fixture.FrameFixture;
 import org.junit.After;
 import org.junit.Before;
@@ -223,11 +228,6 @@ import org.junit.Test;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
-import org.lastfm.action.ResponseCallback;
-import org.lastfm.action.ViewEngine;
-import org.lastfm.action.control.ControlEngine;
-import org.lastfm.action.control.ControlEngineConfigurator;
-import org.lastfm.action.control.ViewEngineConfigurator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.util.Environment;
@@ -394,7 +394,6 @@ public class TestMainWindow {
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 		
-		verify(controlEngine).remove(Model.METADATA_ARTIST);
 		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 		assertTrue(mainWindow.getApplyButton().isEnabled());
 		verifyButtonsAssertions();

@@ -211,16 +211,16 @@ import javax.swing.JFileChooser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asmatron.messengine.annotations.ActionMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.action.Actions;
-import org.lastfm.action.control.ActionMethod;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.controller.service.MetadataExtractor;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -252,7 +252,6 @@ public class MetadataController {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
 				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
-				configurator.getControlEngine().remove(Model.METADATA);
 				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
 				configurator.getControlEngine().fireEvent(Events.LOADED);
 			} catch (IOException e) {

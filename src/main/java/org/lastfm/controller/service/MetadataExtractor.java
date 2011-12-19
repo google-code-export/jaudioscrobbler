@@ -213,13 +213,13 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -249,7 +249,6 @@ public class MetadataExtractor {
 		metadataList = new ArrayList<Metadata>();
 		filesWithoutMinimumMetadata = new HashSet<File>();
 		List<File> fileList = fileUtils.getFileList(root);
-		configurator.getControlEngine().remove(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
 		return getMetadataList(fileList);
 	}

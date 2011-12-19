@@ -204,11 +204,9 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -216,7 +214,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -245,17 +242,16 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asmatron.messengine.action.ResponseCallback;
+import org.asmatron.messengine.annotations.EventMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
-import org.lastfm.action.ResponseCallback;
-import org.lastfm.action.control.ControlEngineConfigurator;
-import org.lastfm.action.control.ViewEngineConfigurator;
-import org.lastfm.event.EventMethod;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
@@ -678,7 +674,6 @@ public class MainWindow {
 
 						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
 
-						controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 						getApplyButton().setEnabled(true);
 					}
@@ -847,7 +842,6 @@ public class MainWindow {
 
 	private void afterComplete(Set<Metadata> metadataWithOutArtist) {
 		if (!metadataWithOutArtist.isEmpty()) {
-			controlEngineConfigurator.getControlEngine().remove(Model.METADATA_ARTIST);
 			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
 			getApplyButton().setEnabled(true);
 		}

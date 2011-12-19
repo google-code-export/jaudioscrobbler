@@ -9,16 +9,15 @@
            
     <context:component-scan base-package="org.lastfm" />       
 	
-	<bean class="org.lastfm.action.control.DefaultEngine" id="applicationEngine" />
-	<bean class="org.lastfm.action.control.ViewEngineConfigurator" id="viewEngineConfigurator">
+	<bean class="org.asmatron.messengine.engines.DefaultEngine" id="applicationEngine" />
+	<bean class="org.asmatron.messengine.engines.support.ViewEngineConfigurator" id="viewEngineConfigurator">
 		<constructor-arg ref="applicationEngine" />
 	</bean>
-	<bean class="org.lastfm.action.control.ControlEngineConfigurator" id="controlEngineConfigurator">
+	<bean class="org.asmatron.messengine.engines.support.ControlEngineConfigurator" id="controlEngineConfigurator">
 		<constructor-arg ref="applicationEngine" />
 	</bean>
-	<bean class="org.lastfm.action.control.SpringAppControlAutoConfigurerBeanPostProcessor">
-		<constructor-arg ref="viewEngineConfigurator" />
-		<constructor-arg ref="controlEngineConfigurator" />
+	<bean class="org.asmatron.messengine.engines.support.spring.SpringAppControlAutoConfigurerBeanPostProcessor">
+		<constructor-arg ref="applicationEngine" />
 	</bean>
 	
 	<bean id="scrobblerHelper" class="org.lastfm.helper.ScrobblerHelper"/>

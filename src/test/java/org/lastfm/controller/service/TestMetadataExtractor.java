@@ -215,16 +215,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.control.ControlEngine;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
@@ -288,7 +288,6 @@ public class TestMetadataExtractor {
 		assertEquals(1, metadatas.size());
 		verify(fileUtils).getFileList(root);
 		assertEquals("Jaytech", metadata.getArtist());
-		verify(controlEngine).remove(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		verify(controlEngine, times(1)).fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 	}
 

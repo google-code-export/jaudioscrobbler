@@ -215,13 +215,13 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.control.ControlEngine;
-import org.lastfm.action.control.ControlEngineConfigurator;
 import org.lastfm.controller.service.MetadataExtractor;
 import org.lastfm.event.Events;
-import org.lastfm.event.ValueEvent;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.mockito.InjectMocks;
@@ -264,7 +264,6 @@ public class TestMetadataController {
 		fileChooserSetupExpectations();
 		verify(fileChooser).getSelectedFile();
 		verify(controlEngine).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
-		verify(controlEngine).remove(Model.METADATA);
 		verify(controlEngine).set(Model.METADATA, metadataList, null);
 		verify(metadataExtractor).extractMetadata(root);
 		verify(controlEngine).fireEvent(Events.LOADED);
