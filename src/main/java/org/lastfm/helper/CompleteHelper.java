@@ -207,6 +207,9 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.HashMap;
+
+import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -220,15 +223,22 @@ import de.umass.lastfm.ImageSize;
 
 public class CompleteHelper {
 	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
+	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
 	private Log log = LogFactory.getLog(this.getClass());
-	private Album info;
 
 	public boolean canLastFMHelpToComplete(Metadata metadata) {
 		String artist = metadata.getArtist();
 		String album = metadata.getAlbum();
 
 		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
-			info = helper.getAlbum(artist, album);
+			Album info = cachedAlbums.get(metadata.getAlbum());
+			if(info==null){
+				info = helper.getAlbum(artist, album);
+				String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
+				if(!StringUtils.isEmpty(imageUrl)){
+					cachedAlbums.put(metadata.getAlbum(), info);
+				}
+			}
 			return info == null ? false : true;
 		}
 		return false;
@@ -254,11 +264,16 @@ public class CompleteHelper {
 		if(metadata.getCoverArt() != null){
 			return;
 		}
-		String imageURL = info.getImageURL(ImageSize.EXTRALARGE);
-		log.info("imageURL: " + imageURL + " from album: " + info.getName());
+		String imageURL = StringUtils.EMPTY;
+		Album info = cachedAlbums.get(metadata.getAlbum());
+		if(info!=null){
+			imageURL = info.getImageURL(ImageSize.EXTRALARGE);
+			log.info("imageURL: " + imageURL + " from album: " + info.getName());
+		}
 		if (!StringUtils.isEmpty(imageURL)) {
 			Image image = helper.readImage(imageURL);
-			lastfmAlbum.setImageIcon(helper.getImageIcon(image));
+			ImageIcon imageIcon = helper.getImageIcon(image);
+			lastfmAlbum.setImageIcon(imageIcon);
 		}
 	}
 
@@ -266,7 +281,7 @@ public class CompleteHelper {
 		if(!StringUtils.isEmpty(metadata.getGenre())){
 			return;
 		}
-		String genre = helper.getGenre(info);
+		String genre = helper.getGenre(cachedAlbums.get(metadata.getAlbum()));
 		log.info("Genre from lastFM: " + genre);
 		lastfmAlbum.setGenre(genre);
 	}
@@ -275,7 +290,7 @@ public class CompleteHelper {
 		if(!StringUtils.isEmpty(metadata.getYear())){
 			return;
 		}
-		Date release = info.getReleaseDate();
+		Date release = cachedAlbums.get(metadata.getAlbum()).getReleaseDate();
 		log.info("Year date format: " + release);
 		lastfmAlbum.setYear(helper.getYear(release));
 		log.info("Year metadata format: " + lastfmAlbum.getYear());
