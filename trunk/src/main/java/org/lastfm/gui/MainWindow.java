@@ -352,6 +352,8 @@ public class MainWindow {
 	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
+		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+		log.debug("metadatas: " + metadatas.size());
 		if(!filesWithoutMinimumMetadata.isEmpty()){
 			File file = new File("Music File");
 			Iterator<File> iterator = filesWithoutMinimumMetadata.iterator();

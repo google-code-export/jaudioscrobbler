@@ -216,6 +216,7 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.ImageIcon;
 
@@ -248,6 +249,8 @@ public class TestCompleteHelper {
 	private Album info;
 	@Mock
 	private Image image;
+	@Mock
+	private HashMap<String, Album> cachedAlbums;
 
 	private String year = "2011";
 	private String genre = "Minimal Techno";
@@ -370,6 +373,8 @@ public class TestCompleteHelper {
 
 	private void setYearAndGenreExpectations() {
 		Date date = new Date();
+		when(metadata.getAlbum()).thenReturn(album);
+		when(cachedAlbums.get(album)).thenReturn(info);
 		when(info.getReleaseDate()).thenReturn(date);
 		when(helper.getYear(date)).thenReturn(year);
 		when(helper.getGenre(info)).thenReturn(genre);
@@ -391,6 +396,8 @@ public class TestCompleteHelper {
 	@Test
 	public void shouldNotSetCoverArtIfAnyInFile() throws Exception {
 		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		when(metadata.getAlbum()).thenReturn(album);
+		when(cachedAlbums.get(album)).thenReturn(info);
 		setImageExpectations();
 		
 		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
@@ -406,6 +413,8 @@ public class TestCompleteHelper {
 	
 	@Test
 	public void shouldNotAskForGenreIfAlreadyHasOne() throws Exception {
+		when(metadata.getAlbum()).thenReturn(album);
+		when(cachedAlbums.get(album)).thenReturn(info);
 		when(metadata.getGenre()).thenReturn(genre);
 		
 		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
