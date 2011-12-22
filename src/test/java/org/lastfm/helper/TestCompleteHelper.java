@@ -432,4 +432,14 @@ public class TestCompleteHelper {
 		verify(info, never()).getReleaseDate();
 		assertTrue(StringUtils.isEmpty(lastFMalbum.getYear()));
 	}
+	
+	@Test
+	public void shouldReturnACachedAlbum() throws Exception {
+		setArtistAndAlbumExpectations();
+		when(cachedAlbums.get(album)).thenReturn(info);
+		
+		boolean result = completeHelper.canLastFMHelpToComplete(metadata);
+		
+		assertTrue(result);
+	}
 }
