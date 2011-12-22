@@ -210,6 +210,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.helper.CompleteHelper;
+import org.lastfm.helper.Formatter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.springframework.stereotype.Service;
@@ -217,15 +218,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class LastfmService {
 	private CompleteHelper completeHelper = new CompleteHelper();
+	private Formatter formatter = new Formatter();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {
+			boolean formatted = formatter.isABadFormat(metadata);
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
-				return completeHelper.isSomethingNew(lastfmAlbum, metadata);
+				return formatted == true ? ActionResult.New : completeHelper.isSomethingNew(lastfmAlbum, metadata);
 			} else {
-				return ActionResult.Complete;
+				return formatted == true ? ActionResult.New : ActionResult.Complete;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
