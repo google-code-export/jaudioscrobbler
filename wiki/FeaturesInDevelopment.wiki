@@ -11,6 +11,7 @@ _Features in Development:_
   * Multi-selection in rows at description Table
   * Drag & Drop functionality adding cover art
   * Refactor in Description Table
+  * Avoid &amp; character
 
 _Features in Ready Analysis:_
   * Look & Feel
