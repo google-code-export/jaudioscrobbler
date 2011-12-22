@@ -234,9 +234,11 @@ public class CompleteHelper {
 			Album info = cachedAlbums.get(metadata.getAlbum());
 			if(info==null){
 				info = helper.getAlbum(artist, album);
-				String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
-				if(!StringUtils.isEmpty(imageUrl)){
-					cachedAlbums.put(metadata.getAlbum(), info);
+				if(info!=null){
+					String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
+					if(!StringUtils.isEmpty(imageUrl)){
+						cachedAlbums.put(metadata.getAlbum(), info);
+					}
 				}
 			}
 			return info == null ? false : true;

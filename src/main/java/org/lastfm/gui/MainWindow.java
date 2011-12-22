@@ -790,6 +790,7 @@ public class MainWindow {
 								log.info("response in getting album " + metadata.getTitle() + ": " + response);
 								if (response.equals(ActionResult.New)) {
 									metadataWithAlbum.add(metadata);
+									getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
