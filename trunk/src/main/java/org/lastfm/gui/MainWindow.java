@@ -782,7 +782,7 @@ public class MainWindow {
 					counter = 0;
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
-						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_ALBUM, metadata, new ResponseCallback<ActionResult>() {
+						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
 							public void onResponse(ActionResult response) {
@@ -790,7 +790,6 @@ public class MainWindow {
 								log.info("response in getting album " + metadata.getTitle() + ": " + response);
 								if (response.equals(ActionResult.New)) {
 									metadataWithAlbum.add(metadata);
-									getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTrackNumber(), i, ApplicationState.TRACK_NUMBER_COLUMN);
 									getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
@@ -816,6 +815,8 @@ public class MainWindow {
 											log.info("response in getting lastFM metadata for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);

@@ -384,7 +384,7 @@ public class TestMainWindow {
 
 		window.button(COMPLETE_BUTTON_NAME).click();
 
-		verify(viewEngine).request(eq(Actions.COMPLETE_ALBUM), eq(metadata), responseCaptor.capture());
+		verify(viewEngine).request(eq(Actions.COMPLETE_MUSICBRAINZ), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 
