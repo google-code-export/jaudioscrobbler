@@ -311,6 +311,7 @@ public class MainWindow {
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
+	boolean working;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -353,7 +354,6 @@ public class MainWindow {
 		getCompleteMetadataButton().setEnabled(true);
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-		log.debug("metadatas: " + metadatas.size());
 		if(!filesWithoutMinimumMetadata.isEmpty()){
 			File file = new File("Music File");
 			Iterator<File> iterator = filesWithoutMinimumMetadata.iterator();
@@ -677,7 +677,9 @@ public class MainWindow {
 						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
 
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-						getApplyButton().setEnabled(true);
+						if(!working){
+							getApplyButton().setEnabled(true);
+						}
 					}
 				}
 			});
@@ -780,6 +782,9 @@ public class MainWindow {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					getLabel().setText(ApplicationState.GETTING_ALBUM);
 					counter = 0;
+					working = true;
+					log.info("Start to work...");
+					getApplyButton().setEnabled(false);
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
@@ -817,6 +822,7 @@ public class MainWindow {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
@@ -850,6 +856,8 @@ public class MainWindow {
 			getApplyButton().setEnabled(true);
 		}
 		resetButtonsState();
+		working=false;
+		log.info("I already worked");
 	}
 
 	private void resetButtonsState() {

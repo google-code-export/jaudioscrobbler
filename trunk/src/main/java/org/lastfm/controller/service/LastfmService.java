@@ -226,7 +226,8 @@ public class LastfmService {
 			boolean formatted = formatter.isABadFormat(metadata);
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
-				return formatted == true ? ActionResult.New : completeHelper.isSomethingNew(lastfmAlbum, metadata);
+				ActionResult somethingNew = completeHelper.isSomethingNew(lastfmAlbum, metadata);
+				return formatted == true ? ActionResult.New : somethingNew;
 			} else {
 				return formatted == true ? ActionResult.New : ActionResult.Complete;
 			}
