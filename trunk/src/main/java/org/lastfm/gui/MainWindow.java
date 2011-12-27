@@ -242,6 +242,7 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -645,7 +646,27 @@ public class MainWindow {
 				public void mouseEntered(MouseEvent e) {
 					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
 				}
-
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getButton() == MouseEvent.BUTTON3) {
+						String genre = (String)JOptionPane.showInputDialog(
+			                    frame,
+			                    "Applying metadata in ALL rows",
+			                    "Complete metadata",
+			                    JOptionPane.PLAIN_MESSAGE,
+			                    null,
+			                    null,
+			                    StringUtils.EMPTY);
+						if(!StringUtils.isEmpty(genre)){
+							log.info("genre is: " + genre);
+							DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+							for (int i = 0; i < model.getRowCount(); i ++) {
+								getDescriptionTable().getModel().setValueAt(genre, i, ApplicationState.GENRE_COLUMN);
+							}
+						}
+					}
+				}
 			});
 
 			descriptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
