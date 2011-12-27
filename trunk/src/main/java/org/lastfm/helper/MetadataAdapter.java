@@ -230,6 +230,9 @@ public class MetadataAdapter {
 		if (column == ApplicationState.TOTAL_CDS_NUMBER_COLUMN){
 			metadata.setTotalCds(value);
 		}
+		if (column == ApplicationState.GENRE_COLUMN){
+			metadata.setGenre(value);
+		}
 	}
 
 }
