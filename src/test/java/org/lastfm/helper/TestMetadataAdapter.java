@@ -268,4 +268,12 @@ public class TestMetadataAdapter {
 		
 		verify(metadata).setTotalTracks(totalTracks);
 	}
+	
+	@Test
+	public void shouldUpdateGenre() throws Exception {
+		String value = "Minimal Techno";
+		adapter.update(metadata, ApplicationState.GENRE_COLUMN, value);
+		
+		verify(metadata).setGenre(value);
+	}
 }

@@ -209,6 +209,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import javax.swing.ImageIcon;
 
 import org.junit.Before;
@@ -216,6 +219,7 @@ import org.junit.Test;
 import org.lastfm.action.ActionResult;
 import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.CompleteHelper;
+import org.lastfm.helper.Formatter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
@@ -235,6 +239,8 @@ public class TestLastfmService {
 	private CompleteHelper completeHelper;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
+	@Mock
+	private Formatter formatter;
 
 	private String genre = "Minimal Techno";
 
@@ -245,8 +251,7 @@ public class TestLastfmService {
 	
 	@Test
 	public void shouldCompleteMetadataFromLastfm() throws Exception {
-		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
-		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
+		setCompleteHelperExpectations();
 		when(lastfmAlbum.getImageIcon()).thenReturn(imageIcon);
 		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 		
@@ -266,8 +271,7 @@ public class TestLastfmService {
 	
 	@Test
 	public void shouldNotCompleteGenreIfAlredyHasOne() throws Exception {
-		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
-		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
+		setCompleteHelperExpectations();
 		when(metadata.getGenre()).thenReturn(genre );
 		
 		coverArtService.completeLastFM(metadata);
@@ -277,11 +281,36 @@ public class TestLastfmService {
 	
 	@Test
 	public void shouldReturnMetadataCompleteIfLastfmHasNotNewValues() throws Exception {
-		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
-		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
+		setCompleteHelperExpectations();
 		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.Complete);
 		
 		ActionResult result = coverArtService.completeLastFM(metadata);
 		assertEquals(ActionResult.Complete, result);
+	}
+	
+	@Test
+	public void shouldDetectNewIfIsABadFormat() throws Exception {
+		when(formatter.isABadFormat(metadata)).thenReturn(true);
+		
+		ActionResult result = coverArtService.completeLastFM(metadata);
+		
+		assertEquals(ActionResult.New, result);
+	}
+	
+	@Test
+	public void shouldReturnSomethingnewValueIfNoBadFormat() throws Exception {
+		when(formatter.isABadFormat(metadata)).thenReturn(false);
+		setCompleteHelperExpectations();
+		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
+		
+		ActionResult result = coverArtService.completeLastFM(metadata);
+		
+		assertEquals(ActionResult.New, result);
+	}
+
+	private void setCompleteHelperExpectations() throws MalformedURLException,
+			IOException {
+		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
+		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
 	}
 }

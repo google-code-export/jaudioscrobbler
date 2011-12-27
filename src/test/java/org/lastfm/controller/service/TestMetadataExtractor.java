@@ -227,7 +227,6 @@ import org.junit.Test;
 import org.lastfm.event.Events;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.model.Model;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
