@@ -744,6 +744,7 @@ public class MainWindow {
 							@Override
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
+								updateStatus(counter++, metadataWithAlbumList.size());
 								counter++;
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								if (counter >= metadataWithAlbumList.size()) {
