@@ -442,4 +442,14 @@ public class TestCompleteHelper {
 		
 		assertTrue(result);
 	}
+	
+	@Test
+	public void shouldSetACachedAlbumInTheMap() throws Exception {
+		setArtistAndAlbumExpectations();
+		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
+		
+		completeHelper.canLastFMHelpToComplete(metadata);
+		
+		verify(cachedAlbums).put(album, info);
+	}
 }
