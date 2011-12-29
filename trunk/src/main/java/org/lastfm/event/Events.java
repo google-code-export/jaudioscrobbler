@@ -4,6 +4,7 @@ import org.asmatron.messengine.event.EmptyEvent;
 import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.MetadataValues;
 import org.lastfm.model.User;
 
 import static org.asmatron.messengine.event.EventId.ev;
@@ -28,7 +29,7 @@ public interface Events {
 	String OPEN_ERROR = "openError";
 	EventId<EmptyEvent> OPEN = ev(OPEN_ERROR);
 	
-	String READY_TO_COMPLETE_METADATA = "readyToCompleteMetadata";
-	EventId<EmptyEvent> READY_TO_COMPLETE = ev(READY_TO_COMPLETE_METADATA);
+	String APPLY_METADATA = "readyToApplyMetadata";
+	EventId<ValueEvent<MetadataValues>> READY_TO_APPLY = ev(APPLY_METADATA);
 	
 }

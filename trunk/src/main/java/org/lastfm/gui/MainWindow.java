@@ -200,7 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
@@ -256,6 +256,7 @@ import org.lastfm.action.Actions;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.MetadataValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.lastfm.util.ImageUtils;
@@ -355,13 +356,13 @@ public class MainWindow {
 		getCompleteMetadataButton().setEnabled(true);
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
-		if(!filesWithoutMinimumMetadata.isEmpty()){
+		if (!filesWithoutMinimumMetadata.isEmpty()) {
 			File file = new File("Music File");
 			Iterator<File> iterator = filesWithoutMinimumMetadata.iterator();
-			while(iterator.hasNext()){
+			while (iterator.hasNext()) {
 				file = iterator.next();
 			}
-			if(filesWithoutMinimumMetadata.size()==1){
+			if (filesWithoutMinimumMetadata.size() == 1) {
 				JOptionPane.showMessageDialog(frame, file.getName() + " was not loaded due to not enough metadata");
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
@@ -371,10 +372,31 @@ public class MainWindow {
 		tableLoaded = true;
 	}
 
-	@EventMethod(Events.READY_TO_COMPLETE_METADATA)
-	private void onReadyToCompleteMetadata() {
-		getProgressBar().setValue(0);
-		getProgressBar().setVisible(true);
+	@EventMethod(Events.APPLY_METADATA)
+	private void onReadyToApplyMetadata(MetadataValues metadataValues) {
+		String album = metadataValues.getAlbum();
+		String genre = metadataValues.getGenre();
+		String tracks = metadataValues.getTracks();
+		String cd = metadataValues.getCd();
+		String cds = metadataValues.getCds();
+		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+		for (int i = 0; i < model.getRowCount(); i++) {
+			if (!StringUtils.isEmpty(album)) {
+				getDescriptionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
+			}
+			if (!StringUtils.isEmpty(genre)) {
+				getDescriptionTable().getModel().setValueAt(genre, i, ApplicationState.GENRE_COLUMN);
+			}
+			if (!StringUtils.isEmpty(tracks)) {
+				getDescriptionTable().getModel().setValueAt(tracks, i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+			}
+			if (!StringUtils.isEmpty(cd)) {
+				getDescriptionTable().getModel().setValueAt(cd, i, ApplicationState.CD_NUMBER_COLUMN);
+			}
+			if (!StringUtils.isEmpty(cds)) {
+				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+			}
+		}
 	}
 
 	@EventMethod(Events.LOAD_METADATA)
@@ -646,25 +668,11 @@ public class MainWindow {
 				public void mouseEntered(MouseEvent e) {
 					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
 				}
-				
+
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON3) {
-						String genre = (String)JOptionPane.showInputDialog(
-			                    frame,
-			                    "Applying metadata in ALL rows",
-			                    "Complete metadata",
-			                    JOptionPane.PLAIN_MESSAGE,
-			                    null,
-			                    null,
-			                    StringUtils.EMPTY);
-						if(!StringUtils.isEmpty(genre)){
-							log.info("genre is: " + genre);
-							DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-							for (int i = 0; i < model.getRowCount(); i ++) {
-								getDescriptionTable().getModel().setValueAt(genre, i, ApplicationState.GENRE_COLUMN);
-							}
-						}
+						new MetadataDialog(frame, controlEngineConfigurator, "Alter ALL rows");
 					}
 				}
 			});
@@ -698,7 +706,7 @@ public class MainWindow {
 						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
 
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-						if(!working){
+						if (!working) {
 							getApplyButton().setEnabled(true);
 						}
 					}
@@ -850,7 +858,7 @@ public class MainWindow {
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
 											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
 												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
-											} 
+											}
 											if (counter >= metadataList.size()) {
 												afterComplete(metadataWithAlbum);
 											}
@@ -878,7 +886,7 @@ public class MainWindow {
 			getApplyButton().setEnabled(true);
 		}
 		resetButtonsState();
-		working=false;
+		working = false;
 		log.info("I already worked");
 	}
 
