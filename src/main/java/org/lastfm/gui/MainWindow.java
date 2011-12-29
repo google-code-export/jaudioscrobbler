@@ -214,6 +214,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -380,6 +381,11 @@ public class MainWindow {
 		String cd = metadataValues.getCd();
 		String cds = metadataValues.getCds();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+		log.info(metadataWithAlbum.size());
+		for (Metadata metadata : metadataWithAlbum) {
+			log.info(ToStringBuilder.reflectionToString(metadata));
+		}
 		for (int i = 0; i < model.getRowCount(); i++) {
 			if (!StringUtils.isEmpty(album)) {
 				getDescriptionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
@@ -395,6 +401,12 @@ public class MainWindow {
 			}
 			if (!StringUtils.isEmpty(cds)) {
 				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+			}
+			if(metadataValues.getCoverArt()!=null){
+				Metadata metadata = metadatas.get(i);
+				log.info("coverArt detected for: " + metadata.getTitle());
+				metadata.setLastfmCoverArt(metadataValues.getCoverArt());
+				metadataWithAlbum.add(metadata);
 			}
 		}
 	}
@@ -765,6 +777,7 @@ public class MainWindow {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					final Set<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
+					log.info("metadataWithAlbumList size: " + metadataWithAlbumList.size());
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
 					for (final Metadata metadata : metadataWithAlbumList) {

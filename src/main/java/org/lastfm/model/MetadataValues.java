@@ -1,11 +1,14 @@
 package org.lastfm.model;
 
+import javax.swing.ImageIcon;
+
 public class MetadataValues {
 	private String genre;
 	private String album;
 	private String tracks;
 	private String cd;
 	private String cds;
+	private ImageIcon coverArt;
 
 	public void setGenre(String genre) {
 		this.genre = genre;
@@ -45,6 +48,14 @@ public class MetadataValues {
 	
 	public String getCds() {
 		return cds;
+	}
+
+	public void setCoverart(ImageIcon coverArt) {
+		this.coverArt = coverArt;
+	}
+	
+	public ImageIcon getCoverArt() {
+		return coverArt;
 	}
 
 }

@@ -1,7 +1,9 @@
 package org.lastfm.gui;
 
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.dnd.DropTarget;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
@@ -9,6 +11,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -18,30 +21,37 @@ import javax.swing.JTextField;
 
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
+import org.lastfm.dnd.ImageDropListener;
+import org.lastfm.dnd.MainFrameDragOverListener;
+import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.model.MetadataValues;
+import org.lastfm.observ.ObservValue;
+import org.lastfm.observ.Observer;
 
 public class MetadataDialog extends AllDialog {
 	private static final long serialVersionUID = 4326045585716235724L;
-	private static final Rectangle CONTENT_PANEL_BOUNDS = new Rectangle(0, 0, 388, 237);
-	private static final Rectangle IMAGE_BOUNDS = new Rectangle(123, 10, 150, 40);
-	private static final Rectangle ALBUM_TEXTFIELD_BOUNDS = new Rectangle(123, 60, 230, 22);
-	private static final Rectangle GENRE_TEXTFIELD_BOUNDS = new Rectangle(123, 80, 230, 22);
-	private static final Rectangle TRACKS_TEXTFIELD_BOUNDS = new Rectangle(123, 100, 120, 22);
-	private static final Rectangle CD_TEXTFIELD_BOUNDS = new Rectangle(123, 120, 120, 22);
-	private static final Rectangle CDS_TEXTFIELD_BOUNDS = new Rectangle(123, 140, 120, 22);
-	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(200, 204, 80, 22);
-	private static final Rectangle CANCEL_BUTTON_BOUNDS = new Rectangle(109, 204, 80, 22);
-	private static final Rectangle ALBUM_LABEL_BOUNDS = new Rectangle(24, 60, 226, 18);
-	private static final Rectangle GENRE_LABEL_BOUNDS = new Rectangle(24, 80, 226, 18);
-	private static final Rectangle TRACKS_LABEL_BOUNDS = new Rectangle(24, 100, 226, 18);
-	private static final Rectangle CD_LABEL_BOUNDS = new Rectangle(24, 120, 226, 18);
-	private static final Rectangle CDS_LABEL_BOUNDS = new Rectangle(24, 140, 226, 18);
+	private static final Rectangle CONTENT_PANEL_BOUNDS = new Rectangle(0, 0, 388, 337);
+	private static final Rectangle IMAGE_BOUNDS = new Rectangle(123, 10, 150, 150);
+	private static final Rectangle ALBUM_TEXTFIELD_BOUNDS = new Rectangle(123, 170, 200, 22);
+	private static final Rectangle GENRE_TEXTFIELD_BOUNDS = new Rectangle(123, 190, 200, 22);
+	private static final Rectangle TRACKS_TEXTFIELD_BOUNDS = new Rectangle(123, 210, 120, 22);
+	private static final Rectangle CD_TEXTFIELD_BOUNDS = new Rectangle(123, 230, 120, 22);
+	private static final Rectangle CDS_TEXTFIELD_BOUNDS = new Rectangle(123, 250, 120, 22);
+	private static final Rectangle IMAGE_LABEL_BOUNDS = new Rectangle(24, 10, 226, 18);
+	private static final Rectangle ALBUM_LABEL_BOUNDS = new Rectangle(24, 170, 226, 18);
+	private static final Rectangle GENRE_LABEL_BOUNDS = new Rectangle(24, 190, 226, 18);
+	private static final Rectangle TRACKS_LABEL_BOUNDS = new Rectangle(24, 210, 226, 18);
+	private static final Rectangle CD_LABEL_BOUNDS = new Rectangle(24, 230, 226, 18);
+	private static final Rectangle CDS_LABEL_BOUNDS = new Rectangle(24, 250, 226, 18);
+	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(200, 290, 80, 22);
+	private static final Rectangle CANCEL_BUTTON_BOUNDS = new Rectangle(109, 290, 80, 22);
 	private static final String ALBUM_INPUT = "albumInput";
 	private static final String GENRE_INPUT = "genreInput";
 	private static final String TRACKS_INPUT = "tracksInput";
 	private static final String CD_INPUT = "cdInput";
 	private static final String CDS_INPUT = "cdsInput";
+	private static final String IMAGE_LABEL = "imageLabel";
 	private static final String ALBUM_LABEL = "albumLabel";
 	private static final String GENRE_LABEL = "genreLabel";
 	private static final String TRACKS_LABEL = "tracksLabel";
@@ -49,6 +59,7 @@ public class MetadataDialog extends AllDialog {
 	private static final String CDS_LABEL = "cdsLabel";
 	private static final String BUTTON_NAME = "buttonOk";
 	private static final String APPLY = "Apply";
+	private static final String IMAGE = "Cover Art";
 	private static final String ALBUM = "Album";
 	private static final String GENRE = "Genre";
 	private static final String TRACKS = "#Trks";
@@ -64,21 +75,45 @@ public class MetadataDialog extends AllDialog {
 	private JButton sendButton;
 	private JButton cancelButton;
 	private final String message;
+	private JLabel imageLabel;
 	private JLabel albumLabel;
 	private JLabel genreLabel;
 	private JLabel tracksLabel;
 	private JLabel cdLabel;
 	private JLabel cdsLabel;
-	private final ControlEngineConfigurator configurator;
 	private JPanel imagePanel;
-	
+	private ImageIcon imageIcon;
+	private final ControlEngineConfigurator configurator;
+
 	public MetadataDialog(JFrame frame, ControlEngineConfigurator controlEngineConfigurator, String message) {
 		super(frame, true, message);
 		this.configurator = controlEngineConfigurator;
 		this.message = message;
 		initializeContentPane();
 		getTitleLabel().setText(dialogTitle());
+		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
+		setDragAndDrop(multiLayerDropTargetListener);
 		setVisible(true);
+	}
+	
+	private void setDragAndDrop(MultiLayerDropTargetListener multiLayerDropTargetListener) {
+		setDropTarget(new DropTarget(this, multiLayerDropTargetListener));
+		multiLayerDropTargetListener.addDragListener(this, new MainFrameDragOverListener(this));
+		ImageDropListener listener = new ImageDropListener(new ImagePanel());
+		listener.onDropped().add(new Observer<ObservValue<ImagePanel>>() {
+
+			@Override
+			public void observe(ObservValue<ImagePanel> t) {
+				ImagePanel value = t.getValue();
+				Image image = value.getImage();
+				imageIcon = new ImageIcon(image);
+				JLabel imageLabel = new JLabel(imageIcon);
+				imagePanel.add(imageLabel);
+				MetadataDialog.this.invalidate();
+				MetadataDialog.this.revalidate();
+			}
+		});
+		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
 	}
 	
 	@Override
@@ -91,6 +126,7 @@ public class MetadataDialog extends AllDialog {
 			contentPanel = new JPanel();
 			contentPanel.setLayout(null);
 			contentPanel.setBounds(CONTENT_PANEL_BOUNDS);
+			contentPanel.add(getImageLabel());
 			contentPanel.add(getImagePanel());
 			contentPanel.add(getAlbumLabel());
 			contentPanel.add(getAlbumTextField());
@@ -108,6 +144,17 @@ public class MetadataDialog extends AllDialog {
 		return contentPanel;
 	}
 	
+	private JLabel getImageLabel() {
+		if(imageLabel == null){
+			imageLabel = new JLabel();
+			imageLabel.setBounds(IMAGE_LABEL_BOUNDS);
+			imageLabel.setName(IMAGE_LABEL);
+			imageLabel.setText(IMAGE);
+			imageLabel.requestFocus();
+		}
+		return imageLabel;
+	}
+
 	private JPanel getImagePanel() {
 		if(imagePanel == null){
 			imagePanel = new JPanel();
@@ -237,6 +284,7 @@ public class MetadataDialog extends AllDialog {
 				public void actionPerformed(ActionEvent e) {
 					sendButton.setEnabled(false);
 					MetadataValues metadataValues = new MetadataValues();
+					metadataValues.setCoverart(imageIcon);
 					metadataValues.setAlbum(getAlbumTextField().getText());
 					metadataValues.setGenre(getGenreTextField().getText());
 					metadataValues.setTracks(getTracksTextField().getText());
