@@ -777,9 +777,9 @@ public class MainWindow {
 				@Override
 				protected Boolean doInBackground() throws Exception {
 					final Set<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
-					log.info("metadataWithAlbumList size: " + metadataWithAlbumList.size());
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
+					log.info("Ready for write " + metadataWithAlbumList.size() + " files");
 					for (final Metadata metadata : metadataWithAlbumList) {
 						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
 
@@ -787,7 +787,7 @@ public class MainWindow {
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								updateStatus(counter++, metadataWithAlbumList.size());
-								counter++;
+								log.info("writter counter: " + counter);
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								if (counter >= metadataWithAlbumList.size()) {
 									resetButtonsState();
@@ -796,7 +796,9 @@ public class MainWindow {
 							}
 
 							private void finishingWorker() {
+								log.info("I'm done, ALL rows have been written");
 								getApplyButton().setEnabled(false);
+								metadataWithAlbumList.clear();
 							}
 						});
 					}
