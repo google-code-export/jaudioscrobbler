@@ -314,7 +314,7 @@ public class MetadataDialog extends AllDialog {
 			public void observe(ObservValue<ImagePanel> t) {
 				ImagePanel value = t.getValue();
 				Image image = value.getImage();
-				coverArt = new ImageIcon(image);
+				coverArt = imageUtils.resize(new ImageIcon(image), THREE_HUNDRED, THREE_HUNDRED);
 				ImageIcon imageIcon = new ImageIcon(image);
 				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, ONE_HUNDRED_FIFTY, ONE_HUNDRED_FIFTY));
 				imagePanel.add(imageLabel);
@@ -494,7 +494,7 @@ public class MetadataDialog extends AllDialog {
 				public void actionPerformed(ActionEvent e) {
 					sendButton.setEnabled(false);
 					MetadataValues metadataValues = new MetadataValues();
-					metadataValues.setCoverart(imageUtils.resize(coverArt, THREE_HUNDRED, THREE_HUNDRED));
+					metadataValues.setCoverart(coverArt);
 					metadataValues.setAlbum(getAlbumTextField().getText());
 					metadataValues.setGenre(getGenreTextField().getText());
 					metadataValues.setTracks(getTracksTextField().getText());
