@@ -225,13 +225,14 @@ public class CompleteHelper {
 	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
 	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
 	private Log log = LogFactory.getLog(this.getClass());
+	private Album info;
 
 	public boolean canLastFMHelpToComplete(Metadata metadata) {
 		String artist = metadata.getArtist();
 		String album = metadata.getAlbum();
 
 		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
-			Album info = cachedAlbums.get(metadata.getAlbum());
+			info = cachedAlbums.get(metadata.getAlbum());
 			if(info==null){
 				info = helper.getAlbum(artist, album);
 				if(info!=null){
@@ -267,10 +268,10 @@ public class CompleteHelper {
 			return;
 		}
 		String imageURL = StringUtils.EMPTY;
-		Album info = cachedAlbums.get(metadata.getAlbum());
-		if(info!=null){
-			imageURL = info.getImageURL(ImageSize.EXTRALARGE);
-			log.info("imageURL: " + imageURL + " from album: " + info.getName());
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		if(album!=null){
+			imageURL = album.getImageURL(ImageSize.EXTRALARGE);
+			log.info("imageURL: " + imageURL + " from album: " + album.getName());
 		}
 		if (!StringUtils.isEmpty(imageURL)) {
 			Image image = helper.readImage(imageURL);
@@ -280,22 +281,42 @@ public class CompleteHelper {
 	}
 
 	private void setGenre(Metadata metadata, LastfmAlbum lastfmAlbum) {
-		if(!StringUtils.isEmpty(metadata.getGenre())){
+		if(!StringUtils.isEmpty(metadata.getGenre()) || StringUtils.isEmpty(metadata.getAlbum())){
 			return;
 		}
-		String genre = helper.getGenre(cachedAlbums.get(metadata.getAlbum()));
-		log.info("Genre from lastFM: " + genre);
-		lastfmAlbum.setGenre(genre);
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		String genre = StringUtils.EMPTY;
+		if(album != null){
+			genre = helper.getGenre(album);
+		} else {
+			genre = helper.getGenre(info);
+		}
+		if(!StringUtils.isEmpty(genre)){
+			log.info("Genre from lastFM: " + genre);
+			lastfmAlbum.setGenre(genre);
+		} else {
+			lastfmAlbum.setGenre(StringUtils.EMPTY);
+		}
 	}
 
 	private void setYear(Metadata metadata, LastfmAlbum lastfmAlbum) {
 		if(!StringUtils.isEmpty(metadata.getYear())){
 			return;
 		}
-		Date release = cachedAlbums.get(metadata.getAlbum()).getReleaseDate();
-		log.info("Year date format: " + release);
-		lastfmAlbum.setYear(helper.getYear(release));
-		log.info("Year metadata format: " + lastfmAlbum.getYear());
+		Date release = null;
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		if(album != null) {
+			release = album.getReleaseDate();
+		} else {
+			release = info.getReleaseDate();
+		}
+		if(release != null){
+			log.info("Year date format: " + release);
+			lastfmAlbum.setYear(helper.getYear(release));
+			log.info("Year metadata format: " + lastfmAlbum.getYear());
+		} else {
+			lastfmAlbum.setYear(StringUtils.EMPTY);
+		}
 	}
 
 	public ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {

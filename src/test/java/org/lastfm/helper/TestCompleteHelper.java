@@ -452,4 +452,11 @@ public class TestCompleteHelper {
 		
 		verify(cachedAlbums).put(album, info);
 	}
+	
+	@Test
+	public void shouldReturnEmptyGenreIfNoAlbum() throws Exception {
+		completeHelper.getLastFM(metadata);
+		
+		verify(helper, never()).getGenre(null);
+	}
 }
