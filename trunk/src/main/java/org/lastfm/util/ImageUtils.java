@@ -282,4 +282,17 @@ public class ImageUtils {
 		return file;
 	}
 
+	public ImageIcon getDragImage() {
+		try {
+			Image image = imageHelper.readDragImage();
+			imageIcon = new ImageIcon(image);
+			return imageIcon;
+		} catch (MalformedURLException mfe) {
+			log.error(mfe, mfe);
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+		}
+		return imageIcon;
+	}
+
 }
