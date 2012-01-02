@@ -871,7 +871,9 @@ public class MainWindow {
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
 											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+												if(!response.equals(ActionResult.Complete)){
+													getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+												}
 											}
 											if (counter >= metadataList.size()) {
 												afterComplete(metadataWithAlbum);
