@@ -204,7 +204,6 @@
 
 package org.lastfm.gui;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
@@ -317,6 +316,7 @@ public class MetadataDialog extends AllDialog {
 				coverArt = imageUtils.resize(new ImageIcon(image), THREE_HUNDRED, THREE_HUNDRED);
 				ImageIcon imageIcon = new ImageIcon(image);
 				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, ONE_HUNDRED_FIFTY, ONE_HUNDRED_FIFTY));
+				imagePanel.removeAll();
 				imagePanel.add(imageLabel);
 				MetadataDialog.this.invalidate();
 				MetadataDialog.this.revalidate();
@@ -368,7 +368,7 @@ public class MetadataDialog extends AllDialog {
 		if(imagePanel == null){
 			imagePanel = new JPanel();
 			imagePanel.setBounds(IMAGE_BOUNDS);
-			imagePanel.setBackground(new Color(255,255,255));
+			imagePanel.add(new JLabel(imageUtils.getDragImage()));
 		}
 		return imagePanel;
 	}

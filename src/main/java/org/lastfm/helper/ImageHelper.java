@@ -227,4 +227,8 @@ public class ImageHelper {
 		ImageIO.write((BufferedImage) bufferedImage, ext, file);
 	}
 
+	public Image readDragImage() throws MalformedURLException, IOException {
+		return ImageIO.read(new File(ApplicationState.DRAG_IMAGE));
+	}
+
 }
