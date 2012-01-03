@@ -288,6 +288,7 @@ public class CompleteController {
 			metadataWriter.writeGenre(metadata.getGenre());
 			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
 				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
+				metadata.setCoverArt(metadata.getLastfmCoverArt());
 			}
 			return ActionResult.Updated;
 		} catch (MetadataException mde) {

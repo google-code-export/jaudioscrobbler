@@ -245,7 +245,6 @@ public class TestMainWindow {
 	private static final int FIRST_ROW = 0;
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
-	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String ALBUM = "Mirage";
 	private static final String TRACK_NUMBER = "5";
@@ -350,32 +349,6 @@ public class TestMainWindow {
 		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
-	@Test
-	public void shouldApply() throws Exception {
-		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatasWaitingForMetadata);
-		mainWindow.getApplyButton().setEnabled(true);
-
-		window.button(APPLY_BUTTON_NAME).click();
-
-		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
-		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.Updated);
-		assertEquals(ActionResult.Updated, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		verifyButtonsAssertions();
-	}
-
-	@Test
-	public void shouldNotApplyDueToErrorActionResult() throws Exception {
-		when(viewEngine.get(Model.METADATA_ARTIST)).thenReturn(metadatasWaitingForMetadata);
-		mainWindow.getApplyButton().setEnabled(true);
-
-		window.button(APPLY_BUTTON_NAME).click();
-
-		verify(viewEngine).request(eq(Actions.WRITE), eq(metadata), responseCaptor.capture());
-		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-		callback.onResponse(ActionResult.Error);
-		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-	}
 
 	@Test
 	public void shouldComplete() throws Exception {

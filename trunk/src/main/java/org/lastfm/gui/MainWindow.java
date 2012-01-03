@@ -352,6 +352,14 @@ public class MainWindow {
 		getDirectoryField().setText(path);
 	}
 
+	private void resetImagePanel() {
+		log.info("Trying to reset to the default image");
+		getImagePanel().removeAll();
+		getImagePanel().add(new JLabel(imageUtils.getDefaultImage()));
+		getImagePanel().invalidate();
+		getImagePanel().revalidate();
+	}
+
 	@EventMethod(Events.TRACKS_LOADED)
 	private void onTracksLoaded() {
 		getCompleteMetadataButton().setEnabled(true);
@@ -370,6 +378,7 @@ public class MainWindow {
 				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " were not loaded due to not enough metadata");
 			}
 		}
+		resetImagePanel();
 		tableLoaded = true;
 	}
 
@@ -402,11 +411,13 @@ public class MainWindow {
 			if (!StringUtils.isEmpty(cds)) {
 				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 			}
-			if(metadataValues.getCoverArt()!=null){
+			if(metadataValues.getCoverArt() != null){
 				Metadata metadata = metadatas.get(i);
 				log.info("coverArt detected for: " + metadata.getTitle());
 				metadata.setLastfmCoverArt(metadataValues.getCoverArt());
 				metadataWithAlbum.add(metadata);
+				getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+				getApplyButton().setEnabled(true);
 			}
 		}
 	}
@@ -776,19 +787,18 @@ public class MainWindow {
 
 				@Override
 				protected Boolean doInBackground() throws Exception {
-					final Set<Metadata> metadataWithAlbumList = viewEngineConfigurator.getViewEngine().get(Model.METADATA_ARTIST);
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
-					log.info("Ready for write " + metadataWithAlbumList.size() + " files");
-					for (final Metadata metadata : metadataWithAlbumList) {
+					log.info("Ready for write " + metadataWithAlbum.size() + " files");
+					for (final Metadata metadata : metadataWithAlbum) {
 						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
 
 							@Override
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
-								updateStatus(counter++, metadataWithAlbumList.size());
+								updateStatus(counter++, metadataWithAlbum.size());
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
-								if (counter >= metadataWithAlbumList.size()) {
+								if (counter >= metadataWithAlbum.size()) {
 									resetButtonsState();
 									finishingWorker();
 								}
@@ -797,7 +807,7 @@ public class MainWindow {
 							private void finishingWorker() {
 								log.info("I'm done, ALL rows have been written");
 								getApplyButton().setEnabled(false);
-								metadataWithAlbumList.clear();
+								metadataWithAlbum.clear();
 							}
 						});
 					}
@@ -854,6 +864,7 @@ public class MainWindow {
 							private void getLastfmData() {
 								getLabel().setText(ApplicationState.GETTING_LAST_FM);
 								counter = 0;
+								log.info("Searching in lastfm for " + metadataList.size() + " files");
 								for (final Metadata metadata : metadataList) {
 									final int i = metadataList.indexOf(metadata);
 									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
@@ -861,6 +872,7 @@ public class MainWindow {
 										@Override
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
+											log.info("counter at the moment: " + counter);
 											log.info("response in getting lastFM metadata for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
