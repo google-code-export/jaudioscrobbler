@@ -218,6 +218,9 @@ public class MetadataAdapter {
 		if (column == ApplicationState.ALBUM_COLUMN){
 			metadata.setAlbum(value);
 		}
+		if (column == ApplicationState.YEAR_COLUMN){
+			metadata.setYear(value);
+		}
 		if (column == ApplicationState.TRACK_NUMBER_COLUMN){
 			metadata.setTrackNumber(value);
 		}
