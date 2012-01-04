@@ -215,6 +215,7 @@ import java.io.File;
 public interface ApplicationState {
 	static final String DEFAULT_IMAGE = "src/main/resources/images/drag_300.png";
 	static final String DRAG_IMAGE = "src/main/resources/images/drag_150.png";
+	static final String CLOSE_IMAGE = "src/main/resources/images/close.png";
 	static String DESTFILE_PATH = System.getProperty("java.io.tmpdir") + File.separator;
 
 	static final String LOGIN_FAIL = "Login fail";

@@ -295,4 +295,17 @@ public class ImageUtils {
 		return imageIcon;
 	}
 
+	public ImageIcon getCloseImage() {
+		try {
+			Image image = imageHelper.readCloseImage();
+			imageIcon = new ImageIcon(image);
+			return imageIcon;
+		} catch (MalformedURLException mfe) {
+			log.error(mfe, mfe);
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+		}
+		return imageIcon;
+	}
+
 }

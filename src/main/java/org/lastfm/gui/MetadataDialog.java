@@ -284,7 +284,7 @@ public class MetadataDialog extends AllDialog {
 	private JTextField tracksTextField;
 	private JTextField cdTextField;
 	private JTextField cdsTextField;
-	private JButton sendButton;
+	private JButton applyButton;
 	private JButton cancelButton;
 	private final String message;
 	private JLabel imageLabel;
@@ -356,7 +356,7 @@ public class MetadataDialog extends AllDialog {
 			contentPanel.add(getCdTextField());
 			contentPanel.add(getCdsLabel());
 			contentPanel.add(getCdsTextField());
-			contentPanel.add(getSendButton());
+			contentPanel.add(getApplyButton());
 			contentPanel.add(getCancelButton());
 		}
 		return contentPanel;
@@ -509,19 +509,20 @@ public class MetadataDialog extends AllDialog {
 		return genreTextField;
 	}
 	
-	private JButton getSendButton() {
-		if (sendButton == null) {
-			sendButton = new JButton();
-			sendButton.setBounds(SEND_BUTTON_BOUNDS);
-			sendButton.setName(BUTTON_NAME);
-			sendButton.setText(APPLY);
-			sendButton.setEnabled(true);
-			getRootPane().setDefaultButton(sendButton);
-			sendButton.addActionListener(new ActionListener() {
+	private JButton getApplyButton() {
+		if (applyButton == null) {
+			applyButton = new JButton();
+			applyButton.setBounds(SEND_BUTTON_BOUNDS);
+			applyButton.setName(BUTTON_NAME);
+			applyButton.setText(APPLY);
+			applyButton.setMnemonic(KeyEvent.VK_A);
+			applyButton.setEnabled(true);
+			getRootPane().setDefaultButton(applyButton);
+			applyButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					sendButton.setEnabled(false);
+					applyButton.setEnabled(false);
 					MetadataValues metadataValues = new MetadataValues();
 					metadataValues.setCoverart(coverArt);
 					metadataValues.setAlbum(getAlbumTextField().getText());
@@ -535,7 +536,7 @@ public class MetadataDialog extends AllDialog {
 				}
 			});
 		}
-		return sendButton;
+		return applyButton;
 	}
 	
 	private JButton getCancelButton() {
@@ -544,6 +545,7 @@ public class MetadataDialog extends AllDialog {
 			cancelButton.setBounds(CANCEL_BUTTON_BOUNDS);
 			cancelButton.setName(BUTTON_NAME);
 			cancelButton.setText(CANCEL);
+			cancelButton.setMnemonic(KeyEvent.VK_C);
 			cancelButton.addActionListener(new CloseListener());
 		}
 		return cancelButton;
@@ -554,11 +556,11 @@ public class MetadataDialog extends AllDialog {
 		public void keyReleased(KeyEvent e) {
 			if (e.getSource().equals(genreTextField)) {
 				if (genreTextField.getText().length() > 0) {
-					getSendButton().setEnabled(true);
+					getApplyButton().setEnabled(true);
 				}
 			}
-			if (getSendButton().isEnabled() && e.getKeyCode() == KeyEvent.VK_ENTER) {
-				getSendButton().doClick();
+			if (getApplyButton().isEnabled() && e.getKeyCode() == KeyEvent.VK_ENTER) {
+				getApplyButton().doClick();
 			}
 		}
 	}
@@ -568,7 +570,7 @@ public class MetadataDialog extends AllDialog {
 		public void focusLost(FocusEvent e) {
 			if (e.getSource().equals(genreTextField)) {
 				if (!genreTextField.getText().equals("")) {
-					getSendButton().setEnabled(true);
+					getApplyButton().setEnabled(true);
 				}
 			}
 		}
