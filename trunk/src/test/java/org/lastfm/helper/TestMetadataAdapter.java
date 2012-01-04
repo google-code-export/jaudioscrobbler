@@ -276,4 +276,12 @@ public class TestMetadataAdapter {
 		
 		verify(metadata).setGenre(value);
 	}
+	
+	@Test
+	public void shouldUpdateYear() throws Exception {
+		String value = "2001";
+		adapter.update(metadata, ApplicationState.YEAR_COLUMN, value);
+		
+		verify(metadata).setYear(value);
+	}
 }

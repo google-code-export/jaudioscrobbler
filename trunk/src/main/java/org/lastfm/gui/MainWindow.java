@@ -315,6 +315,7 @@ public class MainWindow {
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
 	boolean working;
+	private int selectedRow;
 
 	@Autowired
 	private LoginWindow loginWindow;
@@ -417,6 +418,9 @@ public class MainWindow {
 				metadata.setLastfmCoverArt(metadataValues.getCoverArt());
 				metadataWithAlbum.add(metadata);
 				getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+				if(i == selectedRow){
+					updateImage(i);
+				}
 				getApplyButton().setEnabled(true);
 			}
 		}
@@ -705,7 +709,8 @@ public class MainWindow {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					if (tableLoaded) {
-						updateImage(descriptionTable.getSelectedRow());
+						selectedRow = descriptionTable.getSelectedRow();
+						updateImage(selectedRow);
 					}
 				}
 
@@ -716,11 +721,10 @@ public class MainWindow {
 				@Override
 				public void tableChanged(TableModelEvent e) {
 					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != ApplicationState.STATUS_COLUMN) {
-						log.info("tableChanged");
 						int column = e.getColumn();
 						int row = e.getFirstRow();
 						String value = getDescriptionTable().getModel().getValueAt(row, column).toString();
-						log.info("value: " + value);
+						log.info("value changed: " + value);
 						List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 						Metadata metadata = metadataList.get(row);
 						metadataAdapter.update(metadata, column, value);
@@ -745,7 +749,6 @@ public class MainWindow {
 		TableModel model = getDescriptionTable().getModel();
 		List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 
-		log.info("selectedRow: " + selectedRow);
 		Metadata metadata = metadataList.get(selectedRow);
 		log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
 
@@ -798,6 +801,9 @@ public class MainWindow {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								updateStatus(counter++, metadataWithAlbum.size());
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
+								if(metadata.getCoverArt() != null && selectedRow == getRow(metadata)){
+									updateImage(counter-1);
+								}
 								if (counter >= metadataWithAlbum.size()) {
 									resetButtonsState();
 									finishingWorker();
@@ -872,7 +878,6 @@ public class MainWindow {
 										@Override
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
-											log.info("counter at the moment: " + counter);
 											log.info("response in getting lastFM metadata for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
