@@ -213,6 +213,7 @@ public class MetadataValues {
 	private String cd;
 	private String cds;
 	private ImageIcon coverArt;
+	private String year;
 
 	public void setGenre(String genre) {
 		this.genre = genre;
@@ -260,6 +261,14 @@ public class MetadataValues {
 	
 	public ImageIcon getCoverArt() {
 		return coverArt;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+	
+	public String getYear() {
+		return year;
 	}
 
 }
