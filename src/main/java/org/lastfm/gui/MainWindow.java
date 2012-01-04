@@ -387,6 +387,7 @@ public class MainWindow {
 	private void onReadyToApplyMetadata(MetadataValues metadataValues) {
 		String album = metadataValues.getAlbum();
 		String genre = metadataValues.getGenre();
+		String year = metadataValues.getYear();
 		String tracks = metadataValues.getTracks();
 		String cd = metadataValues.getCd();
 		String cds = metadataValues.getCds();
@@ -402,6 +403,9 @@ public class MainWindow {
 			}
 			if (!StringUtils.isEmpty(genre)) {
 				getDescriptionTable().getModel().setValueAt(genre, i, ApplicationState.GENRE_COLUMN);
+			}
+			if (!StringUtils.isEmpty(year)) {
+				getDescriptionTable().getModel().setValueAt(year, i, ApplicationState.YEAR_COLUMN);
 			}
 			if (!StringUtils.isEmpty(tracks)) {
 				getDescriptionTable().getModel().setValueAt(tracks, i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);

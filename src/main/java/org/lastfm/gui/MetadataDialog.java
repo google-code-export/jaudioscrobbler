@@ -241,25 +241,29 @@ public class MetadataDialog extends AllDialog {
 	private static final Rectangle IMAGE_BOUNDS = new Rectangle(123, 10, 150, 150);
 	private static final Rectangle ALBUM_TEXTFIELD_BOUNDS = new Rectangle(123, 170, 200, 22);
 	private static final Rectangle GENRE_TEXTFIELD_BOUNDS = new Rectangle(123, 190, 200, 22);
-	private static final Rectangle TRACKS_TEXTFIELD_BOUNDS = new Rectangle(123, 210, 120, 22);
-	private static final Rectangle CD_TEXTFIELD_BOUNDS = new Rectangle(123, 230, 120, 22);
-	private static final Rectangle CDS_TEXTFIELD_BOUNDS = new Rectangle(123, 250, 120, 22);
+	private static final Rectangle YEAR_TEXTFIELD_BOUNDS = new Rectangle(123, 210, 120, 22);
+	private static final Rectangle TRACKS_TEXTFIELD_BOUNDS = new Rectangle(123, 230, 120, 22);
+	private static final Rectangle CD_TEXTFIELD_BOUNDS = new Rectangle(123, 250, 120, 22);
+	private static final Rectangle CDS_TEXTFIELD_BOUNDS = new Rectangle(123, 270, 120, 22);
 	private static final Rectangle IMAGE_LABEL_BOUNDS = new Rectangle(24, 10, 226, 18);
 	private static final Rectangle ALBUM_LABEL_BOUNDS = new Rectangle(24, 170, 226, 18);
 	private static final Rectangle GENRE_LABEL_BOUNDS = new Rectangle(24, 190, 226, 18);
-	private static final Rectangle TRACKS_LABEL_BOUNDS = new Rectangle(24, 210, 226, 18);
-	private static final Rectangle CD_LABEL_BOUNDS = new Rectangle(24, 230, 226, 18);
-	private static final Rectangle CDS_LABEL_BOUNDS = new Rectangle(24, 250, 226, 18);
-	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(200, 290, 80, 22);
-	private static final Rectangle CANCEL_BUTTON_BOUNDS = new Rectangle(109, 290, 80, 22);
+	private static final Rectangle YEAR_LABEL_BOUNDS = new Rectangle(24, 210, 226, 18);
+	private static final Rectangle TRACKS_LABEL_BOUNDS = new Rectangle(24, 230, 226, 18);
+	private static final Rectangle CD_LABEL_BOUNDS = new Rectangle(24, 250, 226, 18);
+	private static final Rectangle CDS_LABEL_BOUNDS = new Rectangle(24, 270, 226, 18);
+	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(200, 310, 80, 22);
+	private static final Rectangle CANCEL_BUTTON_BOUNDS = new Rectangle(109, 310, 80, 22);
 	private static final String ALBUM_INPUT = "albumInput";
 	private static final String GENRE_INPUT = "genreInput";
+	private static final String YEAR_INPUT = "yearImput";
 	private static final String TRACKS_INPUT = "tracksInput";
 	private static final String CD_INPUT = "cdInput";
 	private static final String CDS_INPUT = "cdsInput";
 	private static final String IMAGE_LABEL = "imageLabel";
 	private static final String ALBUM_LABEL = "albumLabel";
 	private static final String GENRE_LABEL = "genreLabel";
+	private static final String YEAR_LABEL = "yearLabel";
 	private static final String TRACKS_LABEL = "tracksLabel";
 	private static final String CD_LABEL = "cdLabel";
 	private static final String CDS_LABEL = "cdsLabel";
@@ -268,6 +272,7 @@ public class MetadataDialog extends AllDialog {
 	private static final String IMAGE = "Cover Art";
 	private static final String ALBUM = "Album";
 	private static final String GENRE = "Genre";
+	private static final String YEAR = "Year";
 	private static final String TRACKS = "#Trks";
 	private static final String CANCEL = "Cancel";
 	private static final String CD = "#CD";
@@ -275,6 +280,7 @@ public class MetadataDialog extends AllDialog {
 	private JPanel contentPanel;
 	private JTextField albumTextField;
 	private JTextField genreTextField;
+	private JTextField yearTextField;
 	private JTextField tracksTextField;
 	private JTextField cdTextField;
 	private JTextField cdsTextField;
@@ -284,6 +290,7 @@ public class MetadataDialog extends AllDialog {
 	private JLabel imageLabel;
 	private JLabel albumLabel;
 	private JLabel genreLabel;
+	private JLabel yearLabel;
 	private JLabel tracksLabel;
 	private JLabel cdLabel;
 	private JLabel cdsLabel;
@@ -341,6 +348,8 @@ public class MetadataDialog extends AllDialog {
 			contentPanel.add(getAlbumTextField());
 			contentPanel.add(getGenreLabel());
 			contentPanel.add(getGenreTextField());
+			contentPanel.add(getYearLabel());
+			contentPanel.add(getYearTextField());
 			contentPanel.add(getTracksLabel());
 			contentPanel.add(getTracksTextField());
 			contentPanel.add(getCdLabel());
@@ -353,6 +362,26 @@ public class MetadataDialog extends AllDialog {
 		return contentPanel;
 	}
 	
+	private JLabel getYearLabel() {
+		if (yearLabel == null) {
+			yearLabel = new JLabel();
+			yearLabel.setBounds(YEAR_LABEL_BOUNDS);
+			yearLabel.setName(YEAR_LABEL);
+			yearLabel.setText(YEAR);
+			yearLabel.requestFocus();
+		}
+		return yearLabel;
+	}
+	
+	private JTextField getYearTextField() {
+		if (yearTextField == null) {
+			yearTextField = new JTextField();
+			yearTextField.setBounds(YEAR_TEXTFIELD_BOUNDS);
+			yearTextField.setName(YEAR_INPUT);
+		}
+		return yearTextField;
+	}
+
 	private JLabel getImageLabel() {
 		if(imageLabel == null){
 			imageLabel = new JLabel();
@@ -497,6 +526,7 @@ public class MetadataDialog extends AllDialog {
 					metadataValues.setCoverart(coverArt);
 					metadataValues.setAlbum(getAlbumTextField().getText());
 					metadataValues.setGenre(getGenreTextField().getText());
+					metadataValues.setYear(getYearTextField().getText());
 					metadataValues.setTracks(getTracksTextField().getText());
 					metadataValues.setCd(getCdTextField().getText());
 					metadataValues.setCds(getCdsTextField().getText());
