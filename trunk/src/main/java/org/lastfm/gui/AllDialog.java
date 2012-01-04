@@ -222,6 +222,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import org.lastfm.util.ImageUtils;
+
 /**
  * @understands
  * This class decorates the dialog borders avoiding code duplication in every
@@ -244,6 +246,7 @@ public abstract class AllDialog extends JDialog {
 	private JPanel titlePanel;
 	private JLabel titleLabel;
 	private JButton exitButton;
+	private ImageUtils imageUtils = new ImageUtils();
 	
 	/**
 	 * Set the title of the dialog
@@ -348,11 +351,11 @@ public abstract class AllDialog extends JDialog {
 		if (exitButton == null) {
 			exitButton = new JButton();
 			exitButton.setName(EXIT_BUTTON_NAME);
-			exitButton.setText("x");
 			exitButton.setPreferredSize(EXIT_BUTTON_SIZE);
 			exitButton.setMinimumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMaximumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMnemonic(KeyEvent.VK_UNDEFINED);
+			exitButton.setIcon(imageUtils.getCloseImage());
 			exitButton.addActionListener(new CloseListener());
 		}
 		return exitButton;

@@ -611,6 +611,7 @@ public class MainWindow {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ActionResult.Complete.toString());
 			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
+			completeMetadataButton.setMnemonic(KeyEvent.VK_C);
 			completeMetadataButton.setEnabled(false);
 
 			completeMetadataButton.addActionListener(new ActionListener() {
@@ -636,6 +637,7 @@ public class MainWindow {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
 			applyButton.setName(APPLY_BUTTON_NAME);
+			applyButton.setMnemonic(KeyEvent.VK_A);
 			applyButton.setEnabled(false);
 
 			applyButton.addActionListener(new ActionListener() {

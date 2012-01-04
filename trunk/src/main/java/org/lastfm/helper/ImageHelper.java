@@ -231,4 +231,8 @@ public class ImageHelper {
 		return ImageIO.read(new File(ApplicationState.DRAG_IMAGE));
 	}
 
+	public Image readCloseImage() throws MalformedURLException, IOException {
+		return ImageIO.read(new File(ApplicationState.CLOSE_IMAGE));
+	}
+
 }
