@@ -323,8 +323,8 @@ public class MetadataDialog extends AllDialog {
 				coverArt = imageUtils.resize(new ImageIcon(image), THREE_HUNDRED, THREE_HUNDRED);
 				ImageIcon imageIcon = new ImageIcon(image);
 				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, ONE_HUNDRED_FIFTY, ONE_HUNDRED_FIFTY));
-				imagePanel.removeAll();
-				imagePanel.add(imageLabel);
+				getImagePanel().removeAll();
+				getImagePanel().add(imageLabel);
 				MetadataDialog.this.invalidate();
 				MetadataDialog.this.revalidate();
 			}

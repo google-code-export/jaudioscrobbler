@@ -293,7 +293,6 @@ public class MainWindow extends JFrame {
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
-	private int counter = 0;
 
 	private JFrame frame;
 	private JPanel panel;
@@ -322,6 +321,7 @@ public class MainWindow extends JFrame {
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	boolean tableLoaded;
 	boolean working;
+	private int counter = 0;
 	private int selectedRow;
 
 	@Autowired
@@ -359,11 +359,14 @@ public class MainWindow extends JFrame {
 				ImagePanel value = t.getValue();
 				Image image = value.getImage();
 				ImageIcon imageIcon = new ImageIcon(image);
-				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
-				imagePanel.removeAll();
-				imagePanel.add(imageLabel);
-				MainWindow.this.invalidate();
-				MainWindow.this.revalidate();
+				List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+				Metadata metadata = metadatas.get(selectedRow);
+				metadata.setLastfmCoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
+				log.info("sertting image to the row: " + selectedRow);
+				updateImage(selectedRow);
+				metadataWithAlbum.add(metadata);
+				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
+				getApplyButton().setEnabled(true);
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -691,6 +694,7 @@ public class MainWindow extends JFrame {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setName(SEND_BUTTON_NAME);
+			sendButton.setMnemonic(KeyEvent.VK_S);
 			sendButton.setEnabled(false);
 
 			sendButton.addActionListener(new ActionListener() {
