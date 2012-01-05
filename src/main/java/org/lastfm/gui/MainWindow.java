@@ -204,9 +204,10 @@
 package org.lastfm.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
+import java.awt.dnd.DropTarget;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -214,13 +215,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -254,12 +256,17 @@ import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
+import org.lastfm.dnd.ImageDropListener;
+import org.lastfm.dnd.MainFrameDragOverListener;
+import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.MetadataValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
+import org.lastfm.observ.ObservValue;
+import org.lastfm.observ.Observer;
 import org.lastfm.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -269,9 +276,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 
 @SuppressWarnings("unused")
-public class MainWindow {
+public class MainWindow extends JFrame {
+	private static final long serialVersionUID = 1311230231101552007L;
 	private static final int THREE_HUNDRED = 300;
-	private static final int ONE_HUNDRED = 100;
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
 	private static final String JMENU_LABEL = "Last.fm";
 	private static final int DIRECTORY_SELECTED_LENGHT = 20;
@@ -325,13 +332,41 @@ public class MainWindow {
 	private ControlEngineConfigurator controlEngineConfigurator;
 
 	public MainWindow() {
-		doLayout();
+		super(ApplicationState.APPLICATION_NAME);
+		initialize();
 		getDescriptionTable().getModel().addTableModelListener(new DescriptionTableModelListener());
 	}
 
-	private void doLayout() {
+	private void initialize() {
 		registerKeyStrokeAction();
-		getFrame();
+		this.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setJMenuBar(getMenubar());
+		this.add(getPanel());
+		this.setVisible(true);
+	}
+	
+	@PostConstruct
+	private void setDragAndDrop() {
+		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
+		setDropTarget(new DropTarget(this, multiLayerDropTargetListener));
+		multiLayerDropTargetListener.addDragListener(this, new MainFrameDragOverListener(this));
+		ImageDropListener listener = new ImageDropListener(new ImagePanel());
+		listener.onDropped().add(new Observer<ObservValue<ImagePanel>>() {
+
+			@Override
+			public void observe(ObservValue<ImagePanel> t) {
+				ImagePanel value = t.getValue();
+				Image image = value.getImage();
+				ImageIcon imageIcon = new ImageIcon(image);
+				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
+				imagePanel.removeAll();
+				imagePanel.add(imageLabel);
+				MainWindow.this.invalidate();
+				MainWindow.this.revalidate();
+			}
+		});
+		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
 	}
 
 	@EventMethod(Events.USER_LOGGED)
@@ -486,7 +521,7 @@ public class MainWindow {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					loginWindow.getFrame().setLocationRelativeTo(getFrame());
+					loginWindow.getFrame().setLocationRelativeTo(MainWindow.this);
 					loginWindow.getFrame().setVisible(true);
 				}
 			});
@@ -773,17 +808,6 @@ public class MainWindow {
 		imagePanel.revalidate();
 	}
 
-	public Frame getFrame() {
-		if (frame == null) {
-			frame = new JFrame(ApplicationState.APPLICATION_NAME);
-			frame.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setJMenuBar(getMenubar());
-			frame.add(getPanel());
-			frame.setVisible(true);
-		}
-		return frame;
-	}
 
 	private class WriteWorker {
 

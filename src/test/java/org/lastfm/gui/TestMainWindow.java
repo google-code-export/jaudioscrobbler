@@ -275,7 +275,7 @@ public class TestMainWindow {
 		MockitoAnnotations.initMocks(this);
 		when(viewEngineConfigurator.getViewEngine()).thenReturn(viewEngine);
 		when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
-		window = new FrameFixture(mainWindow.getFrame());
+		window = new FrameFixture(mainWindow);
 		window.show();
 		metadatas = new ArrayList<Metadata>();
 		metadatasWaitingForMetadata = new HashSet<Metadata>();
