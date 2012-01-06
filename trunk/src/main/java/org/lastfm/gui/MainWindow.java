@@ -649,7 +649,6 @@ public class MainWindow extends JFrame {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ActionResult.Complete.toString());
 			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
-			completeMetadataButton.setMnemonic(KeyEvent.VK_C);
 			completeMetadataButton.setEnabled(false);
 
 			completeMetadataButton.addActionListener(new ActionListener() {
@@ -675,7 +674,6 @@ public class MainWindow extends JFrame {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
 			applyButton.setName(APPLY_BUTTON_NAME);
-			applyButton.setMnemonic(KeyEvent.VK_A);
 			applyButton.setEnabled(false);
 
 			applyButton.addActionListener(new ActionListener() {
@@ -694,7 +692,6 @@ public class MainWindow extends JFrame {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
 			sendButton.setName(SEND_BUTTON_NAME);
-			sendButton.setMnemonic(KeyEvent.VK_S);
 			sendButton.setEnabled(false);
 
 			sendButton.addActionListener(new ActionListener() {
@@ -712,7 +709,6 @@ public class MainWindow extends JFrame {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
 			openButton.setName(OPEN_BUTTON_NAME);
-			openButton.setMnemonic(KeyEvent.VK_O);
 
 			openButton.addActionListener(new ActionListener() {
 
