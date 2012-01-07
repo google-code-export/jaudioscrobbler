@@ -366,7 +366,7 @@ public class MainWindow extends JFrame {
 				updateImage(selectedRow);
 				metadataWithAlbum.add(metadata);
 				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
-				getApplyButton().setEnabled(true);
+				getApplyButton().setEnabled(!working);
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -463,7 +463,7 @@ public class MainWindow extends JFrame {
 				if(i == selectedRow){
 					updateImage(i);
 				}
-				getApplyButton().setEnabled(true);
+				getApplyButton().setEnabled(!working);
 			}
 		}
 	}
@@ -774,9 +774,7 @@ public class MainWindow extends JFrame {
 						getDescriptionTable().getModel().setValueAt(ActionResult.New, row, ApplicationState.STATUS_COLUMN);
 
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-						if (!working) {
-							getApplyButton().setEnabled(true);
-						}
+						getApplyButton().setEnabled(!working);
 					}
 				}
 			});
@@ -822,6 +820,9 @@ public class MainWindow extends JFrame {
 				protected Boolean doInBackground() throws Exception {
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
+					working = true;
+					log.info("Starting to write...");
+					getApplyButton().setEnabled(!working);
 					log.info("Ready for write " + metadataWithAlbum.size() + " files");
 					for (final Metadata metadata : metadataWithAlbum) {
 						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
@@ -842,7 +843,7 @@ public class MainWindow extends JFrame {
 
 							private void finishingWorker() {
 								log.info("I'm done, ALL rows have been written");
-								getApplyButton().setEnabled(false);
+								getApplyButton().setEnabled(!working);
 								metadataWithAlbum.clear();
 							}
 						});
@@ -874,7 +875,7 @@ public class MainWindow extends JFrame {
 					counter = 0;
 					working = true;
 					log.info("Start to work...");
-					getApplyButton().setEnabled(false);
+					getApplyButton().setEnabled(!working);
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
