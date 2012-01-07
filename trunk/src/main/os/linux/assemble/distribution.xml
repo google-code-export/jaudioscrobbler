@@ -11,7 +11,15 @@
 			<outputDirectory>/System/Jar</outputDirectory>
 		</file>
 		<file>
-			<source>src/main/resources/images/daft_punk.png</source>
+			<source>src/main/resources/images/drag_300.png</source>
+			<outputDirectory>/src/main/resources/images/</outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/images/drag_150.png</source>
+			<outputDirectory>/src/main/resources/images/</outputDirectory>
+		</file>
+		<file>
+			<source>src/main/resources/images/close.png</source>
 			<outputDirectory>/src/main/resources/images/</outputDirectory>
 		</file>
 		<file>
