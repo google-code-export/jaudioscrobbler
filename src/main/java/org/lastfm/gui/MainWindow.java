@@ -361,12 +361,14 @@ public class MainWindow extends JFrame {
 				ImageIcon imageIcon = new ImageIcon(image);
 				List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 				Metadata metadata = metadatas.get(selectedRow);
-				metadata.setLastfmCoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
-				log.info("sertting image to the row: " + selectedRow);
-				updateImage(selectedRow);
-				metadataWithAlbum.add(metadata);
-				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
-				getApplyButton().setEnabled(!working);
+				if(metadata.getCoverArt() == null){
+					metadata.setLastfmCoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
+					log.info("sertting image to the row: " + selectedRow);
+					updateImage(selectedRow);
+					metadataWithAlbum.add(metadata);
+					getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
+					getApplyButton().setEnabled(!working);
+				}
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -432,10 +434,8 @@ public class MainWindow extends JFrame {
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 		log.info(metadataWithAlbum.size());
-		for (Metadata metadata : metadataWithAlbum) {
-			log.info(ToStringBuilder.reflectionToString(metadata));
-		}
 		for (int i = 0; i < model.getRowCount(); i++) {
+			Metadata metadata = metadatas.get(i);
 			if (!StringUtils.isEmpty(album)) {
 				getDescriptionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
 			}
@@ -454,8 +454,7 @@ public class MainWindow extends JFrame {
 			if (!StringUtils.isEmpty(cds)) {
 				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 			}
-			if(metadataValues.getCoverArt() != null){
-				Metadata metadata = metadatas.get(i);
+			if(metadataValues.getCoverArt() != null && metadata.getCoverArt() == null){
 				log.info("coverArt detected for: " + metadata.getTitle());
 				metadata.setLastfmCoverArt(metadataValues.getCoverArt());
 				metadataWithAlbum.add(metadata);
