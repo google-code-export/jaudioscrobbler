@@ -262,6 +262,8 @@ import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.CoverArt;
+import org.lastfm.model.CoverArtType;
 import org.lastfm.model.MetadataValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -345,7 +347,7 @@ public class MainWindow extends JFrame {
 		this.add(getPanel());
 		this.setVisible(true);
 	}
-	
+
 	@PostConstruct
 	private void setDragAndDrop() {
 		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
@@ -361,14 +363,13 @@ public class MainWindow extends JFrame {
 				ImageIcon imageIcon = new ImageIcon(image);
 				List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 				Metadata metadata = metadatas.get(selectedRow);
-				if(metadata.getCoverArt() == null){
-					metadata.setLastfmCoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED));
-					log.info("sertting image to the row: " + selectedRow);
-					updateImage(selectedRow);
-					metadataWithAlbum.add(metadata);
-					getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
-					getApplyButton().setEnabled(!working);
-				}
+				CoverArt coverArt = new CoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED), CoverArtType.DRAG_AND_DROP);
+				metadata.setNewCoverArt(coverArt);
+				log.info("sertting image to the row: " + selectedRow);
+				updateImage(selectedRow);
+				metadataWithAlbum.add(metadata);
+				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
+				getApplyButton().setEnabled(!working);
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -454,12 +455,13 @@ public class MainWindow extends JFrame {
 			if (!StringUtils.isEmpty(cds)) {
 				getDescriptionTable().getModel().setValueAt(cds, i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
 			}
-			if(metadataValues.getCoverArt() != null && metadata.getCoverArt() == null){
+			if (metadataValues.getCoverArt() != null) {
 				log.info("coverArt detected for: " + metadata.getTitle());
-				metadata.setLastfmCoverArt(metadataValues.getCoverArt());
+				CoverArt coverArt = new CoverArt(metadataValues.getCoverArt(), CoverArtType.DRAG_AND_DROP);
+				metadata.setNewCoverArt(coverArt);
 				metadataWithAlbum.add(metadata);
 				getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
-				if(i == selectedRow){
+				if (i == selectedRow) {
 					updateImage(i);
 				}
 				getApplyButton().setEnabled(!working);
@@ -791,12 +793,18 @@ public class MainWindow extends JFrame {
 		log.info("metadata: " + ToStringBuilder.reflectionToString(metadata));
 
 		imagePanel.removeAll();
-		if (metadata.getCoverArt() != null) {
+		if (metadata.getNewCoverArt() != null) {
+			CoverArt coverArt = metadata.getNewCoverArt();
+			log.info("setting coverArt to: " + coverArt.getType());
+			imagePanel.add(new JLabel(coverArt.getImageIcon()));
+			String label = ApplicationState.COVER_ART_FROM_LASTFM;
+			if(coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)){
+				label = ApplicationState.COVER_ART_FROM_DRAG_AND_DROP;
+			}
+			imageLabel.setText(label);
+		} else if (metadata.getCoverArt() != null) {
 			imagePanel.add(new JLabel(imageUtils.resize(metadata.getCoverArt(), THREE_HUNDRED, THREE_HUNDRED)));
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
-		} else if (metadata.getLastfmCoverArt() != null) {
-			imagePanel.add(new JLabel(metadata.getLastfmCoverArt()));
-			imageLabel.setText(ApplicationState.COVER_ART_FROM_LASTFM);
 		} else {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
@@ -804,7 +812,6 @@ public class MainWindow extends JFrame {
 		imagePanel.invalidate();
 		imagePanel.revalidate();
 	}
-
 
 	private class WriteWorker {
 
@@ -831,8 +838,8 @@ public class MainWindow extends JFrame {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								updateStatus(counter++, metadataWithAlbum.size());
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
-								if(metadata.getCoverArt() != null && selectedRow == getRow(metadata)){
-									updateImage(counter-1);
+								if (metadata.getCoverArt() != null && selectedRow == getRow(metadata)) {
+									updateImage(counter - 1);
 								}
 								if (counter >= metadataWithAlbum.size()) {
 									resetButtonsState();
@@ -918,7 +925,7 @@ public class MainWindow extends JFrame {
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
 											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-												if(!response.equals(ActionResult.Complete)){
+												if (!response.equals(ActionResult.Complete)) {
 													getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 												}
 											}

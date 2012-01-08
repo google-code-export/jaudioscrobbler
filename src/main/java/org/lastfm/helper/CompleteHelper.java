@@ -216,6 +216,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.CoverArt;
+import org.lastfm.model.CoverArtType;
 import org.lastfm.model.LastfmAlbum;
 
 import de.umass.lastfm.Album;
@@ -323,7 +325,8 @@ public class CompleteHelper {
 		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
 			return ActionResult.Complete;
 		}
-		metadata.setLastfmCoverArt(lastfmAlbum.getImageIcon());
+		CoverArt coverArt = new CoverArt(lastfmAlbum.getImageIcon(), CoverArtType.LAST_FM);
+		metadata.setNewCoverArt(coverArt);
 		if(StringUtils.isEmpty(metadata.getYear())){
 			metadata.setYear(lastfmAlbum.getYear());
 		}

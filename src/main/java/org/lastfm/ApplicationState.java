@@ -238,6 +238,7 @@ public interface ApplicationState {
 	static final int HEIGHT = 600;
 	static final String COVER_ART_FROM_FILE = "Cover Art from File";
 	static final String COVER_ART_FROM_LASTFM = "Cover Art from Lastfm";
+	static final String COVER_ART_FROM_DRAG_AND_DROP = "Cover Art from Drag & Drop";
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
 	static final Object READY = "Ready";

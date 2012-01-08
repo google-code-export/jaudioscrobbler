@@ -200,7 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.lastfm.controller;
 
 import java.io.File;
@@ -216,6 +216,8 @@ import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
+import org.lastfm.model.CoverArt;
+import org.lastfm.model.CoverArtType;
 import org.lastfm.model.MusicBrainzTrack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -264,13 +266,13 @@ public class CompleteController {
 			return ActionResult.Error;
 		}
 	}
-	
+
 	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
 	public ActionResult completeCoverArtMetadata(Metadata metadata) {
 		log.info("trying to complete LastFM metadata for: " + metadata.getArtist() + " - " + metadata.getTitle());
 		return lastfmService.completeLastFM(metadata);
 	}
-	
+
 	@RequestMethod(Actions.WRITE_METADATA)
 	public synchronized ActionResult completeAlbum(Metadata metadata) {
 		try {
@@ -286,9 +288,15 @@ public class CompleteController {
 			metadataWriter.writeTotalCds(metadata.getTotalCds());
 			metadataWriter.writeYear(metadata.getYear());
 			metadataWriter.writeGenre(metadata.getGenre());
-			if (metadata.getCoverArt() == null && metadata.getLastfmCoverArt() != null) {
-				metadataWriter.writeCoverArt(metadata.getLastfmCoverArt());
-				metadata.setCoverArt(metadata.getLastfmCoverArt());
+			CoverArt coverArt = metadata.getNewCoverArt();
+			if (coverArt != null) {
+				if(coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)){
+					log.info("trying to remove artwork");
+					boolean result = metadataWriter.removeCoverArt();
+					log.info("artwork deleted with result: " + result);
+				}
+				metadataWriter.writeCoverArt(coverArt.getImageIcon());
+				metadata.setCoverArt(coverArt.getImageIcon());
 			}
 			return ActionResult.Updated;
 		} catch (MetadataException mde) {
