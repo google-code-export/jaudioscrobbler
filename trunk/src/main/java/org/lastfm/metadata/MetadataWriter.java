@@ -348,6 +348,18 @@ public class MetadataWriter {
 			throw new MetadataException(ioe.getMessage());
 		}
 	}
+	
+	public boolean removeCoverArt() throws MetadataException {
+		try {
+			tag.deleteArtworkField();
+			audioFile.commit();
+			return true;
+		} catch (KeyNotFoundException kne) {
+			throw new MetadataException(kne.getMessage());
+		} catch (CannotWriteException nwe) {
+			throw new MetadataException(nwe.getMessage());
+		}	
+	}
 
 	public boolean writeCdNumber(String cdNumber) throws MetadataException {
 		try {

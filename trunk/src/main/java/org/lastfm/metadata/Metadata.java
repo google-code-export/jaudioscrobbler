@@ -207,6 +207,8 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import org.lastfm.model.CoverArt;
+
 public class Metadata {
 	private String title;
 	private String artist;
@@ -218,10 +220,10 @@ public class Metadata {
 	private int length;
 	private int bitRate;
 	private File file;
-	private ImageIcon coverArt;
 	private String cdNumber;
 	private String totalCds;
 	private String year;
+	private CoverArt coverArt;
 	
 	public File getFile() {
 		return file;
@@ -273,12 +275,6 @@ public class Metadata {
 	public void setFile(File file) {
 		this.file = file;
 	}
-	public void setLastfmCoverArt(ImageIcon coverArt) {
-		this.coverArt = coverArt;
-	}
-	public ImageIcon getLastfmCoverArt() {
-		return coverArt;
-	}
 	public String getTrackNumber() {
 		return trackNumber;
 	}
@@ -308,5 +304,11 @@ public class Metadata {
 	}
 	public String getYear() {
 		return year;
+	}
+	public void setNewCoverArt(CoverArt coverArt) {
+		this.coverArt = coverArt;
+	}
+	public CoverArt getNewCoverArt() {
+		return coverArt;
 	}
 }
