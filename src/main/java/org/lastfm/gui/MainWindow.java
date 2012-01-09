@@ -370,7 +370,7 @@ public class MainWindow extends JFrame {
 				metadataWithAlbum.add(metadata);
 				getDescriptionTable().getModel().setValueAt(ActionResult.New, selectedRow, ApplicationState.STATUS_COLUMN);
 				getApplyButton().setEnabled(!working);
-				log.info("setting working to : " + !working);
+				log.info("setting applyButton to : " + !working);
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
@@ -466,7 +466,7 @@ public class MainWindow extends JFrame {
 					updateImage(i);
 				}
 				getApplyButton().setEnabled(!working);
-				log.info("setting working to : " + !working);
+				log.info("setting applyButton to : " + !working);
 			}
 		}
 	}
@@ -754,6 +754,7 @@ public class MainWindow extends JFrame {
 				public void valueChanged(ListSelectionEvent e) {
 					if (tableLoaded) {
 						selectedRow = descriptionTable.getSelectedRow();
+						log.info("SETTING SELECTED ROW to : " + selectedRow);
 						updateImage(selectedRow);
 					}
 				}
@@ -778,7 +779,7 @@ public class MainWindow extends JFrame {
 
 						controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 						getApplyButton().setEnabled(!working);
-						log.info("setting working to : " + !working);
+						log.info("setting applyButton to : " + !working);
 					}
 				}
 			});
@@ -832,7 +833,7 @@ public class MainWindow extends JFrame {
 					working = true;
 					log.info("Starting to write...");
 					getApplyButton().setEnabled(!working);
-					log.info("setting working to : " + !working);
+					log.info("setting applyButton to : " + !working);
 					log.info("Ready for write " + metadataWithAlbum.size() + " files");
 					for (final Metadata metadata : metadataWithAlbum) {
 						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
@@ -843,7 +844,8 @@ public class MainWindow extends JFrame {
 								updateStatus(counter++, metadataWithAlbum.size());
 								getDescriptionTable().getModel().setValueAt(result, getRow(metadata), ApplicationState.STATUS_COLUMN);
 								if (metadata.getCoverArt() != null && selectedRow == getRow(metadata)) {
-									updateImage(counter - 1);
+									log.info("setting image to row: " + selectedRow);
+									updateImage(selectedRow);
 								}
 								if (counter >= metadataWithAlbum.size()) {
 									resetButtonsState();
@@ -853,8 +855,9 @@ public class MainWindow extends JFrame {
 
 							private void finishingWorker() {
 								log.info("I'm done, ALL rows have been written");
-								getApplyButton().setEnabled(!working);
-								log.info("setting working to : " + !working);
+								working = false;
+								getApplyButton().setEnabled(working);
+								log.info("setting applyButton to : " + working);
 								metadataWithAlbum.clear();
 							}
 						});
@@ -887,7 +890,7 @@ public class MainWindow extends JFrame {
 					working = true;
 					log.info("Start to work...");
 					getApplyButton().setEnabled(!working);
-					log.info("setting working to : " + !working);
+					log.info("setting applyButton to : " + !working);
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
@@ -960,7 +963,7 @@ public class MainWindow extends JFrame {
 		if (!metadataWithOutArtist.isEmpty()) {
 			controlEngineConfigurator.getControlEngine().set(Model.METADATA_ARTIST, metadataWithOutArtist, null);
 			getApplyButton().setEnabled(true);
-			log.info("setting working to : true");
+			log.info("setting applyButton to : true");
 		}
 		resetButtonsState();
 		working = false;
