@@ -223,6 +223,7 @@ import org.lastfm.event.Events;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
+import org.lastfm.metadata.MetadataReader;
 import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
 import org.lastfm.model.Model;
@@ -259,9 +260,13 @@ public class MetadataExtractor {
 		for (File file : fileList) {
 			Metadata metadata = null;
 			if (fileUtils.isMp3File(file)) {
-				metadata = new Mp3Reader().getMetadata(file);
+				MetadataReader mp3Reader = new Mp3Reader();
+				mp3Reader.setControlEngine(configurator);
+				metadata = mp3Reader.getMetadata(file);
 			} else if (fileUtils.isM4aFile(file)) {
-				metadata = new Mp4Reader().getMetadata(file);
+				Mp4Reader mp4Reader = new Mp4Reader();
+				mp4Reader.setControlEngine(configurator);
+				metadata = mp4Reader.getMetadata(file);
 			}
 
 			if (metadata == null) {

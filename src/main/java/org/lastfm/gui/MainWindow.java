@@ -381,6 +381,11 @@ public class MainWindow extends JFrame {
 		getLoginLabel().setText(ApplicationState.LOGGED_AS + currentUser.getUsername());
 		getSendButton().setEnabled(true);
 	}
+	
+	@EventMethod(Events.COVER_ART_FAILED)
+	private void onCovertArtFailed(String title) {
+		JOptionPane.showMessageDialog(frame, title + " has a corrupted coverArt");
+	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
 	private void onUserLoginFailed() {

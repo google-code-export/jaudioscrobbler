@@ -32,4 +32,7 @@ public interface Events {
 	String APPLY_METADATA = "readyToApplyMetadata";
 	EventId<ValueEvent<MetadataValues>> READY_TO_APPLY = ev(APPLY_METADATA);
 	
+	String COVER_ART_FAILED = "coverArtFailed";
+	EventId<ValueEvent<String>> LOAD_COVER_ART = ev(COVER_ART_FAILED);
+	
 }
