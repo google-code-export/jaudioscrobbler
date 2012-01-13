@@ -214,10 +214,17 @@ import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
+import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.lastfm.event.Events;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -229,8 +236,10 @@ public abstract class MetadataReader {
 	protected Tag tag;
 	protected AudioHeader header;
 	protected Log log = LogFactory.getLog(this.getClass());
+	private ControlEngineConfigurator configurator;
 	
 	public abstract String getGenre();
+	public abstract Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException;
 
 	public MetadataReader() { 
 		turnOffLogMessages();
@@ -310,16 +319,23 @@ public abstract class MetadataReader {
 		}
 	}
 
-	private ImageIcon getCoverArt() throws IOException, MetadataException {
-		if(tag == null) return null;
-		Artwork artwork = tag.getFirstArtwork();
-		log.info(getTitle() + " has cover art?: " + (artwork != null));
-		return artwork==null ? null: new ImageIcon(artwork.getImage());
+	private ImageIcon getCoverArt(Metadata metadata) throws IOException, MetadataException {
+		try{
+			if(tag == null) return null;
+			Artwork artwork = tag.getFirstArtwork();
+			log.info(getTitle() + " has cover art?: " + (artwork != null));
+			return artwork==null ? null: new ImageIcon(artwork.getImage());
+		} catch(IllegalArgumentException iae){
+			log.info("couldn't get coverArt for file: " + metadata.getTitle());
+			log.error("IllegalArgumentException: " + iae.getMessage());
+			configurator.getControlEngine().fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(getTitle()));
+			return null;
+		}
 	}
 	
 	protected Metadata generateMetadata(File file) throws IOException, MetadataException {
 		Metadata metadata = new Metadata();
-		metadata.setCoverArt(getCoverArt());
+		metadata.setCoverArt(getCoverArt(metadata));
 		metadata.setTitle(getTitle());
 		metadata.setArtist(getArtist());
 		metadata.setAlbum(getAlbum());
@@ -333,5 +349,9 @@ public abstract class MetadataReader {
 		metadata.setBitRate(getBitRate());
 		metadata.setFile(file);
 		return metadata;
+	}
+	
+	public void setControlEngine(ControlEngineConfigurator configurator) {
+		this.configurator = configurator;
 	}
 }
