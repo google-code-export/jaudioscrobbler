@@ -1,0 +1,2 @@
+Funcionalidad principal de JAudioScrobbler: Completar metadata usando MusicBrainz y LastFM. 
+
