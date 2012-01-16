@@ -319,18 +319,23 @@ public abstract class MetadataReader {
 		}
 	}
 
-	private ImageIcon getCoverArt(Metadata metadata) throws IOException, MetadataException {
+	private ImageIcon getCoverArt(Metadata metadata) throws MetadataException {
 		try{
 			if(tag == null) return null;
 			Artwork artwork = tag.getFirstArtwork();
 			log.info(getTitle() + " has cover art?: " + (artwork != null));
 			return artwork==null ? null: new ImageIcon(artwork.getImage());
 		} catch(IllegalArgumentException iae){
-			log.info("couldn't get coverArt for file: " + metadata.getTitle());
-			log.error("IllegalArgumentException: " + iae.getMessage());
-			configurator.getControlEngine().fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(getTitle()));
-			return null;
+			return handleCoverArtException(metadata, iae);
+		} catch (IOException ioe){
+			return handleCoverArtException(metadata, ioe);
 		}
+	}
+	private ImageIcon handleCoverArtException(Metadata metadata, Exception exc) {
+		log.info("couldn't get coverArt for file: " + metadata.getTitle());
+		log.error("Exception: " + exc.getMessage());
+		configurator.getControlEngine().fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(getTitle()));
+		return null;
 	}
 	
 	protected Metadata generateMetadata(File file) throws IOException, MetadataException {

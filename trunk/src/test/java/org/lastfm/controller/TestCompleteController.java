@@ -343,7 +343,7 @@ public class TestCompleteController {
 	
 	@Test
 	public void shouldCompleteCoverArtMetadata() throws Exception {
-		controller.completeCoverArtMetadata(metadata);
+		controller.completeLastFmMetadata(metadata);
 		
 		verify(coverArtService).completeLastFM(metadata);
 	}

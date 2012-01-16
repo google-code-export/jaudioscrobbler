@@ -346,6 +346,8 @@ public class MetadataWriter {
 			throw new MetadataException(nwe.getMessage());
 		} catch (IOException ioe) {
 			throw new MetadataException(ioe.getMessage());
+		} catch (NullPointerException nue) {
+			throw new MetadataException(nue.getMessage());
 		}
 	}
 	

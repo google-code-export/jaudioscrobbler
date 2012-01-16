@@ -398,19 +398,27 @@ public class MainWindow extends JFrame {
 		deleteALLRows(descriptionTable);
 		metadataWithAlbum.clear();
 		getDirectoryField().setText(path);
+		getLabel().setText(ApplicationState.WORKING);
+	}
+	
+	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
+	private void onMusicDirectorySelectedCancel() {
+		getOpenButton().setEnabled(true);
 	}
 
-	private void resetImagePanel() {
+	private void resetStatus() {
 		log.info("Trying to reset to the default image");
 		getImagePanel().removeAll();
 		getImagePanel().add(new JLabel(imageUtils.getDefaultImage()));
+		getCompleteMetadataButton().setEnabled(true);
+		getOpenButton().setEnabled(true);
+		getLabel().setText(STATUS_LABEL);
 		getImagePanel().invalidate();
 		getImagePanel().revalidate();
 	}
 
 	@EventMethod(Events.TRACKS_LOADED)
 	private void onTracksLoaded() {
-		getCompleteMetadataButton().setEnabled(true);
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 		if (!filesWithoutMinimumMetadata.isEmpty()) {
@@ -426,7 +434,7 @@ public class MainWindow extends JFrame {
 				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " were not loaded due to not enough metadata");
 			}
 		}
-		resetImagePanel();
+		resetStatus();
 		tableLoaded = true;
 	}
 
@@ -722,6 +730,7 @@ public class MainWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					openButton.setEnabled(false);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
