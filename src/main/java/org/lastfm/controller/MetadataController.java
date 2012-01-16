@@ -271,6 +271,8 @@ public class MetadataController {
 			} catch (MetadataException e) {
 				handleException(e);
 			}
+		} else {
+			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
 		}
 	}
 

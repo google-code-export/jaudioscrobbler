@@ -217,7 +217,6 @@ import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
 import org.lastfm.model.CoverArt;
-import org.lastfm.model.CoverArtType;
 import org.lastfm.model.MusicBrainzTrack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -268,7 +267,7 @@ public class CompleteController {
 	}
 
 	@RequestMethod(Actions.COMPLETE_LAST_FM_METADATA)
-	public ActionResult completeCoverArtMetadata(Metadata metadata) {
+	public ActionResult completeLastFmMetadata(Metadata metadata) {
 		log.info("trying to complete LastFM metadata for: " + metadata.getArtist() + " - " + metadata.getTitle());
 		return lastfmService.completeLastFM(metadata);
 	}
@@ -288,15 +287,13 @@ public class CompleteController {
 			metadataWriter.writeTotalCds(metadata.getTotalCds());
 			metadataWriter.writeYear(metadata.getYear());
 			metadataWriter.writeGenre(metadata.getGenre());
-			CoverArt coverArt = metadata.getNewCoverArt();
-			if (coverArt != null) {
-				if(coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)){
-					log.info("trying to remove artwork");
-					boolean result = metadataWriter.removeCoverArt();
-					log.info("artwork deleted with result: " + result);
-				}
-				metadataWriter.writeCoverArt(coverArt.getImageIcon());
-				metadata.setCoverArt(coverArt.getImageIcon());
+			CoverArt coverArtNew = metadata.getNewCoverArt();
+			if (coverArtNew != null) {
+				log.info("trying to remove artwork");
+				boolean result = metadataWriter.removeCoverArt();
+				log.info("artwork deleted with result: " + result);
+				metadataWriter.writeCoverArt(coverArtNew.getImageIcon());
+				metadata.setCoverArt(coverArtNew.getImageIcon());
 			}
 			return ActionResult.Updated;
 		} catch (MetadataException mde) {
@@ -304,5 +301,5 @@ public class CompleteController {
 			return ActionResult.Error;
 		}
 	}
-
+	
 }

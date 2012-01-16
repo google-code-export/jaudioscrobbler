@@ -252,12 +252,6 @@ public class Metadata {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public ImageIcon getCoverArt() {
-		return artwork;
-	}
-	public void setCoverArt(ImageIcon artwork) {
-		this.artwork = artwork;
-	}
 	public void setLenght(int length) {
 		this.length = length;
 	}
@@ -304,6 +298,12 @@ public class Metadata {
 	}
 	public String getYear() {
 		return year;
+	}
+	public ImageIcon getCoverArt() {
+		return artwork;
+	}
+	public void setCoverArt(ImageIcon artwork) {
+		this.artwork = artwork;
 	}
 	public void setNewCoverArt(CoverArt coverArt) {
 		this.coverArt = coverArt;
