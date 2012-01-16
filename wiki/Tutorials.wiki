@@ -1,4 +1,4 @@
-#labels MainFunctionality,CompleteMetadata
+#labels Functionality,Metadata,Tutorials
 === ALL information concerning JAudioScrobbler functionality ===
 
 Main functionality.
