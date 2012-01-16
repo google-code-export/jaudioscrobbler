@@ -4,3 +4,9 @@
 Main functionality.
 
 <wiki:video url="http://www.youtube.com/watch?v=p787VIw1Vz4"/>
+
+
+Add cover art using drag & drop
+
+
+<wiki:video url="http://www.youtube.com/watch?v=FbA5wBVhTyI"/>
