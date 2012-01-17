@@ -404,6 +404,7 @@ public class MainWindow extends JFrame {
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
 	private void onMusicDirectorySelectedCancel() {
 		getOpenButton().setEnabled(true);
+		getCompleteMetadataButton().setEnabled(true);
 	}
 
 	private void resetStatus() {
@@ -412,7 +413,7 @@ public class MainWindow extends JFrame {
 		getImagePanel().add(new JLabel(imageUtils.getDefaultImage()));
 		getCompleteMetadataButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
-		getLabel().setText(STATUS_LABEL);
+		getLabel().setText(ApplicationState.DONE);
 		getImagePanel().invalidate();
 		getImagePanel().revalidate();
 	}
@@ -731,6 +732,7 @@ public class MainWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					openButton.setEnabled(false);
+					getCompleteMetadataButton().setEnabled(false);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
