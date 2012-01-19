@@ -1,5 +1,7 @@
 package org.lastfm.event;
 
+import java.util.List;
+
 import org.asmatron.messengine.event.EmptyEvent;
 import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
@@ -27,7 +29,7 @@ public interface Events {
 	EventId<EmptyEvent> LOADED = ev(TRACKS_LOADED);
 	
 	String LOAD_METADATA = "loadMetadata";
-	EventId<ValueEvent<Metadata>> LOAD = ev(LOAD_METADATA);
+	EventId<ValueEvent<List<Metadata>>> LOAD = ev(LOAD_METADATA);
 	
 	String OPEN_ERROR = "openError";
 	EventId<EmptyEvent> OPEN = ev(OPEN_ERROR);

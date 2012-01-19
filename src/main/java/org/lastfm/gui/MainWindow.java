@@ -486,21 +486,23 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.LOAD_METADATA)
-	private void onLoadMetadata(Metadata metadata) {
+	private void onLoadMetadata(List<Metadata> metadatas) {
 		JTable descriptionTable = getDescriptionTable();
-		int row = descriptionTable.getRowCount();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-		model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
-		descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
-		descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
-		descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
-		descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
-		descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
-		descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
-		descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-		descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
-		descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
-		descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
+		for (Metadata metadata : metadatas) {
+			int row = descriptionTable.getRowCount();
+			model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
+			descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
+			descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
+			descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
+			descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
+			descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
+			descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+			descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
+		}
 	}
 
 	private void deleteALLRows(JTable descriptionTable) {

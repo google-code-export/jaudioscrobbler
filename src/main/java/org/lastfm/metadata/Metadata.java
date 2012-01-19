@@ -207,9 +207,11 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.model.CoverArt;
 
-public class Metadata {
+public class Metadata implements Comparable<Metadata>{
 	private String title;
 	private String artist;
 	private String album;
@@ -224,6 +226,7 @@ public class Metadata {
 	private String totalCds;
 	private String year;
 	private CoverArt coverArt;
+	private Log log = LogFactory.getLog(this.getClass());
 	
 	public File getFile() {
 		return file;
@@ -310,5 +313,15 @@ public class Metadata {
 	}
 	public CoverArt getNewCoverArt() {
 		return coverArt;
+	}
+	@Override
+	public int compareTo(Metadata metadata) {
+		try{
+			int thisTrackNumer = Integer.valueOf(getTrackNumber());
+			return thisTrackNumer > Integer.valueOf(metadata.getTrackNumber()) ? 1 : -1;
+		} catch (NumberFormatException nfe){
+			log.warn(nfe.getMessage());
+			return 0;
+		}
 	}
 }

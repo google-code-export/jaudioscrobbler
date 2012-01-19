@@ -205,10 +205,12 @@ package org.lastfm.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.ActionMethod;
@@ -252,7 +254,12 @@ public class MetadataController {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
 				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
+				Collections.sort(metadataList);
+				for (Metadata metadata : metadataList) {
+					log.info(ToStringBuilder.reflectionToString(metadata));
+				}
 				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
+				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
 				configurator.getControlEngine().fireEvent(Events.LOADED);
 			} catch (IOException e) {
 				handleException(e);
