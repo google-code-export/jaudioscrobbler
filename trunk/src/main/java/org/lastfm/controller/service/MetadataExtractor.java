@@ -214,12 +214,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.event.Events;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
@@ -273,7 +271,6 @@ public class MetadataExtractor {
 				log.info(file.getAbsoluteFile() + " is not a valid Audio File");
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
-				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<Metadata>(metadata));
 			} else {
 				filesWithoutMinimumMetadata.add(file);
 			}
