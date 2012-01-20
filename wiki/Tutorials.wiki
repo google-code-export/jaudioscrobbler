@@ -15,4 +15,4 @@ Add cover art using drag & drop
 Add same information to several files
 
 
-<wiki:video url="http://youtu.be/MWrs_6WQH3Q"/>
+<wiki:video url="http://www.youtube.com/watch?v=MWrs_6WQH3Q"/>
