@@ -210,7 +210,6 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.ActionMethod;
@@ -255,9 +254,6 @@ public class MetadataController {
 			try {
 				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
 				Collections.sort(metadataList);
-				for (Metadata metadata : metadataList) {
-					log.info(ToStringBuilder.reflectionToString(metadata));
-				}
 				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
 				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
 				configurator.getControlEngine().fireEvent(Events.LOADED);

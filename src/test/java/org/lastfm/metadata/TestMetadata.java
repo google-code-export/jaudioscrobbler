@@ -187,7 +187,7 @@
       same "printed page" as the copyright notice for easier
       identification within third-party archives.
 
-   Copyright 2011 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
+   Copyright 2012 Jose Luis De la Cruz Morales joseluis.delacruz@gmail.com
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -202,127 +202,129 @@
    limitations under the License.
 */
 
+
 package org.lastfm.metadata;
+
+import static org.junit.Assert.*;
 
 import java.io.File;
 
 import javax.swing.ImageIcon;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.junit.Before;
+import org.junit.Test;
 import org.lastfm.model.CoverArt;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-public class Metadata implements Comparable<Metadata>{
-	private String title;
-	private String artist;
-	private String album;
-	private String genre;
-	private String trackNumber;
-	private String totalTracks;
-	private ImageIcon coverArt;
-	private int length;
-	private int bitRate;
+
+public class TestMetadata {
+	private Metadata metadata = new Metadata();
+	private String title = "Reverie (Dash Berlin Remix)";
+	private String artist = "First State feat. Sarah Howells";
+	private String album = "Reverie";
+	private String genre = "Vocal Trance";
+	private String trackNumber = "1";
+	private String totalTracks = "5";
+	private int length = 697;
+	private int bitRate = 320;
+	private String cdNumber = "1";
+	private String totalCds = "1";
+	private String year = "2011";
+	
+	@Mock
+	private ImageIcon artwork;
+	@Mock
 	private File file;
-	private String cdNumber;
-	private String totalCds;
-	private String year;
-	private CoverArt newCoverArt;
-	private Log log = LogFactory.getLog(this.getClass());
+	@Mock
+	private CoverArt coverArt;
 	
-	public File getFile() {
-		return file;
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
 	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getArtist() {
-		return artist;
-	}
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-	public String getAlbum() {
-		return album;
-	}
-	public void setAlbum(String album) {
-		this.album = album;
-	}
-	public String getGenre() {
-		return genre;
-	}
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
-	public void setLenght(int length) {
-		this.length = length;
+
+	@Test
+	public void shouldGetTitle() throws Exception {
+		metadata.setTitle(title );
+		assertEquals(title, metadata.getTitle());
 	}
 	
-	public int getLength() {
-		return length;
-	}
-	public void setBitRate(int bitRate) {
-		this.bitRate = bitRate;
+	@Test
+	public void shouldGetArtist() throws Exception {
+		metadata.setArtist(artist);
+		assertEquals(artist, metadata.getArtist());
 	}
 	
-	public int getBitRate() {
-		return bitRate;
+	@Test
+	public void shouldGetAlbum() throws Exception {
+		metadata.setAlbum(album );
+		assertEquals(album, metadata.getAlbum());
 	}
-	public void setFile(File file) {
-		this.file = file;
+	
+	@Test
+	public void shouldGetGenre() throws Exception {
+		metadata.setGenre(genre);
+		assertEquals(genre, metadata.getGenre());
 	}
-	public String getTrackNumber() {
-		return trackNumber;
+	
+	@Test
+	public void shouldGetTrackNumber() throws Exception {
+		metadata.setTrackNumber(trackNumber);
+		assertEquals(trackNumber, metadata.getTrackNumber());
 	}
-	public void setTrackNumber(String trackNumber) {
-		this.trackNumber = trackNumber;
+	
+	@Test
+	public void shouldGetTotalTracks() throws Exception {
+		metadata.setTotalTracks(totalTracks);
+		assertEquals(totalTracks, metadata.getTotalTracks());
 	}
-	public String getTotalTracks() {
-		return totalTracks;
+	
+	@Test
+	public void shouldGetArtWork() throws Exception {
+		metadata.setCoverArt(artwork);
+		assertEquals(artwork, metadata.getCoverArt());
 	}
-	public void setTotalTracks(String totalTracks) {
-		this.totalTracks = totalTracks;
+	
+	@Test
+	public void shouldGetLength() throws Exception {
+		metadata.setLenght(length);
+		assertEquals(length, metadata.getLength());
 	}
-	public void setCdNumber(String cdNumber) {
-		this.cdNumber = cdNumber;
+	
+	@Test
+	public void shouldGetBitRate() throws Exception {
+		metadata.setBitRate(bitRate);
+		assertEquals(bitRate, metadata.getBitRate());
 	}
-	public String getCdNumber() {
-		return cdNumber;
+	
+	@Test
+	public void shouldGetFile() throws Exception {
+		metadata.setFile(file);
+		assertEquals(file, metadata.getFile());
 	}
-	public void setTotalCds(String totalCds) {
-		this.totalCds = totalCds;
+	
+	@Test
+	public void shouldGetCdNumber() throws Exception {
+		metadata.setCdNumber(cdNumber);
+		assertEquals(cdNumber, metadata.getCdNumber());
 	}
-	public String getTotalCds() {
-		return totalCds;
+	
+	@Test
+	public void shouldGetTotalCds() throws Exception {
+		metadata.setTotalCds(totalCds);
+		assertEquals(totalCds, metadata.getTotalCds());
 	}
-	public void setYear(String year) {
-		this.year = year;
+	
+	@Test
+	public void shouldGetYear() throws Exception {
+		metadata.setYear(year);
+		assertEquals(year, metadata.getYear());
 	}
-	public String getYear() {
-		return year;
-	}
-	public ImageIcon getCoverArt() {
-		return coverArt;
-	}
-	public void setCoverArt(ImageIcon artwork) {
-		this.coverArt = artwork;
-	}
-	public void setNewCoverArt(CoverArt coverArt) {
-		this.newCoverArt = coverArt;
-	}
-	public CoverArt getNewCoverArt() {
-		return newCoverArt;
-	}
-	@Override
-	public int compareTo(Metadata metadata) {
-		try{
-			int thisTrackNumer = Integer.valueOf(getTrackNumber());
-			return thisTrackNumer > Integer.valueOf(metadata.getTrackNumber()) ? 1 : -1;
-		} catch (NumberFormatException nfe){
-			log.warn(nfe.getMessage());
-			return 0;
-		}
+	
+	@Test
+	public void shouldGetNewCoverArt() throws Exception {
+		metadata.setNewCoverArt(coverArt);
+		assertEquals(coverArt, metadata.getNewCoverArt());
 	}
 }
