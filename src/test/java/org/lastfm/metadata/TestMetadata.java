@@ -224,7 +224,7 @@ public class TestMetadata {
 	private String artist = "First State feat. Sarah Howells";
 	private String album = "Reverie";
 	private String genre = "Vocal Trance";
-	private String trackNumber = "1";
+	private String trackNumber = "2";
 	private String totalTracks = "5";
 	private int length = 697;
 	private int bitRate = 320;
@@ -326,5 +326,32 @@ public class TestMetadata {
 	public void shouldGetNewCoverArt() throws Exception {
 		metadata.setNewCoverArt(coverArt);
 		assertEquals(coverArt, metadata.getNewCoverArt());
+	}
+	
+	@Test
+	public void shouldDetectPreviousMetadata() throws Exception {
+		Metadata previousMetadata = new Metadata();
+		previousMetadata.setTrackNumber("1");
+		
+		metadata.setTrackNumber(trackNumber);
+		assertEquals(1, metadata.compareTo(previousMetadata));
+	}
+	
+	@Test
+	public void shouldDetectNextMetadata() throws Exception {
+		Metadata nextMetadata = new Metadata();
+		nextMetadata.setTrackNumber("3");
+		
+		metadata.setTrackNumber(trackNumber);
+		assertEquals(-1, metadata.compareTo(nextMetadata));
+	}
+	
+	@Test
+	public void shouldRespondAtErrorInTrackNumber() throws Exception {
+		Metadata rareMetadata = new Metadata();
+		rareMetadata.setTrackNumber("somethingWrong");
+		
+		metadata.setTrackNumber(trackNumber);
+		assertEquals(0, metadata.compareTo(rareMetadata));
 	}
 }

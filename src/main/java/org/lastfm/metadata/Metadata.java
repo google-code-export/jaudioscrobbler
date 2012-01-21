@@ -315,13 +315,14 @@ public class Metadata implements Comparable<Metadata>{
 	public CoverArt getNewCoverArt() {
 		return newCoverArt;
 	}
+	
 	@Override
 	public int compareTo(Metadata metadata) {
 		try{
 			int thisTrackNumer = Integer.valueOf(getTrackNumber());
 			return thisTrackNumer > Integer.valueOf(metadata.getTrackNumber()) ? 1 : -1;
 		} catch (NumberFormatException nfe){
-			log.warn(nfe.getMessage());
+			log.error("Metadata : " + metadata.getTitle() + " has an incorrect trackNumber: " + nfe.getMessage());
 			return 0;
 		}
 	}
