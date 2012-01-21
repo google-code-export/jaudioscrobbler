@@ -7,3 +7,7 @@ Funcionalidad principal de JAudioScrobbler: Completar metadata usando MusicBrain
 Agregar cover art a tus archivos arrastrando y soltando una imagen.
 
 <wiki:video url="http://www.youtube.com/watch?v=VqIbRTKtgLA"/>
+
+Agregar información a un Album.
+
+<wiki:video url="http://www.youtube.com/watch?v=nz0T3Tr3V18"/>
