@@ -203,6 +203,7 @@
 */
 package org.lastfm.controller;
 
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
@@ -210,6 +211,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -218,11 +220,17 @@ import javax.swing.JFileChooser;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.controller.service.MetadataExtractor;
 import org.lastfm.event.Events;
+import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataException;
 import org.lastfm.model.Model;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -255,9 +263,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldGetMetadata() throws Exception {
-		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
-		when(fileChooser.getSelectedFile()).thenReturn(root);
-		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
+		setFileChooserExpectations();
 		
 		controller.getMetadata();
 		
@@ -267,6 +273,32 @@ public class TestMetadataController {
 		verify(controlEngine).set(Model.METADATA, metadataList, null);
 		verify(metadataExtractor).extractMetadata(root);
 		verify(controlEngine).fireEvent(Events.LOADED);
+	}
+	
+	@Test
+	public void shouldGetAnOrderListByTrackNumnber() throws Exception {
+		setFileChooserExpectations();
+		
+		Metadata firstTrack = new Metadata();
+		firstTrack.setTrackNumber("1");
+		
+		Metadata secondTrack = new Metadata();
+		secondTrack.setTrackNumber("2");
+		
+		metadataList.add(secondTrack);
+		metadataList.add(firstTrack);
+		
+		controller.getMetadata();
+		
+		assertEquals("1", metadataList.get(0).getTrackNumber());
+		assertEquals("2", metadataList.get(1).getTrackNumber());
+	}
+
+	private void setFileChooserExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
+			InvalidId3VersionException, MetadataException {
+		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
+		when(fileChooser.getSelectedFile()).thenReturn(root);
+		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
 	}
 
 	private void fileChooserSetupExpectations() {
