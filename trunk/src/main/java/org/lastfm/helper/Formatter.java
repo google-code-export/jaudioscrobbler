@@ -1,5 +1,8 @@
 package org.lastfm.helper;
 
+import java.util.StringTokenizer;
+
+import org.apache.commons.lang3.StringUtils;
 import org.lastfm.metadata.Metadata;
 
 public class Formatter {
@@ -21,6 +24,26 @@ public class Formatter {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isNotCamelized(Metadata metadata) {
+		String title = metadata.getTitle();
+		if(StringUtils.isAllLowerCase(title.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(title.replace(" ", StringUtils.EMPTY))){
+			metadata.setTitle(toCamelCase(title));
+			return true;
+		}
+		return false;
+	}
+	
+	private String toCamelCase(String value) {
+		StringTokenizer stringTokenizer = new StringTokenizer(value);
+		StringBuilder stringBuilder = new StringBuilder();
+		while(stringTokenizer.hasMoreTokens()){
+			stringBuilder.append(StringUtils.capitalize(stringTokenizer.nextToken()));
+			stringBuilder.append(" ");
+		}
+		String[] strings = StringUtils.split(stringBuilder.toString(), " ");
+		return StringUtils.join(strings, " ");
 	}
 
 }

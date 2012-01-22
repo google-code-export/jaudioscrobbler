@@ -298,8 +298,7 @@ public class TestLastfmService {
 	}
 	
 	@Test
-	public void shouldReturnSomethingnewValueIfNoBadFormat() throws Exception {
-		when(formatter.isABadFormat(metadata)).thenReturn(false);
+	public void shouldReturnSomethingnewValueIfNoBadFormatAndCapitalized() throws Exception {
 		setCompleteHelperExpectations();
 		when(completeHelper.isSomethingNew(lastfmAlbum, metadata)).thenReturn(ActionResult.New);
 		
@@ -313,4 +312,14 @@ public class TestLastfmService {
 		when(completeHelper.canLastFMHelpToComplete(metadata)).thenReturn(true);
 		when(completeHelper.getLastFM(metadata)).thenReturn(lastfmAlbum);
 	}
+	
+	@Test
+	public void shouldDetectNewIfIsNotCamelized() throws Exception {
+		when(formatter.isNotCamelized(metadata)).thenReturn(true);
+		
+		ActionResult result = coverArtService.completeLastFM(metadata);
+		
+		assertEquals(ActionResult.New, result);
+	}
+
 }

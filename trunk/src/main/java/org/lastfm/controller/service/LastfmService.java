@@ -224,12 +224,13 @@ public class LastfmService {
 	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {
 			boolean formatted = formatter.isABadFormat(metadata);
+			boolean capitalized = formatter.isNotCamelized(metadata);
 			if (completeHelper.canLastFMHelpToComplete(metadata)) {
 				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
 				ActionResult somethingNew = completeHelper.isSomethingNew(lastfmAlbum, metadata);
-				return formatted == true ? ActionResult.New : somethingNew;
+				return formatted == true || capitalized == true ? ActionResult.New : somethingNew;
 			} else {
-				return formatted == true ? ActionResult.New : ActionResult.Complete;
+				return formatted == true || capitalized == true ? ActionResult.New : ActionResult.Complete;
 			}
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);
