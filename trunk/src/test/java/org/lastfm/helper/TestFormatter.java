@@ -8,8 +8,6 @@ import org.lastfm.metadata.Metadata;
 
 
 public class TestFormatter {
-	private String title = "legends of the fall";
-	private String expected = "Legends Of The Fall";
 	private String badFormatA = "¿Cu&aacute;ndo?";
 	private String badFormatAExpected = "¿Cuándo?";
 	private String badFormatE = "¿Qu&eacute;?";
@@ -20,8 +18,12 @@ public class TestFormatter {
 	private String bFormatOExpected = "¿Cómo?";
 	private String badFormatU = "t&uacute;";
 	private String badFormatUExpected = "tú";
-	private String artist = "Angel Tears";
-	private String album = "Vision";
+	private String artist = "angel tears";
+	private String artistExpected = "Angel Tears";
+	private String title = "legends of the fall";
+	private String titleExpected = "Legends Of The Fall";
+	private String album = "vision";
+	private String albumExpected = "Vision";
 	private Metadata metadata = new Metadata();
 
 	
@@ -30,15 +32,6 @@ public class TestFormatter {
 		metadata.setArtist(artist);
 		metadata.setTitle(title);
 		metadata.setAlbum(album);
-	}
-	
-	@Test
-	public void shouldCapitalizeTitle() throws Exception {
-		Formatter formatter = new Formatter();
-		metadata.setTitle(title);
-
-		assertTrue(formatter.isNotCamelized(metadata));
-		assertEquals(expected , metadata.getTitle());
 	}
 	
 	@Test
@@ -188,5 +181,32 @@ public class TestFormatter {
 		assertTrue(formatter.isABadFormat(metadata));
 		assertEquals(badFormatUExpected , metadata.getAlbum());
 
+	}
+	
+	@Test
+	public void shouldCapitalizeTitle() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setTitle(title);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(titleExpected , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldCapitalizeArtist() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setArtist(artist);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(artistExpected , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldCapitalizeAlbum() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setAlbum(album);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(albumExpected , metadata.getAlbum());
 	}
 }

@@ -27,12 +27,23 @@ public class Formatter {
 	}
 
 	public boolean isNotCamelized(Metadata metadata) {
+		boolean camelized = false;
+		String artist = metadata.getArtist();
 		String title = metadata.getTitle();
+		String album = metadata.getAlbum();
 		if(StringUtils.isAllLowerCase(title.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(title.replace(" ", StringUtils.EMPTY))){
 			metadata.setTitle(toCamelCase(title));
-			return true;
+			camelized =  true;
 		}
-		return false;
+		if(StringUtils.isAllLowerCase(artist.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(artist.replace(" ", StringUtils.EMPTY))){
+			metadata.setArtist(toCamelCase(artist));
+			camelized =  true;
+		}
+		if(StringUtils.isAllLowerCase(album.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(album.replace(" ", StringUtils.EMPTY))){
+			metadata.setAlbum(toCamelCase(album));
+			camelized =  true;
+		}
+		return camelized == true ? true : false;
 	}
 	
 	private String toCamelCase(String value) {
