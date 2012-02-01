@@ -209,4 +209,31 @@ public class TestFormatter {
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(albumExpected , metadata.getAlbum());
 	}
+	
+	@Test
+	public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setAlbum(album.toUpperCase());
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(albumExpected , metadata.getAlbum());
+	}
+	
+	@Test
+	public void shouldCapitalizeTitleWhenUppercase() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setTitle(title.toUpperCase());
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(titleExpected , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldCapitalizeArtistWhenUppercase() throws Exception {
+		Formatter formatter = new Formatter();
+		metadata.setArtist(artist.toUpperCase());
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(artistExpected , metadata.getArtist());
+	}
 }
