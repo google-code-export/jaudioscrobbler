@@ -9,7 +9,7 @@ Main functionality.
 Add cover art using drag & drop
 
 
-<wiki:video url="http://www.youtube.com/watch?v=FbA5wBVhTyI"/>
+<wiki:video url="http://www.youtube.com/watch?v=8MbS4Ksh_Dc"/>
 
 
 Add same information to several files
