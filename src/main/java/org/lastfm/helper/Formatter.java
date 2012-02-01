@@ -47,7 +47,7 @@ public class Formatter {
 	}
 	
 	private String toCamelCase(String value) {
-		StringTokenizer stringTokenizer = new StringTokenizer(value);
+		StringTokenizer stringTokenizer = new StringTokenizer(value.toLowerCase());
 		StringBuilder stringBuilder = new StringBuilder();
 		while(stringTokenizer.hasMoreTokens()){
 			stringBuilder.append(StringUtils.capitalize(stringTokenizer.nextToken()));
