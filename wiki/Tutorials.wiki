@@ -18,7 +18,7 @@ Add same information to several files
 <wiki:video url="http://www.youtube.com/watch?v=MWrs_6WQH3Q"/>
 
 
-How to send scrobblings to your Last.FM account
+How to send scrobblings to your [LastFM] account
 
 
 <wiki:video url="http://www.youtube.com/watch?v=4g74FQH7di8"/>
