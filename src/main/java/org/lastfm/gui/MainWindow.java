@@ -237,6 +237,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.ListSelectionModel;
 import javax.swing.SwingWorker;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -436,6 +437,10 @@ public class MainWindow extends JFrame {
 			}
 		}
 		resetStatus();
+		ListSelectionModel listSelectionModel = getDescriptionTable().getSelectionModel();
+		listSelectionModel.setSelectionInterval(0, 0);
+		selectedRow = 0;
+		updateImage(selectedRow);
 		tableLoaded = true;
 	}
 
@@ -753,11 +758,6 @@ public class MainWindow extends JFrame {
 		if (descriptionTable == null) {
 			descriptionTable = new DescriptionTable();
 			descriptionTable.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					descriptionTable.setToolTipText("In order to enter a custom metadata you have to click " + "on complete button first");
-				}
-
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON3) {

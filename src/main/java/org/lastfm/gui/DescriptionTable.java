@@ -234,7 +234,6 @@ public class DescriptionTable extends JTable{
 	public DescriptionTable() {
 		DefaultTableModel model = new DefaultTableModel(data,columnNames);
 		this.setModel(model);
-		this.setEnabled(false);
 		setPreferredWidth();
 	}
 
