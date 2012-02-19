@@ -243,6 +243,7 @@ public class MetadataController {
 	private ControlEngineConfigurator configurator;
 	@Autowired
 	private MetadataExtractor metadataExtractor;
+	private List<Metadata> metadataList;
 
 	@ActionMethod(Actions.GET_METADATA)
 	public void getMetadata() {
@@ -252,11 +253,9 @@ public class MetadataController {
 			File root = fileChooser.getSelectedFile();
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
-				List<Metadata> metadataList = metadataExtractor.extractMetadata(root);
+				metadataList = metadataExtractor.extractMetadata(root);
 				Collections.sort(metadataList);
-				configurator.getControlEngine().set(Model.METADATA, metadataList, null);
-				configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
-				configurator.getControlEngine().fireEvent(Events.LOADED);
+				sendLoadedEvent(metadataList);
 			} catch (IOException e) {
 				handleException(e);
 			} catch (TagException e) {
@@ -273,10 +272,19 @@ public class MetadataController {
 				handleException(e);
 			} catch (MetadataException e) {
 				handleException(e);
+			} catch (IllegalArgumentException e) {
+				sendLoadedEvent(metadataList);
+				handleException(e);
 			}
 		} else {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
 		}
+	}
+
+	private void sendLoadedEvent(List<Metadata> metadataList) {
+		configurator.getControlEngine().set(Model.METADATA, metadataList, null);
+		configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
+		configurator.getControlEngine().fireEvent(Events.LOADED);
 	}
 
 	private void handleException(Exception e) {
