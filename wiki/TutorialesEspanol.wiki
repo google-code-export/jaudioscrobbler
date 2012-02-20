@@ -11,3 +11,7 @@ Agregar cover art a tus archivos arrastrando y soltando una imagen.
 Agregar información a un Album.
 
 <wiki:video url="http://www.youtube.com/watch?v=nz0T3Tr3V18"/>
+
+Enviar Scrobblings a [Last.FM]
+
+http://www.youtube.com/watch?v=n5IViEmmKUA
