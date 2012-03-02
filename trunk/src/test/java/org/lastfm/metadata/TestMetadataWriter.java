@@ -212,8 +212,6 @@ import static org.mockito.Mockito.when;
 import java.awt.Image;
 import java.io.File;
 
-import javax.swing.ImageIcon;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
@@ -245,8 +243,6 @@ public class TestMetadataWriter {
 	private File file;
 	@Mock
 	private AudioFileHelper audioFileHelper;
-	@Mock
-	private ImageIcon imageIcon;
 	@Mock
 	private Image image;
 	@Mock
@@ -317,11 +313,10 @@ public class TestMetadataWriter {
 
 	@Test
 	public void shouldWriteCoverArt() throws Exception {
-		when(imageIcon.getImage()).thenReturn(image);
 		when(imageUtils.saveCoverArtToFile(image)).thenReturn(file);
 		when(artworkHelper.createArtwork()).thenReturn(artwork);
 		
-		metadataWriter.writeCoverArt(imageIcon);
+		metadataWriter.writeCoverArt(image);
 		
 		verify(imageUtils).saveCoverArtToFile(image);
 		verify(artwork).setFromFile(file);

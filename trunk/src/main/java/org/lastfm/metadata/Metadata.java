@@ -204,9 +204,8 @@
 
 package org.lastfm.metadata;
 
+import java.awt.Image;
 import java.io.File;
-
-import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -219,7 +218,7 @@ public class Metadata implements Comparable<Metadata>{
 	private String genre;
 	private String trackNumber;
 	private String totalTracks;
-	private ImageIcon coverArt;
+	private Image coverArt;
 	private int length;
 	private int bitRate;
 	private File file;
@@ -303,10 +302,10 @@ public class Metadata implements Comparable<Metadata>{
 	public String getYear() {
 		return year;
 	}
-	public ImageIcon getCoverArt() {
+	public Image getCoverArt() {
 		return coverArt;
 	}
-	public void setCoverArt(ImageIcon artwork) {
+	public void setCoverArt(Image artwork) {
 		this.coverArt = artwork;
 	}
 	public void setNewCoverArt(CoverArt coverArt) {
@@ -316,7 +315,7 @@ public class Metadata implements Comparable<Metadata>{
 		return newCoverArt;
 	}
 	
-	@Override
+	
 	public int compareTo(Metadata metadata) {
 		try{
 			int thisTrackNumer = Integer.valueOf(getTrackNumber());

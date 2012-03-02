@@ -1,5 +1,7 @@
 package org.lastfm.action;
 
+import java.util.List;
+
 import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.EmptyAction;
 import org.asmatron.messengine.action.RequestAction;
@@ -27,4 +29,7 @@ public interface Actions {
 	
 	String WRITE_METADATA = "writeMetadata";
 	ActionId<RequestAction<Metadata, ActionResult>> WRITE = cm(WRITE_METADATA);
+	
+	String EXPORT_METADATA = "exportMetadata";
+	ActionId<RequestAction<List<Metadata>, ActionResult>> EXPORT = cm(EXPORT_METADATA);
 }

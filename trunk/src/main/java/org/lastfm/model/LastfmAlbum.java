@@ -203,18 +203,18 @@
 */
 package org.lastfm.model;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 public class LastfmAlbum {
-	private ImageIcon imageIcon;
+	private Image imageIcon;
 	private String year;
 	private String genre;
 
-	public ImageIcon getImageIcon() {
+	public Image getImageIcon() {
 		return imageIcon;
 	}
 
-	public void setImageIcon(ImageIcon imageIcon) {
+	public void setImageIcon(Image imageIcon) {
 		this.imageIcon = imageIcon;
 	}
 	

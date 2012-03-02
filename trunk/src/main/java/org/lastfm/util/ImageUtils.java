@@ -230,9 +230,9 @@ public class ImageUtils {
 	private ImageIcon imageIcon;
 	private ImageHelper imageHelper = new ImageHelper();
 
-	public ImageIcon resize(ImageIcon imageIcon, int width, int height) {
-		BufferedImage image = (BufferedImage) imageIcon.getImage();
-		int type = image.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : image.getType();
+	public Image resize(Image image, int width, int height) {
+		BufferedImage bufferedImage = (BufferedImage) image;
+		int type = bufferedImage.getType() == 0 ? BufferedImage.TYPE_INT_ARGB : bufferedImage.getType();
 		BufferedImage resizedImage = new BufferedImage(width, height, type);
 		Graphics2D g = resizedImage.createGraphics();
 		g.setComposite(AlphaComposite.Src);
@@ -245,7 +245,7 @@ public class ImageUtils {
 
 		g.drawImage(image, 0, 0, width, height, null);
 		g.dispose();
-		return new ImageIcon(resizedImage);
+		return resizedImage;
 	}
 
 	public ImageIcon getDefaultImage() {
@@ -265,20 +265,25 @@ public class ImageUtils {
 		return imageIcon;
 	}
 
-	private void write(Image bufferedImage, String ext, File file) throws IOException {
-		imageHelper.write(bufferedImage, ext, file);
+	private void write(Image bufferedImage, File file) throws IOException {
+		imageHelper.write(bufferedImage, file);
 	}
 
 	public File saveCoverArtToFile(Image image) throws IOException {
 		File file = imageHelper.createTempFile();
-		log.info("image height: " + image.getHeight(new ImageObserver() {
+		log.info("Saving image: " + file.getAbsolutePath());
+		int imageHeight = image.getHeight(new ImageObserver() {
 			
-			@Override
+			
 			public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
 				return false;
 			}
-		}));
-		write(image, ApplicationState.IMAGE_EXT, file);
+		});
+		log.info("Image height: " + imageHeight);
+		if(imageHeight!=300){
+			image = resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+		}
+		write(image, file);
 		return file;
 	}
 

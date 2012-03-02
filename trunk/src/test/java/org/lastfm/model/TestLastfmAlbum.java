@@ -205,7 +205,7 @@ package org.lastfm.model;
 
 import static org.junit.Assert.assertEquals;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -215,7 +215,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestLastfmAlbum {
 	@Mock
-	private ImageIcon imageIcon;
+	private Image imageIcon;
 	private String year = "2011";
 	private String genre = "Minimal Techno";
 	

@@ -213,7 +213,6 @@ import java.util.Date;
 import java.util.Iterator;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -232,10 +231,6 @@ public class LastFMAlbumHelper {
 
 	public Image readImage(String imageURL) throws MalformedURLException, IOException {
 		return ImageIO.read(new URL(imageURL));
-	}
-
-	public ImageIcon getImageIcon(Image image) {
-		return new ImageIcon(image);
 	}
 
 	public String getYear(Date releaseDate) {

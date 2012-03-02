@@ -212,6 +212,7 @@ import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
+import org.lastfm.ApplicationState;
 import org.lastfm.exception.InvalidId3VersionException;
 
 /**
@@ -247,6 +248,10 @@ public class FileUtils {
 
 	public boolean isM4aFile(File file) {
 		return file.getPath().toLowerCase().endsWith("m4a");
+	}
+	
+	public File createTempFile() throws IOException {
+		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.FILE_EXT);
 	}
 }
 

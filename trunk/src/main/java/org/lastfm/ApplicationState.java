@@ -241,13 +241,16 @@ public interface ApplicationState {
 	static final String COVER_ART_FROM_DRAG_AND_DROP = "Cover Art from Drag & Drop";
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
+	static final String EXPORT = "Export";
 	static final Object READY = "Ready";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
+	static final String FILE_EXT = ".txt";
 	static final String PREFIX = "JAS_";
 	static final String GETTING_ALBUM = "Getting Album from Musicbrainz";
 	static final String GETTING_LAST_FM = "Getting Last.fm Metadata";
 	static final String WRITTING_METADATA = "Writting Metadata";
 	static final String USERNAME_LABEL = "username:";
 	static final String PASSWORD_LABEL = "password:";
+	static final int THREE_HUNDRED = 300;
 }
