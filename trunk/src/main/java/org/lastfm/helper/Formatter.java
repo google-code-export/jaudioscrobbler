@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.lastfm.metadata.Metadata;
 
 public class Formatter {
+	
+	private FormatterHelper helper = new FormatterHelper();
 
 	public boolean isABadFormat(Metadata metadata) {
 		if (metadata.getTitle().contains("&amp;") || metadata.getArtist().contains("&amp;") || metadata.getAlbum().contains("&amp;") || metadata.getTitle().contains("`") || metadata.getArtist().contains("`") || metadata.getAlbum().contains("`")
@@ -29,17 +31,20 @@ public class Formatter {
 	public boolean isNotCamelized(Metadata metadata) {
 		boolean camelized = false;
 		String artist = metadata.getArtist();
+		String artistFormatted = helper.getBasicFormat(metadata.getArtist());
 		String title = metadata.getTitle();
+		String titleFormatted = helper.getBasicFormat(metadata.getTitle());
 		String album = metadata.getAlbum();
-		if(StringUtils.isAllLowerCase(title.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(title.replace(" ", StringUtils.EMPTY))){
+		String albumFormatted = helper.getBasicFormat(metadata.getAlbum());
+		if(StringUtils.isAllLowerCase(titleFormatted) || StringUtils.isAllUpperCase(titleFormatted)){
 			metadata.setTitle(toCamelCase(title));
 			camelized =  true;
 		}
-		if(StringUtils.isAllLowerCase(artist.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(artist.replace(" ", StringUtils.EMPTY))){
+		if(StringUtils.isAllLowerCase(artistFormatted) || StringUtils.isAllUpperCase(artistFormatted)){
 			metadata.setArtist(toCamelCase(artist));
 			camelized =  true;
 		}
-		if(StringUtils.isAllLowerCase(album.replace(" ", StringUtils.EMPTY)) || StringUtils.isAllUpperCase(album.replace(" ", StringUtils.EMPTY))){
+		if(StringUtils.isAllLowerCase(albumFormatted) || StringUtils.isAllUpperCase(albumFormatted)){
 			metadata.setAlbum(toCamelCase(album));
 			camelized =  true;
 		}
