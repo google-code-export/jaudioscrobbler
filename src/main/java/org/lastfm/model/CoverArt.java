@@ -1,18 +1,18 @@
 package org.lastfm.model;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 public class CoverArt {
-	private final ImageIcon imageIcon;
+	private final Image image;
 	private final CoverArtType type;
 
-	public CoverArt(ImageIcon imageIcon, CoverArtType type){
-		this.imageIcon = imageIcon;
+	public CoverArt(Image image, CoverArtType type){
+		this.image = image;
 		this.type = type;
 	}
 	
-	public ImageIcon getImageIcon() {
-		return imageIcon;
+	public Image getImageIcon() {
+		return image;
 	}
 	
 	public CoverArtType getType() {

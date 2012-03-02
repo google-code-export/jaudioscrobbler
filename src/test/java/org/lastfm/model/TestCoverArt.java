@@ -1,8 +1,8 @@
 package org.lastfm.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import javax.swing.ImageIcon;
+import java.awt.Image;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import org.mockito.MockitoAnnotations;
 public class TestCoverArt {
 
 	@Mock
-	private ImageIcon imageIcon;
+	private Image imageIcon;
 	
 	@Before
 	public void setup() throws Exception {

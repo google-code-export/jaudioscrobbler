@@ -281,7 +281,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SuppressWarnings("unused")
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 1311230231101552007L;
-	private static final int THREE_HUNDRED = 300;
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
 	private static final String JMENU_LABEL = "Last.fm";
 	private static final int DIRECTORY_SELECTED_LENGHT = 20;
@@ -295,6 +294,7 @@ public class MainWindow extends JFrame {
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 
 	private JFrame frame;
@@ -302,6 +302,7 @@ public class MainWindow extends JFrame {
 	private JButton openButton;
 	private JButton sendButton;
 	private JButton applyButton;
+	private JButton exportButton;
 	private JButton completeMetadataButton;
 	private JTextField directorySelected;
 	private JPanel bottomPanel;
@@ -357,14 +358,12 @@ public class MainWindow extends JFrame {
 		ImageDropListener listener = new ImageDropListener(new ImagePanel());
 		listener.onDropped().add(new Observer<ObservValue<ImagePanel>>() {
 
-			@Override
 			public void observe(ObservValue<ImagePanel> t) {
 				ImagePanel value = t.getValue();
 				Image image = value.getImage();
-				ImageIcon imageIcon = new ImageIcon(image);
 				List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 				Metadata metadata = metadatas.get(selectedRow);
-				CoverArt coverArt = new CoverArt(imageUtils.resize(imageIcon, THREE_HUNDRED, THREE_HUNDRED), CoverArtType.DRAG_AND_DROP);
+				CoverArt coverArt = new CoverArt(imageUtils.resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED), CoverArtType.DRAG_AND_DROP);
 				metadata.setNewCoverArt(coverArt);
 				log.info("sertting image to the row: " + selectedRow);
 				updateImage(selectedRow);
@@ -382,7 +381,7 @@ public class MainWindow extends JFrame {
 		getLoginLabel().setText(ApplicationState.LOGGED_AS + currentUser.getUsername());
 		getSendButton().setEnabled(true);
 	}
-	
+
 	@EventMethod(Events.COVER_ART_FAILED)
 	private void onCovertArtFailed(String title) {
 		JOptionPane.showMessageDialog(frame, title + " has a corrupted coverArt");
@@ -401,7 +400,7 @@ public class MainWindow extends JFrame {
 		getDirectoryField().setText(path);
 		getLabel().setText(ApplicationState.WORKING);
 	}
-	
+
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
 	private void onMusicDirectorySelectedCancel() {
 		getOpenButton().setEnabled(true);
@@ -413,6 +412,7 @@ public class MainWindow extends JFrame {
 		getImagePanel().removeAll();
 		getImagePanel().add(new JLabel(imageUtils.getDefaultImage()));
 		getCompleteMetadataButton().setEnabled(true);
+		getExportButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
 		getLabel().setText(ApplicationState.DONE);
 		getImagePanel().invalidate();
@@ -546,7 +546,6 @@ public class MainWindow extends JFrame {
 
 			menuItem.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					loginWindow.getFrame().setLocationRelativeTo(MainWindow.this);
 					loginWindow.getFrame().setVisible(true);
@@ -566,6 +565,7 @@ public class MainWindow extends JFrame {
 			bottomPanel.add(getSendButton());
 			bottomPanel.add(getCompleteMetadataButton());
 			bottomPanel.add(getApplyButton());
+			bottomPanel.add(getExportButton());
 		}
 		return bottomPanel;
 	}
@@ -677,7 +677,6 @@ public class MainWindow extends JFrame {
 
 			completeMetadataButton.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					resetStatus();
 					new CompleteWorker();
@@ -702,7 +701,6 @@ public class MainWindow extends JFrame {
 
 			applyButton.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					new WriteWorker();
 				}
@@ -710,6 +708,24 @@ public class MainWindow extends JFrame {
 			});
 		}
 		return applyButton;
+	}
+
+	public JButton getExportButton() {
+		if (exportButton == null) {
+			exportButton = new JButton(ApplicationState.EXPORT);
+			exportButton.setName(APPLY_BUTTON_NAME);
+			exportButton.setEnabled(false);
+
+			exportButton.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					log.info("Exporting");
+					new ExportWorker();
+				}
+
+			});
+		}
+		return exportButton;
 	}
 
 	public JButton getSendButton() {
@@ -720,7 +736,6 @@ public class MainWindow extends JFrame {
 
 			sendButton.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					new SendWorker();
 				}
@@ -736,7 +751,6 @@ public class MainWindow extends JFrame {
 
 			openButton.addActionListener(new ActionListener() {
 
-				@Override
 				public void actionPerformed(ActionEvent e) {
 					openButton.setEnabled(false);
 					getCompleteMetadataButton().setEnabled(false);
@@ -758,7 +772,7 @@ public class MainWindow extends JFrame {
 		if (descriptionTable == null) {
 			descriptionTable = new DescriptionTable();
 			descriptionTable.addMouseListener(new MouseAdapter() {
-				@Override
+
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON3) {
 						new MetadataDialog(frame, controlEngineConfigurator, "Alter ALL rows");
@@ -768,7 +782,6 @@ public class MainWindow extends JFrame {
 
 			descriptionTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
-				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					if (tableLoaded) {
 						selectedRow = descriptionTable.getSelectedRow();
@@ -781,7 +794,6 @@ public class MainWindow extends JFrame {
 
 			descriptionTable.getModel().addTableModelListener(new TableModelListener() {
 
-				@Override
 				public void tableChanged(TableModelEvent e) {
 					if (e.getType() == TableModelEvent.UPDATE && tableLoaded && e.getColumn() != ApplicationState.STATUS_COLUMN) {
 						int column = e.getColumn();
@@ -818,14 +830,16 @@ public class MainWindow extends JFrame {
 		if (metadata.getNewCoverArt() != null) {
 			CoverArt coverArt = metadata.getNewCoverArt();
 			log.info("setting coverArt to: " + coverArt.getType());
-			imagePanel.add(new JLabel(coverArt.getImageIcon()));
+			ImageIcon imageIcon = new ImageIcon(coverArt.getImageIcon());
+			imagePanel.add(new JLabel(imageIcon));
 			String label = ApplicationState.COVER_ART_FROM_LASTFM;
-			if(coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)){
+			if (coverArt.getType().equals(CoverArtType.DRAG_AND_DROP)) {
 				label = ApplicationState.COVER_ART_FROM_DRAG_AND_DROP;
 			}
 			imageLabel.setText(label);
 		} else if (metadata.getCoverArt() != null) {
-			imagePanel.add(new JLabel(imageUtils.resize(metadata.getCoverArt(), THREE_HUNDRED, THREE_HUNDRED)));
+			Image resize = imageUtils.resize(metadata.getCoverArt(), ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+			imagePanel.add(new JLabel(new ImageIcon(resize)));
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
 		} else {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
@@ -844,7 +858,6 @@ public class MainWindow extends JFrame {
 		private void work() {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
-				@Override
 				protected Boolean doInBackground() throws Exception {
 					getLabel().setText(ApplicationState.WRITTING_METADATA);
 					counter = 0;
@@ -856,7 +869,6 @@ public class MainWindow extends JFrame {
 					for (final Metadata metadata : metadataWithAlbum) {
 						viewEngineConfigurator.getViewEngine().request(Actions.WRITE, metadata, new ResponseCallback<ActionResult>() {
 
-							@Override
 							public void onResponse(ActionResult result) {
 								log.info("Writing metadata to " + metadata.getTitle() + " w/result: " + result);
 								updateStatus(counter++, metadataWithAlbum.size());
@@ -900,7 +912,6 @@ public class MainWindow extends JFrame {
 		private void work() {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
-				@Override
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					getLabel().setText(ApplicationState.GETTING_ALBUM);
@@ -913,7 +924,6 @@ public class MainWindow extends JFrame {
 						final int i = metadataList.indexOf(metadata);
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_MUSICBRAINZ, metadata, new ResponseCallback<ActionResult>() {
 
-							@Override
 							public void onResponse(ActionResult response) {
 								updateStatus(counter++, metadataList.size());
 								log.info("response in getting album " + metadata.getTitle() + ": " + response);
@@ -939,7 +949,6 @@ public class MainWindow extends JFrame {
 									final int i = metadataList.indexOf(metadata);
 									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_LAST_FM, metadata, new ResponseCallback<ActionResult>() {
 
-										@Override
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
 											log.info("response in getting lastFM metadata for " + metadata.getTitle() + ": " + response);
@@ -1009,14 +1018,12 @@ public class MainWindow extends JFrame {
 		private void work() {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
-				@Override
 				protected Boolean doInBackground() throws Exception {
 					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
 					counter = 0;
 					for (final Metadata metadata : metadataList) {
 						MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.SEND, metadata, new ResponseCallback<ActionResult>() {
 
-							@Override
 							public void onResponse(ActionResult response) {
 								log.info("response on sending " + metadata.getTitle() + ": " + response);
 								updateStatus(counter++, metadataList.size());
@@ -1028,7 +1035,6 @@ public class MainWindow extends JFrame {
 					return true;
 				}
 
-				@Override
 				public void done() {
 					getLabel().setText(ApplicationState.DONE);
 					getCompleteMetadataButton().setEnabled(true);
@@ -1042,6 +1048,32 @@ public class MainWindow extends JFrame {
 			getOpenButton().setEnabled(false);
 			getProgressBar().setVisible(true);
 			getLabel().setText(ApplicationState.WORKING);
+		}
+	}
+
+	private class ExportWorker {
+		public ExportWorker() {
+			work();
+		}
+
+		private void work() {
+			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
+
+				protected Boolean doInBackground() throws Exception {
+					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+					MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.EXPORT, metadataList, new ResponseCallback<ActionResult>() {
+
+						public void onResponse(ActionResult response) {
+							for (Metadata metadata : metadataList) {
+								getDescriptionTable().getModel().setValueAt(response, getRow(metadata), ApplicationState.STATUS_COLUMN);
+							}
+						}
+
+					});
+					return true;
+				}
+			};
+			swingWorker.execute();
 		}
 	}
 
@@ -1075,7 +1107,6 @@ public class MainWindow extends JFrame {
 
 	private class DescriptionTableModelListener implements TableModelListener {
 
-		@Override
 		public void tableChanged(TableModelEvent e) {
 			if (MainWindow.this.getCompleteMetadataButton().getText().equals(ApplicationState.APPLY) && e.getColumn() != ApplicationState.STATUS_COLUMN) {
 				int lastRow = e.getLastRow();

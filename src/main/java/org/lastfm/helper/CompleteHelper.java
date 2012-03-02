@@ -209,8 +209,6 @@ import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.HashMap;
 
-import javax.swing.ImageIcon;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -277,8 +275,7 @@ public class CompleteHelper {
 		}
 		if (!StringUtils.isEmpty(imageURL)) {
 			Image image = helper.readImage(imageURL);
-			ImageIcon imageIcon = helper.getImageIcon(image);
-			lastfmAlbum.setImageIcon(imageIcon);
+			lastfmAlbum.setImageIcon(image);
 		}
 	}
 

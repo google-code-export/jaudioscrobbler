@@ -214,7 +214,6 @@ import javax.swing.ImageIcon;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.helper.ImageHelper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -251,6 +250,6 @@ public class TestImageUtils {
 		imageUtils.saveCoverArtToFile(image);
 		
 		verify(imageHelper).createTempFile();
-		verify(imageHelper).write(image, ApplicationState.IMAGE_EXT, file);
+		verify(imageHelper).write(image, file);
 	}
 }

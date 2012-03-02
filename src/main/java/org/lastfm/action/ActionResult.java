@@ -1,5 +1,5 @@
 package org.lastfm.action;
 
 public enum ActionResult {
-	New, FAILURE, Error, Not_Scrobbleable, Sessionless, Not_Found, Updated, NotLogged, Complete, Sent
+	New, FAILURE, Error, Not_Scrobbleable, Sessionless, Not_Found, Updated, NotLogged, Complete, Sent, Exported
 }

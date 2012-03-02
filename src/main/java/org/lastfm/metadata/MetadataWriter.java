@@ -203,10 +203,9 @@
 */
 package org.lastfm.metadata;
 
+import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -330,9 +329,9 @@ public class MetadataWriter {
 		}
 	}
 
-	public boolean writeCoverArt(ImageIcon lastfmCoverArt) throws MetadataException {
+	public boolean writeCoverArt(Image lastfmCoverArt) throws MetadataException {
 		try {
-			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt.getImage());
+			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt);
 			Artwork artwork = artworkHelper.createArtwork();
 			artwork.setFromFile(coverArtFile);
 			tag.setField(artwork);

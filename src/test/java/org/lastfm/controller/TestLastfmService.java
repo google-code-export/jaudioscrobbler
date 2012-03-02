@@ -209,10 +209,9 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
-import javax.swing.ImageIcon;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -234,7 +233,7 @@ public class TestLastfmService {
 	@Mock
 	private Metadata metadata;
 	@Mock
-	private ImageIcon imageIcon;
+	private Image imageIcon;
 	@Mock
 	private CompleteHelper completeHelper;
 	@Mock

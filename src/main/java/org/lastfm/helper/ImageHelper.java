@@ -223,8 +223,8 @@ public class ImageHelper {
 		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
 	}
 
-	public void write(Image bufferedImage, String ext, File file) throws IOException {
-		ImageIO.write((BufferedImage) bufferedImage, ext, file);
+	public void write(Image bufferedImage, File file) throws IOException {
+		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
 	}
 
 	public Image readDragImage() throws MalformedURLException, IOException {

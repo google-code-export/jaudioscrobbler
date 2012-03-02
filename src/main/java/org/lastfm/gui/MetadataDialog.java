@@ -295,7 +295,7 @@ public class MetadataDialog extends AllDialog {
 	private JLabel cdLabel;
 	private JLabel cdsLabel;
 	private JPanel imagePanel;
-	private ImageIcon coverArt;
+	private Image coverArt;
 	private ImageUtils imageUtils = new ImageUtils();
 	private final ControlEngineConfigurator configurator;
 
@@ -316,13 +316,12 @@ public class MetadataDialog extends AllDialog {
 		ImageDropListener listener = new ImageDropListener(new ImagePanel());
 		listener.onDropped().add(new Observer<ObservValue<ImagePanel>>() {
 
-			@Override
+			
 			public void observe(ObservValue<ImagePanel> t) {
 				ImagePanel value = t.getValue();
 				Image image = value.getImage();
-				coverArt = imageUtils.resize(new ImageIcon(image), THREE_HUNDRED, THREE_HUNDRED);
-				ImageIcon imageIcon = new ImageIcon(image);
-				JLabel imageLabel = new JLabel(imageUtils.resize(imageIcon, ONE_HUNDRED_FIFTY, ONE_HUNDRED_FIFTY));
+				coverArt = imageUtils.resize(image, THREE_HUNDRED, THREE_HUNDRED);
+				JLabel imageLabel = new JLabel(new ImageIcon(imageUtils.resize(image, ONE_HUNDRED_FIFTY, ONE_HUNDRED_FIFTY)));
 				getImagePanel().removeAll();
 				getImagePanel().add(imageLabel);
 				MetadataDialog.this.invalidate();
@@ -332,7 +331,7 @@ public class MetadataDialog extends AllDialog {
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
 	}
 	
-	@Override
+	
 	String dialogTitle() {
 		return message;
 	}
@@ -402,7 +401,7 @@ public class MetadataDialog extends AllDialog {
 		return imagePanel;
 	}
 
-	@Override
+	
 	JComponent getContentComponent() {
 		return getContentPanel();
 	}
@@ -520,7 +519,7 @@ public class MetadataDialog extends AllDialog {
 			getRootPane().setDefaultButton(applyButton);
 			applyButton.addActionListener(new ActionListener() {
 
-				@Override
+				
 				public void actionPerformed(ActionEvent e) {
 					applyButton.setEnabled(false);
 					MetadataValues metadataValues = new MetadataValues();
@@ -552,7 +551,7 @@ public class MetadataDialog extends AllDialog {
 	}
 	
 	private final class KeyListener extends KeyAdapter {
-		@Override
+		
 		public void keyReleased(KeyEvent e) {
 			if (e.getSource().equals(genreTextField)) {
 				if (genreTextField.getText().length() > 0) {
@@ -566,7 +565,7 @@ public class MetadataDialog extends AllDialog {
 	}
 
 	private final class FocusListener extends FocusAdapter {
-		@Override
+		
 		public void focusLost(FocusEvent e) {
 			if (e.getSource().equals(genreTextField)) {
 				if (!genreTextField.getText().equals("")) {

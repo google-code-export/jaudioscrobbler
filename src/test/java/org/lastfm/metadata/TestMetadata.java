@@ -205,11 +205,10 @@
 
 package org.lastfm.metadata;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+import java.awt.Image;
 import java.io.File;
-
-import javax.swing.ImageIcon;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -233,7 +232,7 @@ public class TestMetadata {
 	private String year = "2011";
 	
 	@Mock
-	private ImageIcon artwork;
+	private Image artwork;
 	@Mock
 	private File file;
 	@Mock
