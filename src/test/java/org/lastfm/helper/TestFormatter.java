@@ -236,4 +236,40 @@ public class TestFormatter {
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(artistExpected , metadata.getArtist());
 	}
+	
+	@Test
+	public void shouldCapitalizeArtistWhenDash() throws Exception {
+		Formatter formatter = new Formatter();
+		String artist = "de-pazz";
+		String artistExpected = "De-pazz";
+		
+		metadata.setArtist(artist);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(artistExpected , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldCapitalizeTitleWhenDash() throws Exception {
+		Formatter formatter = new Formatter();
+		String title = "blue-eyed";
+		String titleExpected = "Blue-eyed";
+		
+		metadata.setTitle(title);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(titleExpected , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldCapitalizeAlbumWhenDash() throws Exception {
+		Formatter formatter = new Formatter();
+		String album = "blue-eyed";
+		String albumExpected = "Blue-eyed";
+		
+		metadata.setAlbum(album);
+
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(albumExpected , metadata.getAlbum());
+	}
 }

@@ -204,10 +204,12 @@
 package org.lastfm.util;
 
 import static org.junit.Assert.assertSame;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Image;
+import java.awt.image.ImageObserver;
 import java.io.File;
 
 import javax.swing.ImageIcon;
@@ -246,6 +248,7 @@ public class TestImageUtils {
 	@Test
 	public void shouldSaveCoverArtToFile() throws Exception {
 		when(imageHelper.createTempFile()).thenReturn(file);
+		when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
 		
 		imageUtils.saveCoverArtToFile(image);
 		

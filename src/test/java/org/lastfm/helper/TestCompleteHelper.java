@@ -239,8 +239,6 @@ public class TestCompleteHelper {
 	@Mock
 	private LastfmAlbum lastfmAlbum;
 	@Mock
-	private Image imageIcon;
-	@Mock
 	private LastFMAlbumHelper helper;
 	@Mock
 	private Album info;
@@ -288,7 +286,7 @@ public class TestCompleteHelper {
 	@Test
 	public void shouldCompleteIfNoGenre() throws Exception {
 		setArtistAndAlbumExpectations();
-		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getYear()).thenReturn(year);
 		
 		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
@@ -298,7 +296,7 @@ public class TestCompleteHelper {
 	@Test
 	public void shouldCompleteIfNoYear() throws Exception {
 		setArtistAndAlbumExpectations();
-		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getGenre()).thenReturn(genre);
 		
 		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
@@ -306,7 +304,7 @@ public class TestCompleteHelper {
 	}
 	
 	private void setYearGenreCoverExpectations() {
-		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getYear()).thenReturn(year);
 		when(metadata.getGenre()).thenReturn(genre);
 	}
@@ -344,7 +342,7 @@ public class TestCompleteHelper {
 		
 		assertEquals(year, lastFMalbum.getYear());
 		assertEquals(genre, lastFMalbum.getGenre());
-		assertEquals(imageIcon, lastFMalbum.getImageIcon());
+		assertEquals(image, lastFMalbum.getImageIcon());
 	}
 	
 	
@@ -383,7 +381,7 @@ public class TestCompleteHelper {
 	
 	@Test
 	public void shouldNotSetCoverArtIfAnyInFile() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(imageIcon);
+		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getAlbum()).thenReturn(album);
 		when(cachedAlbums.get(album)).thenReturn(info);
 		setImageExpectations();
