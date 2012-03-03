@@ -313,12 +313,12 @@ public class TestMetadataWriter {
 
 	@Test
 	public void shouldWriteCoverArt() throws Exception {
-		when(imageUtils.saveCoverArtToFile(image)).thenReturn(file);
+		when(imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY)).thenReturn(file);
 		when(artworkHelper.createArtwork()).thenReturn(artwork);
 		
 		metadataWriter.writeCoverArt(image);
 		
-		verify(imageUtils).saveCoverArtToFile(image);
+		verify(imageUtils).saveCoverArtToFile(image, StringUtils.EMPTY);
 		verify(artwork).setFromFile(file);
 		verify(tag).setField(isA(Artwork.class));
 		verify(audioFile).commit();

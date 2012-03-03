@@ -8,6 +8,7 @@ import org.lastfm.metadata.Metadata;
 
 
 public class TestFormatter {
+	private Formatter formatter = new Formatter();
 	private String badFormatA = "¿Cu&aacute;ndo?";
 	private String badFormatAExpected = "¿Cuándo?";
 	private String badFormatE = "¿Qu&eacute;?";
@@ -36,7 +37,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectAaccentMarkTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(badFormatA);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -46,7 +46,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectEaccentMarkTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(badFormatE);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -56,7 +55,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectIaccentMarkTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(badFormatI);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -66,7 +64,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectOaccentMarkTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(badFormatO);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -76,7 +73,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectUaccentMarkTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(badFormatU);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -86,7 +82,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectAaccentMarkArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(badFormatA);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -96,7 +91,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectEaccentMarkArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(badFormatE);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -106,7 +100,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectIaccentMarkArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(badFormatI);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -116,7 +109,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectOaccentMarkArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(badFormatO);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -126,7 +118,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectUaccentMarkArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(badFormatU);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -135,7 +126,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectAaccentMarkAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(badFormatA);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -145,7 +135,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectEaccentMarkAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(badFormatE);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -155,7 +144,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectIaccentMarkAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(badFormatI);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -165,7 +153,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectOaccentMarkAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(badFormatO);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -175,7 +162,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldDetectUaccentMarkAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(badFormatU);
 
 		assertTrue(formatter.isABadFormat(metadata));
@@ -185,7 +171,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeTitle() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(title);
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -194,7 +179,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeArtist() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(artist);
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -203,7 +187,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeAlbum() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(album);
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -212,7 +195,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeAlbumWhenUppercase() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setAlbum(album.toUpperCase());
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -221,7 +203,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeTitleWhenUppercase() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setTitle(title.toUpperCase());
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -230,7 +211,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeArtistWhenUppercase() throws Exception {
-		Formatter formatter = new Formatter();
 		metadata.setArtist(artist.toUpperCase());
 
 		assertTrue(formatter.isNotCamelized(metadata));
@@ -239,7 +219,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeArtistWhenDash() throws Exception {
-		Formatter formatter = new Formatter();
 		String artist = "de-pazz";
 		String artistExpected = "De-pazz";
 		
@@ -251,7 +230,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeTitleWhenDash() throws Exception {
-		Formatter formatter = new Formatter();
 		String title = "blue-eyed";
 		String titleExpected = "Blue-eyed";
 		
@@ -263,7 +241,6 @@ public class TestFormatter {
 	
 	@Test
 	public void shouldCapitalizeAlbumWhenDash() throws Exception {
-		Formatter formatter = new Formatter();
 		String album = "blue-eyed";
 		String albumExpected = "Blue-eyed";
 		
@@ -271,5 +248,12 @@ public class TestFormatter {
 
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(albumExpected , metadata.getAlbum());
+	}
+	
+	@Test
+	public void shouldGetDuration() throws Exception {
+		int lenght = 397;
+		String expectedDuration = "6:37";
+		assertEquals(expectedDuration, formatter.getDuration(lenght));
 	}
 }

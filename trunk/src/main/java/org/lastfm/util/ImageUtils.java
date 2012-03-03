@@ -269,8 +269,8 @@ public class ImageUtils {
 		imageHelper.write(bufferedImage, file);
 	}
 
-	public File saveCoverArtToFile(Image image) throws IOException {
-		File file = imageHelper.createTempFile();
+	public File saveCoverArtToFile(Image image, String prefix) throws IOException {
+		File file = imageHelper.createTempFile(prefix);
 		log.info("Saving image: " + file.getAbsolutePath());
 		int imageHeight = image.getHeight(new ImageObserver() {
 			

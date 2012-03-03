@@ -7,6 +7,7 @@ import org.lastfm.metadata.Metadata;
 
 public class Formatter {
 	
+	private static final int SIXTY = 60;
 	private FormatterHelper helper = new FormatterHelper();
 
 	public boolean isABadFormat(Metadata metadata) {
@@ -60,6 +61,12 @@ public class Formatter {
 		}
 		String[] strings = StringUtils.split(stringBuilder.toString(), " ");
 		return StringUtils.join(strings, " ");
+	}
+
+	public String getDuration(int length) {
+		int seconds = length % SIXTY;
+		int minutes = (length - seconds)/SIXTY;
+		return minutes + ":" + seconds;
 	}
 
 }

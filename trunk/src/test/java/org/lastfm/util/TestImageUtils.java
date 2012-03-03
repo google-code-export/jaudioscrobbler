@@ -214,6 +214,7 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.helper.ImageHelper;
@@ -247,12 +248,12 @@ public class TestImageUtils {
 	
 	@Test
 	public void shouldSaveCoverArtToFile() throws Exception {
-		when(imageHelper.createTempFile()).thenReturn(file);
+		when(imageHelper.createTempFile(StringUtils.EMPTY)).thenReturn(file);
 		when(image.getHeight(isA(ImageObserver.class))).thenReturn(300);
 		
-		imageUtils.saveCoverArtToFile(image);
+		imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY);
 		
-		verify(imageHelper).createTempFile();
+		verify(imageHelper).createTempFile(StringUtils.EMPTY);
 		verify(imageHelper).write(image, file);
 	}
 }
