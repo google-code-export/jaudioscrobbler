@@ -200,7 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.lastfm.helper;
 
 import java.awt.Image;
@@ -211,6 +211,7 @@ import java.net.MalformedURLException;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.lang3.StringUtils;
 import org.lastfm.ApplicationState;
 
 public class ImageHelper {
@@ -219,8 +220,8 @@ public class ImageHelper {
 		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
 	}
 
-	public File createTempFile() throws IOException {
-		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT);
+	public File createTempFile(String prefix) throws IOException {
+		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
 	}
 
 	public void write(Image bufferedImage, File file) throws IOException {
