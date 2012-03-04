@@ -960,6 +960,9 @@ public class MainWindow extends JFrame {
 												getDescriptionTable().getModel().setValueAt(metadata.getYear(), i, ApplicationState.YEAR_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getGenre(), i, ApplicationState.GENRE_COLUMN);
 												getDescriptionTable().getModel().setValueAt(ActionResult.New, i, ApplicationState.STATUS_COLUMN);
+												if (metadata.getNewCoverArt() != null && i == selectedRow) {
+													updateImage(i);
+												}
 											} else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
 												if (!response.equals(ActionResult.Complete)) {
 													getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
