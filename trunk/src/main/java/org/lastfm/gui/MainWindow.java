@@ -404,7 +404,10 @@ public class MainWindow extends JFrame {
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
 	private void onMusicDirectorySelectedCancel() {
 		getOpenButton().setEnabled(true);
-		getCompleteMetadataButton().setEnabled(true);
+		if(tableLoaded){
+			getCompleteMetadataButton().setEnabled(true);
+			getExportButton().setEnabled(true);
+		}
 	}
 
 	private void resetStatus() {
@@ -754,6 +757,7 @@ public class MainWindow extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					openButton.setEnabled(false);
 					getCompleteMetadataButton().setEnabled(false);
+					getExportButton().setEnabled(false);
 					viewEngineConfigurator.getViewEngine().send(Actions.METADATA);
 				}
 			});
@@ -864,6 +868,7 @@ public class MainWindow extends JFrame {
 					working = true;
 					log.info("Starting to write...");
 					getApplyButton().setEnabled(!working);
+					getExportButton().setEnabled(!working);
 					log.info("setting applyButton to : " + !working);
 					log.info("Ready for write " + metadataWithAlbum.size() + " files");
 					for (final Metadata metadata : metadataWithAlbum) {
@@ -887,6 +892,7 @@ public class MainWindow extends JFrame {
 								log.info("I'm done, ALL rows have been written");
 								working = false;
 								getApplyButton().setEnabled(working);
+								getExportButton().setEnabled(true);
 								log.info("setting applyButton to : " + working);
 								metadataWithAlbum.clear();
 							}
@@ -919,6 +925,7 @@ public class MainWindow extends JFrame {
 					working = true;
 					log.info("Start to work...");
 					getApplyButton().setEnabled(!working);
+					getExportButton().setEnabled(!working);
 					log.info("setting applyButton to : " + !working);
 					for (final Metadata metadata : metadataList) {
 						final int i = metadataList.indexOf(metadata);
@@ -1005,6 +1012,7 @@ public class MainWindow extends JFrame {
 		getLabel().setText(ApplicationState.DONE);
 		getCompleteMetadataButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
+		getExportButton().setEnabled(true);
 		getDescriptionTable().setEnabled(true);
 	}
 
