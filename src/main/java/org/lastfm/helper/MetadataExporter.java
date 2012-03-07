@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.util.FileUtils;
 
@@ -17,9 +19,11 @@ public class MetadataExporter {
 	private FileUtils fileUtils = new FileUtils();
 	private Formatter formatter = new Formatter();
 	private OutStreamWriter  outputStreamWriter = new OutStreamWriter();
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public void export(List<Metadata> metadatas) throws IOException {
 		File file = fileUtils.createTempFile();
+		log.info("Exporting metadata to: " + file.getAbsolutePath());
 		OutputStream writer = outputStreamWriter.getWriter(file);
 		int counter = 1;
 		for (Metadata metadata : metadatas) {

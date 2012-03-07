@@ -219,7 +219,7 @@ public class TestGenreTypes {
 	
 	@Test
 	public void shouldReturnEmptyStringIfNoGenre() throws Exception {
-		int unknownCode = 150;
+		int unknownCode = 500;
 		assertEquals(StringUtils.EMPTY, GenreTypes.getGenreByCode(unknownCode));
 	}
 	

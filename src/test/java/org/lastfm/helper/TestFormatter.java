@@ -223,6 +223,8 @@ public class TestFormatter {
 	private String bFormatOExpected = "¿Cómo?";
 	private String badFormatU = "t&uacute;";
 	private String badFormatUExpected = "tú";
+	private String badFormatAcute = "What&acute;s The Time";
+	private String badFormatAcuteExpected = "What's The Time";
 	private String artist = "angel tears";
 	private String artistExpected = "Angel Tears";
 	private String title = "legends of the fall";
@@ -459,5 +461,32 @@ public class TestFormatter {
 		int lenght = 397;
 		String expectedDuration = "6:37";
 		assertEquals(expectedDuration, formatter.getDuration(lenght));
+	}
+	
+	@Test
+	public void shouldDetectAcuteMarkTitle() throws Exception {
+		metadata.setTitle(badFormatAcute);
+
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(badFormatAcuteExpected , metadata.getTitle());
+
+	}
+	
+	@Test
+	public void shouldDetectAcuteMarkArtist() throws Exception {
+		metadata.setArtist(badFormatAcute);
+
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(badFormatAcuteExpected , metadata.getArtist());
+
+	}
+	
+	@Test
+	public void shouldDetectAcuteMarkAlbum() throws Exception {
+		metadata.setAlbum(badFormatAcute);
+
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(badFormatAcuteExpected , metadata.getAlbum());
+
 	}
 }

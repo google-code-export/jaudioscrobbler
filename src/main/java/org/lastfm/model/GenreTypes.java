@@ -200,13 +200,13 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.lastfm.model;
 
 import org.apache.commons.lang3.StringUtils;
 
 public enum GenreTypes {
-	
+
 	BLUES(0, "Blues"), CLASSIC_ROCK(1, "Classic Rock"), COUNTRY(2, "Country"), DANCE(3, "Dance"), DISCO(4, "Disco"), FUNK(5, "Funk"), GRUNGE(6, "Grunge"), HIP_HOP(7, "Hip-Hop"), JAZZ(8, "Jazz"), METAL(
 			9, "Metal"), NEW_AGE(10, "New Age"), OLDIES(11, "Oldies"), OTHER(12, "Other"), POP(13, "Pop"), R_and_B(14, "R&B"), RAP(15, "Rap"), REGGAE(16, "Reggae"), ROCK(17, "Rock"), TECHNO(18,
 			"Techno"), INDUSTRIAL(19, "Industrial"), ALTERNATIVE(20, "Alternative"), SKA(21, "Ska"), DEATH_METAL(22, "Death Metal"), PRANKS(23, "Pranks"), SOUNDTRACK(24, "Soundtrack"), EURO_TECHNO(
@@ -227,7 +227,8 @@ public enum GenreTypes {
 			125, "Dance Hall"), GOA(126, "Goa"), DRUM_BASS(127, "Drum & Bass"), CLUB_HOUSE(128, "Club ,House"), HARDCORE(129, "Hardcore"), TERROR(130, "Terror"), INDIE(131, "Indie"), BRITPOP(132,
 			"BritPop"), NEGERPUNK(133, "Negerpunk"), POLSK_PUNK(134, "Polsk Punk"), BEAT(135, "Beat"), CHRISTIAN_GANGSTA_RAP(136, "Christian Gangsta Rap"), HEAVY_METAL(137, "Heavy Metal"), BLACK_METAL(
 			138, "Black Metal"), CROSSOVER(139, "Crossover"), CONTEMPORARY_CHRISTIAN(140, "Contemporary Christian"), CHRISTIAN_ROCK(141, "Christian Rock"), MERENGUE(142, "Merengue"), SALSA(143,
-			"Salsa"), THRASH_METAL(144, "Thrash Metal"), ANIME(145, "Anime"), JPOP(146, "JPop"), SYNTHPOP(147, "Synthpop"), UNKNOWN(148, "Unknown"), LOUNGE(149 ,"Lounge"), VOCAL_TRANCE(150 ,"Vocal Trance");
+			"Salsa"), THRASH_METAL(144, "Thrash Metal"), ANIME(145, "Anime"), JPOP(146, "JPop"), SYNTHPOP(147, "Synthpop"), UNKNOWN(148, "Unknown"), LOUNGE(149, "Lounge"), VOCAL_TRANCE(150,
+			"Vocal Trance"), DOWNTEMPO(151, "Downtempo");
 
 	private final String name;
 	private final int code;
@@ -253,7 +254,7 @@ public enum GenreTypes {
 		}
 		return StringUtils.EMPTY;
 	}
-	
+
 	public static GenreTypes getGenreByName(String name) {
 		for (GenreTypes item : GenreTypes.values()) {
 			if (item.getName().toLowerCase().equals(name.toLowerCase())) {
