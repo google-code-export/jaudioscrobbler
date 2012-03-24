@@ -256,12 +256,12 @@ public class FileUtils {
 		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.FILE_EXT);
 	}
 
-	public File createFile(File root, String prefix) {
+	public File createFile(File root, String prefix, String ext) {
 		Date timestamp = new Date();
 		StringBuilder sb = new StringBuilder();
 		sb.append(timestamp.getTime());
 		sb.append(".");
-		sb.append(ApplicationState.IMAGE_EXT);
+		sb.append(ext);
 		return (prefix == StringUtils.EMPTY) ? new File(root, ApplicationState.PREFIX + sb.toString()) : new File(root, prefix + sb.toString());
 	}
 }
