@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.lastfm.ApplicationState;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -22,7 +24,7 @@ public class MetadataExporter {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public void export(ExportPackage exportPackage) throws IOException {
-		File file = fileUtils.createTempFile();
+		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);
 		log.info("Exporting metadata to: " + file.getAbsolutePath());
 		OutputStream writer = outputStreamWriter.getWriter(file);
 		int counter = 1;

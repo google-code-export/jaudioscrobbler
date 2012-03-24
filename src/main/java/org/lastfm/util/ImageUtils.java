@@ -271,7 +271,7 @@ public class ImageUtils {
 	}
 	
 	public File saveCoverArtToFile(Image image, File root, String prefix) throws IOException {
-		File file = fileUtils.createFile(root, prefix);
+		File file = fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT);
 		saveImage(image, file);
 		return file;
 	}
