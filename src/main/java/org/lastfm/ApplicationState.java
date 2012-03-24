@@ -245,7 +245,7 @@ public interface ApplicationState {
 	static final Object READY = "Ready";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
-	static final String FILE_EXT = ".txt";
+	static final String FILE_EXT = "txt";
 	static final String PREFIX = "JAS_";
 	static final String GETTING_ALBUM = "Getting Album from Musicbrainz";
 	static final String GETTING_LAST_FM = "Getting Last.fm Metadata";

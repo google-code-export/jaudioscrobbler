@@ -212,8 +212,10 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -262,9 +264,10 @@ public class TestMetadataExporter {
 		when(metadata.getLength()).thenReturn(lenght);
 		when(formatter.getDuration(metadata.getLength())).thenReturn(lenghtFormated);
 		metadatas.add(metadata);
-		when(fileUtils.createTempFile()).thenReturn(file);
-		when(outputStreamWriter.getWriter(file)).thenReturn(writer);
+		when(exportPackage.getRoot()).thenReturn(file);
 		when(exportPackage.getMetadataList()).thenReturn(metadatas);
+		when(fileUtils.createFile(file, StringUtils.EMPTY, ApplicationState.FILE_EXT)).thenReturn(file);
+		when(outputStreamWriter.getWriter(file)).thenReturn(writer);
 	}
 	
 	@Test
