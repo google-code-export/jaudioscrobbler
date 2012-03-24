@@ -209,6 +209,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Image;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -216,6 +217,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.util.ImageUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -237,6 +239,9 @@ public class TestImageExporter {
 	private String title = "Bliksem";
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
+	private ExportPackage exportPackage;
+	@Mock
+	private File root; 
 
 	@Before
 	public void setup() throws Exception {
@@ -246,28 +251,29 @@ public class TestImageExporter {
 		when(metadata.getTitle()).thenReturn(title);
 		when(metadata.getCoverArt()).thenReturn(coverArt);
 		metadatas.add(metadata);
+		exportPackage = new ExportPackage(root, metadatas);
 	}
 	
 	@Test
 	public void shouldExportASingleImage() throws Exception {
-		imageExporter.export(metadatas);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), StringUtils.EMPTY);
+		imageExporter.export(exportPackage);
+		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
 	}
 	
 	@Test
 	public void shouldExportASingleImageWhenSameAlbum() throws Exception {
 		metadatas.add(metadata);
-		imageExporter.export(metadatas);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), StringUtils.EMPTY);
+		imageExporter.export(exportPackage);
+		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
 	}
 	
 	@Test
 	public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
 		Metadata metadata = setSecondMetadataExpectations();
 		metadatas.add(metadata);
-		imageExporter.export(metadatas);
-		verify(imageUtils).saveCoverArtToFile(coverArt, "Sander van Doorn" + "-" + "Bliksem");
-		verify(imageUtils).saveCoverArtToFile(coverArt, "ATA" + "-" + "Blue Skies (Andy Tau Remix)");
+		imageExporter.export(exportPackage);
+		verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn" + "-" + "Bliksem");
+		verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA" + "-" + "Blue Skies (Andy Tau Remix)");
 	}
 
 	private Metadata setSecondMetadataExpectations() {

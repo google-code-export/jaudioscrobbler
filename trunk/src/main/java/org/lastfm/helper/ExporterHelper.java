@@ -204,18 +204,17 @@
 package org.lastfm.helper;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.lastfm.action.ActionResult;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 
 public class ExporterHelper {
 	private ImageExporter imageExporter = new ImageExporter();
 	private MetadataExporter metadataExporter = new MetadataExporter();
 
-	public ActionResult export(List<Metadata> metadatas) throws IOException {
-		imageExporter.export(metadatas);
-		metadataExporter.export(metadatas);
+	public ActionResult export(ExportPackage exportPackage) throws IOException {
+		imageExporter.export(exportPackage);
+		metadataExporter.export(exportPackage);
 		return ActionResult.Exported;
 	}
 }

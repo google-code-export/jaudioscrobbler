@@ -204,22 +204,26 @@
 
 package org.lastfm.helper;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.util.ImageUtils;
 
 public class ImageExporter {
 	private ImageUtils imageUtils = new ImageUtils();
 
-	public void export(List<Metadata> metadatas) throws IOException {
-		if (isSameAlbum(metadatas)){
-			imageUtils.saveCoverArtToFile(metadatas.get(0).getCoverArt(), StringUtils.EMPTY);
+	public void export(ExportPackage exportPackage) throws IOException {
+		List<Metadata> metadataList = exportPackage.getMetadataList();
+		File root = exportPackage.getRoot();
+		if (isSameAlbum(metadataList)){
+			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
 		} else { 
-			for (Metadata metadata : metadatas) {
-				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), metadata.getArtist() + "-" + metadata.getTitle());
+			for (Metadata metadata : metadataList) {
+				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
 			}
 		}
 	}

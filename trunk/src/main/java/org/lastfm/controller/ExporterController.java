@@ -204,7 +204,6 @@
 package org.lastfm.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -212,7 +211,7 @@ import org.asmatron.messengine.annotations.RequestMethod;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.helper.ExporterHelper;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -226,9 +225,9 @@ public class ExporterController {
 	private ExporterHelper exporterHelper = new ExporterHelper();
 	
 	@RequestMethod(Actions.EXPORT_METADATA)
-	public ActionResult sendMetadata(List<Metadata> metadatas) {
+	public ActionResult sendMetadata(ExportPackage exportPackage) {
 		try {
-			return exporterHelper.export(metadatas);
+			return exporterHelper.export(exportPackage);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 		} 

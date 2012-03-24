@@ -215,6 +215,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -242,6 +243,8 @@ public class TestMetadataExporter {
 	private OutStreamWriter outputStreamWriter;
 	@Mock
 	private OutputStream writer;
+	@Mock
+	private ExportPackage exportPackage;
 	
 	private String album = "Bliksem";
 	private String artist = "Sander van Doorn";
@@ -261,11 +264,12 @@ public class TestMetadataExporter {
 		metadatas.add(metadata);
 		when(fileUtils.createTempFile()).thenReturn(file);
 		when(outputStreamWriter.getWriter(file)).thenReturn(writer);
+		when(exportPackage.getMetadataList()).thenReturn(metadatas);
 	}
 	
 	@Test
 	public void shouldExport() throws Exception {
-		metadataExporter.export(metadatas);
+		metadataExporter.export(exportPackage);
 		verify(writer).write(Integer.toString(1).getBytes());
 		verify(writer).write(DOT.getBytes());
 		verify(writer).write(metadata.getArtist().getBytes());
