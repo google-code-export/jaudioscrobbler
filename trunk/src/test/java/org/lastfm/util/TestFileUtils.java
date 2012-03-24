@@ -204,11 +204,19 @@
 package org.lastfm.util;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
+import org.lastfm.helper.FileHelper;
 import org.lastfm.util.FileUtils;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
 /**
  * 
@@ -217,10 +225,22 @@ import org.lastfm.util.FileUtils;
  */
 
 public class TestFileUtils {
+	@InjectMocks
+	private FileUtils fileUtils = new FileUtils();
+	
+	@Mock
+	private FileHelper fileHelper;
 
+	private long timestamp = 1332562352428L;
+	private File root = new File("src/test/resources/audio");
+	
+
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+	}
 	@Test
 	public void shouldScanADirectory() throws Exception {
-		FileUtils fileUtils = new FileUtils();
 		File root = new MockFile("root");
 		List<File> fileList = fileUtils.getFileList(root);
 		assertEquals(2, fileList.size());
@@ -242,5 +262,23 @@ public class TestFileUtils {
 		public String getAbsolutePath() {
 			return path;
 		}
+	}
+	
+	@Test
+	public void shouldCreateFileForImage() throws Exception {
+		String expectedPath = "JAS_1332562352428.png";
+		when(fileHelper.getTimestamp()).thenReturn(timestamp);
+		File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
+		
+		assertEquals(expectedPath, result.getName());
+	}
+	
+	@Test
+	public void shouldCreateFileForFile() throws Exception {
+		String expectedPath = "JAS_1332562352428.txt";
+		when(fileHelper.getTimestamp()).thenReturn(timestamp);
+		File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.FILE_EXT);
+		
+		assertEquals(expectedPath, result.getName());
 	}
 }

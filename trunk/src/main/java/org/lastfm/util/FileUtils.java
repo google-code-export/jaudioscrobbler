@@ -206,7 +206,6 @@ package org.lastfm.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -216,6 +215,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.ApplicationState;
 import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.helper.FileHelper;
 
 /**
  * 
@@ -225,6 +225,7 @@ import org.lastfm.exception.InvalidId3VersionException;
 
 public class FileUtils {
 	private List<File> fileList;
+	private FileHelper fileHelper = new FileHelper();
 
 	public List<File> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
 		fileList = new ArrayList<File>();
@@ -257,11 +258,11 @@ public class FileUtils {
 	}
 
 	public File createFile(File root, String prefix, String ext) {
-		Date timestamp = new Date();
+		long timestamp = fileHelper.getTimestamp();
 		StringBuilder sb = new StringBuilder();
-		sb.append(timestamp.getTime());
+		sb.append(timestamp);
 		sb.append(".");
-		sb.append(ext);
+		sb.append(ext.toLowerCase());
 		return (prefix == StringUtils.EMPTY) ? new File(root, ApplicationState.PREFIX + sb.toString()) : new File(root, prefix + sb.toString());
 	}
 }
