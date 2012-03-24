@@ -204,12 +204,9 @@
 
 package org.lastfm.helper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -223,8 +220,9 @@ public class TestExporterHelper {
 	private ImageExporter imageExporter;
 	@Mock
 	private MetadataExporter metadataExporter;
-
-	private List<Metadata> metadatas = new ArrayList<Metadata>();
+	@Mock
+	private ExportPackage exportPackage;
+	
 	
 	@Before
 	public void setup() throws Exception {
@@ -233,9 +231,9 @@ public class TestExporterHelper {
 	
 	@Test
 	public void shouldExportImage() throws Exception {
-		exporterHelper.export(metadatas);
-		Mockito.verify(imageExporter).export(metadatas);
-		Mockito.verify(metadataExporter).export(metadatas);
+		exporterHelper.export(exportPackage);
+		Mockito.verify(imageExporter).export(exportPackage);
+		Mockito.verify(metadataExporter).export(exportPackage);
 	}
 
 }

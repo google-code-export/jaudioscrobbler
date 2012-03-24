@@ -229,6 +229,7 @@ public class ImageUtils {
 	private Log log = LogFactory.getLog(this.getClass());
 	private ImageIcon imageIcon;
 	private ImageHelper imageHelper = new ImageHelper();
+	private FileUtils fileUtils = new FileUtils();
 
 	public Image resize(Image image, int width, int height) {
 		BufferedImage bufferedImage = (BufferedImage) image;
@@ -268,9 +269,20 @@ public class ImageUtils {
 	private void write(Image bufferedImage, File file) throws IOException {
 		imageHelper.write(bufferedImage, file);
 	}
+	
+	public File saveCoverArtToFile(Image image, File root, String prefix) throws IOException {
+		File file = fileUtils.createFile(root, prefix);
+		saveImage(image, file);
+		return file;
+	}
 
 	public File saveCoverArtToFile(Image image, String prefix) throws IOException {
 		File file = imageHelper.createTempFile(prefix);
+		saveImage(image, file);
+		return file;
+	}
+
+	private void saveImage(Image image, File file) throws IOException {
 		log.info("Saving image: " + file.getAbsolutePath());
 		int imageHeight = image.getHeight(new ImageObserver() {
 			
@@ -284,7 +296,6 @@ public class ImageUtils {
 			image = resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
 		}
 		write(image, file);
-		return file;
 	}
 
 	public ImageIcon getDragImage() {

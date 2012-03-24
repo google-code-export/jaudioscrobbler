@@ -206,8 +206,10 @@ package org.lastfm.util;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
@@ -252,6 +254,15 @@ public class FileUtils {
 	
 	public File createTempFile() throws IOException {
 		return File.createTempFile(ApplicationState.PREFIX, ApplicationState.FILE_EXT);
+	}
+
+	public File createFile(File root, String prefix) {
+		Date timestamp = new Date();
+		StringBuilder sb = new StringBuilder();
+		sb.append(timestamp.getTime());
+		sb.append(".");
+		sb.append(ApplicationState.IMAGE_EXT);
+		return (prefix == StringUtils.EMPTY) ? new File(root, ApplicationState.PREFIX + sb.toString()) : new File(root, prefix + sb.toString());
 	}
 }
 

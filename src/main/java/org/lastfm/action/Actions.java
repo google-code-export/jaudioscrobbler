@@ -1,15 +1,14 @@
 package org.lastfm.action;
 
-import java.util.List;
+import static org.asmatron.messengine.action.ActionId.cm;
 
 import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.EmptyAction;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ValueAction;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.model.User;
-
-import static org.asmatron.messengine.action.ActionId.cm;
 
 public interface Actions {
 	String LOGIN_ID = "login";
@@ -31,5 +30,5 @@ public interface Actions {
 	ActionId<RequestAction<Metadata, ActionResult>> WRITE = cm(WRITE_METADATA);
 	
 	String EXPORT_METADATA = "exportMetadata";
-	ActionId<RequestAction<List<Metadata>, ActionResult>> EXPORT = cm(EXPORT_METADATA);
+	ActionId<RequestAction<ExportPackage, ActionResult>> EXPORT = cm(EXPORT_METADATA);
 }

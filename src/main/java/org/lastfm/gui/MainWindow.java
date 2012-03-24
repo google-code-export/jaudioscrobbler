@@ -225,6 +225,7 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.InputMap;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -265,6 +266,7 @@ import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.model.MetadataValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -723,7 +725,13 @@ public class MainWindow extends JFrame {
 
 				public void actionPerformed(ActionEvent e) {
 					log.info("Exporting");
-					new ExportWorker();
+					JFileChooser fileChooser = new JFileChooser();
+					fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+					int selection = fileChooser.showOpenDialog(null);
+					if (selection == JFileChooser.APPROVE_OPTION) {
+						File root = fileChooser.getSelectedFile();
+						new ExportWorker(root);
+					}
 				}
 
 			});
@@ -1063,7 +1071,12 @@ public class MainWindow extends JFrame {
 	}
 
 	private class ExportWorker {
-		public ExportWorker() {
+		private List<Metadata> metadataList;
+		private ExportPackage exportPackage;
+
+		public ExportWorker(File root) {
+			metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
+			exportPackage = new ExportPackage(root, metadataList); 
 			work();
 		}
 
@@ -1071,8 +1084,7 @@ public class MainWindow extends JFrame {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				protected Boolean doInBackground() throws Exception {
-					final List<Metadata> metadataList = viewEngineConfigurator.getViewEngine().get(Model.METADATA);
-					MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.EXPORT, metadataList, new ResponseCallback<ActionResult>() {
+					MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.EXPORT, exportPackage, new ResponseCallback<ActionResult>() {
 
 						public void onResponse(ActionResult response) {
 							for (Metadata metadata : metadataList) {
