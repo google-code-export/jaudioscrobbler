@@ -489,4 +489,26 @@ public class TestFormatter {
 		assertEquals(badFormatAcuteExpected , metadata.getAlbum());
 
 	}
+	
+	@Test
+	public void shouldCamelizeWhenParenthesis() throws Exception {
+		String title = "as the rush comes (chillout mix)";
+		String expectedTitle = "As The Rush Comes (chillout Mix)";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldCamelizeWhenNumbers() throws Exception {
+		String title = "rabbit in your headlights (3d mix)";
+		String expectedTitle = "Rabbit In Your Headlights (3d Mix)";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
 }
