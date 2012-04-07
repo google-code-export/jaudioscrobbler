@@ -205,6 +205,7 @@
 package org.lastfm.helper;
 
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -249,19 +250,20 @@ public class TestImageExporter {
 		when(metadata.getAlbum()).thenReturn(album);
 		when(metadata.getArtist()).thenReturn(artist);
 		when(metadata.getTitle()).thenReturn(title);
-		when(metadata.getCoverArt()).thenReturn(coverArt);
 		metadatas.add(metadata);
 		exportPackage = new ExportPackage(root, metadatas);
 	}
 	
 	@Test
 	public void shouldExportASingleImage() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(coverArt);
 		imageExporter.export(exportPackage);
 		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
 	}
 	
 	@Test
 	public void shouldExportASingleImageWhenSameAlbum() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(coverArt);
 		metadatas.add(metadata);
 		imageExporter.export(exportPackage);
 		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
@@ -269,6 +271,7 @@ public class TestImageExporter {
 	
 	@Test
 	public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(coverArt);
 		Metadata metadata = setSecondMetadataExpectations();
 		metadatas.add(metadata);
 		imageExporter.export(exportPackage);
@@ -283,5 +286,11 @@ public class TestImageExporter {
 		when(metadata.getTitle()).thenReturn("Blue Skies (Andy Tau Remix)");
 		when(metadata.getCoverArt()).thenReturn(coverArt);
 		return metadata;
+	}
+	
+	@Test
+	public void shouldNotExportIfNoImage() throws Exception {
+		imageExporter.export(exportPackage);
+		verify(imageUtils, never()).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
 	}
 }
