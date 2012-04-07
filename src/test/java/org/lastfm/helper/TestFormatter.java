@@ -511,4 +511,15 @@ public class TestFormatter {
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
+	
+	@Test
+	public void shouldCamelizeWhenApostrophe() throws Exception {
+		String title = "jesu, joy of man's desiring";
+		String expectedTitle = "Jesu, Joy Of Man's Desiring";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
 }

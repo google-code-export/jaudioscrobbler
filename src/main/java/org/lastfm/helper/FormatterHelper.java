@@ -221,6 +221,8 @@ public class FormatterHelper {
 		formatted = formatted.replace("7", StringUtils.EMPTY);
 		formatted = formatted.replace("8", StringUtils.EMPTY);
 		formatted = formatted.replace("9", StringUtils.EMPTY);
+		formatted = formatted.replace("'", StringUtils.EMPTY);
+		formatted = formatted.replace(",", StringUtils.EMPTY);
 		return formatted.replace(" ", StringUtils.EMPTY);
 	}
 
