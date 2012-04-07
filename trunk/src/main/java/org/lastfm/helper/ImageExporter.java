@@ -218,6 +218,9 @@ public class ImageExporter {
 
 	public void export(ExportPackage exportPackage) throws IOException {
 		List<Metadata> metadataList = exportPackage.getMetadataList();
+		if(metadataList.get(0).getCoverArt() == null){
+			return;
+		}
 		File root = exportPackage.getRoot();
 		if (isSameAlbum(metadataList)){
 			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
