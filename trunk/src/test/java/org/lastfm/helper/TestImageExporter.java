@@ -234,6 +234,8 @@ public class TestImageExporter {
 	private Metadata metadata;
 	@Mock
 	private Image coverArt;
+	@Mock
+	private MetadataHelper metadataHelper;
 
 	private String album = "Bliksem";
 	private String artist = "Sander van Doorn";
@@ -257,6 +259,7 @@ public class TestImageExporter {
 	@Test
 	public void shouldExportASingleImage() throws Exception {
 		when(metadata.getCoverArt()).thenReturn(coverArt);
+		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
 		imageExporter.export(exportPackage);
 		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
 	}
@@ -264,6 +267,7 @@ public class TestImageExporter {
 	@Test
 	public void shouldExportASingleImageWhenSameAlbum() throws Exception {
 		when(metadata.getCoverArt()).thenReturn(coverArt);
+		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
 		metadatas.add(metadata);
 		imageExporter.export(exportPackage);
 		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);

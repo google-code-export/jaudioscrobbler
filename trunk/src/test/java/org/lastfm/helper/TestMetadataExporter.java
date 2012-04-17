@@ -205,7 +205,7 @@
 package org.lastfm.helper;
 
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.OutputStream;
@@ -229,6 +229,7 @@ public class TestMetadataExporter {
 	private static final String DOT = ". ";
 	private static final String PAR_OPEN = " (";
 	private static final String PAR_CLOSE = ")";
+	private static final String BY = " by ";
 	
 	@InjectMocks
 	private MetadataExporter metadataExporter = new MetadataExporter();
@@ -247,6 +248,8 @@ public class TestMetadataExporter {
 	private OutputStream writer;
 	@Mock
 	private ExportPackage exportPackage;
+	@Mock
+	private MetadataHelper metadataHelper;
 	
 	private String album = "Bliksem";
 	private String artist = "Sander van Doorn";
@@ -272,15 +275,22 @@ public class TestMetadataExporter {
 	
 	@Test
 	public void shouldExport() throws Exception {
+		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		
 		metadataExporter.export(exportPackage);
+		
+		verify(writer, times(2)).write(metadata.getAlbum().getBytes());
+		verify(writer).write(BY.getBytes());
+		verify(writer, times(2)).write(metadata.getArtist().getBytes());
+		verify(writer, times(3)).write(NEW_LINE.getBytes());
+		
+		verify(metadataHelper).isSameAlbum(metadatas);
 		verify(writer).write(Integer.toString(1).getBytes());
 		verify(writer).write(DOT.getBytes());
-		verify(writer).write(metadata.getArtist().getBytes());
 		verify(writer).write(DASH.getBytes());
-		verify(writer).write(metadata.getTitle().getBytes());
+		verify(writer, times(2)).write(metadata.getTitle().getBytes());
 		verify(writer).write(PAR_OPEN.getBytes());
 		verify(writer).write(formatter.getDuration(metadata.getLength()).getBytes());
 		verify(writer).write(PAR_CLOSE.getBytes());
-		verify(writer).write(NEW_LINE.getBytes());
 	}
 }
