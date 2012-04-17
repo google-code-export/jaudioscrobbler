@@ -22,3 +22,9 @@ How to send scrobblings to your [LastFM] account
 
 
 <wiki:video url="http://www.youtube.com/watch?v=4g74FQH7di8"/>
+
+
+Exporting metadata to a directory
+
+
+<wiki:video url="http://www.youtube.com/watch?v=CJG5EjbneC0"/>
