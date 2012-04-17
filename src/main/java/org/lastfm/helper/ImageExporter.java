@@ -212,8 +212,15 @@ import org.apache.commons.lang3.StringUtils;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.ImageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ImageExporter {
+	
+	@Autowired
+	private MetadataHelper metadataHelper;
+	
 	private ImageUtils imageUtils = new ImageUtils();
 
 	public void export(ExportPackage exportPackage) throws IOException {
@@ -222,21 +229,12 @@ public class ImageExporter {
 			return;
 		}
 		File root = exportPackage.getRoot();
-		if (isSameAlbum(metadataList)){
+		if (metadataHelper.isSameAlbum(metadataList)){
 			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
 		} else { 
 			for (Metadata metadata : metadataList) {
 				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
 			}
 		}
-	}
-	
-	private boolean isSameAlbum(List<Metadata> metadatas) {
-		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
-			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
-				return false;
-			}
-		}
-		return true;
 	}
 }

@@ -207,10 +207,16 @@ import java.io.IOException;
 
 import org.lastfm.action.ActionResult;
 import org.lastfm.model.ExportPackage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ExporterHelper {
-	private ImageExporter imageExporter = new ImageExporter();
-	private MetadataExporter metadataExporter = new MetadataExporter();
+	
+	@Autowired
+	private ImageExporter imageExporter;
+	@Autowired
+	private MetadataExporter metadataExporter;
 
 	public ActionResult export(ExportPackage exportPackage) throws IOException {
 		imageExporter.export(exportPackage);

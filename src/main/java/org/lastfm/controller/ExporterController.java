@@ -212,6 +212,7 @@ import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.helper.ExporterHelper;
 import org.lastfm.model.ExportPackage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
@@ -222,7 +223,8 @@ import org.springframework.stereotype.Controller;
 public class ExporterController {
 	private Log log = LogFactory.getLog(this.getClass());
 
-	private ExporterHelper exporterHelper = new ExporterHelper();
+	@Autowired
+	private ExporterHelper exporterHelper;
 	
 	@RequestMethod(Actions.EXPORT_METADATA)
 	public ActionResult sendMetadata(ExportPackage exportPackage) {
