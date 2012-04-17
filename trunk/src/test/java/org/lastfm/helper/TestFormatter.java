@@ -522,4 +522,37 @@ public class TestFormatter {
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
+	
+	@Test
+	public void shouldDetecteGraveAccent() throws Exception {
+		String title = "Lumi&egrave;res De Skye";
+		String expectedTitle = "Lumières De Skye";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetecteEAcuteAccent() throws Exception {
+		String title = "Le Vent d'&Eacute;cosse";
+		String expectedTitle = "Le Vent d'Écosse";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetecteCircumflexAccent() throws Exception {
+		String title = "Entre-Nous... La f&ecirc;te";
+		String expectedTitle = "Entre-Nous... La fête";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
 }
