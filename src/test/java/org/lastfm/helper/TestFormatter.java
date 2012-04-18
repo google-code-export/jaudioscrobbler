@@ -555,4 +555,26 @@ public class TestFormatter {
 		assertTrue(formatter.isABadFormat(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
 	}
+	
+	@Test
+	public void shouldCamelizeWhenI() throws Exception {
+		String title = "barakaya (part I)";
+		String expectedTitle = "Barakaya (part I)";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldCamelizeWhenAmpersand() throws Exception {
+		String title = "paco fernandez & neve";
+		String expectedTitle = "Paco Fernandez & Neve";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isNotCamelized(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
 }
