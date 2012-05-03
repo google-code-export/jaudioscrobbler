@@ -970,6 +970,9 @@ public class MainWindow extends JFrame {
 											log.info("response in getting album " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTitle(), i, ApplicationState.TITLE_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);
 											}
 											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 											if (counter >= metadataList.size()) {
