@@ -952,7 +952,32 @@ public class MainWindow extends JFrame {
 								}
 								getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 								if (counter >= metadataList.size()) {
-									getLastfmData();
+									getFormatterData();
+								}
+							}
+							
+							private void getFormatterData() {
+								getLabel().setText(ApplicationState.GETTING_FORMATTER);
+								counter = 0;
+								log.info("Formating for " + metadataList.size() + " files");
+								for (final Metadata metadata : metadataList) {
+									final int i = metadataList.indexOf(metadata);
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_FORMATTER, metadata, new ResponseCallback<ActionResult>() {
+
+										@Override
+										public void onResponse(ActionResult response) {
+											updateStatus(counter++, metadataList.size());
+											log.info("response in getting album " + metadata.getTitle() + ": " + response);
+											if (response.equals(ActionResult.New)) {
+												metadataWithAlbum.add(metadata);
+											}
+											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+											if (counter >= metadataList.size()) {
+												getLastfmData();
+											}
+										}
+										
+									});
 								}
 							}
 

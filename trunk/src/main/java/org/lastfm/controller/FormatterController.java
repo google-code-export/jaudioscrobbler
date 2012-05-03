@@ -200,151 +200,28 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
+
 package org.lastfm.controller;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.io.File;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
+import org.asmatron.messengine.annotations.RequestMethod;
 import org.lastfm.action.ActionResult;
-import org.lastfm.controller.service.LastfmService;
-import org.lastfm.helper.MusicBrainzDelegator;
+import org.lastfm.action.Actions;
+import org.lastfm.controller.service.FormatterService;
 import org.lastfm.metadata.Metadata;
-import org.lastfm.metadata.MetadataException;
-import org.lastfm.metadata.MetadataWriter;
-import org.lastfm.model.MusicBrainzTrack;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import com.slychief.javamusicbrainz.ServerUnavailableException;
-
-
-public class TestCompleteController {
-	private static final String ERROR = "Error";
-
-	@InjectMocks
-	private CompleteController controller = new CompleteController();
+@Controller
+public class FormatterController {
 	
-	@Mock
-	private MusicBrainzDelegator musicBrainzDelegator;
-	@Mock
-	private MetadataWriter metadataWriter;
-	@Mock
-	private Metadata metadata;
-	@Mock
-	private File file;
-	@Mock
-	private LastfmService coverArtService;
-
-	private String artist = "Dave Deen";
-	private String title = "Footprints (Original Mix)";
-	private String album = "Footprints EP";
-	private String trackNumber = "10";
-	private String totalTracks = "25";
-	private String year = "1990";
-
-
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		when(metadata.getArtist()).thenReturn(artist);
-		when(metadata.getTitle()).thenReturn(title);
-		when(metadata.getAlbum()).thenReturn(album);
-		when(metadata.getTrackNumber()).thenReturn(trackNumber);
-		when(metadata.getTotalTracks()).thenReturn(totalTracks);
-		when(metadata.getYear()).thenReturn(year);
-		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
-	}
+	@Autowired
+	private FormatterService formatterService;
 	
-	
-	@Test
-	public void shouldCompleteMetadata() throws Exception {
-		MusicBrainzTrack musicBrainzTrack = setExpectations();
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
-		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
-		ActionResult result = controller.completeAlbumMetadata(metadata);
-		
-		verify(musicBrainzDelegator).getAlbum(artist, title);
-		verify(metadata).setAlbum(album);
-		verify(metadata).setTrackNumber(trackNumber);
-		verify(metadata).setTotalTracks(totalTracks);
-		assertEquals(ActionResult.New, result);
-	}
-
-
-	private MusicBrainzTrack setExpectations() {
-		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-		musicBrainzTrack.setAlbum(album);
-		musicBrainzTrack.setTrackNumber(trackNumber);
-		musicBrainzTrack.setTotalTrackNumber(totalTracks);
-		return musicBrainzTrack;
-	}
-	
-	@Test
-	public void shouldDetectAnErrorInService() throws Exception {
-		when(metadata.getAlbum()).thenReturn("");
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
-		
-		ActionResult result = controller.completeAlbumMetadata(metadata);
-		
-		assertEquals(ActionResult.Error, result);
-	}
-	
-	@Test
-	public void shouldNotFoundAlbum() throws Exception {
-		when(metadata.getAlbum()).thenReturn("");
-		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
-		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
-		
-		ActionResult result = controller.completeAlbumMetadata(metadata);
-
-		verify(metadata, never()).setAlbum(album);
-		assertEquals(ActionResult.Not_Found, result);
-	}
-	
-	@Test
-	public void shouldCompleteAlbumInMetadata() throws Exception {
-		when(metadata.getFile()).thenReturn(file);
-		
-		ActionResult result = controller.completeAlbum(metadata);
-		
-		verify(metadataWriter).setFile(file);
-		verify(metadataWriter).writeAlbum(album);
-		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
-		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
-		verify(metadataWriter).writeYear(year);
-		assertEquals(ActionResult.Updated, result);
-	}
-	
-	@Test
-	public void shouldNotUpdateMetadata() throws Exception {
-		when(metadata.getFile()).thenReturn(file);
-		when(metadataWriter.writeAlbum(album)).thenThrow(new MetadataException(ERROR));
-		
-		ActionResult result = controller.completeAlbum(metadata);
-		
-		assertEquals(ActionResult.Error, result);
-	}
-	
-	@Test
-	public void shouldReturnMetadataCompleteIfHasAlbum() throws Exception {
-		when(metadata.getAlbum()).thenReturn(album);
-		ActionResult result = controller.completeAlbumMetadata(metadata);
-		
-		assertEquals(ActionResult.Complete, result);
-	}
-	
-	@Test
-	public void shouldCompleteCoverArtMetadata() throws Exception {
-		controller.completeLastFmMetadata(metadata);
-		verify(coverArtService).completeLastFM(metadata);
+	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
+	public ActionResult format(Metadata metadata) {
+		boolean formatted = formatterService.isABadFormat(metadata);
+		boolean capitalized = formatterService.isNotCamelized(metadata);
+		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
 	}
 }

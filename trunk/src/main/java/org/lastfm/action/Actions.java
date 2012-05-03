@@ -31,4 +31,7 @@ public interface Actions {
 	
 	String EXPORT_METADATA = "exportMetadata";
 	ActionId<RequestAction<ExportPackage, ActionResult>> EXPORT = cm(EXPORT_METADATA);
+	
+	String COMPLETE_FORMATTER_METADATA = "completeFormatterMetadata";
+	ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_FORMATTER = cm(COMPLETE_FORMATTER_METADATA);
 }
