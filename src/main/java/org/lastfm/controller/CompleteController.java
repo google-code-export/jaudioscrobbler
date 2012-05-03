@@ -240,7 +240,7 @@ public class CompleteController {
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
 	public ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
-			log.info("trying to complete metadata for: " + metadata.getArtist() + " - " + metadata.getTitle());
+			log.info("trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
 				MusicBrainzTrack musicBrainzTrack = service.getAlbum(metadata.getArtist(), metadata.getTitle());
 				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {

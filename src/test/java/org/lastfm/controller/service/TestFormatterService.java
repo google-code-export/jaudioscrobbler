@@ -202,17 +202,18 @@
    limitations under the License.
  */
 
-package org.lastfm.helper;
+package org.lastfm.controller.service;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.controller.service.FormatterService;
 import org.lastfm.metadata.Metadata;
 
 
-public class TestFormatter {
-	private Formatter formatter = new Formatter();
+public class TestFormatterService {
+	private FormatterService formatter = new FormatterService();
 	private String badFormatA = "¿Cu&aacute;ndo?";
 	private String badFormatAExpected = "¿Cuándo?";
 	private String badFormatE = "¿Qu&eacute;?";

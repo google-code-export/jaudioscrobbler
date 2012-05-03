@@ -362,6 +362,11 @@ public class TestMainWindow {
 		callback.onResponse(ActionResult.New);
 
 		verifyCompleteAlbumAssertions();
+		
+		verify(viewEngine).request(eq(Actions.COMPLETE_FORMATTER), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.New);
+		
 
 		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
