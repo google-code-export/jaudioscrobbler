@@ -218,7 +218,6 @@ import org.junit.Test;
 import org.lastfm.action.ActionResult;
 import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.CompleteHelper;
-import org.lastfm.helper.Formatter;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
@@ -238,8 +237,6 @@ public class TestLastfmService {
 	private CompleteHelper completeHelper;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
-	@Mock
-	private Formatter formatter;
 
 	private String genre = "Minimal Techno";
 
