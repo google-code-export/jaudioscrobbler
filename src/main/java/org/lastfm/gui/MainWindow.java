@@ -989,7 +989,7 @@ public class MainWindow extends JFrame {
 								log.info("Completing album for " + metadataList.size() + " files");
 								for (final Metadata metadata : metadataList) {
 									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadata, new ResponseCallback<ActionResult>() {
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadataList, new ResponseCallback<ActionResult>() {
 
 										@Override
 										public void onResponse(ActionResult response) {

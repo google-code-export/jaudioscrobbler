@@ -2,6 +2,8 @@ package org.lastfm.action;
 
 import static org.asmatron.messengine.action.ActionId.cm;
 
+import java.util.List;
+
 import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.EmptyAction;
 import org.asmatron.messengine.action.RequestAction;
@@ -36,5 +38,5 @@ public interface Actions {
 	ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_FORMATTER = cm(COMPLETE_FORMATTER_METADATA);
 	
 	String COMPLETE_DEFAULT_METADATA = "completeDefaultMetadata";
-	ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_DEFAULT = cm(COMPLETE_DEFAULT_METADATA);
+	ActionId<RequestAction<List<Metadata>, ActionResult>> COMPLETE_DEFAULT = cm(COMPLETE_DEFAULT_METADATA);
 }
