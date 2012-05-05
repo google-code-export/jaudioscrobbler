@@ -983,6 +983,33 @@ public class MainWindow extends JFrame {
 									});
 								}
 							}
+							
+							private void completeValuesForAlbum() {
+								counter = 0;
+								log.info("Completing album for " + metadataList.size() + " files");
+								for (final Metadata metadata : metadataList) {
+									final int i = metadataList.indexOf(metadata);
+									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadata, new ResponseCallback<ActionResult>() {
+
+										@Override
+										public void onResponse(ActionResult response) {
+											updateStatus(counter++, metadataList.size());
+											log.info("response in getting album " + metadata.getTitle() + ": " + response);
+											if (response.equals(ActionResult.New)) {
+												metadataWithAlbum.add(metadata);
+												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
+												getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+											}
+											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+											if (counter >= metadataList.size()) {
+												afterComplete(metadataWithAlbum);
+											}
+										}
+										
+									});
+								}
+							}
 
 							private void getLastfmData() {
 								getLabel().setText(ApplicationState.GETTING_LAST_FM);
@@ -1012,10 +1039,9 @@ public class MainWindow extends JFrame {
 												}
 											}
 											if (counter >= metadataList.size()) {
-												afterComplete(metadataWithAlbum);
+												completeValuesForAlbum();
 											}
 										}
-
 									});
 								}
 

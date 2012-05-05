@@ -34,4 +34,7 @@ public interface Actions {
 	
 	String COMPLETE_FORMATTER_METADATA = "completeFormatterMetadata";
 	ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_FORMATTER = cm(COMPLETE_FORMATTER_METADATA);
+	
+	String COMPLETE_DEFAULT_METADATA = "completeDefaultMetadata";
+	ActionId<RequestAction<Metadata, ActionResult>> COMPLETE_DEFAULT = cm(COMPLETE_DEFAULT_METADATA);
 }
