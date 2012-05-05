@@ -371,7 +371,7 @@ public class TestMainWindow {
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 		
-		verify(viewEngine).request(eq(Actions.COMPLETE_DEFAULT), eq(metadata), responseCaptor.capture());
+		verify(viewEngine).request(eq(Actions.COMPLETE_DEFAULT), eq(metadatas), responseCaptor.capture());
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 		

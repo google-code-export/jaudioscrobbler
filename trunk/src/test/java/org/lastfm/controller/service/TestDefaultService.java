@@ -1,5 +1,6 @@
 package org.lastfm.controller.service;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -8,6 +9,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -28,6 +30,8 @@ public class TestDefaultService {
 	private Metadata metadata_one;
 	@Mock
 	private Metadata metadata_two;
+	@Mock
+	private MetadataHelper metadataHelper;
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
 	
@@ -42,19 +46,33 @@ public class TestDefaultService {
 	
 	@Test
 	public void shouldCompleteTotalTracks() throws Exception {
-		defaultService.complete(metadatas);
+		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		defaultService.isCompletable(metadatas);
 		verify(metadata_one).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_two).setTotalTracks(TOTAL_TRACKS);
 	}
 	
 	@Test
 	public void shouldCompleteCDNumbers() throws Exception {
-		defaultService.complete(metadatas);
+		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		defaultService.isCompletable(metadatas);
 		
 		verify(metadata_one).setCdNumber(CD_NUMBER);
 		verify(metadata_one).setTotalCds(TOTAL_CD_NUMBER);
 		verify(metadata_two).setCdNumber(CD_NUMBER);
 		verify(metadata_two).setTotalCds(TOTAL_CD_NUMBER);
+	}
+	
+	@Test
+	public void shouldNotCompleteIfSingleTrack() throws Exception {
+		List<Metadata> metadatas = new ArrayList<Metadata>();
+		metadatas.add(metadata_one);
+		
+		defaultService.isCompletable(metadatas);
+		
+		verify(metadata_one, never()).setTotalTracks(TOTAL_TRACKS);
+		verify(metadata_one, never()).setCdNumber(CD_NUMBER);
+		verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
 	}
 
 }
