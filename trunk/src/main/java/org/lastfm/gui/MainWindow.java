@@ -276,7 +276,6 @@ import org.lastfm.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A principal JAudioScrobbler principal window
  */
 

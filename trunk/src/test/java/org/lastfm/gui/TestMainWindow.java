@@ -246,9 +246,16 @@ public class TestMainWindow {
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
+	private static final String ARTIST = "Armin Van Buuren";
 	private static final String ALBUM = "Mirage";
+	private static final String TITLE = "I Don't Own You";
+	private static final String YEAR = "2010";
+	private static final String CD_NUMBER = "1";
+	private static final String TOTAL_CD_NUMBER = "1";
+	private static final String GENRE = "Trance";
 	private static final String TRACK_NUMBER = "5";
 	private static final String TOTAL_TRACKS_NUMBER = "16";
+
 	private FrameFixture window;
 
 	@Mock
@@ -348,57 +355,88 @@ public class TestMainWindow {
 		callback.onResponse(ActionResult.Error);
 		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-
+	
+	private void setMetadataExpectations() {
+		when(metadata.getArtist()).thenReturn(ARTIST);
+		when(metadata.getTitle()).thenReturn(TITLE);
+		when(metadata.getAlbum()).thenReturn(ALBUM);
+		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
+		when(metadata.getTotalTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
+		when(metadata.getYear()).thenReturn(YEAR);
+		when(metadata.getGenre()).thenReturn(GENRE);
+		when(metadata.getCdNumber()).thenReturn(CD_NUMBER);
+		when(metadata.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+	}
 
 	@Test
 	public void shouldComplete() throws Exception {
 		setMetadataExpectations();
+		
 		mainWindow.getCompleteMetadataButton().setEnabled(true);
-
 		window.button(COMPLETE_BUTTON_NAME).click();
 
 		verify(viewEngine).request(eq(Actions.COMPLETE_MUSICBRAINZ), eq(metadata), responseCaptor.capture());
 		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 
-		verifyCompleteAlbumAssertions();
+		verifyCompleteMusicbrainzAssertions();
 		
 		verify(viewEngine).request(eq(Actions.COMPLETE_FORMATTER), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 		
+		verifyCompleteFormatterAssertions();
+		
 		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
 		
+		verifyCompleteLastfmAssertions();
+		
 		verify(viewEngine).request(eq(Actions.COMPLETE_DEFAULT), eq(metadatas), responseCaptor.capture());
 		callback = responseCaptor.getValue();
 		callback.onResponse(ActionResult.New);
+		
+		verifyCompleteDefaultAssertions();
 		
 		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
 		assertTrue(mainWindow.getApplyButton().isEnabled());
 		verifyButtonsAssertions();
 	}
 
-	private void verifyButtonsAssertions() {
-		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
-		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
-		assertTrue(mainWindow.getOpenButton().isEnabled());
-		assertTrue(mainWindow.getDescriptionTable().isEnabled());
+	private void verifyCompleteDefaultAssertions() {
+		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
+		assertEquals(CD_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.CD_NUMBER_COLUMN));
+		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
-	private void verifyCompleteAlbumAssertions() {
+	private void verifyCompleteLastfmAssertions() {
+		assertEquals(YEAR, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.YEAR_COLUMN));
+		assertEquals(GENRE, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.GENRE_COLUMN));
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+	}
+
+	private void verifyCompleteFormatterAssertions() {
+		assertEquals(ARTIST, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
+		assertEquals(TITLE, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TITLE_COLUMN));
+		assertEquals(ALBUM, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+	}
+
+	private void verifyCompleteMusicbrainzAssertions() {
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 		assertEquals(TRACK_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TRACK_NUMBER_COLUMN));
 		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
 		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-
-	private void setMetadataExpectations() {
-		when(metadata.getAlbum()).thenReturn(ALBUM);
-		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
-		when(metadata.getTotalTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
-		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+	
+	private void verifyButtonsAssertions() {
+		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
+		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
+		assertTrue(mainWindow.getOpenButton().isEnabled());
+		assertTrue(mainWindow.getDescriptionTable().isEnabled());
 	}
 
 	@Test
