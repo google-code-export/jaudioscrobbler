@@ -214,6 +214,7 @@ public class MetadataValues {
 	private String cds;
 	private Image coverArt;
 	private String year;
+	private String artist;
 
 	public void setGenre(String genre) {
 		this.genre = genre;
@@ -269,6 +270,14 @@ public class MetadataValues {
 	
 	public String getYear() {
 		return year;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+	
+	public String getArtist() {
+		return artist;
 	}
 
 }

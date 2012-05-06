@@ -451,6 +451,7 @@ public class MainWindow extends JFrame {
 
 	@EventMethod(Events.APPLY_METADATA)
 	private void onReadyToApplyMetadata(MetadataValues metadataValues) {
+		String artist = metadataValues.getArtist();
 		String album = metadataValues.getAlbum();
 		String genre = metadataValues.getGenre();
 		String year = metadataValues.getYear();
@@ -462,6 +463,9 @@ public class MainWindow extends JFrame {
 		log.info(metadataWithAlbum.size());
 		for (int i = 0; i < model.getRowCount(); i++) {
 			Metadata metadata = metadatas.get(i);
+			if (!StringUtils.isEmpty(artist)) {
+				getDescriptionTable().getModel().setValueAt(artist, i, ApplicationState.ARTIST_COLUMN);
+			}
 			if (!StringUtils.isEmpty(album)) {
 				getDescriptionTable().getModel().setValueAt(album, i, ApplicationState.ALBUM_COLUMN);
 			}
