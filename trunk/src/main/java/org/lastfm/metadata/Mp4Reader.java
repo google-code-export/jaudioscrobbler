@@ -223,11 +223,15 @@ import org.lastfm.helper.AudioFileHelper;
 public class Mp4Reader extends MetadataReader {
 	private AudioFileHelper audioFileHelper = new AudioFileHelper();
 
-	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-		AudioFile audioFile = audioFileHelper.read(file);
-		tag = (Mp4Tag) audioFile.getTag();
-		header = audioFile.getAudioHeader();
-		return generateMetadata(file);
+	public Metadata getMetadata(File file) throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
+		try{
+			AudioFile audioFile = audioFileHelper.read(file);
+			tag = (Mp4Tag) audioFile.getTag();
+			header = audioFile.getAudioHeader();
+			return generateMetadata(file);
+		} catch (CannotReadException cnr){
+			return null;
+		}
 	}
 
 	@Override
