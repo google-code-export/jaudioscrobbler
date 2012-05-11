@@ -230,8 +230,12 @@ public class Mp3Reader extends MetadataReader {
 	private AudioFile audioFile;
 	private AudioFileHelper audioFileHelper = new AudioFileHelper();
 
-	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-		audioFile = audioFileHelper.read(file);
+	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
+		try{
+			audioFile = audioFileHelper.read(file);
+		} catch (InvalidAudioFrameException ina){
+			return null;
+		}
 		if (audioFile instanceof MP3File) {
 			MP3File audioMP3 = (MP3File) audioFile;
 			if (!audioMP3.hasID3v2Tag()) {
