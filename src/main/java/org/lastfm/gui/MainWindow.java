@@ -434,10 +434,10 @@ public class MainWindow extends JFrame {
 				file = iterator.next();
 			}
 			if (filesWithoutMinimumMetadata.size() == 1) {
-				JOptionPane.showMessageDialog(frame, file.getName() + " was not loaded due to not enough metadata");
+				JOptionPane.showMessageDialog(frame, file.getName() + " title and artist metadata were extracted from file name");
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
-				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " were not loaded due to not enough metadata");
+				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " title and artist metadata were extracted from file name");
 			}
 		}
 		resetStatus();
@@ -446,6 +446,32 @@ public class MainWindow extends JFrame {
 		selectedRow = 0;
 		updateImage(selectedRow);
 		tableLoaded = true;
+	}
+	
+	@EventMethod(Events.LOAD_METADATA)
+	private void onLoadMetadata(List<Metadata> metadatas) {
+		JTable descriptionTable = getDescriptionTable();
+		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
+		for (Metadata metadata : metadatas) {
+			int row = descriptionTable.getRowCount();
+			model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
+			descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
+			descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
+			descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
+			descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
+			descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
+			descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
+			descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
+			if(metadata.isMetadataFromFile()){
+				descriptionTable.setValueAt(ApplicationState.NEW , row, ApplicationState.STATUS_COLUMN);
+				metadataWithAlbum.add(metadata);
+				getApplyButton().setEnabled(true);
+			} else {
+				descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
+			}
+		}
 	}
 
 	@EventMethod(Events.APPLY_METADATA)
@@ -495,26 +521,6 @@ public class MainWindow extends JFrame {
 				getApplyButton().setEnabled(!working);
 				log.info("setting applyButton to : " + !working);
 			}
-		}
-	}
-
-	@EventMethod(Events.LOAD_METADATA)
-	private void onLoadMetadata(List<Metadata> metadatas) {
-		JTable descriptionTable = getDescriptionTable();
-		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
-		for (Metadata metadata : metadatas) {
-			int row = descriptionTable.getRowCount();
-			model.addRow(new Object[] { "", "", "", "", "", "", "", "" });
-			descriptionTable.setValueAt(metadata.getArtist(), row, ApplicationState.ARTIST_COLUMN);
-			descriptionTable.setValueAt(metadata.getTitle(), row, ApplicationState.TITLE_COLUMN);
-			descriptionTable.setValueAt(metadata.getAlbum(), row, ApplicationState.ALBUM_COLUMN);
-			descriptionTable.setValueAt(metadata.getGenre(), row, ApplicationState.GENRE_COLUMN);
-			descriptionTable.setValueAt(metadata.getYear(), row, ApplicationState.YEAR_COLUMN);
-			descriptionTable.setValueAt(metadata.getTrackNumber(), row, ApplicationState.TRACK_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getTotalTracks(), row, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getCdNumber(), row, ApplicationState.CD_NUMBER_COLUMN);
-			descriptionTable.setValueAt(metadata.getTotalCds(), row, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
-			descriptionTable.setValueAt(ApplicationState.READY, row, ApplicationState.STATUS_COLUMN);
 		}
 	}
 

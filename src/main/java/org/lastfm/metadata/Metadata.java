@@ -227,6 +227,7 @@ public class Metadata implements Comparable<Metadata>{
 	private String year;
 	private CoverArt newCoverArt;
 	private Log log = LogFactory.getLog(this.getClass());
+	private boolean metadataFromFile;
 	
 	public File getFile() {
 		return file;
@@ -314,7 +315,12 @@ public class Metadata implements Comparable<Metadata>{
 	public CoverArt getNewCoverArt() {
 		return newCoverArt;
 	}
-	
+	public boolean isMetadataFromFile() {
+		return metadataFromFile ;
+	}
+	public void setMetadataFromFile(boolean metadataFromFile) {
+		this.metadataFromFile = metadataFromFile;
+	}
 	
 	public int compareTo(Metadata metadata) {
 		try{
