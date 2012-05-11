@@ -219,6 +219,7 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataReader;
@@ -243,6 +244,8 @@ public class MetadataExtractor {
 	
 	@Autowired
 	private ControlEngineConfigurator configurator;
+	@Autowired
+	private MetadataHelper metadataHelper;
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
 		metadataList = new ArrayList<Metadata>();
@@ -272,6 +275,7 @@ public class MetadataExtractor {
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 			} else {
+				metadataList.add(metadataHelper.extractFromFileName(metadata));
 				filesWithoutMinimumMetadata.add(file);
 			}
 		}

@@ -242,7 +242,8 @@ public interface ApplicationState {
 	static final String COVER_ART_DEFAULT = "Covert Art not found";
 	static final String APPLY = "Apply";
 	static final String EXPORT = "Export";
-	static final Object READY = "Ready";
+	static final String NEW = "New";
+	static final String READY = "Ready";
 	static final String APPLICATION_NAME = "JAudioScrobbler";
 	static final String IMAGE_EXT = "PNG";
 	static final String FILE_EXT = "txt";
