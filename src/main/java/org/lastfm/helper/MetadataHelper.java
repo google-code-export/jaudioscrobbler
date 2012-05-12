@@ -28,17 +28,22 @@ public class MetadataHelper {
 		try{
 			StringTokenizer stringTokenizer = new StringTokenizer(titleComplete, "-");
 			String artist = stringTokenizer.nextToken();
-			String title = stringTokenizer.nextToken();
+			String title = removeExtension(stringTokenizer.nextToken());
 			metadata.setArtist(artist);
-			metadata.setTitle(title.substring(0, title.length() - 4));
+			metadata.setTitle(title);
 		} catch (NoSuchElementException nue){
-			String uniqueName = titleComplete.substring(0, titleComplete.length() - 4);
-			metadata.setTitle(uniqueName);
+			String uniqueName = removeExtension(titleComplete);
 			metadata.setArtist(uniqueName);
+			metadata.setTitle(uniqueName);
 			log.info(titleComplete + " has no slash format");
 		}
 		metadata.setMetadataFromFile(true);
 		return metadata;
+	}
+
+	private String removeExtension(String name) {
+		int extensionIndex = name.lastIndexOf(".");
+		return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
 	}
 
 }
