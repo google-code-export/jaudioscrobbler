@@ -50,5 +50,5 @@ public class TestFormatterController {
 		ActionResult result = formatterController.format(metadata);
 		assertEquals(ActionResult.Complete, result);
 	}
-
+	
 }

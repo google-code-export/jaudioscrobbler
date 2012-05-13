@@ -208,6 +208,9 @@ import org.apache.commons.lang3.StringUtils;
 public class FormatterHelper {
 
 	public String getBasicFormat(String word) {
+		if(word.length() == 2){
+			return word;
+		}
 		String formatted = word.replace("-", StringUtils.EMPTY);
 		formatted = formatted.replace("(", StringUtils.EMPTY);
 		formatted = formatted.replace(")", StringUtils.EMPTY);

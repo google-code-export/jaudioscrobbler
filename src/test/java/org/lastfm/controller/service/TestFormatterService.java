@@ -204,11 +204,13 @@
 
 package org.lastfm.controller.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.controller.service.FormatterService;
 import org.lastfm.metadata.Metadata;
 
 
@@ -577,5 +579,19 @@ public class TestFormatterService {
 		
 		assertTrue(formatter.isNotCamelized(metadata));
 		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldNotReturnNew() throws Exception {
+		String artist = "Youth Blood Martydparty Master Edit";
+		String title = "6a";
+		String album = StringUtils.EMPTY;
+		
+		metadata.setArtist(artist);
+		metadata.setTitle(title);
+		metadata.setAlbum(album);
+		
+		assertFalse(formatter.isNotCamelized(metadata));
+		assertFalse(formatter.isABadFormat(metadata));
 	}
 }
