@@ -271,12 +271,18 @@ public class ImageUtils {
 	}
 	
 	public File saveCoverArtToFile(Image image, File root, String prefix) throws IOException {
+		if(image == null){
+			return null;
+		}
 		File file = fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT);
 		saveImage(image, file);
 		return file;
 	}
 
 	public File saveCoverArtToFile(Image image, String prefix) throws IOException {
+		if(image == null){
+			return null;
+		}
 		File file = imageHelper.createTempFile(prefix);
 		saveImage(image, file);
 		return file;
