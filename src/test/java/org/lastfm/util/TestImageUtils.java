@@ -205,6 +205,7 @@ package org.lastfm.util;
 
 import static org.junit.Assert.assertSame;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -217,6 +218,7 @@ import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.ApplicationState;
 import org.lastfm.helper.ImageHelper;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -232,6 +234,8 @@ public class TestImageUtils {
 	private Image image;
 	@Mock
 	private File file;
+	@Mock
+	private FileUtils fileUtils;
 	
 	@Before
 	public void setup() throws Exception {
@@ -255,5 +259,19 @@ public class TestImageUtils {
 		
 		verify(imageHelper).createTempFile(StringUtils.EMPTY);
 		verify(imageHelper).write(image, file);
+	}
+	
+	@Test
+	public void shouldNotSaveCoverArtIfNoImage() throws Exception {
+		imageUtils.saveCoverArtToFile(null, StringUtils.EMPTY);
+		
+		verify(imageHelper, never()).createTempFile(StringUtils.EMPTY);
+	}
+	
+	@Test
+	public void shouldNotSaveCoverArtIfRootAndNoImage() throws Exception {
+		imageUtils.saveCoverArtToFile(null, file, StringUtils.EMPTY);
+		
+		verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
 	}
 }
