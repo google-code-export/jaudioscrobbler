@@ -32,5 +32,5 @@ Note: You should find the third party Jars in /lib folder in JAudioScrobbler sou
 === Create Installers ===
 
    * Maven in your system environment path is required [http://maven.apache.org/download.html]
-   * From your command line: mvn -Dmaven.test.skip clean assembly:assembly
+   * From your command line: {{{mvn -Dmaven.test.skip clean assembly:assembly}}}
     
