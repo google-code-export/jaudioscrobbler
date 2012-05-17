@@ -332,7 +332,7 @@ public class MetadataDialog extends AllDialog {
 				getImagePanel().removeAll();
 				getImagePanel().add(imageLabel);
 				MetadataDialog.this.invalidate();
-				MetadataDialog.this.revalidate();
+				MetadataDialog.this.validate();
 			}
 		});
 		multiLayerDropTargetListener.addDropListener(imagePanel, listener);
