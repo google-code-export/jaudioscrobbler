@@ -222,7 +222,6 @@ import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataReader;
-import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.metadata.Mp4Reader;
 import org.lastfm.model.Model;
 import org.lastfm.util.FileUtils;
@@ -260,11 +259,11 @@ public class MetadataExtractor {
 		for (File file : fileList) {
 			Metadata metadata = null;
 			if (fileUtils.isMp3File(file)) {
-				MetadataReader mp3Reader = new Mp3Reader();
+				MetadataReader mp3Reader = metadataHelper.createMp3Reader();
 				mp3Reader.setControlEngine(configurator);
 				metadata = mp3Reader.getMetadata(file);
 			} else if (fileUtils.isM4aFile(file)) {
-				Mp4Reader mp4Reader = new Mp4Reader();
+				Mp4Reader mp4Reader = metadataHelper.createMp4Reader();
 				mp4Reader.setControlEngine(configurator);
 				metadata = mp4Reader.getMetadata(file);
 			}

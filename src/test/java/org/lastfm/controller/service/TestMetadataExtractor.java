@@ -204,7 +204,6 @@
 package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -226,7 +225,9 @@ import org.junit.Test;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.Mp3Reader;
+import org.lastfm.metadata.Mp4Reader;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -249,48 +250,67 @@ public class TestMetadataExtractor {
 	@Mock
 	private Mp3Reader mp3Reader;
 	@Mock
+	private Mp4Reader mp4Reader;
+	@Mock
 	private Metadata metadata;
 	@Mock
 	private Set<File> filesWithoutMinimumMetadata;
+	@Mock
+	private File pepeGarden;
+	@Mock
+	private File checkStyleFile;
 
 	private List<File> fileList;
 	private static final int FIRST_ELEMENT = 0;
-	private File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
-	private File signalRunners = new File("src/test/resources/audio/Signalrunners And Julie Thompson - These Shoulders (Andy Moor Remix).mp3");
-	private File checkStyleFile = new File("src/test/resources/checkstyle/checkstyle.xml");
-
-
-
 
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
-		when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
 		fileList = new ArrayList<File>();
+		when(metadataHelper.createMp3Reader()).thenReturn(mp3Reader);
+		when(metadataHelper.createMp4Reader()).thenReturn(mp4Reader);
 	}
 
 	@Test
-	public void shouldExtractMetadata() throws Exception {
+	public void shouldExtractMetadataWhenMp3() throws Exception {
+		setMp3Expectations();
 		setFileListExpectations();
 
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
+		verify(mp3Reader).setControlEngine(configurator);
 	}
 
 	@Test
-	public void shouldDetectANotValidAudioFile() throws Exception {
-		fileList.add(pepeGarden);
-		fileList.add(checkStyleFile);
-		when(fileUtils.isMp3File(checkStyleFile)).thenReturn(false);
-		when(fileUtils.getFileList(root)).thenReturn(fileList);
+	public void shouldExtractMetadataWhenMp4() throws Exception {
+		setMp4Expectations();
+		setFileListExpectations();
 
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
+		verify(mp4Reader).setControlEngine(configurator);
+	}
+
+	@Test
+	public void shouldDetectANotValidAudioFile() throws Exception {
+		setMp4Expectations();
+		setFileListExpectations();
+		fileList.add(checkStyleFile);
+
+		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		Metadata metadata = metadatas.get(FIRST_ELEMENT);
+
+		verifyExpectations(metadatas, metadata);
+	}
+
+	private void setMp4Expectations() throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
+		when(fileUtils.isM4aFile(pepeGarden)).thenReturn(true);
+		when(mp4Reader.getMetadata(pepeGarden)).thenReturn(metadata);
 	}
 
 	private void verifyExpectations(List<Metadata> metadatas, Metadata metadata) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException,
@@ -302,6 +322,7 @@ public class TestMetadataExtractor {
 
 	@Test
 	public void shouldCleanMetadataList() throws Exception {
+		setMp4Expectations();
 		setFileListExpectations();
 
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
@@ -314,23 +335,30 @@ public class TestMetadataExtractor {
 	}
 
 	private void setFileListExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
+		when(metadata.getArtist()).thenReturn("Jaytech");
+		when(metadata.getTitle()).thenReturn("Pepe Garden (Original Mix)");
 		fileList.add(pepeGarden);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 	}
 	
+	private void setMp3Expectations() throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
+		when(fileUtils.isMp3File(pepeGarden)).thenReturn(true);
+		when(mp3Reader.getMetadata(pepeGarden)).thenReturn(metadata);
+	}
+	
 	@Test
 	public void shouldDetectAFileWithoutMinimumMetadata() throws Exception {
-		when(fileUtils.isMp3File(signalRunners)).thenReturn(true);
-		fileList.add(signalRunners);
-		when(mp3Reader.getMetadata(signalRunners)).thenReturn(metadata);
+		setMp3Expectations();
+		fileList.add(pepeGarden);
+		
 		when(metadataHelper.createHashSet()).thenReturn(filesWithoutMinimumMetadata);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
 
 		assertEquals(1, metadatas.size());
-		verify(fileUtils, never()).isM4aFile(signalRunners);
-		verify(metadataHelper).extractFromFileName(isA(Metadata.class));
-		verify(filesWithoutMinimumMetadata).add(signalRunners);
+		verify(fileUtils, never()).isM4aFile(pepeGarden);
+		verify(metadataHelper).extractFromFileName(metadata);
+		verify(filesWithoutMinimumMetadata).add(pepeGarden);
 	}
 }
