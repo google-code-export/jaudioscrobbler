@@ -10,6 +10,9 @@ import java.util.StringTokenizer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.MetadataReader;
+import org.lastfm.metadata.Mp3Reader;
+import org.lastfm.metadata.Mp4Reader;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +54,14 @@ public class MetadataHelper {
 
 	public Set<File> createHashSet() {
 		return new HashSet<File>();
+	}
+
+	public MetadataReader createMp3Reader() {
+		return new Mp3Reader();
+	}
+
+	public Mp4Reader createMp4Reader() {
+		return new Mp4Reader();
 	}
 
 }
