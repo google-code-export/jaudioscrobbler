@@ -208,6 +208,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
@@ -219,6 +220,7 @@ import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;
+import org.lastfm.model.CoverArt;
 import org.lastfm.model.MusicBrainzTrack;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -243,13 +245,21 @@ public class TestCompleteController {
 	private File file;
 	@Mock
 	private LastfmService coverArtService;
+	@Mock
+	private CoverArt coverArt;
+	@Mock
+	private Image imageIcon;
 
 	private String artist = "Dave Deen";
 	private String title = "Footprints (Original Mix)";
 	private String album = "Footprints EP";
+	private String genre = "Trance";
 	private String trackNumber = "10";
 	private String totalTracks = "25";
 	private String year = "1990";
+	private String cdNumber = "1";
+	private String totalCds = "2";
+
 
 
 	@Before
@@ -260,7 +270,10 @@ public class TestCompleteController {
 		when(metadata.getAlbum()).thenReturn(album);
 		when(metadata.getTrackNumber()).thenReturn(trackNumber);
 		when(metadata.getTotalTracks()).thenReturn(totalTracks);
+		when(metadata.getCdNumber()).thenReturn(cdNumber);
+		when(metadata.getTotalCds()).thenReturn(totalCds);
 		when(metadata.getYear()).thenReturn(year);
+		when(metadata.getGenre()).thenReturn(genre);
 		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
 	}
 	
@@ -270,6 +283,7 @@ public class TestCompleteController {
 		MusicBrainzTrack musicBrainzTrack = setExpectations();
 		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
 		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		
 		ActionResult result = controller.completeAlbumMetadata(metadata);
 		
 		verify(musicBrainzDelegator).getAlbum(artist, title);
@@ -317,10 +331,28 @@ public class TestCompleteController {
 		ActionResult result = controller.completeAlbum(metadata);
 		
 		verify(metadataWriter).setFile(file);
+		verify(metadataWriter).writeArtist(artist);
+		verify(metadataWriter).writeTitle(title);
 		verify(metadataWriter).writeAlbum(album);
 		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
 		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
+		verify(metadataWriter).writeCdNumber(cdNumber);
+		verify(metadataWriter).writeTotalCds(totalCds);
 		verify(metadataWriter).writeYear(year);
+		verify(metadataWriter).writeGenre(genre);
+		assertEquals(ActionResult.Updated, result);
+	}
+	
+	@Test
+	public void shouldRemoveCoverArt() throws Exception {
+		when(metadata.getNewCoverArt()).thenReturn(coverArt);
+		when(coverArt.getImageIcon()).thenReturn(imageIcon);
+		
+		ActionResult result = controller.completeAlbum(metadata);
+		
+		verify(metadataWriter).removeCoverArt();
+		verify(metadataWriter).writeCoverArt(imageIcon);
+		verify(metadata).setCoverArt(imageIcon);
 		assertEquals(ActionResult.Updated, result);
 	}
 	
