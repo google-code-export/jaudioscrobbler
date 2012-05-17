@@ -1,7 +1,10 @@
 package org.lastfm.helper;
 
+import java.io.File;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 import org.apache.commons.logging.Log;
@@ -44,6 +47,10 @@ public class MetadataHelper {
 	private String removeExtension(String name) {
 		int extensionIndex = name.lastIndexOf(".");
 		return extensionIndex == -1 ? name : name.substring(0, extensionIndex);
+	}
+
+	public Set<File> createHashSet() {
+		return new HashSet<File>();
 	}
 
 }

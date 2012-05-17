@@ -204,7 +204,7 @@
 package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -213,6 +213,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
@@ -223,7 +224,9 @@ import org.jaudiotagger.tag.TagException;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
+import org.lastfm.metadata.Mp3Reader;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -241,12 +244,23 @@ public class TestMetadataExtractor {
 	private ControlEngineConfigurator configurator;
 	@Mock
 	private ControlEngine controlEngine;
+	@Mock
+	private MetadataHelper metadataHelper;
+	@Mock
+	private Mp3Reader mp3Reader;
+	@Mock
+	private Metadata metadata;
+	@Mock
+	private Set<File> filesWithoutMinimumMetadata;
 
 	private List<File> fileList;
 	private static final int FIRST_ELEMENT = 0;
 	private File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
 	private File signalRunners = new File("src/test/resources/audio/Signalrunners And Julie Thompson - These Shoulders (Andy Moor Remix).mp3");
 	private File checkStyleFile = new File("src/test/resources/checkstyle/checkstyle.xml");
+
+
+
 
 	@Before
 	public void setup() throws Exception {
@@ -308,11 +322,15 @@ public class TestMetadataExtractor {
 	public void shouldDetectAFileWithoutMinimumMetadata() throws Exception {
 		when(fileUtils.isMp3File(signalRunners)).thenReturn(true);
 		fileList.add(signalRunners);
+		when(mp3Reader.getMetadata(signalRunners)).thenReturn(metadata);
+		when(metadataHelper.createHashSet()).thenReturn(filesWithoutMinimumMetadata);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		
 		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
 
-		assertTrue(metadatas.isEmpty());
+		assertEquals(1, metadatas.size());
 		verify(fileUtils, never()).isM4aFile(signalRunners);
+		verify(metadataHelper).extractFromFileName(isA(Metadata.class));
+		verify(filesWithoutMinimumMetadata).add(signalRunners);
 	}
 }

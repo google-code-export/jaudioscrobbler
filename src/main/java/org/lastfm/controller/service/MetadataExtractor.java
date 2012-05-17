@@ -206,7 +206,6 @@ package org.lastfm.controller.service;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -249,7 +248,7 @@ public class MetadataExtractor {
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
 		metadataList = new ArrayList<Metadata>();
-		filesWithoutMinimumMetadata = new HashSet<File>();
+		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
 		List<File> fileList = fileUtils.getFileList(root);
 		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
 		return getMetadataList(fileList);
