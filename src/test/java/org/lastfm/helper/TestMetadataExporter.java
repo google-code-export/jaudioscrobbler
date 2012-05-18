@@ -216,6 +216,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
+import org.lastfm.controller.service.FormatterService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -237,7 +238,7 @@ public class TestMetadataExporter {
 	@Mock
 	private FileUtils fileUtils;
 	@Mock
-	private Formatter formatter;
+	private FormatterService formatter;
 	@Mock
 	private Metadata metadata;
 	@Mock

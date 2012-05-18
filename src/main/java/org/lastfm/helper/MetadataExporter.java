@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
+import org.lastfm.controller.service.FormatterService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -24,12 +25,13 @@ public class MetadataExporter {
 	private static final String PAR_CLOSE = ")";
 	private static final String BY = " by ";
 	private FileUtils fileUtils = new FileUtils();
-	private Formatter formatter = new Formatter();
 	private OutStreamWriter  outputStreamWriter = new OutStreamWriter();
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	@Autowired
 	private MetadataHelper metadataHelper;
+	@Autowired
+	private FormatterService formatter;
 
 	public void export(ExportPackage exportPackage) throws IOException {
 		File file = fileUtils.createFile(exportPackage.getRoot(), StringUtils.EMPTY, ApplicationState.FILE_EXT);
