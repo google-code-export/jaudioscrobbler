@@ -209,7 +209,6 @@ import static org.mockito.Mockito.when;
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.controller.ScrobblerController;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -234,6 +233,5 @@ public class TestLauncher {
 		
 		verify(context).getBean(DefaultEngine.class);
 		verify(defaultEngine).start();
-		verify(context).getBean(ScrobblerController.class);
 	}
 }
