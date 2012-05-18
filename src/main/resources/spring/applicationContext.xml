@@ -20,12 +20,7 @@
 		<constructor-arg ref="applicationEngine" />
 	</bean>
 	
-	<bean id="scrobblerHelper" class="org.lastfm.helper.ScrobblerHelper"/>
-	<bean id="metadataExtractor" class="org.lastfm.controller.service.MetadataExtractor" />
 	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow" />
 	<bean id="mainWindow" class="org.lastfm.gui.MainWindow" />
-	<bean id="loginController" class="org.lastfm.controller.LoginController" />
-	<bean id="metadataController" class="org.lastfm.controller.MetadataController" />
-	<bean id="completeController" class="org.lastfm.controller.CompleteController" />
-	<bean id="scrobblerController" class="org.lastfm.controller.ScrobblerController" />
+	
 </beans>

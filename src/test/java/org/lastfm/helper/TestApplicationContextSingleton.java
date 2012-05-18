@@ -4,7 +4,8 @@ import static org.junit.Assert.assertNotNull;
 
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.junit.Test;
-import org.lastfm.controller.ScrobblerController;
+import org.lastfm.gui.LoginWindow;
+import org.lastfm.gui.MainWindow;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class TestApplicationContextSingleton {
@@ -13,9 +14,11 @@ public class TestApplicationContextSingleton {
 	public void shouldCreateAnApplicationContext() throws Exception {
 		ConfigurableApplicationContext applicationContext = ApplicationContextSingleton.getApplicationContext();
 		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
-		ScrobblerController scrobblerController = applicationContext.getBean(ScrobblerController.class);
+		MainWindow mainWindow = applicationContext.getBean(MainWindow.class);
+		LoginWindow loginWindow = applicationContext.getBean(LoginWindow.class);
 		assertNotNull(defaultEngine);
-		assertNotNull(scrobblerController);
+		assertNotNull(mainWindow);
+		assertNotNull(loginWindow);
 	}
 
 }
