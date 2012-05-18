@@ -228,20 +228,20 @@ public class ScrobblerController {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
-	private ScrobblerHelper helperScrobbler;
+	private ScrobblerHelper scrobblerHelper;
 	@Autowired
 	private ControlEngineConfigurator configurator;
 	
 	@PostConstruct
 	public void setup() {
-		helperScrobbler.setControlEngine(configurator.getControlEngine());
+		scrobblerHelper.setControlEngine(configurator.getControlEngine());
 	}
 
 	@RequestMethod(Actions.SEND_METADATA)
 	public ActionResult sendMetadata(Metadata metadata) {
 		try {
 			log.info("Sending scrobbling for: " + metadata.getTitle());
-			return helperScrobbler.send(metadata);
+			return scrobblerHelper.send(metadata);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 		} catch (InterruptedException ine) {

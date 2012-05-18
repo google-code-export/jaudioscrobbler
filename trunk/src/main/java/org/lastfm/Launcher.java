@@ -205,7 +205,6 @@
 package org.lastfm;
 
 import org.asmatron.messengine.engines.DefaultEngine;
-import org.lastfm.controller.ScrobblerController;
 import org.lastfm.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;
 
@@ -218,7 +217,6 @@ public class Launcher {
 	public Launcher(ConfigurableApplicationContext applicationContext) {
 		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
 		defaultEngine.start();
-		applicationContext.getBean(ScrobblerController.class);
 	}
 	
 	public static void main(String[] args) {

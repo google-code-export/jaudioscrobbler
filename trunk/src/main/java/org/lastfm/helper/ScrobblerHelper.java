@@ -221,6 +221,7 @@ import org.lastfm.action.ActionResult;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
+import org.springframework.stereotype.Service;
 
 import de.umass.lastfm.Session;
 import de.umass.lastfm.scrobble.ScrobbleResult;
@@ -230,6 +231,7 @@ import de.umass.lastfm.scrobble.ScrobbleResult;
  * @understands A class who knows how to send scrobblings
  */
 
+@Service
 public class ScrobblerHelper {
 	private static final int ONE_THOUSAND = 1000;
 	private static final int MIN_LENGHT = 240;
