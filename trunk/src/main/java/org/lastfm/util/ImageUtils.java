@@ -218,7 +218,7 @@ import javax.swing.ImageIcon;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
-import org.lastfm.helper.ImageHelper;
+import org.lastfm.controller.service.ImageService;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
@@ -228,7 +228,7 @@ import org.lastfm.helper.ImageHelper;
 public class ImageUtils {
 	private Log log = LogFactory.getLog(this.getClass());
 	private ImageIcon imageIcon;
-	private ImageHelper imageHelper = new ImageHelper();
+	private ImageService imageHelper = new ImageService();
 	private FileUtils fileUtils = new FileUtils();
 
 	public Image resize(Image image, int width, int height) {

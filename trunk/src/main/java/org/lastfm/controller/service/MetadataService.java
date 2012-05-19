@@ -229,12 +229,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who know how extract metadata from files using a root directory
  */
 
 @Service
-public class MetadataExtractor {
+public class MetadataService {
 	private List<Metadata> metadataList;
 	private Set<File> filesWithoutMinimumMetadata;
 	private FileUtils fileUtils = new FileUtils();

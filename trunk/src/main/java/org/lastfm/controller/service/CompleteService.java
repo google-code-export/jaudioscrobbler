@@ -200,40 +200,144 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
-package org.lastfm.helper;
+*/
+package org.lastfm.controller.service;
 
 import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-
-import javax.imageio.ImageIO;
+import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
-import org.lastfm.ApplicationState;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.lastfm.action.ActionResult;
+import org.lastfm.helper.LastFMAlbumHelper;
+import org.lastfm.metadata.Metadata;
+import org.lastfm.model.CoverArt;
+import org.lastfm.model.CoverArtType;
+import org.lastfm.model.LastfmAlbum;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class ImageHelper {
+import de.umass.lastfm.Album;
+import de.umass.lastfm.ImageSize;
 
-	public Image read() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
+@Service
+public class CompleteService {
+	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
+	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
+	private Log log = LogFactory.getLog(this.getClass());
+	private Album info;
+	
+	@Autowired
+	private ImageService imageService;
+
+	public boolean canLastFMHelpToComplete(Metadata metadata) {
+		String artist = metadata.getArtist();
+		String album = metadata.getAlbum();
+
+		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
+			info = cachedAlbums.get(metadata.getAlbum());
+			if(info==null){
+				info = helper.getAlbum(artist, album);
+				if(info!=null){
+					String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
+					if(!StringUtils.isEmpty(imageUrl)){
+						cachedAlbums.put(metadata.getAlbum(), info);
+					}
+				}
+			}
+			return info == null ? false : true;
+		}
+		return false;
 	}
 
-	public File createTempFile(String prefix) throws IOException {
-		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
+	private boolean hasAlbumAndArtist(String artist, String album) {
+		return (!StringUtils.isEmpty(album) && !StringUtils.isEmpty(artist));
 	}
 
-	public void write(Image bufferedImage, File file) throws IOException {
-		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
+	private boolean isMetadataIncomplete(Metadata metadata) {
+		return (metadata.getCoverArt() == null || StringUtils.isEmpty(metadata.getYear()) || StringUtils.isEmpty(metadata.getGenre()));
 	}
 
-	public Image readDragImage() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.DRAG_IMAGE));
+	public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
+		LastfmAlbum lastfmAlbum = new LastfmAlbum();
+		setCoverArt(metadata, lastfmAlbum);
+		setYear(metadata, lastfmAlbum);
+		setGenre(metadata, lastfmAlbum);
+		return lastfmAlbum;
 	}
 
-	public Image readCloseImage() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.CLOSE_IMAGE));
+	private void setCoverArt(Metadata metadata, LastfmAlbum lastfmAlbum) throws MalformedURLException, IOException {
+		if(metadata.getCoverArt() != null){
+			return;
+		}
+		String imageURL = StringUtils.EMPTY;
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		if(album!=null){
+			imageURL = album.getImageURL(ImageSize.EXTRALARGE);
+			log.info("imageURL: " + imageURL + " from album: " + album.getName());
+		}
+		if (!StringUtils.isEmpty(imageURL)) {
+			Image image = imageService.readImage(imageURL);
+			lastfmAlbum.setImageIcon(image);
+		}
+	}
+
+	private void setGenre(Metadata metadata, LastfmAlbum lastfmAlbum) {
+		if(!StringUtils.isEmpty(metadata.getGenre()) || StringUtils.isEmpty(metadata.getAlbum())){
+			return;
+		}
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		String genre = StringUtils.EMPTY;
+		if(album != null){
+			genre = helper.getGenre(album);
+		} else {
+			genre = helper.getGenre(info);
+		}
+		if(!StringUtils.isEmpty(genre)){
+			log.info("Genre from lastFM: " + genre);
+			lastfmAlbum.setGenre(genre);
+		} else {
+			lastfmAlbum.setGenre(StringUtils.EMPTY);
+		}
+	}
+
+	private void setYear(Metadata metadata, LastfmAlbum lastfmAlbum) {
+		if(!StringUtils.isEmpty(metadata.getYear())){
+			return;
+		}
+		Date release = null;
+		Album album = cachedAlbums.get(metadata.getAlbum());
+		if(album != null) {
+			release = album.getReleaseDate();
+		} else {
+			release = info.getReleaseDate();
+		}
+		if(release != null){
+			log.info("Year date format: " + release);
+			lastfmAlbum.setYear(helper.getYear(release));
+			log.info("Year metadata format: " + lastfmAlbum.getYear());
+		} else {
+			lastfmAlbum.setYear(StringUtils.EMPTY);
+		}
+	}
+
+	public ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
+		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
+			return ActionResult.Complete;
+		}
+		CoverArt coverArt = new CoverArt(lastfmAlbum.getImageIcon(), CoverArtType.LAST_FM);
+		metadata.setNewCoverArt(coverArt);
+		if(StringUtils.isEmpty(metadata.getYear())){
+			metadata.setYear(lastfmAlbum.getYear());
+		}
+		if(StringUtils.isEmpty(metadata.getGenre())){
+			metadata.setGenre(lastfmAlbum.getGenre());
+		}
+		return ActionResult.New;
 	}
 
 }

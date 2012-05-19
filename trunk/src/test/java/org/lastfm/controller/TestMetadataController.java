@@ -226,7 +226,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.controller.service.MetadataExtractor;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.event.Events;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
@@ -247,7 +247,7 @@ public class TestMetadataController {
 	@Mock
 	private ControlEngineConfigurator configurator;
 	@Mock
-	private MetadataExtractor metadataExtractor;
+	private MetadataService metadataExtractor;
 	@Mock
 	private File root;
 	@Mock

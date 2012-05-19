@@ -219,7 +219,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
-import org.lastfm.helper.ImageHelper;
+import org.lastfm.controller.service.ImageService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -229,7 +229,7 @@ public class TestImageUtils {
 	@InjectMocks
 	private ImageUtils imageUtils = new ImageUtils();
 	@Mock
-	private ImageHelper imageHelper;
+	private ImageService imageHelper;
 	@Mock
 	private Image image;
 	@Mock
