@@ -220,7 +220,7 @@ import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.action.Actions;
-import org.lastfm.controller.service.MetadataExtractor;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.event.Events;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.metadata.Metadata;
@@ -242,7 +242,7 @@ public class MetadataController {
 	@Autowired
 	private ControlEngineConfigurator configurator;
 	@Autowired
-	private MetadataExtractor metadataExtractor;
+	private MetadataService metadataExtractor;
 	private List<Metadata> metadataList;
 
 	@ActionMethod(Actions.GET_METADATA)

@@ -203,16 +203,10 @@
 */
 package org.lastfm.helper;
 
-import java.awt.Image;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-
-import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
@@ -227,10 +221,6 @@ public class LastFMAlbumHelper {
 
 	public Album getAlbum(String artist, String album) {
 		return Album.getInfo(artist, album, Auth.KEY);
-	}
-
-	public Image readImage(String imageURL) throws MalformedURLException, IOException {
-		return ImageIO.read(new URL(imageURL));
 	}
 
 	public String getYear(Date releaseDate) {

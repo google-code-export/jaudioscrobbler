@@ -221,6 +221,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
+import org.lastfm.controller.service.CompleteService;
+import org.lastfm.controller.service.ImageService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
@@ -233,13 +235,15 @@ import de.umass.lastfm.ImageSize;
 
 public class TestCompleteHelper {
 	@InjectMocks
-	private CompleteHelper completeHelper = new CompleteHelper();
+	private CompleteService completeHelper = new CompleteService();
 	@Mock
 	private Metadata metadata;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
 	@Mock
 	private LastFMAlbumHelper helper;
+	@Mock
+	private ImageService imageService;
 	@Mock
 	private Album info;
 	@Mock
@@ -393,7 +397,7 @@ public class TestCompleteHelper {
 
 	private void setImageExpectations() throws MalformedURLException, IOException {
 		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
-		when(helper.readImage(imageURL)).thenReturn(image);
+		when(imageService.readImage(imageURL)).thenReturn(image);
 	}
 	
 	@Test

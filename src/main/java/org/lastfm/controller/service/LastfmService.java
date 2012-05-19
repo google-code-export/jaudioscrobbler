@@ -209,14 +209,13 @@ import java.net.MalformedURLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
-import org.lastfm.helper.CompleteHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LastfmService {
-	private CompleteHelper completeHelper = new CompleteHelper();
+	private CompleteService completeHelper = new CompleteService();
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public synchronized ActionResult completeLastFM(Metadata metadata) {

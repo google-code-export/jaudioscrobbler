@@ -216,8 +216,8 @@ import java.net.MalformedURLException;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
+import org.lastfm.controller.service.CompleteService;
 import org.lastfm.controller.service.LastfmService;
-import org.lastfm.helper.CompleteHelper;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
 import org.mockito.InjectMocks;
@@ -234,7 +234,7 @@ public class TestLastfmService {
 	@Mock
 	private Image imageIcon;
 	@Mock
-	private CompleteHelper completeHelper;
+	private CompleteService completeHelper;
 	@Mock
 	private LastfmAlbum lastfmAlbum;
 

@@ -9,11 +9,12 @@ import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
+import org.lastfm.controller.service.ImageService;
 
 public class TestImageHelper {
 
 	private static final String PREFIX = "PREFIX";
-	private ImageHelper imageHelper = new ImageHelper();
+	private ImageService imageHelper = new ImageService();
 		
 	@Test
 	public void shouldCreateTempFile() throws Exception {

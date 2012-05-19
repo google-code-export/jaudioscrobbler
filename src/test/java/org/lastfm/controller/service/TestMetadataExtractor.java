@@ -235,7 +235,7 @@ import org.mockito.MockitoAnnotations;
 
 public class TestMetadataExtractor {
 	@InjectMocks
-	private MetadataExtractor metadataExtractor = new MetadataExtractor();
+	private MetadataService metadataExtractor = new MetadataService();
 
 	@Mock
 	private FileUtils fileUtils;
