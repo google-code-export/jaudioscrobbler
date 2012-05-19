@@ -215,7 +215,7 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.lastfm.ApplicationState;
 import org.lastfm.exception.InvalidId3VersionException;
-import org.lastfm.helper.FileHelper;
+import org.lastfm.helper.DateHelper;
 
 /**
  * 
@@ -225,7 +225,7 @@ import org.lastfm.helper.FileHelper;
 
 public class FileUtils {
 	private List<File> fileList;
-	private FileHelper fileHelper = new FileHelper();
+	private DateHelper fileHelper = new DateHelper();
 
 	public List<File> getFileList(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException {
 		fileList = new ArrayList<File>();
