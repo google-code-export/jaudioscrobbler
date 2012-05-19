@@ -2,7 +2,6 @@ package org.lastfm.controller.service;
 
 import java.util.List;
 
-import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,10 @@ public class DefaultService {
 	private static final String TOTAL_CD_NUMBER = "1";
 	
 	@Autowired
-	private MetadataHelper metadataHelper;
+	private MetadataService metadataService;
 	
 	public Boolean isCompletable(List<Metadata> metadatas) {
-		if(metadatas.size() < 2 || !metadataHelper.isSameAlbum(metadatas)){
+		if(metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)){
 			return false;
 		}
 		for (Metadata metadata : metadatas) {

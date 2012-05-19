@@ -204,6 +204,8 @@
 package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -233,9 +235,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestMetadataExtractor {
+public class TestMetadataService {
 	@InjectMocks
-	private MetadataService metadataExtractor = new MetadataService();
+	private MetadataService metadataService = new MetadataService();
 
 	@Mock
 	private FileUtils fileUtils;
@@ -248,6 +250,8 @@ public class TestMetadataExtractor {
 	@Mock
 	private MetadataHelper metadataHelper;
 	@Mock
+	private ExtractService extractService;
+	@Mock
 	private Mp3Reader mp3Reader;
 	@Mock
 	private Mp4Reader mp4Reader;
@@ -259,8 +263,12 @@ public class TestMetadataExtractor {
 	private File pepeGarden;
 	@Mock
 	private File checkStyleFile;
+	
+	private List<Metadata> metadatas = new ArrayList<Metadata>();
+
 
 	private List<File> fileList;
+	private static final String ALBUM = "Lemon Flavored Kiss";
 	private static final int FIRST_ELEMENT = 0;
 
 	@Before
@@ -277,7 +285,7 @@ public class TestMetadataExtractor {
 		setMp3Expectations();
 		setFileListExpectations();
 
-		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		List<Metadata> metadatas = metadataService.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
@@ -289,7 +297,7 @@ public class TestMetadataExtractor {
 		setMp4Expectations();
 		setFileListExpectations();
 
-		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		List<Metadata> metadatas = metadataService.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
@@ -302,7 +310,7 @@ public class TestMetadataExtractor {
 		setFileListExpectations();
 		fileList.add(checkStyleFile);
 
-		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		List<Metadata> metadatas = metadataService.extractMetadata(root);
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
@@ -325,11 +333,11 @@ public class TestMetadataExtractor {
 		setMp4Expectations();
 		setFileListExpectations();
 
-		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		List<Metadata> metadatas = metadataService.extractMetadata(root);
 
 		assertEquals(1, metadatas.size());
 		
-		metadatas = metadataExtractor.extractMetadata(root);
+		metadatas = metadataService.extractMetadata(root);
 		
 		assertEquals(1, metadatas.size());
 	}
@@ -354,11 +362,20 @@ public class TestMetadataExtractor {
 		when(metadataHelper.createHashSet()).thenReturn(filesWithoutMinimumMetadata);
 		when(fileUtils.getFileList(root)).thenReturn(fileList);
 		
-		List<Metadata> metadatas = metadataExtractor.extractMetadata(root);
+		List<Metadata> metadatas = metadataService.extractMetadata(root);
 
 		assertEquals(1, metadatas.size());
 		verify(fileUtils, never()).isM4aFile(pepeGarden);
-		verify(metadataHelper).extractFromFileName(metadata);
+		verify(extractService).extractFromFileName(metadata);
 		verify(filesWithoutMinimumMetadata).add(pepeGarden);
+	}
+	
+	@Test
+	public void shouldKnowIfSameAlbum() throws Exception {
+		Metadata anotherMetadata = mock(Metadata.class);
+		when(metadata.getAlbum()).thenReturn(ALBUM);
+		when(anotherMetadata.getAlbum()).thenReturn(ALBUM);
+		
+		assertTrue(metadataService.isSameAlbum(metadatas));
 	}
 }

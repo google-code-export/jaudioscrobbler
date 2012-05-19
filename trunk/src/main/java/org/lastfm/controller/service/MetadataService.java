@@ -243,6 +243,8 @@ public class MetadataService {
 	private ControlEngineConfigurator configurator;
 	@Autowired
 	private MetadataHelper metadataHelper;
+	@Autowired
+	private ExtractService extractService;
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
 		metadataList = new ArrayList<Metadata>();
@@ -272,11 +274,20 @@ public class MetadataService {
 			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
 				metadataList.add(metadata);
 			} else {
-				metadataList.add(metadataHelper.extractFromFileName(metadata));
+				metadataList.add(extractService.extractFromFileName(metadata));
 				filesWithoutMinimumMetadata.add(file);
 			}
 		}
 		return metadataList;
+	}
+	
+	public boolean isSameAlbum(List<Metadata> metadatas) {
+		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
+			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
+				return false;
+			}
+		}
+		return true;
 	}
 
 }

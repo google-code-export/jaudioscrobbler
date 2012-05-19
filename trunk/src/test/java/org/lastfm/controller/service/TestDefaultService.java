@@ -9,7 +9,6 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -31,7 +30,7 @@ public class TestDefaultService {
 	@Mock
 	private Metadata metadata_two;
 	@Mock
-	private MetadataHelper metadataHelper;
+	private MetadataService metadataService;
 	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();
 	
@@ -46,7 +45,7 @@ public class TestDefaultService {
 	
 	@Test
 	public void shouldCompleteTotalTracks() throws Exception {
-		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		defaultService.isCompletable(metadatas);
 		verify(metadata_one).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_two).setTotalTracks(TOTAL_TRACKS);
@@ -54,7 +53,7 @@ public class TestDefaultService {
 	
 	@Test
 	public void shouldCompleteCDNumbers() throws Exception {
-		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		defaultService.isCompletable(metadatas);
 		
 		verify(metadata_one).setCdNumber(CD_NUMBER);
