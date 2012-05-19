@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.FormatterService;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -29,7 +30,7 @@ public class MetadataExporter {
 	private Log log = LogFactory.getLog(this.getClass());
 	
 	@Autowired
-	private MetadataHelper metadataHelper;
+	private MetadataService metadataService;
 	@Autowired
 	private FormatterService formatter;
 
@@ -39,7 +40,7 @@ public class MetadataExporter {
 		OutputStream writer = outputStreamWriter.getWriter(file);
 		int counter = 1;
 		List<Metadata> metadatas = exportPackage.getMetadataList();
-		if(metadataHelper.isSameAlbum(metadatas)){
+		if(metadataService.isSameAlbum(metadatas)){
 			writer.write(metadatas.get(0).getAlbum().getBytes());
 			writer.write(BY.getBytes());
 			writer.write(metadatas.get(0).getArtist().getBytes());

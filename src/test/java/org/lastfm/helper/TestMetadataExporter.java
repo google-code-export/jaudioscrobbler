@@ -217,6 +217,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.FormatterService;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.FileUtils;
@@ -250,7 +251,7 @@ public class TestMetadataExporter {
 	@Mock
 	private ExportPackage exportPackage;
 	@Mock
-	private MetadataHelper metadataHelper;
+	private MetadataService metadataService;
 	
 	private String album = "Bliksem";
 	private String artist = "Sander van Doorn";
@@ -276,7 +277,7 @@ public class TestMetadataExporter {
 	
 	@Test
 	public void shouldExport() throws Exception {
-		when(metadataHelper.isSameAlbum(metadatas)).thenReturn(true);
+		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		
 		metadataExporter.export(exportPackage);
 		
@@ -285,7 +286,7 @@ public class TestMetadataExporter {
 		verify(writer, times(2)).write(metadata.getArtist().getBytes());
 		verify(writer, times(3)).write(NEW_LINE.getBytes());
 		
-		verify(metadataHelper).isSameAlbum(metadatas);
+		verify(metadataService).isSameAlbum(metadatas);
 		verify(writer).write(Integer.toString(1).getBytes());
 		verify(writer).write(DOT.getBytes());
 		verify(writer).write(DASH.getBytes());

@@ -209,6 +209,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.util.ImageUtils;
@@ -219,7 +220,7 @@ import org.springframework.stereotype.Service;
 public class ImageExporter {
 	
 	@Autowired
-	private MetadataHelper metadataHelper;
+	private MetadataService metadataService;
 	
 	private ImageUtils imageUtils = new ImageUtils();
 
@@ -229,7 +230,7 @@ public class ImageExporter {
 			return;
 		}
 		File root = exportPackage.getRoot();
-		if (metadataHelper.isSameAlbum(metadataList)){
+		if (metadataService.isSameAlbum(metadataList)){
 			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
 		} else { 
 			for (Metadata metadata : metadataList) {
