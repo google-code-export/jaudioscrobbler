@@ -218,11 +218,16 @@ public class TestMetadataAdapter {
 	
 	@Mock
 	private Metadata metadata;
-	private String artist = "Daniel Kandi";
-	private String title = "Make Me Believe";
-	private String album = "Anjunabeats 5";
-	private String trackNumber = "5";
-	private String totalTracks = "13";
+	private final static String ARTIST = "Daniel Kandi";
+	private final static String TITLE = "Make Me Believe";
+	private final static String ALBUM = "Anjunabeats 5";
+	private final static String TRACK_NUMBER = "5";
+	private final static String TOTAL_TRACKS = "13";
+	private final static String GENRE_COLUMN = "Minimal Techno";
+	private final static String YEAR_COLUMN = "2001";
+	private final static String CD_NUMBER = "1";
+
+	private static final String TOTAL_CDS_NUMBER = null;
 	
 	@Before
 	public void setup() throws Exception {
@@ -231,57 +236,64 @@ public class TestMetadataAdapter {
 	
 	@Test
 	public void shouldUpdateArtist() throws Exception {
-		String value = artist;
-		adapter.update(metadata, ApplicationState.ARTIST_COLUMN, value);
+		adapter.update(metadata, ApplicationState.ARTIST_COLUMN, ARTIST);
 		
-		verify(metadata).setArtist(artist);
+		verify(metadata).setArtist(ARTIST);
 	}
 	
 	@Test
 	public void shouldUpdateTitle() throws Exception {
-		String value = title;
-		adapter.update(metadata, ApplicationState.TITLE_COLUMN, value);
+		adapter.update(metadata, ApplicationState.TITLE_COLUMN, TITLE);
 		
-		verify(metadata).setTitle(title);
+		verify(metadata).setTitle(TITLE);
 	}
 	
 	@Test
 	public void shouldUpdateAlbum() throws Exception {
-		String value = album;
-		adapter.update(metadata, ApplicationState.ALBUM_COLUMN, value);
+		adapter.update(metadata, ApplicationState.ALBUM_COLUMN, ALBUM);
 		
-		verify(metadata).setAlbum(album);
+		verify(metadata).setAlbum(ALBUM);
 	}
 	
 	@Test
 	public void shouldUpdateTrackNumber() throws Exception {
-		String value = trackNumber;
-		adapter.update(metadata, ApplicationState.TRACK_NUMBER_COLUMN, value);
+		adapter.update(metadata, ApplicationState.TRACK_NUMBER_COLUMN, TRACK_NUMBER);
 		
-		verify(metadata).setTrackNumber(trackNumber);
+		verify(metadata).setTrackNumber(TRACK_NUMBER);
 	}
 	
 	@Test
 	public void shouldUpdateTotalTracksNumber() throws Exception {
-		String value = totalTracks;
-		adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, value);
+		adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, TOTAL_TRACKS);
 		
-		verify(metadata).setTotalTracks(totalTracks);
+		verify(metadata).setTotalTracks(TOTAL_TRACKS);
 	}
 	
 	@Test
 	public void shouldUpdateGenre() throws Exception {
-		String value = "Minimal Techno";
-		adapter.update(metadata, ApplicationState.GENRE_COLUMN, value);
+		adapter.update(metadata, ApplicationState.GENRE_COLUMN, GENRE_COLUMN);
 		
-		verify(metadata).setGenre(value);
+		verify(metadata).setGenre(GENRE_COLUMN);
 	}
 	
 	@Test
 	public void shouldUpdateYear() throws Exception {
-		String value = "2001";
-		adapter.update(metadata, ApplicationState.YEAR_COLUMN, value);
+		adapter.update(metadata, ApplicationState.YEAR_COLUMN, YEAR_COLUMN);
 		
-		verify(metadata).setYear(value);
+		verify(metadata).setYear(YEAR_COLUMN);
+	}
+	
+	@Test
+	public void shouldUpdateCdNumber() throws Exception {
+		adapter.update(metadata, ApplicationState.CD_NUMBER_COLUMN, CD_NUMBER);
+		
+		verify(metadata).setCdNumber(CD_NUMBER);
+	}
+	
+	@Test
+	public void shouldUpdateTotalCds() throws Exception {
+		adapter.update(metadata, ApplicationState.TOTAL_CDS_NUMBER_COLUMN, TOTAL_CDS_NUMBER);
+		
+		verify(metadata).setTotalCds(TOTAL_CDS_NUMBER);
 	}
 }
