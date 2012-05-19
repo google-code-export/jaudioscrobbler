@@ -212,7 +212,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.ApplicationState;
-import org.lastfm.helper.FileHelper;
+import org.lastfm.helper.DateHelper;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -229,7 +229,7 @@ public class TestFileUtils {
 	private FileUtils fileUtils = new FileUtils();
 	
 	@Mock
-	private FileHelper fileHelper;
+	private DateHelper fileHelper;
 
 	private long timestamp = 1332562352428L;
 	private File root = new File("src/test/resources/audio");
