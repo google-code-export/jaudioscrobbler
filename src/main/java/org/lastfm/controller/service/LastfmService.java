@@ -211,18 +211,22 @@ import org.apache.commons.logging.LogFactory;
 import org.lastfm.action.ActionResult;
 import org.lastfm.metadata.Metadata;
 import org.lastfm.model.LastfmAlbum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LastfmService {
-	private CompleteService completeHelper = new CompleteService();
+	
+	@Autowired
+	private CompleteService completeService;
+	
 	private Log log = LogFactory.getLog(this.getClass());
 
 	public synchronized ActionResult completeLastFM(Metadata metadata) {
 		try {
-			if (completeHelper.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeHelper.getLastFM(metadata);
-				return completeHelper.isSomethingNew(lastfmAlbum, metadata);
+			if (completeService.canLastFMHelpToComplete(metadata)) {
+				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
+				return completeService.isSomethingNew(lastfmAlbum, metadata);
 			} else {
 				return ActionResult.Complete;
 			}
