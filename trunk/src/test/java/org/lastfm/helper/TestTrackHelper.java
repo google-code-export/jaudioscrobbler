@@ -304,7 +304,7 @@ public class TestTrackHelper {
 	
 	@Test
 	public void shouldGetCdNumber() throws Exception {
-		assertEquals(ONE, trackHelper.getTotalCds(track));
+		assertEquals(ONE, trackHelper.getCdNumber(track));
 	}
 	
 	@Test

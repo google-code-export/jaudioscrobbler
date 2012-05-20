@@ -393,4 +393,12 @@ public class TestMetadataWriter {
 	public void shouldNotWriteGenreIfEmptyString() throws Exception {
 		assertFalse(metadataWriter.writeGenre(StringUtils.EMPTY));
 	}
+	
+	@Test
+	public void shouldRemoveCoverArt() throws Exception {
+		assertTrue(metadataWriter.removeCoverArt());
+		
+		verify(tag).deleteArtworkField();
+		verify(audioFile).commit();
+	}
 }

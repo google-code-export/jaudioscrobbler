@@ -219,17 +219,6 @@ import org.mockito.MockitoAnnotations;
 
 public class TestMetadata {
 	private Metadata metadata = new Metadata();
-	private String title = "Reverie (Dash Berlin Remix)";
-	private String artist = "First State feat. Sarah Howells";
-	private String album = "Reverie";
-	private String genre = "Vocal Trance";
-	private String trackNumber = "2";
-	private String totalTracks = "5";
-	private int length = 697;
-	private int bitRate = 320;
-	private String cdNumber = "1";
-	private String totalCds = "1";
-	private String year = "2011";
 	
 	@Mock
 	private Image artwork;
@@ -237,6 +226,19 @@ public class TestMetadata {
 	private File file;
 	@Mock
 	private CoverArt coverArt;
+	
+	private static final String title = "Reverie (Dash Berlin Remix)";
+	private static final String artist = "First State feat. Sarah Howells";
+	private static final String album = "Reverie";
+	private static final String genre = "Vocal Trance";
+	private static final String trackNumber = "2";
+	private static final String totalTracks = "5";
+	private static final int length = 697;
+	private static final int bitRate = 320;
+	private static final String cdNumber = "1";
+	private static final String totalCds = "1";
+	private static final String year = "2011";
+	private static final boolean metadataFromFile = true;
 	
 	@Before
 	public void setup() throws Exception {
@@ -352,5 +354,11 @@ public class TestMetadata {
 		
 		metadata.setTrackNumber(trackNumber);
 		assertEquals(0, metadata.compareTo(rareMetadata));
+	}
+	
+	@Test
+	public void shouldKnowIfMetadataIsFromFile() throws Exception {
+		metadata.setMetadataFromFile(metadataFromFile);
+		assertEquals(metadataFromFile, metadata.isMetadataFromFile());
 	}
 }
