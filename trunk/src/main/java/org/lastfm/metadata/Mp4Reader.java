@@ -214,6 +214,7 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.model.Metadata;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)

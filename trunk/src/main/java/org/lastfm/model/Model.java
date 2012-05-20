@@ -208,7 +208,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.asmatron.messengine.model.ModelId;
-import org.lastfm.metadata.Metadata;
 
 import static org.asmatron.messengine.model.ModelId.model;
 

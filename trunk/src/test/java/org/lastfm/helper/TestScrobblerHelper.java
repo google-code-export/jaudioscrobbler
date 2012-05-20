@@ -217,7 +217,7 @@ import org.asmatron.messengine.ControlEngine;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.mockito.InjectMocks;

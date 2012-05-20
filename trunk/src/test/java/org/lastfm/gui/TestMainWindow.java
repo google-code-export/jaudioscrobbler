@@ -228,7 +228,7 @@ import org.junit.Test;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.util.Environment;
 import org.mockito.ArgumentCaptor;

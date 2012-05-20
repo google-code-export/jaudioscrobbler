@@ -214,7 +214,7 @@ import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.helper.ScrobblerHelper;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

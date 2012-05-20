@@ -263,11 +263,11 @@ import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataAdapter;
-import org.lastfm.metadata.Metadata;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
 import org.lastfm.model.ExportPackage;
-import org.lastfm.model.MetadataValues;
+import org.lastfm.model.Metadata;
+import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.lastfm.observ.ObservValue;
@@ -475,7 +475,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.APPLY_METADATA)
-	private void onReadyToApplyMetadata(MetadataValues metadataValues) {
+	private void onReadyToApplyMetadata(MetadataAlbumValues metadataValues) {
 		String artist = metadataValues.getArtist();
 		String album = metadataValues.getAlbum();
 		String genre = metadataValues.getGenre();
