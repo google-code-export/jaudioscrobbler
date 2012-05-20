@@ -239,6 +239,7 @@ import org.mockito.MockitoAnnotations;
 
 @SuppressWarnings("unchecked")
 public class TestMetadataController {
+	
 	@InjectMocks
 	private MetadataController controller = new MetadataController();
 	
@@ -252,6 +253,8 @@ public class TestMetadataController {
 	private File root;
 	@Mock
 	private ControlEngine controlEngine;
+	@Mock
+	private Metadata metadata;
 
 	private List<Metadata> metadataList = new ArrayList<Metadata>();
 
@@ -264,6 +267,8 @@ public class TestMetadataController {
 	@Test
 	public void shouldGetMetadata() throws Exception {
 		setFileChooserExpectations();
+		metadataList.add(metadata);
+		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
 		
 		controller.getMetadata();
 		
@@ -316,6 +321,16 @@ public class TestMetadataController {
 		verify(fileChooser, never()).getSelectedFile();
 		verify(controlEngine, never()).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
 		verify(metadataExtractor, never()).extractMetadata(root);
+		verify(controlEngine, never()).fireEvent(Events.LOADED);
+	}
+	
+	@Test
+	public void shouldNotFindAnyAudioFile() throws Exception {
+		setFileChooserExpectations();
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY);
 		verify(controlEngine, never()).fireEvent(Events.LOADED);
 	}
 }

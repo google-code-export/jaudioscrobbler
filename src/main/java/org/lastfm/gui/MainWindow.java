@@ -448,6 +448,12 @@ public class MainWindow extends JFrame {
 		tableLoaded = true;
 	}
 	
+	@EventMethod(Events.DIRECTORY_EMPTY_EVENT)
+	private void onDirectoryEmpty() {
+		JOptionPane.showMessageDialog(frame, "I could not find any mp3 or mp4 audio file in the directory");
+		resetStatus();
+	}
+	
 	@EventMethod(Events.LOAD_METADATA)
 	private void onLoadMetadata(List<Metadata> metadatas) {
 		JTable descriptionTable = getDescriptionTable();
