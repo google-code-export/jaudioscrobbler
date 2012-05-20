@@ -219,10 +219,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
-
 public class TestMusicBrainzDelegator {
 	private static final Object ZERO = "0";
 
@@ -232,8 +228,8 @@ public class TestMusicBrainzDelegator {
 	@Mock
 	private TrackFinder trackService;
 	
-	String artistName = "";
-	String trackName = "";
+	private String artistName = "";
+	private String trackName = "";
 
 	@Before
 	public void setup() throws Exception {
