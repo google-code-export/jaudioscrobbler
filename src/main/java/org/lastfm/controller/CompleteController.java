@@ -246,7 +246,6 @@ public class CompleteController {
 				if (StringUtils.isNotEmpty(musicBrainzTrack.getAlbum())) {
 					log.info("Album found by MusicBrainz: " + musicBrainzTrack.getAlbum() + " for track: " + metadata.getTitle());
 					metadata.setAlbum(musicBrainzTrack.getAlbum());
-					metadata.setYear(musicBrainzTrack.getYear());
 					metadata.setTrackNumber(musicBrainzTrack.getTrackNumber());
 					metadata.setTotalTracks(musicBrainzTrack.getTotalTrackNumber());
 					metadata.setCdNumber(musicBrainzTrack.getCdNumber());
