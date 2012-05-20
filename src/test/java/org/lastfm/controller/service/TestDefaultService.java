@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

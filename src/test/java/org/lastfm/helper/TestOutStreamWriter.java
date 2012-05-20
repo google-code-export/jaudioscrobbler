@@ -15,7 +15,7 @@ public class TestOutStreamWriter {
 	@InjectMocks
 	private OutStreamWriter outStreamWriter = new OutStreamWriter();
 	
-	private File pepeGarden = new File("src/test/resources/audio/Jaytech - Pepe Garden (Original Mix).mp3");
+	private File pepeGarden = new File("src/test/resources/checkstyle/checkstyle.xml");
 	
 	@Before
 	public void setup() throws Exception {

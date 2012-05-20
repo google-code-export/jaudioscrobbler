@@ -204,7 +204,7 @@
 package org.lastfm.helper;
 
 import org.lastfm.ApplicationState;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 
 public class MetadataAdapter {
 

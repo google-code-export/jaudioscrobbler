@@ -228,7 +228,7 @@ import org.lastfm.dnd.ImageDropListener;
 import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
-import org.lastfm.model.MetadataValues;
+import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.observ.ObservValue;
 import org.lastfm.observ.Observer;
 import org.lastfm.util.ImageUtils;
@@ -551,7 +551,7 @@ public class MetadataDialog extends AllDialog {
 				
 				public void actionPerformed(ActionEvent e) {
 					applyButton.setEnabled(false);
-					MetadataValues metadataValues = new MetadataValues();
+					MetadataAlbumValues metadataValues = new MetadataAlbumValues();
 					metadataValues.setCoverart(coverArt);
 					metadataValues.setArtist(getArtistTextField().getText());
 					metadataValues.setAlbum(getAlbumTextField().getText());
@@ -560,7 +560,7 @@ public class MetadataDialog extends AllDialog {
 					metadataValues.setTracks(getTracksTextField().getText());
 					metadataValues.setCd(getCdTextField().getText());
 					metadataValues.setCds(getCdsTextField().getText());
-					configurator.getControlEngine().fireEvent(Events.READY_TO_APPLY, new ValueEvent<MetadataValues>(metadataValues));
+					configurator.getControlEngine().fireEvent(Events.READY_TO_APPLY, new ValueEvent<MetadataAlbumValues>(metadataValues));
 					closeDialog();
 				}
 			});

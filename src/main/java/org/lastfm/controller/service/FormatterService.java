@@ -4,7 +4,7 @@ import java.util.StringTokenizer;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lastfm.helper.FormatterHelper;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.springframework.stereotype.Service;
 
 @Service

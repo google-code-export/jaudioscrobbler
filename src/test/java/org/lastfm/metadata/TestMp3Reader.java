@@ -208,7 +208,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -223,15 +223,10 @@ import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- *
- */
 
 public class TestMp3Reader{
 	@InjectMocks
@@ -454,6 +449,26 @@ public class TestMp3Reader{
 		when(tag.getFirst(FieldKey.YEAR)).thenReturn(year);
 		Metadata metadata = reader.getMetadata(file);
 		assertEquals(year, metadata.getYear());
+	}
+
+	@Test
+	public void shouldNotGetCoverArt() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenReturn(bufferedImage);
+		
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(bufferedImage, metadata.getCoverArt());
+	}
+	
+	@Test
+	public void shouldNotGetCoverArtIfNull() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(null);
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(null, metadata.getCoverArt());
 	}
 	
 }

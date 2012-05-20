@@ -218,7 +218,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.ControlEngine;
 import org.lastfm.action.ActionResult;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.stereotype.Service;

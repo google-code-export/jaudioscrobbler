@@ -213,7 +213,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
 import org.lastfm.helper.ScrobblerHelper;
-import org.lastfm.metadata.Metadata;
+import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

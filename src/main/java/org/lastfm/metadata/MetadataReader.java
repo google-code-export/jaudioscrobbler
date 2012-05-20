@@ -224,6 +224,7 @@ import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.lastfm.event.Events;
+import org.lastfm.model.Metadata;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)

@@ -219,6 +219,7 @@ import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -391,5 +392,25 @@ public class TestMp4Reader{
 	public void shouldGetArtwork() throws Exception {
 		reader.getMetadata(file);
 		verify(artwork).getImage();
+	}
+	
+	@Test
+	public void shouldNotGetCoverArt() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenReturn(bufferedImage);
+		
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(bufferedImage, metadata.getCoverArt());
+	}
+	
+	@Test
+	public void shouldNotGetCoverArtIfNull() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(null);
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(null, metadata.getCoverArt());
 	}
 }

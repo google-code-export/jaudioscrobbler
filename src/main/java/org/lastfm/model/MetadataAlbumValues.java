@@ -206,7 +206,7 @@ package org.lastfm.model;
 
 import java.awt.Image;
 
-public class MetadataValues {
+public class MetadataAlbumValues {
 	private String genre;
 	private String album;
 	private String tracks;

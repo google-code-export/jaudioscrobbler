@@ -5,8 +5,8 @@ import java.util.List;
 import org.asmatron.messengine.event.EmptyEvent;
 import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
-import org.lastfm.metadata.Metadata;
-import org.lastfm.model.MetadataValues;
+import org.lastfm.model.Metadata;
+import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.model.User;
 
 import static org.asmatron.messengine.event.EventId.ev;
@@ -35,7 +35,7 @@ public interface Events {
 	EventId<EmptyEvent> OPEN = ev(OPEN_ERROR);
 	
 	String APPLY_METADATA = "readyToApplyMetadata";
-	EventId<ValueEvent<MetadataValues>> READY_TO_APPLY = ev(APPLY_METADATA);
+	EventId<ValueEvent<MetadataAlbumValues>> READY_TO_APPLY = ev(APPLY_METADATA);
 	
 	String COVER_ART_FAILED = "coverArtFailed";
 	EventId<ValueEvent<String>> LOAD_COVER_ART = ev(COVER_ART_FAILED);

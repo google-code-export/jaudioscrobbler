@@ -218,6 +218,7 @@ import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
 import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.model.GenreTypes;
+import org.lastfm.model.Metadata;
 
 /**
  * 
