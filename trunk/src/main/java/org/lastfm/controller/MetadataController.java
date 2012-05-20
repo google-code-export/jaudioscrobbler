@@ -254,8 +254,12 @@ public class MetadataController {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
 				metadataList = metadataExtractor.extractMetadata(root);
-				Collections.sort(metadataList);
-				sendLoadedEvent(metadataList);
+				if(metadataList.isEmpty()){
+					configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
+				}  else {
+					Collections.sort(metadataList);
+					sendLoadedEvent(metadataList);
+				}
 			} catch (IOException e) {
 				handleException(e);
 			} catch (TagException e) {
