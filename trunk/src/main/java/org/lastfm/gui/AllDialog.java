@@ -222,7 +222,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.lastfm.util.ImageUtils;
+import org.lastfm.util.CloseImageIcon;
+import org.lastfm.util.ImageIconBase;
 
 /**
  * @understands
@@ -246,7 +247,6 @@ public abstract class AllDialog extends JDialog {
 	private JPanel titlePanel;
 	private JLabel titleLabel;
 	private JButton exitButton;
-	private ImageUtils imageUtils = new ImageUtils();
 	
 	/**
 	 * Set the title of the dialog
@@ -355,7 +355,8 @@ public abstract class AllDialog extends JDialog {
 			exitButton.setMinimumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMaximumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMnemonic(KeyEvent.VK_UNDEFINED);
-			exitButton.setIcon(imageUtils.getCloseImage());
+			ImageIconBase imageIconBase = new CloseImageIcon();
+			exitButton.setIcon(imageIconBase.getImageIcon());
 			exitButton.addActionListener(new CloseListener());
 		}
 		return exitButton;
