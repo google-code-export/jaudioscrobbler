@@ -231,6 +231,8 @@ import org.lastfm.event.Events;
 import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.observ.ObservValue;
 import org.lastfm.observ.Observer;
+import org.lastfm.util.DragImageIcon;
+import org.lastfm.util.ImageIconBase;
 import org.lastfm.util.ImageUtils;
 
 public class MetadataDialog extends AllDialog {
@@ -445,7 +447,8 @@ public class MetadataDialog extends AllDialog {
 		if(imagePanel == null){
 			imagePanel = new JPanel();
 			imagePanel.setBounds(IMAGE_BOUNDS);
-			imagePanel.add(new JLabel(imageUtils.getDragImage()));
+			ImageIconBase imageIconBase = new DragImageIcon();
+			imagePanel.add(new JLabel(imageIconBase.getImageIcon()));
 		}
 		return imagePanel;
 	}
