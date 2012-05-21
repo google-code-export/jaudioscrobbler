@@ -218,21 +218,19 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- *
- */
-
 public class TestFileUtils {
+
 	@InjectMocks
 	private FileUtils fileUtils = new FileUtils();
 	
 	@Mock
 	private DateHelper fileHelper;
+	@Mock
+	private File file;
 
 	private long timestamp = 1332562352428L;
 	private File root = new File("src/test/resources/audio");
+
 	
 
 	@Before
@@ -281,4 +279,36 @@ public class TestFileUtils {
 		
 		assertEquals(expectedPath, result.getName());
 	}
+	
+	@Test
+	public void shouldKnowIfIsMp3File() throws Exception {
+		when(file.getPath()).thenReturn("somePath.mp3");
+		assertTrue(fileUtils.isMp3File(file));
+	}
+	
+	@Test
+	public void shouldKnowIfIsNotMp3File() throws Exception {
+		when(file.getPath()).thenReturn("somePath.wma");
+		assertFalse(fileUtils.isMp3File(file));
+	}
+	
+	@Test
+	public void shouldKnowIfIsMp4File() throws Exception {
+		when(file.getPath()).thenReturn("somePath.m4a");
+		assertTrue(fileUtils.isM4aFile(file));
+	}
+	
+	@Test
+	public void shouldKnowIfIsNotMp4File() throws Exception {
+		when(file.getPath()).thenReturn("somePath.wma");
+		assertFalse(fileUtils.isM4aFile(file));
+	}
+	
+	@Test
+	public void shouldCreateTempfile() throws Exception {
+		File tempFile = fileUtils.createTempFile();
+		assertTrue(tempFile.getName().startsWith(ApplicationState.PREFIX));
+		assertTrue(tempFile.getName().endsWith(ApplicationState.FILE_EXT));
+	}
+
 }
