@@ -594,4 +594,37 @@ public class TestFormatterService {
 		assertFalse(formatter.isNotCamelized(metadata));
 		assertFalse(formatter.isABadFormat(metadata));
 	}
+	
+	@Test
+	public void shouldDetectUFormatInTitle() throws Exception {
+		String title = "Bl&uuml;chel & von Deylen";
+		String expectedTitle = "Blüchel & von Deylen";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectUFormatInArtist() throws Exception {
+		String artist = "Bl&uuml;chel & von Deylen";
+		String expectedArtist = "Blüchel & von Deylen";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectUFormatInAlbum() throws Exception {
+		String album = "Bl&uuml;chel & von Deylen";
+		String expectedAlbum = "Blüchel & von Deylen";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
 }
