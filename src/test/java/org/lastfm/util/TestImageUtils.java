@@ -226,6 +226,7 @@ import org.mockito.MockitoAnnotations;
 
 
 public class TestImageUtils {
+	private static final Integer THREE_HUNDRED = 300;
 	@InjectMocks
 	private ImageUtils imageUtils = new ImageUtils();
 	@Mock
@@ -236,6 +237,11 @@ public class TestImageUtils {
 	private File file;
 	@Mock
 	private FileUtils fileUtils;
+	@Mock
+	private File root;
+	
+	private String prefix = "MIRI_";
+	private String path = "PATH";
 	
 	@Before
 	public void setup() throws Exception {
@@ -274,4 +280,16 @@ public class TestImageUtils {
 		
 		verify(fileUtils, never()).createFile(file, StringUtils.EMPTY, ApplicationState.IMAGE_EXT);
 	}
+	
+	@Test
+	public void shouldSaveImageToFile() throws Exception {
+		when(fileUtils.createFile(root, prefix, ApplicationState.IMAGE_EXT)).thenReturn(file);
+		when(file.getAbsolutePath()).thenReturn(path);
+		when(image.getHeight(isA(ImageObserver.class))).thenReturn(THREE_HUNDRED);
+		
+		imageUtils.saveCoverArtToFile(image, root, prefix);
+		
+		verify(fileUtils).createFile(root, prefix, ApplicationState.IMAGE_EXT);
+	}
+	
 }
