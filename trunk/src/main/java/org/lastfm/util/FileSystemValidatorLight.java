@@ -213,24 +213,11 @@ public class FileSystemValidatorLight {
 	private final List<File> folderList = new ArrayList<File>();
 	private final List<File> trackList = new ArrayList<File>();
 	private final List<File> playlistList = new ArrayList<File>();
-	private final boolean fromExternalDevicesPanel;
-
-	public FileSystemValidatorLight(boolean fromExternalDevicesPanel, File... files) {
-		this.fromExternalDevicesPanel = fromExternalDevicesPanel;
-		for (File file : files) {
-			validateFile(file);
-		}
-	}
 
 	public FileSystemValidatorLight(boolean fromExternalDevicesPanel, Iterable<File> files) {
-		this.fromExternalDevicesPanel = fromExternalDevicesPanel;
 		for (File file : files) {
 			validateFile(file);
 		}
-	}
-
-	public boolean isFromExternalDevicesPanel() {
-		return fromExternalDevicesPanel;
 	}
 
 	private void validateFile(File file) {
@@ -255,34 +242,6 @@ public class FileSystemValidatorLight {
 		} else {
 			trackList.add(file);
 		}
-	}
-
-	public List<File> getFolders() {
-		return folderList;
-	}
-
-	public List<File> getTracks() {
-		return trackList;
-	}
-
-	public List<File> getPlaylists() {
-		return playlistList;
-	}
-
-	public boolean hasPlaylists() {
-		return isListNotEmpty(playlistList);
-	}
-
-	public boolean hasFolders() {
-		return isListNotEmpty(folderList);
-	}
-
-	public boolean hasTracks() {
-		return isListNotEmpty(trackList);
-	}
-
-	private boolean isListNotEmpty(List<?> list) {
-		return list != null && !list.isEmpty();
 	}
 
 	public boolean hasError() {
