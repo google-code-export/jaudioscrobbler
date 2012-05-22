@@ -219,7 +219,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageService {
 
-	public Image read() throws MalformedURLException, IOException {
+	public Image readDefaultImage() throws MalformedURLException, IOException {
 		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
 	}
 
