@@ -217,12 +217,6 @@ import org.lastfm.ApplicationState;
 import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.helper.DateHelper;
 
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- *
- */
-
 public class FileUtils {
 	private List<File> fileList;
 	private DateHelper fileHelper = new DateHelper();
