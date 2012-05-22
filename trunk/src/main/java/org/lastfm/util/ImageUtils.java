@@ -211,7 +211,6 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 
 import javax.swing.ImageIcon;
 
@@ -221,7 +220,6 @@ import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.ImageService;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who knows how to resize an image
  */
 
@@ -250,20 +248,8 @@ public class ImageUtils {
 	}
 
 	public ImageIcon getDefaultImage() {
-		return imageIcon == null ? getDeafaultIcon() : imageIcon;
-	}
-
-	private ImageIcon getDeafaultIcon() {
-		try {
-			Image image = imageHelper.read();
-			imageIcon = new ImageIcon(image);
-			return imageIcon;
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-		}
-		return imageIcon;
+		ImageIconBase imageIconBase = new DefaultImageIcon();
+		return imageIcon == null ? imageIconBase.getImageIcon() : imageIcon;
 	}
 
 	private void write(Image bufferedImage, File file) throws IOException {

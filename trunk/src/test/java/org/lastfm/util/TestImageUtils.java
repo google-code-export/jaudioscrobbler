@@ -240,7 +240,7 @@ public class TestImageUtils {
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(imageHelper.read()).thenReturn(image);
+		when(imageHelper.readDefaultImage()).thenReturn(image);
 	}
 	
 	@Test

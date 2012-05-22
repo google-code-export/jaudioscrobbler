@@ -272,15 +272,6 @@ public class TestFileUtils {
 	}
 	
 	@Test
-	public void shouldCreateFileForFile() throws Exception {
-		String expectedPath = "JAS_1332562352428.txt";
-		when(fileHelper.getTimestamp()).thenReturn(timestamp);
-		File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.FILE_EXT);
-		
-		assertEquals(expectedPath, result.getName());
-	}
-	
-	@Test
 	public void shouldKnowIfIsMp3File() throws Exception {
 		when(file.getPath()).thenReturn("somePath.mp3");
 		assertTrue(fileUtils.isMp3File(file));
@@ -309,6 +300,25 @@ public class TestFileUtils {
 		File tempFile = fileUtils.createTempFile();
 		assertTrue(tempFile.getName().startsWith(ApplicationState.PREFIX));
 		assertTrue(tempFile.getName().endsWith(ApplicationState.FILE_EXT));
+	}
+	
+	@Test
+	public void shouldCreateFileForFile() throws Exception {
+		String expectedPath = "JAS_1332562352428.txt";
+		when(fileHelper.getTimestamp()).thenReturn(timestamp);
+		File result = fileUtils.createFile(root, StringUtils.EMPTY, ApplicationState.FILE_EXT);
+		
+		assertEquals(expectedPath, result.getName());
+	}
+	
+	@Test
+	public void shouldCreateFileForFileWithPrefix() throws Exception {
+		String expectedPath = "MIRI_1332562352428.txt";
+		String prefix = "MIRI_";
+		when(fileHelper.getTimestamp()).thenReturn(timestamp);
+		File result = fileUtils.createFile(root, prefix, ApplicationState.FILE_EXT);
+		
+		assertEquals(expectedPath, result.getName());
 	}
 
 }

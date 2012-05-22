@@ -10,21 +10,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.lastfm.controller.service.ImageService;
 
-public class CloseImageIcon implements ImageIconBase {
+public class DefaultImageIcon implements ImageIconBase {
 
-	private ImageService imageService = new ImageService();;
-	
+	private ImageService imageService = new ImageService();
+	private Log log = LogFactory.getLog(getClass());
+
 	private ImageIcon imageIcon;
-	
-	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	@Override
 	public ImageIcon getImageIcon() {
 		try {
-			Image dragImage = imageService.readCloseImage();
-			imageIcon = new ImageIcon(dragImage); 
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
+			Image defaultImage = imageService.readDefaultImage();
+			imageIcon = new ImageIcon(defaultImage);
+		} catch (MalformedURLException mue) {
+			log.error(mue, mue);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 		}
