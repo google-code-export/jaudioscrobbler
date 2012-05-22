@@ -248,8 +248,13 @@ public class ImageUtils {
 	}
 
 	public ImageIcon getDefaultImage() {
+		return imageIcon == null ? getDeafaultIcon() : imageIcon;
+	}
+
+	private ImageIcon getDeafaultIcon() {
 		ImageIconBase imageIconBase = new DefaultImageIcon();
-		return imageIcon == null ? imageIconBase.getImageIcon() : imageIcon;
+		imageIcon = imageIconBase.getImageIcon();
+		return imageIcon;
 	}
 
 	private void write(Image bufferedImage, File file) throws IOException {
