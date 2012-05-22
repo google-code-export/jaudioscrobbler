@@ -222,7 +222,6 @@ import de.umass.lastfm.Session;
 
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who control Login process
  */
 

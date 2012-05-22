@@ -261,6 +261,7 @@ public class TestMetadataController {
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		when(fileChooser.getSelectedFile()).thenReturn(root);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
 	}
 	
@@ -332,5 +333,14 @@ public class TestMetadataController {
 		
 		verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY);
 		verify(controlEngine, never()).fireEvent(Events.LOADED);
+	}
+	
+	@Test
+	public void shouldCatchAnIOException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new IOException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
 	}
 }
