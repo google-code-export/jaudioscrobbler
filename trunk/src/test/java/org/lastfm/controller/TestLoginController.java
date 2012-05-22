@@ -209,6 +209,8 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
@@ -269,6 +271,16 @@ public class TestLoginController {
 		controller.login(credentials);
 		
 		verify(lastfmAuthenticator).login(username, password);
+		verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
+		verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
+	}
+	
+	@Test
+	public void shouldKnowAIOException() throws Exception {
+		when(lastfmAuthenticator.login(username, password)).thenThrow(new IOException());
+		
+		controller.login(credentials);
+		
 		verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
 		verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
 	}
