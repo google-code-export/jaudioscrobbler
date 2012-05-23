@@ -208,7 +208,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -278,6 +278,7 @@ public class TestMetadataController {
 		verify(controlEngine).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
 		verify(controlEngine).set(Model.METADATA, metadataList, null);
 		verify(metadataExtractor).extractMetadata(root);
+		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
 		verify(controlEngine).fireEvent(Events.LOADED);
 	}
 	
@@ -342,5 +343,79 @@ public class TestMetadataController {
 		controller.getMetadata();
 		
 		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnTagException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new TagException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnReadOnlyFileException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new ReadOnlyFileException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnInvalidAudioFrameException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidAudioFrameException(null));
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnInvalidId3VersionException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidId3VersionException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnInterruptedException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new InterruptedException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnCannotReadException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new CannotReadException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnMetadataException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new MetadataException(null));
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).fireEvent(Events.OPEN);
+	}
+	
+	@Test
+	public void shouldCatchAnIllegalArgumentException() throws Exception {
+		when(metadataExtractor.extractMetadata(root)).thenThrow(new IllegalArgumentException());
+		
+		controller.getMetadata();
+		
+		verify(controlEngine).set(Model.METADATA, null, null);
+		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(null));
+		verify(controlEngine).fireEvent(Events.LOADED);
 	}
 }
