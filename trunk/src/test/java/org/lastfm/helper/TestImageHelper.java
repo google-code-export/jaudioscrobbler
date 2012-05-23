@@ -13,26 +13,28 @@ import org.lastfm.controller.service.ImageService;
 
 public class TestImageHelper {
 
+	private static final String FILE_PROTOCOL = "file://";
+	private static final String IMAGE_PATH = "/src/test/resources/images/close.png";
 	private static final String PREFIX = "PREFIX";
-	private ImageService imageHelper = new ImageService();
+	private ImageService imageService = new ImageService();
 		
 	@Test
 	public void shouldCreateTempFile() throws Exception {
-		File tempFile = imageHelper.createTempFile(StringUtils.EMPTY);
+		File tempFile = imageService.createTempFile(StringUtils.EMPTY);
 		assertTrue(tempFile.getName().contains(ApplicationState.PREFIX));
 		assertTrue(tempFile.getName().contains(ApplicationState.IMAGE_EXT));
 	}
 	
 	@Test
 	public void shouldCreateTempFileWithCustomPrefix() throws Exception {
-		File tempFile = imageHelper.createTempFile(PREFIX);
+		File tempFile = imageService.createTempFile(PREFIX);
 		assertTrue(tempFile.getName().contains(PREFIX));
 		assertTrue(tempFile.getName().contains(ApplicationState.IMAGE_EXT));
 	}
 	
 	@Test
 	public void shouldReadDragImage() throws Exception {
-		Image image = imageHelper.readDragImage();
+		Image image = imageService.readDragImage();
 		assertEquals(150, image.getHeight(new ImageObserver() {
 			
 			@Override
@@ -44,7 +46,7 @@ public class TestImageHelper {
 	
 	@Test
 	public void shouldReadCloseImage() throws Exception {
-		Image image = imageHelper.readCloseImage();
+		Image image = imageService.readCloseImage();
 		assertEquals(15, image.getHeight(new ImageObserver() {
 			
 			@Override
@@ -52,6 +54,19 @@ public class TestImageHelper {
 				return false;
 			}
 		}));
+	}
+	
+	@Test
+	public void shouldReadImageFromUrl() throws Exception {
+		File file = new File("");
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(FILE_PROTOCOL);
+		sb.append(file.getAbsolutePath());
+		sb.append(IMAGE_PATH);
+		
+		Image image = imageService.readImage(sb.toString());
+		assertNotNull(image);
 	}
 
 }

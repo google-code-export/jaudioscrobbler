@@ -476,4 +476,9 @@ public class TestCompleteService {
 		
 		verify(helper, never()).getGenre(null);
 	}
+	
+	@Test
+	public void shouldCanNotCompleteLastFMDueToHasNoAlbumAndArtist() throws Exception {
+		assertFalse(completeService.canLastFMHelpToComplete(metadata));
+	}
 }
