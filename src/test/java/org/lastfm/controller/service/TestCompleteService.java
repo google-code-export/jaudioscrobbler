@@ -221,8 +221,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.action.ActionResult;
-import org.lastfm.controller.service.CompleteService;
-import org.lastfm.controller.service.ImageService;
 import org.lastfm.helper.LastFMAlbumHelper;
 import org.lastfm.model.LastfmAlbum;
 import org.lastfm.model.Metadata;
@@ -236,7 +234,7 @@ import de.umass.lastfm.ImageSize;
 
 public class TestCompleteService {
 	@InjectMocks
-	private CompleteService completeHelper = new CompleteService();
+	private CompleteService completeService = new CompleteService();
 	@Mock
 	private Metadata metadata;
 	@Mock
@@ -273,7 +271,7 @@ public class TestCompleteService {
 	public void shouldCompleteIfNoMetadata() throws Exception {
 		setArtistAndAlbumExpectations();
 		
-		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
+		assertTrue(completeService.canLastFMHelpToComplete(metadata));
 		verify(helper).getAlbum(artist, album);
 	}
 	
@@ -284,7 +282,7 @@ public class TestCompleteService {
 		when(metadata.getYear()).thenReturn(year);
 		when(metadata.getGenre()).thenReturn(genre);
 		
-		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
+		assertTrue(completeService.canLastFMHelpToComplete(metadata));
 		verify(helper).getAlbum(artist, album);
 	}
 	
@@ -294,7 +292,7 @@ public class TestCompleteService {
 		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getYear()).thenReturn(year);
 		
-		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
+		assertTrue(completeService.canLastFMHelpToComplete(metadata));
 		verify(helper).getAlbum(artist, album);
 	}
 	
@@ -304,7 +302,7 @@ public class TestCompleteService {
 		when(metadata.getCoverArt()).thenReturn(image);
 		when(metadata.getGenre()).thenReturn(genre);
 		
-		assertTrue(completeHelper.canLastFMHelpToComplete(metadata));
+		assertTrue(completeService.canLastFMHelpToComplete(metadata));
 		verify(helper).getAlbum(artist, album);
 	}
 	
@@ -319,7 +317,7 @@ public class TestCompleteService {
 		setArtistAndAlbumExpectations();
 		setYearGenreCoverExpectations();
 		
-		assertFalse(completeHelper.canLastFMHelpToComplete(metadata));
+		assertFalse(completeService.canLastFMHelpToComplete(metadata));
 	}
 	
 	@Test
@@ -327,7 +325,7 @@ public class TestCompleteService {
 		setYearGenreCoverExpectations();
 		when(metadata.getAlbum()).thenReturn(album);
 		
-		assertFalse(completeHelper.canLastFMHelpToComplete(metadata));
+		assertFalse(completeService.canLastFMHelpToComplete(metadata));
 	}
 	
 	@Test
@@ -335,7 +333,7 @@ public class TestCompleteService {
 		when(metadata.getArtist()).thenReturn(artist);
 		setYearGenreCoverExpectations();
 		
-		assertFalse(completeHelper.canLastFMHelpToComplete(metadata));
+		assertFalse(completeService.canLastFMHelpToComplete(metadata));
 	}
 	
 	@Test
@@ -343,19 +341,37 @@ public class TestCompleteService {
 		setYearAndGenreExpectations();
 		setImageExpectations();
 		
-		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
 		
 		assertEquals(year, lastFMalbum.getYear());
 		assertEquals(genre, lastFMalbum.getGenre());
 		assertEquals(image, lastFMalbum.getImageIcon());
+	}  
+	
+	@Test
+	public void shouldNotGetGenreFromCache() throws Exception {
+		setGenreExpectations();
+		
+		LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
+		
+		verify(helper).getGenre(info);
+		assertEquals(genre, lastfmAlbum.getGenre());
 	}
 	
 	
+	private void setGenreExpectations() {
+		Date date = new Date();
+		when(metadata.getAlbum()).thenReturn(album);
+		when(info.getReleaseDate()).thenReturn(date);
+		when(helper.getYear(date)).thenReturn(year);
+		when(helper.getGenre(info)).thenReturn(genre);
+	}
+
 	@Test
 	public void shouldGetLastfmEvenThoughThereisNoCoverArt() throws Exception {
 		setYearAndGenreExpectations();
 		
-		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
 		
 		assertEquals(year, lastFMalbum.getYear());
 		assertEquals(genre, lastFMalbum.getGenre());
@@ -373,14 +389,14 @@ public class TestCompleteService {
 	
 	@Test
 	public void shouldDetectWhenNothingChanged() throws Exception {
-		ActionResult actionResult = completeHelper.isSomethingNew(lastfmAlbum, metadata);
+		ActionResult actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
 		assertEquals(ActionResult.Complete, actionResult);
 	}
 	
 	@Test
 	public void shouldDetectLastfmHasNewValues() throws Exception {
 		when(lastfmAlbum.getYear()).thenReturn(year);
-		ActionResult actionResult = completeHelper.isSomethingNew(lastfmAlbum, metadata);
+		ActionResult actionResult = completeService.isSomethingNew(lastfmAlbum, metadata);
 		assertEquals(ActionResult.New, actionResult);
 	}
 	
@@ -391,7 +407,7 @@ public class TestCompleteService {
 		when(cachedAlbums.get(album)).thenReturn(info);
 		setImageExpectations();
 		
-		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
 		
 		assertNull(lastFMalbum.getImageIcon());
 	}
@@ -407,7 +423,7 @@ public class TestCompleteService {
 		when(cachedAlbums.get(album)).thenReturn(info);
 		when(metadata.getGenre()).thenReturn(genre);
 		
-		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
 		
 		verify(helper, never()).getGenre(info);
 		assertTrue(StringUtils.isEmpty(lastFMalbum.getGenre()));
@@ -417,7 +433,7 @@ public class TestCompleteService {
 	public void shouldNotAskForYearIfAlreadyHasOne() throws Exception {
 		when(metadata.getYear()).thenReturn(year);
 		
-		LastfmAlbum lastFMalbum = completeHelper.getLastFM(metadata);
+		LastfmAlbum lastFMalbum = completeService.getLastFM(metadata);
 		
 		verify(info, never()).getReleaseDate();
 		assertTrue(StringUtils.isEmpty(lastFMalbum.getYear()));
@@ -428,9 +444,20 @@ public class TestCompleteService {
 		setArtistAndAlbumExpectations();
 		when(cachedAlbums.get(album)).thenReturn(info);
 		
-		boolean result = completeHelper.canLastFMHelpToComplete(metadata);
+		boolean result = completeService.canLastFMHelpToComplete(metadata);
 		
 		assertTrue(result);
+	}
+	
+	@Test
+	public void shouldReturnAlbumFromLastFM() throws Exception {
+		setArtistAndAlbumExpectations();
+		when(helper.getAlbum(artist, album)).thenReturn(null);
+		
+		boolean result = completeService.canLastFMHelpToComplete(metadata);
+		
+		assertFalse(result);
+		verify(helper).getAlbum(artist, album);
 	}
 	
 	@Test
@@ -438,14 +465,14 @@ public class TestCompleteService {
 		setArtistAndAlbumExpectations();
 		when(info.getImageURL(ImageSize.EXTRALARGE)).thenReturn(imageURL);
 		
-		completeHelper.canLastFMHelpToComplete(metadata);
+		completeService.canLastFMHelpToComplete(metadata);
 		
 		verify(cachedAlbums).put(album, info);
 	}
 	
 	@Test
-	public void shouldReturnEmptyGenreIfNoAlbum() throws Exception {
-		completeHelper.getLastFM(metadata);
+	public void shouldNotCompleteBecauseNotAlbumFound() throws Exception {
+		completeService.getLastFM(metadata);
 		
 		verify(helper, never()).getGenre(null);
 	}

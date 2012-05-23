@@ -207,6 +207,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.io.IOException;
+
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.junit.Before;
@@ -223,7 +225,7 @@ public class TestScrobblerController {
 	private ScrobblerController controller = new ScrobblerController();
 
 	@Mock
-	private ScrobblerHelper helperScrobbler;
+	private ScrobblerHelper scrobblerHelper;
 	@Mock
 	private Metadata metadata;
 	@Mock
@@ -239,27 +241,45 @@ public class TestScrobblerController {
 
 	@Test
 	public void shouldSendMetadata() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.New);
+		when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
 
 		ActionResult result = controller.sendMetadata(metadata);
 
-		verify(helperScrobbler).send(metadata);
+		verify(scrobblerHelper).send(metadata);
 		assertEquals(ActionResult.New, result);
 	}
 
 	@Test
 	public void shouldDetectWhenErrorInScrobbling() throws Exception {
-		when(helperScrobbler.send(metadata)).thenReturn(ActionResult.Error);
+		when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
 
 		ActionResult result = controller.sendMetadata(metadata);
 
-		verify(helperScrobbler).send(metadata);
+		verify(scrobblerHelper).send(metadata);
 		assertEquals(ActionResult.Error, result);
 	}
 	
 	@Test
 	public void shouldSetup() throws Exception {
 		controller.setup();
-		verify(helperScrobbler).setControlEngine(controlEngine);
+		verify(scrobblerHelper).setControlEngine(controlEngine);
+	}
+	
+	@Test
+	public void shouldCatchIOException() throws Exception {
+		when(scrobblerHelper.send(metadata)).thenThrow(new IOException());
+		
+		ActionResult result = controller.sendMetadata(metadata);
+		
+		assertEquals(ActionResult.Error, result);
+	}
+	
+	@Test
+	public void shouldCatchInterruptedException() throws Exception {
+		when(scrobblerHelper.send(metadata)).thenThrow(new InterruptedException());
+		
+		ActionResult result = controller.sendMetadata(metadata);
+		
+		assertEquals(ActionResult.Error, result);
 	}
 }
