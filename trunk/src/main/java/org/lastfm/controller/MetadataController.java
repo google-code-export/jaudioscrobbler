@@ -230,7 +230,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands A class who knows how to load metadata from files
  */
 
