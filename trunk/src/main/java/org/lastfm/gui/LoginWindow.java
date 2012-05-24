@@ -211,7 +211,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -331,14 +330,6 @@ public class LoginWindow {
 			
 		}
 		return usernameLabel;
-	}
-
-	public void addLoginListener(ActionListener loginListener){
-		sendButton.addActionListener(loginListener);
-	}
-	
-	public void addKeyListener(KeyListener keyListener){
-		passwordTextfield.addKeyListener(keyListener);
 	}
 
 	private JTextField getUsernameTextfield() {
