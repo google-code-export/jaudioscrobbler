@@ -236,9 +236,6 @@ public class LastfmService {
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 			return ActionResult.Error;
-		} catch (NullPointerException npe) {
-			log.error(npe, npe);
-			return ActionResult.Error;
-		}
+		} 
 	}
 }
