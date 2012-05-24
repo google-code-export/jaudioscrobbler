@@ -204,8 +204,8 @@
 package org.lastfm.controller.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -258,6 +258,8 @@ public class TestMetadataService {
 	@Mock
 	private Metadata metadata;
 	@Mock
+	Metadata anotherMetadata;
+	@Mock
 	private Set<File> filesWithoutMinimumMetadata;
 	@Mock
 	private File pepeGarden;
@@ -269,6 +271,7 @@ public class TestMetadataService {
 
 	private List<File> fileList;
 	private static final String ALBUM = "Lemon Flavored Kiss";
+	private static final String MY_REMIXES = "My Remixes";
 	private static final int FIRST_ELEMENT = 0;
 
 	@Before
@@ -371,11 +374,28 @@ public class TestMetadataService {
 	}
 	
 	@Test
-	public void shouldKnowIfSameAlbum() throws Exception {
-		Metadata anotherMetadata = mock(Metadata.class);
+	public void shouldKnowSameAlbum() throws Exception {
 		when(metadata.getAlbum()).thenReturn(ALBUM);
 		when(anotherMetadata.getAlbum()).thenReturn(ALBUM);
 		
+		addMetadatas();
+		
 		assertTrue(metadataService.isSameAlbum(metadatas));
 	}
+	
+	@Test
+	public void shouldKnowDifferentAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn(ALBUM);
+		when(anotherMetadata.getAlbum()).thenReturn(MY_REMIXES);
+		
+		addMetadatas();
+		
+		assertFalse(metadataService.isSameAlbum(metadatas));
+	}
+
+	private void addMetadatas() {
+		metadatas.add(metadata);
+		metadatas.add(anotherMetadata);
+	}
+	
 }
