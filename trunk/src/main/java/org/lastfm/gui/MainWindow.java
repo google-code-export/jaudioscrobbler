@@ -294,7 +294,7 @@ public class MainWindow extends JFrame {
 	private static final String LOG_OUT = "logged out";
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
-	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String WRITE_BUTTON_NAME = "writeButton";
 	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 
@@ -716,7 +716,7 @@ public class MainWindow extends JFrame {
 	public JButton getApplyButton() {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
-			applyButton.setName(APPLY_BUTTON_NAME);
+			applyButton.setName(WRITE_BUTTON_NAME);
 			applyButton.setEnabled(false);
 
 			applyButton.addActionListener(new ActionListener() {
@@ -733,7 +733,7 @@ public class MainWindow extends JFrame {
 	public JButton getExportButton() {
 		if (exportButton == null) {
 			exportButton = new JButton(ApplicationState.EXPORT);
-			exportButton.setName(APPLY_BUTTON_NAME);
+			exportButton.setName(EXPORT_BUTTON_NAME);
 			exportButton.setEnabled(false);
 
 			exportButton.addActionListener(new ActionListener() {
@@ -1208,6 +1208,10 @@ public class MainWindow extends JFrame {
 				String album = (String) model.getValueAt(lastRow, 2);
 			}
 		}
+	}
+
+	public JFrame getFrame() {
+		return frame;
 	}
 
 }

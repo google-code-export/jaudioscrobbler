@@ -228,7 +228,6 @@ import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
  * @understands UI components for logging window
  */
 
