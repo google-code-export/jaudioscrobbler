@@ -204,6 +204,7 @@
 
 package org.lastfm.gui;
 
+import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
@@ -273,7 +274,8 @@ public class MetadataDialog extends AllDialog {
 	private static final String TRACKS_LABEL = "tracksLabel";
 	private static final String CD_LABEL = "cdLabel";
 	private static final String CDS_LABEL = "cdsLabel";
-	private static final String BUTTON_NAME = "buttonOk";
+	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String CANCEL_BUTTON_NAME = "cancelButton";
 	private static final String APPLY = "Apply";
 	private static final String IMAGE = "Cover Art";
 	private static final String ARTIST = "Artist";
@@ -307,9 +309,11 @@ public class MetadataDialog extends AllDialog {
 	private Image coverArt;
 	private ImageUtils imageUtils = new ImageUtils();
 	private final ControlEngineConfigurator configurator;
+	private final JFrame frame;
 
 	public MetadataDialog(JFrame frame, ControlEngineConfigurator controlEngineConfigurator, String message) {
 		super(frame, true, message);
+		this.frame = frame;
 		this.configurator = controlEngineConfigurator;
 		this.message = message;
 		initializeContentPane();
@@ -544,7 +548,7 @@ public class MetadataDialog extends AllDialog {
 		if (applyButton == null) {
 			applyButton = new JButton();
 			applyButton.setBounds(SEND_BUTTON_BOUNDS);
-			applyButton.setName(BUTTON_NAME);
+			applyButton.setName(APPLY_BUTTON_NAME);
 			applyButton.setText(APPLY);
 			applyButton.setMnemonic(KeyEvent.VK_A);
 			applyButton.setEnabled(true);
@@ -575,7 +579,7 @@ public class MetadataDialog extends AllDialog {
 		if (cancelButton == null) {
 			cancelButton = new JButton();
 			cancelButton.setBounds(CANCEL_BUTTON_BOUNDS);
-			cancelButton.setName(BUTTON_NAME);
+			cancelButton.setName(CANCEL_BUTTON_NAME);
 			cancelButton.setText(CANCEL);
 			cancelButton.setMnemonic(KeyEvent.VK_C);
 			cancelButton.addActionListener(new CloseListener());
@@ -606,6 +610,10 @@ public class MetadataDialog extends AllDialog {
 				}
 			}
 		}
+	}
+
+	public Frame getFrame() {
+		return frame;
 	}
 
 }
