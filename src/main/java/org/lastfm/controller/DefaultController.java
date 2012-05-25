@@ -17,7 +17,7 @@ public class DefaultController {
 	private DefaultService defaultService;
 	
 	@RequestMethod(Actions.COMPLETE_DEFAULT_METADATA)
-	public ActionResult complete(List<Metadata> metadatas) {
+	public synchronized ActionResult complete(List<Metadata> metadatas) {
 		return defaultService.isCompletable(metadatas) == true ? ActionResult.New : ActionResult.Complete;
 	}
 

@@ -219,7 +219,7 @@ public class FormatterController {
 	private FormatterService formatterService;
 	
 	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
-	public ActionResult format(Metadata metadata) {
+	public synchronized ActionResult format(Metadata metadata) {
 		boolean formatted = formatterService.isABadFormat(metadata);
 		boolean capitalized = formatterService.isNotCamelized(metadata);
 		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;

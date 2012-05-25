@@ -956,7 +956,7 @@ public class MainWindow extends JFrame {
 
 							public void onResponse(ActionResult response) {
 								updateStatus(counter++, metadataList.size());
-								log.info("response in getting album " + metadata.getTitle() + ": " + response);
+								log.info("response in getting from MusicBrainz album " + metadata.getTitle() + ": " + response);
 								if (response.equals(ActionResult.New)) {
 									metadataWithAlbum.add(metadata);
 									getDescriptionTable().getModel().setValueAt(metadata.getAlbum(), i, ApplicationState.ALBUM_COLUMN);

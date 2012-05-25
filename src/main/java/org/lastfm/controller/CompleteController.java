@@ -238,7 +238,7 @@ public class CompleteController {
 	private LastfmService lastfmService;
 
 	@RequestMethod(Actions.COMPLETE_ALBUM_METADATA)
-	public ActionResult completeAlbumMetadata(Metadata metadata) {
+	public synchronized ActionResult completeAlbumMetadata(Metadata metadata) {
 		try {
 			log.info("trying to complete metadata using MusicBrainz for: " + metadata.getArtist() + " - " + metadata.getTitle());
 			if (StringUtils.isEmpty(metadata.getAlbum())) {
