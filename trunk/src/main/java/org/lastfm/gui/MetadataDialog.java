@@ -204,7 +204,6 @@
 
 package org.lastfm.gui;
 
-import java.awt.Frame;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
@@ -229,6 +228,7 @@ import org.lastfm.dnd.ImageDropListener;
 import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
+import org.lastfm.helper.MetadataHelper;
 import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.observ.ObservValue;
 import org.lastfm.observ.Observer;
@@ -308,19 +308,17 @@ public class MetadataDialog extends AllDialog {
 	private JPanel imagePanel;
 	private Image coverArt;
 	private ImageUtils imageUtils = new ImageUtils();
+	private MetadataHelper metadataHelper = new MetadataHelper();
 	private final ControlEngineConfigurator configurator;
-	private final JFrame frame;
 
 	public MetadataDialog(JFrame frame, ControlEngineConfigurator controlEngineConfigurator, String message) {
 		super(frame, true, message);
-		this.frame = frame;
 		this.configurator = controlEngineConfigurator;
 		this.message = message;
 		initializeContentPane();
 		getTitleLabel().setText(dialogTitle());
 		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
 		setDragAndDrop(multiLayerDropTargetListener);
-		setVisible(true);
 	}
 	
 	private void setDragAndDrop(MultiLayerDropTargetListener multiLayerDropTargetListener) {
@@ -555,10 +553,9 @@ public class MetadataDialog extends AllDialog {
 			getRootPane().setDefaultButton(applyButton);
 			applyButton.addActionListener(new ActionListener() {
 
-				
 				public void actionPerformed(ActionEvent e) {
 					applyButton.setEnabled(false);
-					MetadataAlbumValues metadataValues = new MetadataAlbumValues();
+					MetadataAlbumValues metadataValues = metadataHelper.createMetadataAlbumVaues();
 					metadataValues.setCoverart(coverArt);
 					metadataValues.setArtist(getArtistTextField().getText());
 					metadataValues.setAlbum(getAlbumTextField().getText());
@@ -612,8 +609,8 @@ public class MetadataDialog extends AllDialog {
 		}
 	}
 
-	public Frame getFrame() {
-		return frame;
+	public void setMetadataHelper(MetadataHelper metadataHelper) {
+		this.metadataHelper = metadataHelper;
 	}
 
 }

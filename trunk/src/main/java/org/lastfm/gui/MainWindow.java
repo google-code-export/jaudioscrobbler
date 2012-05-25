@@ -802,7 +802,8 @@ public class MainWindow extends JFrame {
 
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON3) {
-						new MetadataDialog(frame, controlEngineConfigurator, "Alter ALL rows");
+						MetadataDialog metadataDialog = new MetadataDialog(frame, controlEngineConfigurator, "Alter ALL rows");
+						metadataDialog.setVisible(true);
 					}
 				}
 			});
