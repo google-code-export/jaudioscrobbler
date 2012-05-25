@@ -982,7 +982,7 @@ public class MainWindow extends JFrame {
 										@Override
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
-											log.info("response in getting album " + metadata.getTitle() + ": " + response);
+											log.info("response in getFormatterData for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
@@ -1001,6 +1001,7 @@ public class MainWindow extends JFrame {
 							}
 							
 							private void completeValuesForAlbum() {
+								getLabel().setText(ApplicationState.COMPLETE_DEFAULT_VALUES);
 								counter = 0;
 								log.info("Completing album for " + metadataList.size() + " files");
 								for (final Metadata metadata : metadataList) {
@@ -1010,7 +1011,7 @@ public class MainWindow extends JFrame {
 										@Override
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
-											log.info("response in getting album " + metadata.getTitle() + ": " + response);
+											log.info("response in completeValuesForAlbum for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
@@ -1038,7 +1039,7 @@ public class MainWindow extends JFrame {
 
 										public void onResponse(ActionResult response) {
 											updateStatus(counter++, metadataList.size());
-											log.info("response in getting lastFM metadata for " + metadata.getTitle() + ": " + response);
+											log.info("response in getLastfmData for " + metadata.getTitle() + ": " + response);
 											if (response.equals(ActionResult.New)) {
 												metadataWithAlbum.add(metadata);
 												getDescriptionTable().getModel().setValueAt(metadata.getArtist(), i, ApplicationState.ARTIST_COLUMN);
