@@ -230,6 +230,7 @@ import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
+import org.lastfm.model.User;
 import org.lastfm.util.Environment;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -255,6 +256,8 @@ public class TestMainWindow {
 	private static final String GENRE = "Trance";
 	private static final String TRACK_NUMBER = "5";
 	private static final String TOTAL_TRACKS_NUMBER = "16";
+	private static final String LOGIN_LABEL_NAME = "loginLabel";
+	private static final String USERNAME = "josdem";
 
 	private FrameFixture window;
 
@@ -270,13 +273,16 @@ public class TestMainWindow {
 	private Metadata metadata;
 	@Mock
 	private Set<Metadata> metadataWithAlbum;
+	@Mock
+	private User currentUser;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
 	private List<Metadata> metadatas;
 	private Set<Metadata> metadatasWaitingForMetadata;
-	
 
+	
+	
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -453,6 +459,20 @@ public class TestMainWindow {
 
 			assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 		}
+	}
+	
+	@Test
+	public void shouldRespondOnUserLogged() throws Exception {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ApplicationState.LOGGED_AS);
+		sb.append(USERNAME);
+		
+		when(currentUser.getUsername()).thenReturn(USERNAME);
+		
+		mainWindow.onUserLogged(currentUser);
+		
+		assertEquals(sb.toString(), window.label(LOGIN_LABEL_NAME).text());
+		assertTrue(window.button(SEND_BUTTON_NAME).target.isEnabled());
 	}
 
 	@After

@@ -297,6 +297,7 @@ public class MainWindow extends JFrame {
 	private static final String WRITE_BUTTON_NAME = "writeButton";
 	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
+	private static final String LOGIN_LABEL_NAME = "loginLabel";
 
 	private JFrame frame;
 	private JPanel panel;
@@ -378,8 +379,11 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.USER_LOGGED)
-	private void onUserLogged(User currentUser) {
-		getLoginLabel().setText(ApplicationState.LOGGED_AS + currentUser.getUsername());
+	void onUserLogged(User currentUser) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ApplicationState.LOGGED_AS);
+		sb.append(currentUser.getUsername());
+		getLoginLabel().setText(sb.toString());
 		getSendButton().setEnabled(true);
 	}
 
@@ -685,6 +689,7 @@ public class MainWindow extends JFrame {
 	private JLabel getLoginLabel() {
 		if (loginLabel == null) {
 			loginLabel = new JLabel(LOG_OUT);
+			loginLabel.setName(LOGIN_LABEL_NAME);
 		}
 		return loginLabel;
 	}

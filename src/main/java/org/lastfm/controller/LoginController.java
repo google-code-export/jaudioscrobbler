@@ -246,7 +246,7 @@ public class LoginController {
 			} else {
 				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 			}
-		} catch (IOException ioe) {
+		} catch (IOException ioe) {	
 			log.error(ioe, ioe);
 			configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
 		}
