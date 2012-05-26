@@ -299,6 +299,8 @@ public class MainWindow extends JFrame {
 	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
+	private static final String STATUS_LABEL_NAME = "statusLabel";
+	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 
 	private JPanel panel;
 	private JButton openButton;
@@ -390,7 +392,10 @@ public class MainWindow extends JFrame {
 
 	@EventMethod(Events.COVER_ART_FAILED)
 	void onCovertArtFailed(String title) {
-		dialogHelper.showMessageDialog(this, title + " has a corrupted coverArt");
+		StringBuilder sb = new StringBuilder();
+		sb.append(title);
+		sb.append(ApplicationState.CORRUPTED_METADATA_LABEL);
+		dialogHelper.showMessageDialog(this, sb.toString());
 	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
@@ -399,7 +404,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED)
-	private void onMusicDirectorySelected(String path) {
+	void onMusicDirectorySelected(String path) {
 		tableLoaded = false;
 		deleteALLRows(descriptionTable);
 		metadataWithAlbum.clear();
@@ -667,6 +672,7 @@ public class MainWindow extends JFrame {
 	private JTextField getDirectoryField() {
 		if (directorySelected == null) {
 			directorySelected = new JTextField(DIRECTORY_SELECTED_LENGHT);
+			directorySelected.setName(DIRECTORY_SELECTED_TEXTFIELD_NAME);
 			directorySelected.setEnabled(false);
 		}
 		return directorySelected;
@@ -683,6 +689,7 @@ public class MainWindow extends JFrame {
 	public JLabel getLabel() {
 		if (label == null) {
 			label = new JLabel(STATUS_LABEL);
+			label.setName(STATUS_LABEL_NAME);
 		}
 		return label;
 	}
