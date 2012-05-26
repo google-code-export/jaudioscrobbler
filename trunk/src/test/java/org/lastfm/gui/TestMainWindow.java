@@ -259,6 +259,9 @@ public class TestMainWindow {
 	private static final String TOTAL_TRACKS_NUMBER = "16";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 	private static final String USERNAME = "josdem";
+	private static final String PATH = "/User/josdem/music";
+	private static final String STATUS_LABEL_NAME = "statusLabel";
+	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 
 	private FrameFixture window;
 
@@ -481,8 +484,24 @@ public class TestMainWindow {
 	
 	@Test
 	public void shouldShowDialogWhenCoverArtCorrupted() throws Exception {
+		StringBuilder sb = new StringBuilder();
+		sb.append(TITLE);
+		sb.append(ApplicationState.CORRUPTED_METADATA_LABEL);
 		mainWindow.onCovertArtFailed(TITLE);
-		verify(dialogHelper).showMessageDialog(mainWindow, TITLE + " has a corrupted coverArt");
+		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
+	}
+	
+	@Test
+	public void shouldRespondAMusicDirectorySelected() throws Exception {
+		mainWindow.getDescriptionTable().setEnabled(true);
+		mainWindow.getDescriptionTable().setValueAt(ALBUM, 0, ApplicationState.ARTIST_COLUMN);
+		assertEquals(1, mainWindow.getDescriptionTable().getModel().getRowCount());
+		
+		mainWindow.onMusicDirectorySelected(PATH);
+		
+		assertEquals(ApplicationState.WORKING, window.label(STATUS_LABEL_NAME).text());
+		assertEquals(0, mainWindow.getDescriptionTable().getModel().getRowCount());
+		assertEquals(PATH, window.textBox(DIRECTORY_SELECTED_TEXTFIELD_NAME).text());
 	}
 
 	@After
