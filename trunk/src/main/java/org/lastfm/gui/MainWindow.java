@@ -262,6 +262,7 @@ import org.lastfm.dnd.ImageDropListener;
 import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
+import org.lastfm.helper.DialogHelper;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
@@ -299,7 +300,6 @@ public class MainWindow extends JFrame {
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 
-	private JFrame frame;
 	private JPanel panel;
 	private JButton openButton;
 	private JButton sendButton;
@@ -325,6 +325,7 @@ public class MainWindow extends JFrame {
 	private Log log = LogFactory.getLog(this.getClass());
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
+	private DialogHelper dialogHelper = new DialogHelper();
 	boolean tableLoaded;
 	boolean working;
 	private int counter = 0;
@@ -388,8 +389,8 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.COVER_ART_FAILED)
-	private void onCovertArtFailed(String title) {
-		JOptionPane.showMessageDialog(frame, title + " has a corrupted coverArt");
+	void onCovertArtFailed(String title) {
+		dialogHelper.showMessageDialog(this, title + " has a corrupted coverArt");
 	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
@@ -438,10 +439,10 @@ public class MainWindow extends JFrame {
 				file = iterator.next();
 			}
 			if (filesWithoutMinimumMetadata.size() == 1) {
-				JOptionPane.showMessageDialog(frame, file.getName() + " title and artist metadata were extracted from file name");
+				JOptionPane.showMessageDialog(this, file.getName() + " title and artist metadata were extracted from file name");
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
-				JOptionPane.showMessageDialog(frame, file.getName() + " and other " + otherFiles + " title and artist metadata were extracted from file name");
+				JOptionPane.showMessageDialog(this, file.getName() + " and other " + otherFiles + " title and artist metadata were extracted from file name");
 			}
 		}
 		resetStatus();
@@ -454,7 +455,7 @@ public class MainWindow extends JFrame {
 	
 	@EventMethod(Events.DIRECTORY_EMPTY_EVENT)
 	private void onDirectoryEmpty() {
-		JOptionPane.showMessageDialog(frame, "I could not find any mp3 or mp4 audio file in the directory");
+		JOptionPane.showMessageDialog(this, "I could not find any mp3 or mp4 audio file in the directory");
 		resetStatus();
 	}
 	
@@ -807,7 +808,7 @@ public class MainWindow extends JFrame {
 
 				public void mouseClicked(MouseEvent e) {
 					if (e.getButton() == MouseEvent.BUTTON3) {
-						MetadataDialog metadataDialog = new MetadataDialog(frame, controlEngineConfigurator, "Alter ALL rows");
+						MetadataDialog metadataDialog = new MetadataDialog(MainWindow.this, controlEngineConfigurator, "Alter ALL rows");
 						metadataDialog.setVisible(true);
 					}
 				}
@@ -1215,10 +1216,6 @@ public class MainWindow extends JFrame {
 				String album = (String) model.getValueAt(lastRow, 2);
 			}
 		}
-	}
-
-	public JFrame getFrame() {
-		return frame;
 	}
 
 }
