@@ -228,6 +228,7 @@ import org.junit.Test;
 import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
+import org.lastfm.helper.DialogHelper;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -275,11 +276,14 @@ public class TestMainWindow {
 	private Set<Metadata> metadataWithAlbum;
 	@Mock
 	private User currentUser;
+	@Mock
+	private DialogHelper dialogHelper;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
 	private List<Metadata> metadatas;
 	private Set<Metadata> metadatasWaitingForMetadata;
+
 
 	
 	
@@ -473,6 +477,12 @@ public class TestMainWindow {
 		
 		assertEquals(sb.toString(), window.label(LOGIN_LABEL_NAME).text());
 		assertTrue(window.button(SEND_BUTTON_NAME).target.isEnabled());
+	}
+	
+	@Test
+	public void shouldShowDialogWhenCoverArtCorrupted() throws Exception {
+		mainWindow.onCovertArtFailed(TITLE);
+		verify(dialogHelper).showMessageDialog(mainWindow, TITLE + " has a corrupted coverArt");
 	}
 
 	@After
