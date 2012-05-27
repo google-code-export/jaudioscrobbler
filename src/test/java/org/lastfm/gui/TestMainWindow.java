@@ -210,7 +210,9 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -229,6 +231,8 @@ import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.helper.DialogHelper;
+import org.lastfm.model.CoverArt;
+import org.lastfm.model.CoverArtType;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
@@ -248,6 +252,7 @@ public class TestMainWindow {
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
+	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String ARTIST = "Armin Van Buuren";
 	private static final String ALBUM = "Mirage";
 	private static final String TITLE = "I Don't Own You";
@@ -281,15 +286,19 @@ public class TestMainWindow {
 	private User currentUser;
 	@Mock
 	private DialogHelper dialogHelper;
+	@Mock
+	private CoverArt newCoverArt;
+	@Mock
+	private Image imageIcon;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
-	private List<Metadata> metadatas;
-	private Set<Metadata> metadatasWaitingForMetadata;
+	private List<Metadata> metadatas = new ArrayList<Metadata>();;
+	private Set<Metadata> metadatasWaitingForMetadata = new HashSet<Metadata>();
+	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
 
 
-	
-	
+
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -297,8 +306,6 @@ public class TestMainWindow {
 		when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
 		window = new FrameFixture(mainWindow);
 		window.show();
-		metadatas = new ArrayList<Metadata>();
-		metadatasWaitingForMetadata = new HashSet<Metadata>();
 		metadatas.add(metadata);
 		metadatasWaitingForMetadata.add(metadata);
 		when(metadata.getTitle()).thenReturn(TRACK_TITLE);
@@ -502,6 +509,45 @@ public class TestMainWindow {
 		assertEquals(ApplicationState.WORKING, window.label(STATUS_LABEL_NAME).text());
 		assertEquals(0, mainWindow.getDescriptionTable().getModel().getRowCount());
 		assertEquals(PATH, window.textBox(DIRECTORY_SELECTED_TEXTFIELD_NAME).text());
+	}
+	
+	@Test
+	public void shouldLetUserKnowLoginFailed() throws Exception {
+		mainWindow.onUserLoginFailed();
+		assertEquals(ApplicationState.LOGIN_FAIL, window.label(LOGIN_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldKnowWhenMusicDirectorySelectedCanceled() throws Exception {
+		mainWindow.onMusicDirectorySelectedCancel();
+		assertTrue(window.button(OPEN_BUTTON_NAME).target.isEnabled());
+	}
+	
+	@Test
+	public void shouldResetstatusWhenTrackLoaded() throws Exception {
+		setControlAndViewEngineExpectations();
+		
+		mainWindow.onTracksLoaded();
+		
+		assertTrue(window.button(COMPLETE_BUTTON_NAME).target.isEnabled());
+		assertTrue(window.button(EXPORT_BUTTON_NAME).target.isEnabled());
+		assertTrue(window.button(OPEN_BUTTON_NAME).target.isEnabled());
+		assertEquals(ApplicationState.DONE, window.label(STATUS_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldUpdateImageWhenTrackLoaded() throws Exception {
+		when(metadata.getNewCoverArt()).thenReturn(newCoverArt);
+		when(newCoverArt.getImageIcon()).thenReturn(imageIcon);
+		when(newCoverArt.getType()).thenReturn(CoverArtType.DRAG_AND_DROP);
+		setControlAndViewEngineExpectations();
+		
+		mainWindow.onTracksLoaded();
+	}
+
+	private void setControlAndViewEngineExpectations() {
+		when(controlEngine.get(Model.FILES_WITHOUT_MINIMUM_METADATA)).thenReturn(filesWithoutMinimumMetadata);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
 
 	@After
