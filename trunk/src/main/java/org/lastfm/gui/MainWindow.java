@@ -399,7 +399,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
-	private void onUserLoginFailed() {
+	void onUserLoginFailed() {
 		getLoginLabel().setText(ApplicationState.LOGIN_FAIL);
 	}
 
@@ -413,7 +413,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
-	private void onMusicDirectorySelectedCancel() {
+	void onMusicDirectorySelectedCancel() {
 		getOpenButton().setEnabled(true);
 		if(tableLoaded){
 			getCompleteMetadataButton().setEnabled(true);
@@ -434,7 +434,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.TRACKS_LOADED)
-	private void onTracksLoaded() {
+	void onTracksLoaded() {
 		Set<File> filesWithoutMinimumMetadata = controlEngineConfigurator.getControlEngine().get(Model.FILES_WITHOUT_MINIMUM_METADATA);
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 		if (!filesWithoutMinimumMetadata.isEmpty()) {
