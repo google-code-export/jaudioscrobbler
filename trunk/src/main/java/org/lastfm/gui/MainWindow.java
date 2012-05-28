@@ -301,6 +301,7 @@ public class MainWindow extends JFrame {
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
+	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 
 	private JPanel panel;
 	private JButton openButton;
@@ -657,6 +658,7 @@ public class MainWindow extends JFrame {
 	private JLabel getImageLabel() {
 		if (imageLabel == null) {
 			imageLabel = new JLabel();
+			imageLabel.setName(IMAGE_LABEL_NAME);
 		}
 		return imageLabel;
 	}

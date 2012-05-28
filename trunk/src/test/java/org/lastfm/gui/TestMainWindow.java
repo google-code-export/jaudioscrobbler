@@ -267,6 +267,7 @@ public class TestMainWindow {
 	private static final String PATH = "/User/josdem/music";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
+	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 
 	private FrameFixture window;
 
@@ -543,6 +544,8 @@ public class TestMainWindow {
 		setControlAndViewEngineExpectations();
 		
 		mainWindow.onTracksLoaded();
+		
+		assertEquals(ApplicationState.COVER_ART_FROM_DRAG_AND_DROP, window.label(IMAGE_LABEL_NAME).text());
 	}
 
 	private void setControlAndViewEngineExpectations() {
