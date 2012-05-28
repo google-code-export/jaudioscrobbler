@@ -5,8 +5,12 @@ import javax.swing.JOptionPane;
 
 public class DialogHelper {
 
-	public void showMessageDialog(JFrame frame, String title) {
-		JOptionPane.showMessageDialog(frame, title + " has a corrupted coverArt");
+	public void showMessageDialog(JFrame frame, String message) {
+		JOptionPane.showMessageDialog(frame, message);
+	}
+
+	public void showSingleFileMessageDialog(JFrame frame, String message) {
+		JOptionPane.showMessageDialog(frame, message);
 	}
 	
 }

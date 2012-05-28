@@ -445,7 +445,10 @@ public class MainWindow extends JFrame {
 				file = iterator.next();
 			}
 			if (filesWithoutMinimumMetadata.size() == 1) {
-				JOptionPane.showMessageDialog(this, file.getName() + " title and artist metadata were extracted from file name");
+				StringBuilder sb = new StringBuilder();
+				sb.append(file.getName());
+				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+				dialogHelper.showSingleFileMessageDialog(this, sb.toString());
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
 				JOptionPane.showMessageDialog(this, file.getName() + " and other " + otherFiles + " title and artist metadata were extracted from file name");
