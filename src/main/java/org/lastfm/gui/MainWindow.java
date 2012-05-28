@@ -881,8 +881,12 @@ public class MainWindow extends JFrame {
 			}
 			imageLabel.setText(label);
 		} else if (metadata.getCoverArt() != null) {
-			Image resize = imageUtils.resize(metadata.getCoverArt(), ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
-			imagePanel.add(new JLabel(new ImageIcon(resize)));
+			if(imageUtils.is300Image(metadata.getCoverArt())){
+				imagePanel.add(new JLabel(new ImageIcon(metadata.getCoverArt())));
+			} else {
+				Image resize = imageUtils.resize(metadata.getCoverArt(), ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+				imagePanel.add(new JLabel(new ImageIcon(resize)));
+			}
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
 		} else {
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));

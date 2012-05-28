@@ -228,6 +228,7 @@ public class ImageUtils {
 	private ImageIcon imageIcon;
 	private ImageService imageHelper = new ImageService();
 	private FileUtils fileUtils = new FileUtils();
+	private static final int THREE_HUNDRED = 300;
 
 	public Image resize(Image image, int width, int height) {
 		BufferedImage bufferedImage = (BufferedImage) image;
@@ -281,18 +282,21 @@ public class ImageUtils {
 
 	private void saveImage(Image image, File file) throws IOException {
 		log.info("Saving image: " + file.getAbsolutePath());
+		if(!is300Image(image)){
+			image = resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
+		}
+		write(image, file);
+	}
+
+	public boolean is300Image(Image image) {
 		int imageHeight = image.getHeight(new ImageObserver() {
-			
 			
 			public boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height) {
 				return false;
 			}
 		});
 		log.info("Image height: " + imageHeight);
-		if(imageHeight!=300){
-			image = resize(image, ApplicationState.THREE_HUNDRED, ApplicationState.THREE_HUNDRED);
-		}
-		write(image, file);
+		return imageHeight == THREE_HUNDRED ? true : false;
 	}
 
 }

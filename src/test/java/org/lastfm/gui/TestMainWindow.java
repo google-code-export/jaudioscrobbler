@@ -210,13 +210,14 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.ImageIcon;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.ViewEngine;
@@ -287,17 +288,14 @@ public class TestMainWindow {
 	private User currentUser;
 	@Mock
 	private DialogHelper dialogHelper;
-	@Mock
-	private CoverArt newCoverArt;
-	@Mock
-	private Image imageIcon;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
+	
 	private List<Metadata> metadatas = new ArrayList<Metadata>();;
 	private Set<Metadata> metadatasWaitingForMetadata = new HashSet<Metadata>();
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
-
+	private ImageIcon imageIcon = new ImageIcon("src/test/resources/images/A Flock of Bleeps.png");
 
 
 	@Before
@@ -537,15 +535,38 @@ public class TestMainWindow {
 	}
 	
 	@Test
-	public void shouldUpdateImageWhenTrackLoaded() throws Exception {
+	public void shouldUpdateImageWhenCoverArtAddedFromDandD() throws Exception {
+		CoverArt newCoverArt = new CoverArt(imageIcon.getImage(), CoverArtType.DRAG_AND_DROP);
 		when(metadata.getNewCoverArt()).thenReturn(newCoverArt);
-		when(newCoverArt.getImageIcon()).thenReturn(imageIcon);
-		when(newCoverArt.getType()).thenReturn(CoverArtType.DRAG_AND_DROP);
 		setControlAndViewEngineExpectations();
 		
 		mainWindow.onTracksLoaded();
+		Thread.sleep(500);
 		
 		assertEquals(ApplicationState.COVER_ART_FROM_DRAG_AND_DROP, window.label(IMAGE_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldUpdateImageWhenCoverArtAddedFromLastFM() throws Exception {
+		CoverArt newCoverArt = new CoverArt(imageIcon.getImage(), CoverArtType.LAST_FM);
+		when(metadata.getNewCoverArt()).thenReturn(newCoverArt);
+		setControlAndViewEngineExpectations();
+		
+		mainWindow.onTracksLoaded();
+		Thread.sleep(500);
+		
+		assertEquals(ApplicationState.COVER_ART_FROM_LASTFM, window.label(IMAGE_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldUpdateImageWhenCoverArtAddedFromFile() throws Exception {
+		when(metadata.getCoverArt()).thenReturn(imageIcon.getImage());
+		setControlAndViewEngineExpectations();
+		
+		mainWindow.onTracksLoaded();
+		Thread.sleep(500);
+		
+		assertEquals(ApplicationState.COVER_ART_FROM_FILE, window.label(IMAGE_LABEL_NAME).text());
 	}
 
 	private void setControlAndViewEngineExpectations() {
