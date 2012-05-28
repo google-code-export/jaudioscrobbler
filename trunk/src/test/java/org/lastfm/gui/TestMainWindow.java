@@ -288,6 +288,8 @@ public class TestMainWindow {
 	private User currentUser;
 	@Mock
 	private DialogHelper dialogHelper;
+	@Mock
+	private File file;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -567,6 +569,30 @@ public class TestMainWindow {
 		Thread.sleep(500);
 		
 		assertEquals(ApplicationState.COVER_ART_FROM_FILE, window.label(IMAGE_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldUpdateImageWhenCoverArtIsDefault() throws Exception {
+		setControlAndViewEngineExpectations();
+		
+		mainWindow.onTracksLoaded();
+		Thread.sleep(500);
+		
+		assertEquals(ApplicationState.COVER_ART_DEFAULT, window.label(IMAGE_LABEL_NAME).text());
+	}
+	
+	@Test
+	public void shouldAlertOnlyOneFileHasMetadataFromFilename() throws Exception {
+		when(file.getName()).thenReturn(TITLE);
+		filesWithoutMinimumMetadata.add(file);
+		setControlAndViewEngineExpectations();
+		StringBuilder sb = new StringBuilder();
+		sb.append(TITLE);
+		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+		
+		mainWindow.onTracksLoaded();
+		
+		verify(dialogHelper).showSingleFileMessageDialog(mainWindow, sb.toString());
 	}
 
 	private void setControlAndViewEngineExpectations() {
