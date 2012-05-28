@@ -586,13 +586,31 @@ public class TestMainWindow {
 		when(file.getName()).thenReturn(TITLE);
 		filesWithoutMinimumMetadata.add(file);
 		setControlAndViewEngineExpectations();
-		StringBuilder sb = new StringBuilder();
-		sb.append(TITLE);
-		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+		StringBuilder sb = setStringBuilderExpectations();
 		
 		mainWindow.onTracksLoaded();
 		
-		verify(dialogHelper).showSingleFileMessageDialog(mainWindow, sb.toString());
+		verify(dialogHelper).showFileMessageDialog(mainWindow, sb.toString());
+	}
+	
+	@Test
+	public void shouldAlertTwoFileHasMetadataFromFilename() throws Exception {
+		when(file.getName()).thenReturn(TITLE);
+		filesWithoutMinimumMetadata.add(file);
+		filesWithoutMinimumMetadata.add(file);
+		setControlAndViewEngineExpectations();
+		StringBuilder sb = setStringBuilderExpectations();
+		
+		mainWindow.onTracksLoaded();
+		
+		verify(dialogHelper).showFileMessageDialog(mainWindow, sb.toString());
+	}
+
+	private StringBuilder setStringBuilderExpectations() {
+		StringBuilder sb = new StringBuilder();
+		sb.append(TITLE);
+		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+		return sb;
 	}
 
 	private void setControlAndViewEngineExpectations() {
