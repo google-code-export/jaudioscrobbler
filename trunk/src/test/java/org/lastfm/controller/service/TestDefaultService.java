@@ -1,5 +1,6 @@
 package org.lastfm.controller.service;
 
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,18 +47,21 @@ public class TestDefaultService {
 	@Test
 	public void shouldCompleteTotalTracks() throws Exception {
 		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		defaultService.isCompletable(metadatas);
-		verify(metadata_one).setTotalTracks(TOTAL_TRACKS);
-		verify(metadata_two).setTotalTracks(TOTAL_TRACKS);
+		
+		assertTrue(defaultService.isCompletable(metadatas));
 	}
 	
 	@Test
-	public void shouldCompleteCDNumbers() throws Exception {
+	public void shouldComplete() throws Exception {
 		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		defaultService.isCompletable(metadatas);
 		
+		defaultService.complete(metadatas);
+
+		
+		verify(metadata_one).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_one).setCdNumber(CD_NUMBER);
 		verify(metadata_one).setTotalCds(TOTAL_CD_NUMBER);
+		verify(metadata_two).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_two).setCdNumber(CD_NUMBER);
 		verify(metadata_two).setTotalCds(TOTAL_CD_NUMBER);
 	}
@@ -72,6 +76,19 @@ public class TestDefaultService {
 		verify(metadata_one, never()).setTotalTracks(TOTAL_TRACKS);
 		verify(metadata_one, never()).setCdNumber(CD_NUMBER);
 		verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
+	}
+	
+	@Test
+	public void shouldNotCompleteMetadataWhenNoNecesary() throws Exception {
+		when(metadata_one.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+		when(metadata_two.getTotalTracks()).thenReturn(TOTAL_TRACKS);
+		when(metadata_one.getCdNumber()).thenReturn(CD_NUMBER);
+		when(metadata_two.getCdNumber()).thenReturn(CD_NUMBER);
+		when(metadata_one.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+		when(metadata_two.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+		
+		assertFalse(defaultService.isCompletable(metadatas));
 	}
 
 }
