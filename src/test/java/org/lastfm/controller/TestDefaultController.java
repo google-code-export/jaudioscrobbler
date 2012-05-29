@@ -1,7 +1,7 @@
 package org.lastfm.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 import java.util.List;
 
@@ -35,6 +35,7 @@ public class TestDefaultController {
 		
 		ActionResult result = defaultController.complete(metadatas);
 		
+		verify(defaultService).complete(metadatas);
 		assertEquals(ActionResult.New, result);
 	}
 	

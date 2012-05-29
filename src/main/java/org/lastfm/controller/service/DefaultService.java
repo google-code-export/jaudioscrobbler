@@ -2,6 +2,7 @@ package org.lastfm.controller.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,24 @@ public class DefaultService {
 	private MetadataService metadataService;
 	
 	public Boolean isCompletable(List<Metadata> metadatas) {
-		if(metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)){
-			return false;
-		}
+		return (metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)) ? false : isSomethingMissing(metadatas);  
+	}
+	
+	public void complete(List<Metadata> metadatas){
 		for (Metadata metadata : metadatas) {
 			metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
 			metadata.setCdNumber(CD_NUMBER);
 			metadata.setTotalCds(TOTAL_CD_NUMBER);
 		}
-		return true;
+	}
+
+	private boolean isSomethingMissing(List<Metadata> metadatas) {
+		for (Metadata metadata : metadatas) {
+			if(StringUtils.isEmpty(metadata.getTotalTracks()) || StringUtils.isEmpty(metadata.getCdNumber()) || StringUtils.isEmpty(metadata.getTotalCds())){
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private int getTotalTracks(List<Metadata> metadatas) {
