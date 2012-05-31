@@ -259,4 +259,5 @@ public interface ApplicationState {
 	static final String CORRUPTED_METADATA_LABEL = " has a corrupted coverArt";
 	static final String METADATA_FROM_FILE_LABEL = " title and artist metadata were extracted from file name";
 	static final String AND_ANOTHER = " and another ";
+	static final String DIRECTORY_EMPTY = "I could not find any mp3 or mp4 audio file in the directory";
 }

@@ -448,7 +448,7 @@ public class MainWindow extends JFrame {
 				StringBuilder sb = new StringBuilder();
 				sb.append(file.getName());
 				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
-				dialogHelper.showFileMessageDialog(this, sb.toString());
+				dialogHelper.showMessageDialog(this, sb.toString());
 			} else {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
 				StringBuilder sb = new StringBuilder();
@@ -456,7 +456,7 @@ public class MainWindow extends JFrame {
 				sb.append(ApplicationState.AND_ANOTHER);
 				sb.append(otherFiles);
 				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
-				dialogHelper.showFileMessageDialog(this, sb.toString());
+				dialogHelper.showMessageDialog(this, sb.toString());
 			}
 		}
 		resetStatus();
@@ -468,8 +468,8 @@ public class MainWindow extends JFrame {
 	}
 	
 	@EventMethod(Events.DIRECTORY_EMPTY_EVENT)
-	private void onDirectoryEmpty() {
-		JOptionPane.showMessageDialog(this, "I could not find any mp3 or mp4 audio file in the directory");
+	void onDirectoryEmpty() {
+		dialogHelper.showMessageDialog(this, ApplicationState.DIRECTORY_EMPTY);
 		resetStatus();
 	}
 	
