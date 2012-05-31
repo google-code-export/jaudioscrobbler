@@ -531,6 +531,10 @@ public class TestMainWindow {
 		
 		mainWindow.onTracksLoaded();
 		
+		verifyResetStatus();
+	}
+
+	private void verifyResetStatus() {
 		assertTrue(window.button(COMPLETE_BUTTON_NAME).target.isEnabled());
 		assertTrue(window.button(EXPORT_BUTTON_NAME).target.isEnabled());
 		assertTrue(window.button(OPEN_BUTTON_NAME).target.isEnabled());
@@ -591,7 +595,7 @@ public class TestMainWindow {
 		
 		mainWindow.onTracksLoaded();
 		
-		verify(dialogHelper).showFileMessageDialog(mainWindow, sb.toString());
+		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
 	}
 	
 	@Test
@@ -605,7 +609,7 @@ public class TestMainWindow {
 		
 		mainWindow.onTracksLoaded();
 		
-		verify(dialogHelper).showFileMessageDialog(mainWindow, sb.toString());
+		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
 	}
 
 	private StringBuilder setStringBuilderExpectations() {
@@ -631,6 +635,13 @@ public class TestMainWindow {
 	private void setControlAndViewEngineExpectations() {
 		when(controlEngine.get(Model.FILES_WITHOUT_MINIMUM_METADATA)).thenReturn(filesWithoutMinimumMetadata);
 		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+	}
+	
+	@Test
+	public void shouldInformWhenADirectoryIsEmpty() throws Exception {
+		mainWindow.onDirectoryEmpty();
+		verify(dialogHelper).showMessageDialog(mainWindow, ApplicationState.DIRECTORY_EMPTY);
+		verifyResetStatus();
 	}
 
 	@After

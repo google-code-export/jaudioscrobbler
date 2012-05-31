@@ -9,8 +9,4 @@ public class DialogHelper {
 		JOptionPane.showMessageDialog(frame, message);
 	}
 
-	public void showFileMessageDialog(JFrame frame, String message) {
-		JOptionPane.showMessageDialog(frame, message);
-	}
-	
 }
