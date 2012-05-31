@@ -453,7 +453,7 @@ public class MainWindow extends JFrame {
 				int otherFiles = filesWithoutMinimumMetadata.size() - 1;
 				StringBuilder sb = new StringBuilder();
 				sb.append(file.getName());
-				sb.append(" and other ");
+				sb.append(ApplicationState.AND_ANOTHER);
 				sb.append(otherFiles);
 				sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
 				dialogHelper.showFileMessageDialog(this, sb.toString());

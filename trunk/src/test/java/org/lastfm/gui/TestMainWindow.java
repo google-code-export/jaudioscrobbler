@@ -290,6 +290,8 @@ public class TestMainWindow {
 	private DialogHelper dialogHelper;
 	@Mock
 	private File file;
+	@Mock
+	private File anotherfile;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -492,8 +494,7 @@ public class TestMainWindow {
 	
 	@Test
 	public void shouldShowDialogWhenCoverArtCorrupted() throws Exception {
-		StringBuilder sb = new StringBuilder();
-		sb.append(TITLE);
+		StringBuilder sb = createStringBuilder();
 		sb.append(ApplicationState.CORRUPTED_METADATA_LABEL);
 		mainWindow.onCovertArtFailed(TITLE);
 		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
@@ -596,10 +597,11 @@ public class TestMainWindow {
 	@Test
 	public void shouldAlertTwoFileHasMetadataFromFilename() throws Exception {
 		when(file.getName()).thenReturn(TITLE);
+		when(anotherfile.getName()).thenReturn(TITLE);
 		filesWithoutMinimumMetadata.add(file);
-		filesWithoutMinimumMetadata.add(file);
+		filesWithoutMinimumMetadata.add(anotherfile);
 		setControlAndViewEngineExpectations();
-		StringBuilder sb = setStringBuilderExpectations();
+		StringBuilder sb = setSeveralFilesStringBuilderExpectations();
 		
 		mainWindow.onTracksLoaded();
 		
@@ -607,9 +609,22 @@ public class TestMainWindow {
 	}
 
 	private StringBuilder setStringBuilderExpectations() {
+		StringBuilder sb = createStringBuilder();
+		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+		return sb;
+	}
+	
+	private StringBuilder setSeveralFilesStringBuilderExpectations() {
+		StringBuilder sb = createStringBuilder();
+		sb.append(ApplicationState.AND_ANOTHER);
+		sb.append(filesWithoutMinimumMetadata.size()-1);
+		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
+		return sb;
+	}
+
+	private StringBuilder createStringBuilder() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(TITLE);
-		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
 		return sb;
 	}
 
