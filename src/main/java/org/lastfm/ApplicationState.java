@@ -258,4 +258,5 @@ public interface ApplicationState {
 	static final int THREE_HUNDRED = 300;
 	static final String CORRUPTED_METADATA_LABEL = " has a corrupted coverArt";
 	static final String METADATA_FROM_FILE_LABEL = " title and artist metadata were extracted from file name";
+	static final String AND_ANOTHER = " and another ";
 }
