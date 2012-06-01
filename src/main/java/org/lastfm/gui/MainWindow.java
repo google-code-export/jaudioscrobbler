@@ -1032,29 +1032,28 @@ public class MainWindow extends JFrame {
 								getLabel().setText(ApplicationState.COMPLETE_DEFAULT_VALUES);
 								counter = 0;
 								log.info("Completing album for " + metadataList.size() + " files");
-								for (final Metadata metadata : metadataList) {
-									final int i = metadataList.indexOf(metadata);
-									MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadataList, new ResponseCallback<ActionResult>() {
+								MainWindow.this.viewEngineConfigurator.getViewEngine().request(Actions.COMPLETE_DEFAULT, metadataList, new ResponseCallback<ActionResult>() {
 
-										@Override
-										public void onResponse(ActionResult response) {
-											updateStatus(counter++, metadataList.size());
-											log.info("response in completeValuesForAlbum for " + metadata.getTitle() + ": " + response);
-											if (response.equals(ActionResult.New)) {
-												metadataWithAlbum.add(metadata);
+									@Override
+									public void onResponse(ActionResult response) {
+										log.info("response in completeValuesForAlbum for " + metadata.getTitle() + ": " + response);
+										if (response.equals(ActionResult.New)) {
+											for (Metadata metadata : metadataList) {
+												int i = metadataList.indexOf(metadata);
+												updateStatus(counter++, metadataList.size());
 												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
-											}else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
-												getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
+												if (counter >= metadataList.size()) {
+													afterComplete(metadataWithAlbum);
+												}
 											}
-											if (counter >= metadataList.size()) {
-												afterComplete(metadataWithAlbum);
-											}
+										}else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
+											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 										}
-										
-									});
-								}
+									}
+									
+								});
 							}
 
 							private void getLastfmData() {
