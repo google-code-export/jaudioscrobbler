@@ -1044,13 +1044,11 @@ public class MainWindow extends JFrame {
 												getDescriptionTable().getModel().setValueAt(metadata.getTotalTracks(), i, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getCdNumber(), i, ApplicationState.CD_NUMBER_COLUMN);
 												getDescriptionTable().getModel().setValueAt(metadata.getTotalCds(), i, ApplicationState.TOTAL_CDS_NUMBER_COLUMN);
-												if (counter >= metadataList.size()) {
-													afterComplete(metadataWithAlbum);
-												}
 											}
 										}else if (!getDescriptionTable().getModel().getValueAt(i, ApplicationState.STATUS_COLUMN).equals(ActionResult.New)) {
 											getDescriptionTable().getModel().setValueAt(response, i, ApplicationState.STATUS_COLUMN);
 										}
+										afterComplete(metadataWithAlbum);
 									}
 									
 								});
