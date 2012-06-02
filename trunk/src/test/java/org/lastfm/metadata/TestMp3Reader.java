@@ -214,6 +214,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
@@ -222,6 +225,7 @@ import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.event.Events;
 import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
@@ -229,8 +233,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestMp3Reader{
+	private static final String ARTIST = "Armin Van Buuren";
+	private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
+	private static final String YEAR = "2011";
+	private static final String NULL = "null";
+	
 	@InjectMocks
 	private Mp3Reader reader = new Mp3Reader();
+	
 	@Mock
 	private MP3File audioFile;
 	@Mock
@@ -245,12 +255,10 @@ public class TestMp3Reader{
 	private AudioFileHelper audioFileHelper;
 	@Mock
 	private BufferedImage bufferedImage;
-	
-	private String artist = "Armin Van Buuren";
-	private String title = "Control Freak (Sander Van Doorn Remix)";
-	private String year = "2011";
-	
-	private static final String NULL = "null";
+	@Mock
+	private ControlEngineConfigurator configurator;
+	@Mock
+	private ControlEngine controlEngine;
 	
 	@Before
 	public void setup() throws Exception {
@@ -262,6 +270,8 @@ public class TestMp3Reader{
 		when(tag.getFirstArtwork()).thenReturn(artwork);
 		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		when(header.getBitRate()).thenReturn("64");
+		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		reader.setControlEngine(configurator);
 	}
 	
 	@Test
@@ -284,18 +294,18 @@ public class TestMp3Reader{
 	
 	@Test
 	public void shouldGetArtist() throws Exception {
-		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(ARTIST);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(artist, metadata.getArtist());
+		assertEquals(ARTIST, metadata.getArtist());
 	}
 
 	@Test
 	public void shouldGetTitle() throws Exception {
-		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(title, metadata.getTitle());
+		assertEquals(TITLE, metadata.getTitle());
 	}
 	
 	@Test
@@ -446,9 +456,9 @@ public class TestMp3Reader{
 	
 	@Test
 	public void shouldGetYear() throws Exception {
-		when(tag.getFirst(FieldKey.YEAR)).thenReturn(year);
+		when(tag.getFirst(FieldKey.YEAR)).thenReturn(YEAR);
 		Metadata metadata = reader.getMetadata(file);
-		assertEquals(year, metadata.getYear());
+		assertEquals(YEAR, metadata.getYear());
 	}
 
 	@Test
@@ -469,6 +479,21 @@ public class TestMp3Reader{
 		
 		verify(tag).getFirstArtwork();
 		assertEquals(null, metadata.getCoverArt());
+	}
+	
+	/**
+	 * Bug in JAudioTagger null pointer exception when artwork.getImage()
+	 */
+	@Test
+	public void shouldNotGetCoverArtIfImageError() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenThrow(new NullPointerException());
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
+		
+		reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
 	}
 	
 }

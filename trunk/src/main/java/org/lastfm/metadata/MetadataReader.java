@@ -319,6 +319,9 @@ public abstract class MetadataReader {
 		}
 	}
 
+	/**
+	 * Bug in JAudioTagger null pointer exception when artwork.getImage()
+	 */
 	private Image getCoverArt(Metadata metadata) throws MetadataException {
 		try{
 			if(tag == null) return null;
@@ -329,8 +332,11 @@ public abstract class MetadataReader {
 			return handleCoverArtException(metadata, iae);
 		} catch (IOException ioe){
 			return handleCoverArtException(metadata, ioe);
+		} catch (NullPointerException nue){
+			return handleCoverArtException(metadata, nue);
 		}
 	}
+	
 	private Image handleCoverArtException(Metadata metadata, Exception exc) {
 		log.info("couldn't get coverArt for file: " + metadata.getTitle());
 		log.error("Exception: " + exc.getMessage());

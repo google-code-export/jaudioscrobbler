@@ -211,6 +211,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
@@ -218,19 +221,17 @@ import org.jaudiotagger.tag.datatype.Artwork;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Before;
 import org.junit.Test;
+import org.lastfm.event.Events;
 import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * 
- * @author josdem (joseluis.delacruz@gmail.com)
- *
- */
-
 public class TestMp4Reader{
+	private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
+	private static final String NULL = "null";
+	
 	@InjectMocks
 	private Mp4Reader reader = new Mp4Reader();
 	@Mock
@@ -247,8 +248,10 @@ public class TestMp4Reader{
 	private AudioFileHelper audioFileHelper;
 	@Mock
 	private BufferedImage bufferedImage;
-	
-	private static final String NULL = "null";
+	@Mock
+	private ControlEngineConfigurator configurator;
+	@Mock
+	private ControlEngine controlEngine;
 	
 	@Before
 	public void setup() throws Exception {
@@ -259,6 +262,8 @@ public class TestMp4Reader{
 		when(artwork.getImage()).thenReturn(bufferedImage);
 		when(tag.getFirstArtwork()).thenReturn(artwork);
 		when(header.getBitRate()).thenReturn("64");
+		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		reader.setControlEngine(configurator);
 	}
 	
 	@Test
@@ -413,4 +418,20 @@ public class TestMp4Reader{
 		verify(tag).getFirstArtwork();
 		assertEquals(null, metadata.getCoverArt());
 	}
+	
+	/**
+	 * Bug in JAudioTagger null pointer exception when artwork.getImage()
+	 */
+	@Test
+	public void shouldNotGetCoverArtIfImageError() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenThrow(new NullPointerException());
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
+		
+		reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
+	}
+	
 }
