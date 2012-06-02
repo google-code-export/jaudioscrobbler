@@ -474,7 +474,7 @@ public class MainWindow extends JFrame {
 	}
 	
 	@EventMethod(Events.LOAD_METADATA)
-	private void onLoadMetadata(List<Metadata> metadatas) {
+	void onLoadMetadata(List<Metadata> metadatas) {
 		JTable descriptionTable = getDescriptionTable();
 		DefaultTableModel model = (DefaultTableModel) descriptionTable.getModel();
 		for (Metadata metadata : metadatas) {

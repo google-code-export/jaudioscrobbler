@@ -250,6 +250,7 @@ public class TestMainWindow {
 
 	private static final String TRACK_TITLE = "I Don't Own You";
 	private static final int FIRST_ROW = 0;
+	private static final int SECOND_ROW = 1;
 	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
@@ -269,6 +270,8 @@ public class TestMainWindow {
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
+	private static final String WRITE_BUTTON_NAME = "writeButton";
+
 
 	private FrameFixture window;
 
@@ -642,6 +645,40 @@ public class TestMainWindow {
 		mainWindow.onDirectoryEmpty();
 		verify(dialogHelper).showMessageDialog(mainWindow, ApplicationState.DIRECTORY_EMPTY);
 		verifyResetStatus();
+	}
+	
+	@Test
+	public void shouldKnowWhenLoadMetadata() throws Exception {
+		when(metadata.getArtist()).thenReturn(ARTIST);
+		when(metadata.getTitle()).thenReturn(TITLE);
+		when(metadata.getAlbum()).thenReturn(ALBUM);
+		when(metadata.getGenre()).thenReturn(GENRE);
+		when(metadata.getYear()).thenReturn(YEAR);
+		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
+		when(metadata.getTotalTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
+		when(metadata.getCdNumber()).thenReturn(CD_NUMBER);
+		when(metadata.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
+		
+		mainWindow.onLoadMetadata(metadatas);
+		
+		assertEquals(ARTIST, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.ARTIST_COLUMN));
+		assertEquals(TITLE, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TITLE_COLUMN));
+		assertEquals(ALBUM, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.ALBUM_COLUMN));
+		assertEquals(GENRE, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.GENRE_COLUMN));
+		assertEquals(YEAR, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.YEAR_COLUMN));
+		assertEquals(TRACK_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TRACK_NUMBER_COLUMN));
+		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
+		assertEquals(CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.CD_NUMBER_COLUMN));
+		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
+		assertEquals(ApplicationState.READY, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
+	}
+	
+	@Test
+	public void shouldKnowWhenMetadataIsFromFile() throws Exception {
+		when(metadata.isMetadataFromFile()).thenReturn(true);
+		mainWindow.onLoadMetadata(metadatas);
+		assertEquals(ApplicationState.NEW, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
+		assertTrue(window.button(WRITE_BUTTON_NAME).target.isEnabled());
 	}
 
 	@After
