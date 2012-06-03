@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.Metadata;
@@ -38,14 +39,11 @@ public class TestDefaultService {
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(metadata_one.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_ONE);
-		when(metadata_two.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_TWO);
-		metadatas.add(metadata_one);
-		metadatas.add(metadata_two);
 	}
 	
 	@Test
 	public void shouldCompleteTotalTracks() throws Exception {
+		setTracknumberExpectations();
 		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		
 		assertTrue(defaultService.isCompletable(metadatas));
@@ -54,6 +52,7 @@ public class TestDefaultService {
 	@Test
 	public void shouldComplete() throws Exception {
 		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
+		setTracknumberExpectations();
 		
 		defaultService.complete(metadatas);
 
@@ -66,6 +65,13 @@ public class TestDefaultService {
 		verify(metadata_two).setTotalCds(TOTAL_CD_NUMBER);
 	}
 	
+	private void setTracknumberExpectations() {
+		when(metadata_one.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_ONE);
+		when(metadata_two.getTrackNumber()).thenReturn(TRACK_NUMBER_METADATA_TWO);
+		metadatas.add(metadata_one);
+		metadatas.add(metadata_two);
+	}
+
 	@Test
 	public void shouldNotCompleteIfSingleTrack() throws Exception {
 		List<Metadata> metadatas = new ArrayList<Metadata>();
@@ -89,6 +95,15 @@ public class TestDefaultService {
 		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		
 		assertFalse(defaultService.isCompletable(metadatas));
+	}
+	
+	@Test
+	public void shouldNotCompleteWhenNoTracknumber() throws Exception {
+		when(metadata_one.getTotalTracks()).thenReturn(StringUtils.EMPTY);
+		metadatas.add(metadata_one);
+		defaultService.complete(metadatas);
+		verify(metadata_one, never()).setCdNumber(CD_NUMBER);
+		verify(metadata_one, never()).setTotalCds(TOTAL_CD_NUMBER);
 	}
 
 }
