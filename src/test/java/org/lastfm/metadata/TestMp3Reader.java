@@ -208,7 +208,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -227,6 +227,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.event.Events;
 import org.lastfm.helper.AudioFileHelper;
+import org.lastfm.helper.ReaderHelper;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -259,6 +260,8 @@ public class TestMp3Reader{
 	private ControlEngineConfigurator configurator;
 	@Mock
 	private ControlEngine controlEngine;
+	@Mock
+	private ReaderHelper readerHelper;
 	
 	@Before
 	public void setup() throws Exception {
@@ -321,16 +324,8 @@ public class TestMp3Reader{
 	public void shouldGetGenre() throws Exception {
 		String genre = "Minimal Techno";
 		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
-		Metadata metadata = reader.getMetadata(file);
+		when(readerHelper.getGenre(tag, genre)).thenReturn(genre);
 		
-		assertEquals(genre, metadata.getGenre());
-	}
-	
-	@Test
-	public void shouldGetGenreByCodeWithParentheses() throws Exception {
-		String genreAsCode = "(18)";
-		String genre = "Techno";
-		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genreAsCode);
 		Metadata metadata = reader.getMetadata(file);
 		
 		assertEquals(genre, metadata.getGenre());
@@ -494,6 +489,14 @@ public class TestMp3Reader{
 		
 		verify(tag).getFirstArtwork();
 		verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
+	}
+	
+	@Test
+	public void shouldKnowWhenMp3IsNotANumberInsideParenthesis() throws Exception {
+		String genre = "(None)";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
+		reader.getMetadata(file);
+		verify(readerHelper).getGenre(tag, genre);
 	}
 	
 }
