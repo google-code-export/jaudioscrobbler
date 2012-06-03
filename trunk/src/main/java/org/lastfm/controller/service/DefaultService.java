@@ -3,6 +3,8 @@ package org.lastfm.controller.service;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,16 +17,23 @@ public class DefaultService {
 	
 	@Autowired
 	private MetadataService metadataService;
+	private Log log = LogFactory.getLog(getClass());
 	
 	public Boolean isCompletable(List<Metadata> metadatas) {
 		return (metadatas.size() < 2 || !metadataService.isSameAlbum(metadatas)) ? false : isSomethingMissing(metadatas);  
 	}
 	
 	public void complete(List<Metadata> metadatas){
-		for (Metadata metadata : metadatas) {
-			metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
-			metadata.setCdNumber(CD_NUMBER);
-			metadata.setTotalCds(TOTAL_CD_NUMBER);
+		String title = StringUtils.EMPTY;
+		try{
+			for (Metadata metadata : metadatas) {
+				title = metadata.getTitle();
+				metadata.setTotalTracks(String.valueOf(getTotalTracks(metadatas)));
+				metadata.setCdNumber(CD_NUMBER);
+				metadata.setTotalCds(TOTAL_CD_NUMBER);
+			}
+		} catch (NumberFormatException nfe){
+			log.warn("NumberFormatException caused by track: " + title + " - "  + nfe.getMessage());
 		}
 	}
 
