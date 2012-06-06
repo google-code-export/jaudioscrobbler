@@ -219,6 +219,7 @@ import java.util.Set;
 
 import javax.swing.ImageIcon;
 
+import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.action.ResponseCallback;
@@ -235,6 +236,7 @@ import org.lastfm.helper.DialogHelper;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
 import org.lastfm.model.Metadata;
+import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.lastfm.util.Environment;
@@ -295,6 +297,8 @@ public class TestMainWindow {
 	private File file;
 	@Mock
 	private File anotherfile;
+	@Mock
+	private MetadataAlbumValues metadataAlbumValues;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -303,6 +307,7 @@ public class TestMainWindow {
 	private Set<Metadata> metadatasWaitingForMetadata = new HashSet<Metadata>();
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
 	private ImageIcon imageIcon = new ImageIcon("src/test/resources/images/A Flock of Bleeps.png");
+
 
 
 	@Before
@@ -671,6 +676,26 @@ public class TestMainWindow {
 		assertEquals(CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.CD_NUMBER_COLUMN));
 		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
 		assertEquals(ApplicationState.READY, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
+	}
+	
+	@Test
+	public void shouldNotAssingValuesWhenEmptyOnReadyToApplyMetadata() throws Exception {
+		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
+		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
+		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
+		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
+	}
+	
+	@Test
+	public void shouldAssignValuesOnReadyToApplyMetadata() throws Exception {
+		when(metadataAlbumValues.getArtist()).thenReturn(ARTIST);
+		when(metadataAlbumValues.getAlbum()).thenReturn(ALBUM);
+		
+		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
+		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
+		
+		assertEquals(ARTIST, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
+		assertEquals(ALBUM, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 	}
 	
 	@Test
