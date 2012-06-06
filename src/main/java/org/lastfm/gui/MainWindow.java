@@ -500,7 +500,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.APPLY_METADATA)
-	private void onReadyToApplyMetadata(MetadataAlbumValues metadataValues) {
+	void onReadyToApplyMetadata(MetadataAlbumValues metadataValues) {
 		String artist = metadataValues.getArtist();
 		String album = metadataValues.getAlbum();
 		String genre = metadataValues.getGenre();
