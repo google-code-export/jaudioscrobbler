@@ -207,6 +207,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -682,6 +683,7 @@ public class TestMainWindow {
 	public void shouldNotAssingValuesWhenEmptyOnReadyToApplyMetadata() throws Exception {
 		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
+		
 		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
 		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 	}
@@ -690,12 +692,35 @@ public class TestMainWindow {
 	public void shouldAssignValuesOnReadyToApplyMetadata() throws Exception {
 		when(metadataAlbumValues.getArtist()).thenReturn(ARTIST);
 		when(metadataAlbumValues.getAlbum()).thenReturn(ALBUM);
+		when(metadataAlbumValues.getGenre()).thenReturn(GENRE);
+		when(metadataAlbumValues.getYear()).thenReturn(YEAR);
+		when(metadataAlbumValues.getTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
+		when(metadataAlbumValues.getCd()).thenReturn(CD_NUMBER);
+		when(metadataAlbumValues.getCds()).thenReturn(TOTAL_CD_NUMBER);
 		
 		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
 		
 		assertEquals(ARTIST, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
+		assertEquals(GENRE, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.GENRE_COLUMN));
+		assertEquals(YEAR, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.YEAR_COLUMN));
+		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
+		assertEquals(CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.CD_NUMBER_COLUMN));
+		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
+	}
+	
+	@Test
+	public void shouldDetectWhenNewCoverArtOnReadyToApplyMetadata() throws Exception {
+		when(metadataAlbumValues.getCoverArt()).thenReturn(imageIcon.getImage());
+		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+		
+		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
+		
+		verify(metadata).setNewCoverArt(isA(CoverArt.class));
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
+		assertTrue(window.button(WRITE_BUTTON_NAME).target.isEnabled());
 	}
 	
 	@Test
