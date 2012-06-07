@@ -730,6 +730,12 @@ public class TestMainWindow {
 		assertEquals(ApplicationState.NEW, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
 		assertTrue(window.button(WRITE_BUTTON_NAME).target.isEnabled());
 	}
+	
+	@Test
+	public void shouldKnowWhenErrorInOpen() throws Exception {
+		mainWindow.onOpenError();
+		assertEquals(ApplicationState.OPEN_ERROR, window.label(STATUS_LABEL_NAME).target.getText());
+	}
 
 	@After
 	public void tearDown() throws Exception {

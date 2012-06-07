@@ -557,7 +557,7 @@ public class MainWindow extends JFrame {
 	}
 
 	@EventMethod(Events.OPEN_ERROR)
-	private void onOpenError() {
+	void onOpenError() {
 		getLabel().setText(ApplicationState.OPEN_ERROR);
 	}
 
