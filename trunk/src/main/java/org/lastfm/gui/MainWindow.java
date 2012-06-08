@@ -263,6 +263,7 @@ import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.helper.DialogHelper;
+import org.lastfm.helper.FileChooserHelper;
 import org.lastfm.helper.MetadataAdapter;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
@@ -330,6 +331,7 @@ public class MainWindow extends JFrame {
 	private Set<Metadata> metadataWithAlbum = new HashSet<Metadata>();
 	private MetadataAdapter metadataAdapter = new MetadataAdapter();
 	private DialogHelper dialogHelper = new DialogHelper();
+	private FileChooserHelper fileChooserHelper = new FileChooserHelper();
 	boolean tableLoaded;
 	boolean working;
 	private int counter = 0;
@@ -763,13 +765,11 @@ public class MainWindow extends JFrame {
 
 			exportButton.addActionListener(new ActionListener() {
 
+
 				public void actionPerformed(ActionEvent e) {
 					log.info("Exporting");
-					JFileChooser fileChooser = new JFileChooser();
-					fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-					int selection = fileChooser.showOpenDialog(null);
-					if (selection == JFileChooser.APPROVE_OPTION) {
-						File root = fileChooser.getSelectedFile();
+					File root = fileChooserHelper.getDirectory();
+					if (root != null) {
 						new ExportWorker(root);
 					}
 				}
