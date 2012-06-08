@@ -219,6 +219,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
@@ -274,7 +275,7 @@ public class TestMainWindow {
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 	private static final String WRITE_BUTTON_NAME = "writeButton";
-
+	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
 
 	private FrameFixture window;
 
@@ -300,6 +301,8 @@ public class TestMainWindow {
 	private File anotherfile;
 	@Mock
 	private MetadataAlbumValues metadataAlbumValues;
+	@Mock
+	private LoginWindow loginWindow;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -308,8 +311,7 @@ public class TestMainWindow {
 	private Set<Metadata> metadatasWaitingForMetadata = new HashSet<Metadata>();
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
 	private ImageIcon imageIcon = new ImageIcon("src/test/resources/images/A Flock of Bleeps.png");
-
-
+	private JFrame frame = new JFrame();
 
 	@Before
 	public void setup() throws Exception {
@@ -737,6 +739,17 @@ public class TestMainWindow {
 		assertEquals(ApplicationState.OPEN_ERROR, window.label(STATUS_LABEL_NAME).target.getText());
 	}
 
+	@Test
+	public void shouldClickMenuItem() throws Exception {
+		when(loginWindow.getFrame()).thenReturn(frame);
+
+		assertFalse(frame.isVisible());
+		
+		window.menuItem(LOGIN_MENU_ITEM).click();
+		
+		assertTrue(frame.isVisible());
+	}
+	
 	@After
 	public void tearDown() throws Exception {
 		window.cleanUp();

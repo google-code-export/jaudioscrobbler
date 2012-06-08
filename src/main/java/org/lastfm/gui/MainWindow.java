@@ -302,6 +302,7 @@ public class MainWindow extends JFrame {
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
+	private static final String MENU_NAME = "menuName";
 
 	private JPanel panel;
 	private JButton openButton;
@@ -572,6 +573,7 @@ public class MainWindow extends JFrame {
 	private JMenu getMenu() {
 		if (menu == null) {
 			menu = new JMenu(JMENU_LABEL);
+			menu.setName(MENU_NAME);
 			menu.setMnemonic(KeyEvent.VK_L);
 			menu.add(getMenuItem());
 		}
