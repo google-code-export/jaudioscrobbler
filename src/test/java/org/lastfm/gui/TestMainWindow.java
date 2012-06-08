@@ -235,8 +235,10 @@ import org.lastfm.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.helper.DialogHelper;
+import org.lastfm.helper.FileChooserHelper;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.MetadataAlbumValues;
 import org.lastfm.model.Model;
@@ -303,6 +305,10 @@ public class TestMainWindow {
 	private MetadataAlbumValues metadataAlbumValues;
 	@Mock
 	private LoginWindow loginWindow;
+	@Mock
+	private FileChooserHelper fileChooserHelper;
+	@Mock
+	private File root;
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
@@ -312,6 +318,7 @@ public class TestMainWindow {
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
 	private ImageIcon imageIcon = new ImageIcon("src/test/resources/images/A Flock of Bleeps.png");
 	private JFrame frame = new JFrame();
+
 
 	@Before
 	public void setup() throws Exception {
@@ -748,6 +755,21 @@ public class TestMainWindow {
 		window.menuItem(LOGIN_MENU_ITEM).click();
 		
 		assertTrue(frame.isVisible());
+	}
+	
+	@Test
+	public void shouldExport() throws Exception {
+		window.button(EXPORT_BUTTON_NAME).target.setEnabled(true);
+		when(fileChooserHelper.getDirectory()).thenReturn(root);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+
+		window.button(EXPORT_BUTTON_NAME).click();
+		
+		verify(fileChooserHelper).getDirectory();
+		verify(viewEngine).request(eq(Actions.EXPORT), isA(ExportPackage.class), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.Exported);
+		assertEquals(ActionResult.Exported, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 	
 	@After
