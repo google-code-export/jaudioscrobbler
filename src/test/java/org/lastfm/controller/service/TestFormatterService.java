@@ -627,7 +627,7 @@ public class TestFormatterService {
 		assertTrue(formatter.isABadFormat(metadata));
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
-	
+
 	@Test
 	public void shouldDetectOFormatInTitle() throws Exception {
 		String title = "Pop&ouml;s";
@@ -654,6 +654,39 @@ public class TestFormatterService {
 	public void shouldDetectOFormatInAlbum() throws Exception {
 		String album = "Pop&ouml;s";
 		String expectedAlbum = "Popös";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
+	@Test
+	public void shouldDetectßFormatInTitle() throws Exception {
+		String title = "Sü&szlig;stoff";
+		String expectedTitle = "Süßstoff";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectßFormatInArtist() throws Exception {
+		String artist = "Sü&szlig;stoff";
+		String expectedArtist = "Süßstoff";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectßFormatInAlbum() throws Exception {
+		String album = "Sü&szlig;stoff";
+		String expectedAlbum = "Süßstoff";
 		
 		metadata.setAlbum(album);
 		
