@@ -28,3 +28,7 @@ Exporting metadata to a directory
 
 
 <wiki:video url="http://www.youtube.com/watch?v=CJG5EjbneC0"/>
+
+Complete basic information an album needs
+
+<wiki:video url="http://www.youtube.com/watch?v=VPq6s9jDuMY"/>
