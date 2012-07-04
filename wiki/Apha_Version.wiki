@@ -5,6 +5,6 @@
 
 We started this project in January 17th 2010 and now it is in alpha version which means it is ready for the final user, but it is still a work in progress, we know there are still some bugs, and new features ready to show up.
 
-We will thank you your feedback and issues report, since in that way you can help us to improve this application.
+If you can send us feedback and issues report we will thank you, since is the right way to improve this application.
 
 ALL the best.
