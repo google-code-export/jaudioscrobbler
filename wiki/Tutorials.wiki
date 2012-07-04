@@ -33,4 +33,4 @@ Exporting metadata to a directory
 Complete basic information an album needs in automatically way
 
 
-<wiki:video url="http://www.youtube.com/watch?v=yakMJBAU56Y"/>
+<wiki:video url="http://www.youtube.com/watch?v=6isUjfupz4s"/>
