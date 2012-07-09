@@ -212,7 +212,13 @@ import org.junit.Test;
 public class TestGenreTypes {
 	
 	@Test
-	public void shouldGetBluesAsGenre() throws Exception {
+	public void shouldGetMinimalAsGenre() throws Exception {
+		int minimalCode = 152;
+		assertEquals("Minimal", GenreTypes.getGenreByCode(minimalCode));
+	}
+	
+	@Test
+	public void shouldGetHouseAsGenre() throws Exception {
 		int houseCode = 35;
 		assertEquals("House", GenreTypes.getGenreByCode(houseCode));
 	}

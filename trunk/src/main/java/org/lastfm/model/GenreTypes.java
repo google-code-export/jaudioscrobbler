@@ -228,7 +228,7 @@ public enum GenreTypes {
 			"BritPop"), NEGERPUNK(133, "Negerpunk"), POLSK_PUNK(134, "Polsk Punk"), BEAT(135, "Beat"), CHRISTIAN_GANGSTA_RAP(136, "Christian Gangsta Rap"), HEAVY_METAL(137, "Heavy Metal"), BLACK_METAL(
 			138, "Black Metal"), CROSSOVER(139, "Crossover"), CONTEMPORARY_CHRISTIAN(140, "Contemporary Christian"), CHRISTIAN_ROCK(141, "Christian Rock"), MERENGUE(142, "Merengue"), SALSA(143,
 			"Salsa"), THRASH_METAL(144, "Thrash Metal"), ANIME(145, "Anime"), JPOP(146, "JPop"), SYNTHPOP(147, "Synthpop"), UNKNOWN(148, "Unknown"), LOUNGE(149, "Lounge"), VOCAL_TRANCE(150,
-			"Vocal Trance"), DOWNTEMPO(151, "Downtempo");
+			"Vocal Trance"), DOWNTEMPO(151, "Downtempo"), MINIMAL(152, "Minimal");
 
 	private final String name;
 	private final int code;
