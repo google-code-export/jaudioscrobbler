@@ -5,7 +5,7 @@ import java.util.List;
 
 
 public class ExportPackage {
-	private final List<Metadata> metadataList;
+	private List<Metadata> metadataList;
 	private final File root;
 
 	public ExportPackage(File root, List<Metadata> metadataList) {
@@ -19,6 +19,10 @@ public class ExportPackage {
 
 	public List<Metadata> getMetadataList() {
 		return metadataList;
+	}
+
+	public void setMetadataList(List<Metadata> metadatas) {
+		this.metadataList = metadatas;
 	}
 	
 }

@@ -227,6 +227,7 @@ public class Metadata implements Comparable<Metadata>{
 	private CoverArt newCoverArt;
 	private Log log = LogFactory.getLog(this.getClass());
 	private boolean metadataFromFile;
+	private boolean orderByFile=false;
 	
 	public File getFile() {
 		return file;
@@ -321,7 +322,18 @@ public class Metadata implements Comparable<Metadata>{
 		this.metadataFromFile = metadataFromFile;
 	}
 	
+	public boolean isOrderByFile() {
+		return orderByFile;
+	}
+	
+	public void setOrderByFile(boolean orderByFile) {
+		this.orderByFile = orderByFile;
+	}
+	
 	public int compareTo(Metadata metadata) {
+		if(metadata.isOrderByFile()){
+			return getFile().getName().compareTo(metadata.getFile().getName());
+		}
 		try{
 			int thisTrackNumer = Integer.valueOf(getTrackNumber());
 			return thisTrackNumer > Integer.valueOf(metadata.getTrackNumber()) ? 1 : -1;
