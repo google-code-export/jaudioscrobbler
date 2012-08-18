@@ -204,9 +204,12 @@
 package org.lastfm.helper;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
 import org.lastfm.action.ActionResult;
 import org.lastfm.model.ExportPackage;
+import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -219,6 +222,12 @@ public class ExporterHelper {
 	private MetadataExporter metadataExporter;
 
 	public ActionResult export(ExportPackage exportPackage) throws IOException {
+		List<Metadata> metadatas = exportPackage.getMetadataList();
+		for (Metadata metadata : metadatas) {
+			metadata.setOrderByFile(true);
+		}
+		Collections.sort(metadatas);
+		exportPackage.setMetadataList(metadatas);
 		imageExporter.export(exportPackage);
 		metadataExporter.export(exportPackage);
 		return ActionResult.Exported;
