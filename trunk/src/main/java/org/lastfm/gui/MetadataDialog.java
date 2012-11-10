@@ -320,9 +320,9 @@ public class MetadataDialog extends AllDialog {
 		super(frame, true, message);
 		this.configurator = controlEngineConfigurator;
 		this.message = message;
-		initializeContentPane();
 		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
 		metadataCollaborator.setMetadatas(metadatas);
+		initializeContentPane();
 		getTitleLabel().setText(dialogTitle());
 		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
 		setDragAndDrop(multiLayerDropTargetListener);

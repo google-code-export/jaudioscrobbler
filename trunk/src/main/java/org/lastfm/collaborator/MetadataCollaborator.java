@@ -23,4 +23,14 @@ public class MetadataCollaborator {
 		return isTheSame ? metadatas.get(0).getArtist() : StringUtils.EMPTY;
 	}
 
+	public String getAlbum() {
+		boolean isTheSame = true;
+		for (int i=1; i< metadatas.size(); i++) {
+			if (!metadatas.get(i).getAlbum().equals(metadatas.get(i-1).getAlbum())){
+				isTheSame = false;
+			}
+		}
+		return isTheSame ? metadatas.get(0).getAlbum() : StringUtils.EMPTY;
+	}
+
 }
