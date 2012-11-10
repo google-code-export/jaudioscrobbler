@@ -30,6 +30,7 @@ public class TestMetadataCollaborator {
 	private String album = "album";
 	private String genre = "genre";
 	private String year = "year";
+	private String totalTracks = "totalTracks";
 	
 	@Before
 	public void setup() throws Exception {
@@ -112,6 +113,24 @@ public class TestMetadataCollaborator {
 		when(metadataTwo.getYear()).thenReturn("otherYear");
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getYear());
+	}
+	
+	@Test
+	public void shouldGetTotalTracks() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
+		when(metadataTwo.getTotalTracks()).thenReturn(totalTracks);
+		
+		assertEquals(totalTracks, metadataCollaborator.getTotalTracks());
+	}
+	
+	@Test
+	public void shouldNotGetTotalTracks() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalTracks()).thenReturn(totalTracks);
+		when(metadataTwo.getTotalTracks()).thenReturn("otherTotalTracks");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
 	}
 
 }

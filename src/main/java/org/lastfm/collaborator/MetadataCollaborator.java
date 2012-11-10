@@ -53,4 +53,14 @@ public class MetadataCollaborator {
 		return isTheSame ? metadatas.get(0).getYear() : StringUtils.EMPTY;
 	}
 
+	public String getTotalTracks() {
+		boolean isTheSame = true;
+		for (int i=1; i< metadatas.size(); i++) {
+			if (!metadatas.get(i).getTotalTracks().equals(metadatas.get(i-1).getTotalTracks())){
+				isTheSame = false;
+			}
+		}
+		return isTheSame ? metadatas.get(0).getTotalTracks() : StringUtils.EMPTY;
+	}
+
 }
