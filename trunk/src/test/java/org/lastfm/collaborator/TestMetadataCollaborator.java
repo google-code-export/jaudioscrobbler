@@ -28,6 +28,7 @@ public class TestMetadataCollaborator {
 
 	private String artist = "artist";
 	private String album = "album";
+	private String genre = "genre";
 	
 	@Before
 	public void setup() throws Exception {
@@ -74,6 +75,24 @@ public class TestMetadataCollaborator {
 		when(metadataTwo.getAlbum()).thenReturn("otherAlbum");
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getAlbum());
+	}
+	
+	@Test
+	public void shouldGetGenre() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getGenre()).thenReturn(genre);
+		when(metadataTwo.getGenre()).thenReturn(genre);
+		
+		assertEquals(genre, metadataCollaborator.getGenre());
+	}
+	
+	@Test
+	public void shouldNotGetGenre() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getGenre()).thenReturn(genre);
+		when(metadataTwo.getGenre()).thenReturn("otherGenre");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getGenre());
 	}
 
 }
