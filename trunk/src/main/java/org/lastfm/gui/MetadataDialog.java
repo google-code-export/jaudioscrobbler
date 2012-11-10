@@ -213,6 +213,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -224,12 +225,15 @@ import javax.swing.JTextField;
 
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
+import org.lastfm.collaborator.MetadataCollaborator;
 import org.lastfm.dnd.ImageDropListener;
 import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataHelper;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.MetadataAlbumValues;
+import org.lastfm.model.Model;
 import org.lastfm.observ.ObservValue;
 import org.lastfm.observ.Observer;
 import org.lastfm.util.DragImageIcon;
@@ -309,13 +313,16 @@ public class MetadataDialog extends AllDialog {
 	private Image coverArt;
 	private ImageUtils imageUtils = new ImageUtils();
 	private MetadataHelper metadataHelper = new MetadataHelper();
+	private MetadataCollaborator metadataCollaborator = new MetadataCollaborator();
 	private final ControlEngineConfigurator configurator;
-
+	
 	public MetadataDialog(JFrame frame, ControlEngineConfigurator controlEngineConfigurator, String message) {
 		super(frame, true, message);
 		this.configurator = controlEngineConfigurator;
 		this.message = message;
 		initializeContentPane();
+		List<Metadata> metadatas = controlEngineConfigurator.getControlEngine().get(Model.METADATA);
+		metadataCollaborator.setMetadatas(metadatas);
 		getTitleLabel().setText(dialogTitle());
 		MultiLayerDropTargetListener multiLayerDropTargetListener = new MultiLayerDropTargetListener();
 		setDragAndDrop(multiLayerDropTargetListener);
@@ -390,6 +397,7 @@ public class MetadataDialog extends AllDialog {
 			artistTextField = new JTextField();
 			artistTextField.setBounds(ARTIST_TEXTFIELD_BOUNDS);
 			artistTextField.setName(ARTIST_INPUT);
+			artistTextField.setText(metadataCollaborator.getArtist());
 		}
 		return artistTextField;
 	}

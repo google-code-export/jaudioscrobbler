@@ -284,7 +284,6 @@ public class LoginWindow {
 		});
 	}
 	
-	@SuppressWarnings("unused")
 	@EventMethod(Events.USER_LOGGED)
 	private void onUserLogged(){
 		this.getFrame().dispose();

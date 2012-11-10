@@ -260,8 +260,6 @@ public class TestCompleteController {
 	private String cdNumber = "1";
 	private String totalCds = "2";
 
-
-
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
@@ -276,7 +274,6 @@ public class TestCompleteController {
 		when(metadata.getGenre()).thenReturn(genre);
 		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
 	}
-	
 	
 	@Test
 	public void shouldCompleteMetadata() throws Exception {
