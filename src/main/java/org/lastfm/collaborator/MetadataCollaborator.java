@@ -63,4 +63,24 @@ public class MetadataCollaborator {
 		return isTheSame ? metadatas.get(0).getTotalTracks() : StringUtils.EMPTY;
 	}
 
+	public String getTotalCds() {
+		boolean isTheSame = true;
+		for (int i=1; i< metadatas.size(); i++) {
+			if (!metadatas.get(i).getTotalCds().equals(metadatas.get(i-1).getTotalCds())){
+				isTheSame = false;
+			}
+		}
+		return isTheSame ? metadatas.get(0).getTotalCds() : StringUtils.EMPTY;
+	}
+
+	public String getCdNumber() {
+		boolean isTheSame = true;
+		for (int i=1; i< metadatas.size(); i++) {
+			if (!metadatas.get(i).getCdNumber().equals(metadatas.get(i-1).getCdNumber())){
+				isTheSame = false;
+			}
+		}
+		return isTheSame ? metadatas.get(0).getCdNumber() : StringUtils.EMPTY;
+	}
+
 }

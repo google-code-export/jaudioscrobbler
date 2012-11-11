@@ -418,6 +418,7 @@ public class MetadataDialog extends AllDialog {
 			albumTextField = new JTextField();
 			albumTextField.setBounds(ALBUM_TEXTFIELD_BOUNDS);
 			albumTextField.setName(ALBUM_INPUT);
+			albumTextField.setText(metadataCollaborator.getAlbum());
 		}
 		return albumTextField;
 	}
@@ -438,6 +439,7 @@ public class MetadataDialog extends AllDialog {
 			yearTextField = new JTextField();
 			yearTextField.setBounds(YEAR_TEXTFIELD_BOUNDS);
 			yearTextField.setName(YEAR_INPUT);
+			yearTextField.setText(metadataCollaborator.getYear());
 		}
 		return yearTextField;
 	}
@@ -484,6 +486,7 @@ public class MetadataDialog extends AllDialog {
 			cdsTextField = new JTextField();
 			cdsTextField.setBounds(CDS_TEXTFIELD_BOUNDS);
 			cdsTextField.setName(CDS_INPUT);
+			cdsTextField.setText(metadataCollaborator.getTotalCds());
 		}
 		return cdsTextField;
 	}
@@ -504,6 +507,7 @@ public class MetadataDialog extends AllDialog {
 			cdTextField = new JTextField();
 			cdTextField.setBounds(CD_TEXTFIELD_BOUNDS);
 			cdTextField.setName(CD_INPUT);
+			cdTextField.setText(metadataCollaborator.getCdNumber());
 		}
 		return cdTextField;
 	}
@@ -524,6 +528,7 @@ public class MetadataDialog extends AllDialog {
 			tracksTextField = new JTextField();
 			tracksTextField.setBounds(TRACKS_TEXTFIELD_BOUNDS);
 			tracksTextField.setName(TRACKS_INPUT);
+			tracksTextField.setText(metadataCollaborator.getTotalTracks());
 		}
 		return tracksTextField;
 	}
@@ -544,6 +549,7 @@ public class MetadataDialog extends AllDialog {
 			genreTextField = new JTextField();
 			genreTextField.setBounds(GENRE_TEXTFIELD_BOUNDS);
 			genreTextField.setName(GENRE_INPUT);
+			genreTextField.setText(metadataCollaborator.getGenre());
 			genreTextField.addFocusListener(new FocusListener());
 			genreTextField.addKeyListener(new KeyListener());
 		}
