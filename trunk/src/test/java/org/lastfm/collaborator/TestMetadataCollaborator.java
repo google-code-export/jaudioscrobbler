@@ -31,6 +31,8 @@ public class TestMetadataCollaborator {
 	private String genre = "genre";
 	private String year = "year";
 	private String totalTracks = "totalTracks";
+	private String totalCds = "totalCds";
+	private String cdNumber = "cdNumber";
 	
 	@Before
 	public void setup() throws Exception {
@@ -131,6 +133,42 @@ public class TestMetadataCollaborator {
 		when(metadataTwo.getTotalTracks()).thenReturn("otherTotalTracks");
 		
 		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalTracks());
+	}
+	
+	@Test
+	public void shouldGetCdNumber() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getCdNumber()).thenReturn(cdNumber);
+		when(metadataTwo.getCdNumber()).thenReturn(cdNumber);
+		
+		assertEquals(cdNumber, metadataCollaborator.getCdNumber());
+	}
+	
+	@Test
+	public void shouldNotGetCdNumber() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getCdNumber()).thenReturn(cdNumber);
+		when(metadataTwo.getCdNumber()).thenReturn("otherCdNumber");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getCdNumber());
+	}
+	
+	@Test
+	public void shouldGetTotalCds() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalCds()).thenReturn(totalCds);
+		when(metadataTwo.getTotalCds()).thenReturn(totalCds);
+		
+		assertEquals(totalCds, metadataCollaborator.getTotalCds());
+	}
+	
+	@Test
+	public void shouldNotGetTotalCds() throws Exception {
+		setMetadatasExpectations();
+		when(metadataOne.getTotalCds()).thenReturn(totalCds);
+		when(metadataTwo.getTotalCds()).thenReturn("otherCds");
+		
+		assertEquals(StringUtils.EMPTY, metadataCollaborator.getTotalCds());
 	}
 
 }
