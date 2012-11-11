@@ -208,6 +208,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -220,7 +222,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.event.Events;
 import org.lastfm.helper.MetadataHelper;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.MetadataAlbumValues;
+import org.lastfm.model.Model;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -253,12 +257,15 @@ public class TestMetadataDialog {
 	private MetadataHelper metadataHelper;
 	@Mock
 	private MetadataAlbumValues metadataAlbumValues;
+	@Mock
+	private Metadata metadata;
 	
 	private String message = "message";
 	private FrameFixture window;
 	private MetadataDialog metadataDialog;
 	private JFrame frame = new JFrame();
 	private MainWindow mainWindow = new MainWindow();
+	private List<Metadata> metadatas = new ArrayList<Metadata>();
 
 	@Before
 	public void setup() throws Exception {
@@ -268,12 +275,13 @@ public class TestMetadataDialog {
 	
 	@Test
 	public void shouldSetAlbumValues() throws Exception {
+		metadatas.add(metadata);
 		when(metadataHelper.createMetadataAlbumVaues()).thenReturn(metadataAlbumValues);
+		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		
 		metadataDialog = new MetadataDialog(mainWindow, controlEngineConfigurator, message);
 		metadataDialog.setMetadataHelper(metadataHelper);
 		frame.add(metadataDialog.getContentPane());
-		
 		window = new FrameFixture(frame);
 		window.show();
 		window.resizeTo(new Dimension(WIDTH,HEIGHT));
