@@ -222,8 +222,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.lastfm.util.CloseImageIcon;
-import org.lastfm.util.ImageIconBase;
+import org.jas.util.CloseImageIcon;
+import org.jas.util.ImageIconBase;
 
 /**
  * @understands

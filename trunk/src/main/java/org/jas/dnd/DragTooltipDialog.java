@@ -227,8 +227,8 @@ import javax.swing.JPanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import org.lastfm.util.Picture;
-import org.lastfm.util.FileSystemValidatorLight;
+import org.jas.util.FileSystemValidatorLight;
+import org.jas.util.Picture;
 
 public class DragTooltipDialog extends JDialog {
 	private static final String DRAG_DIALOG_NAME = "dragDialog";

@@ -212,6 +212,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.helper.ArtworkHelper;
 import org.jas.helper.AudioFileHelper;
+import org.jas.util.ImageUtils;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
@@ -223,7 +224,6 @@ import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.lastfm.util.ImageUtils;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)

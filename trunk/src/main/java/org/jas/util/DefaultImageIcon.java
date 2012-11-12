@@ -1,4 +1,4 @@
-package org.lastfm.util;
+package org.jas.util;
 
 import java.awt.Image;
 import java.io.IOException;
@@ -10,22 +10,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.service.ImageService;
 
-public class DragImageIcon implements ImageIconBase {
+public class DefaultImageIcon implements ImageIconBase {
 
-	private ImageService imageService = new ImageService();;
-	
+	private ImageService imageService = new ImageService();
+	private Log log = LogFactory.getLog(getClass());
+
 	private ImageIcon imageIcon;
-	
-	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	@Override
 	public ImageIcon getImageIcon() {
-		Image dragImage;
 		try {
-			dragImage = imageService.readDragImage();
-			imageIcon = new ImageIcon(dragImage); 
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
+			Image defaultImage = imageService.readDefaultImage();
+			imageIcon = new ImageIcon(defaultImage);
+		} catch (MalformedURLException mue) {
+			log.error(mue, mue);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
 		}

@@ -236,9 +236,9 @@ import org.jas.model.MetadataAlbumValues;
 import org.jas.model.Model;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
-import org.lastfm.util.DragImageIcon;
-import org.lastfm.util.ImageIconBase;
-import org.lastfm.util.ImageUtils;
+import org.jas.util.DragImageIcon;
+import org.jas.util.ImageIconBase;
+import org.jas.util.ImageUtils;
 
 public class MetadataDialog extends AllDialog {
 	private static final long serialVersionUID = 4326045585716235724L;

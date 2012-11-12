@@ -218,6 +218,8 @@ import javax.swing.ImageIcon;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
+import org.jas.util.FileUtils;
+import org.jas.util.ImageUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

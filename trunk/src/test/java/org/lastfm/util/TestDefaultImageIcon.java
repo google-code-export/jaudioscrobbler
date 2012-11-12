@@ -9,6 +9,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import org.jas.service.ImageService;
+import org.jas.util.DefaultImageIcon;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

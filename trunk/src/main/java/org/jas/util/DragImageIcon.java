@@ -1,4 +1,4 @@
-package org.lastfm.util;
+package org.jas.util;
 
 import java.awt.Image;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.service.ImageService;
 
-public class CloseImageIcon implements ImageIconBase {
+public class DragImageIcon implements ImageIconBase {
 
 	private ImageService imageService = new ImageService();;
 	
@@ -20,8 +20,9 @@ public class CloseImageIcon implements ImageIconBase {
 	
 	@Override
 	public ImageIcon getImageIcon() {
+		Image dragImage;
 		try {
-			Image dragImage = imageService.readCloseImage();
+			dragImage = imageService.readDragImage();
 			imageIcon = new ImageIcon(dragImage); 
 		} catch (MalformedURLException mfe) {
 			log.error(mfe, mfe);

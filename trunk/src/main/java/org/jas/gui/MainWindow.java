@@ -274,7 +274,7 @@ import org.jas.model.Model;
 import org.jas.model.User;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
-import org.lastfm.util.ImageUtils;
+import org.jas.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

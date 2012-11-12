@@ -211,7 +211,7 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.util.Picture;
+import org.jas.util.Picture;
 
 public class DraggedObjectPictureGenerator extends DraggedObjectFileSystemGenerator {
 
