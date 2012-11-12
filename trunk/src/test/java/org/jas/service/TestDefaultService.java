@@ -1,4 +1,4 @@
-package org.lastfm.controller.service;
+package org.jas.service;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.never;

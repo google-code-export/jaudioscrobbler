@@ -1,4 +1,4 @@
-package org.lastfm.controller.service;
+package org.jas.service;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
