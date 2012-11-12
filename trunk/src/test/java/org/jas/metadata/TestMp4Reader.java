@@ -201,205 +201,238 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.metadata;
+package org.jas.metadata;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.isA;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.ArtworkHelper;
+import org.asmatron.messengine.ControlEngine;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
+import org.jas.event.Events;
 import org.jas.helper.AudioFileHelper;
-import org.jas.metadata.MetadataWriter;
-import org.jas.util.ImageUtils;
+import org.jas.metadata.Mp4Reader;
+import org.jas.model.Metadata;
 import org.jaudiotagger.audio.AudioFile;
+import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.jaudiotagger.tag.mp4.Mp4Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
-
-
-public class TestMetadataWriter {
-	@InjectMocks
-	MetadataWriter metadataWriter = new MetadataWriter();
+public class TestMp4Reader{
+	private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
+	private static final String NULL = "null";
 	
-	@Mock
-	private AudioFile audioFile;
-	@Mock
-	private Tag tag;
+	@InjectMocks
+	private Mp4Reader reader = new Mp4Reader();
 	@Mock
 	private File file;
 	@Mock
-	private AudioFileHelper audioFileHelper;
+	private Mp4Tag tag;
 	@Mock
-	private Image image;
+	private AudioFile audioFile;
 	@Mock
-	private ImageUtils imageUtils;
-	@Mock
-	private ArtworkHelper artworkHelper;
+	private AudioHeader header;
 	@Mock
 	private Artwork artwork;
+	@Mock
+	private AudioFileHelper audioFileHelper;
+	@Mock
+	private BufferedImage bufferedImage;
+	@Mock
+	private ControlEngineConfigurator configurator;
+	@Mock
+	private ControlEngine controlEngine;
 	
 	@Before
-	public void initialize() {
+	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(audioFile.getTag()).thenReturn(tag);
-	}
-	
-	@Test
-	public void shouldSetFile() throws Exception {
 		when(audioFileHelper.read(file)).thenReturn(audioFile);
-		metadataWriter.setFile(file);
+		when(audioFile.getTag()).thenReturn(tag);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		when(artwork.getImage()).thenReturn(bufferedImage);
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(header.getBitRate()).thenReturn("64");
+		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		reader.setControlEngine(configurator);
+	}
+	
+	@Test
+	public void shouldGetAlbum() throws Exception {
+		String album = "Simple Pleasures";
+		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
+		Metadata metadata = reader.getMetadata(file);
 		
-		verify(audioFile).getTag();
+		assertEquals(album, metadata.getAlbum());
 	}
 	
 	@Test
-	public void shouldWriteArtist() throws Exception {
-		String artist = "Markus Schulz";
-		metadataWriter.writeArtist(artist);
-		
-		verify(tag).setField(FieldKey.ARTIST, artist);
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldWriteTrackName() throws Exception {
-		String trackName = "Nowhere";
-		metadataWriter.writeTitle(trackName);
-		
-		verify(tag).setField(FieldKey.TITLE, trackName);
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldWriteAlbum() throws Exception {
-		String album = "Sahara Nights";
-		metadataWriter.writeAlbum(album);
-
-		verify(tag).setField(FieldKey.ALBUM, album);
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldWriteTrackNumber() throws Exception {
-		String trackNumber = "1";
-		
-		metadataWriter.writeTrackNumber(trackNumber);
-		verify(tag).setField(FieldKey.TRACK, trackNumber);
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldWriteTotalTracksNumber() throws Exception {
-		String totalTracksNumber = "10";
-		
-		metadataWriter.writeTotalTracksNumber(totalTracksNumber);
-		verify(tag).setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
-		verify(audioFile).commit();
-	}
-
-	@Test
-	public void shouldWriteCoverArt() throws Exception {
-		when(imageUtils.saveCoverArtToFile(image, StringUtils.EMPTY)).thenReturn(file);
-		when(artworkHelper.createArtwork()).thenReturn(artwork);
-		
-		metadataWriter.writeCoverArt(image);
-		
-		verify(imageUtils).saveCoverArtToFile(image, StringUtils.EMPTY);
-		verify(artwork).setFromFile(file);
-		verify(tag).setField(isA(Artwork.class));
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldWriteCdNumber() throws Exception {
-		String cdNumber = "1";
-		
-		boolean result = metadataWriter.writeCdNumber(cdNumber);
-		
-		verify(tag).setField(FieldKey.DISC_NO, cdNumber);
-		verify(audioFile).commit();
-		assertTrue(result);
-	}
-	
-	@Test
-	public void shouldWriteTotalCds() throws Exception {
-		String totalCds = "2";
-		
-		boolean result = metadataWriter.writeTotalCds(totalCds);
-		
-		verify(tag).setField(FieldKey.DISC_TOTAL, totalCds);
-		verify(audioFile).commit();
-		assertTrue(result);
-	}
-	
-	@Test
-	public void shouldNotWritetotalTracksNumberTrackNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTrackNumber(StringUtils.EMPTY));
-	}
-	
-	@Test
-	public void shouldNotWriteTotalTracksNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTotalTracksNumber(StringUtils.EMPTY));
-	}
-	
-	@Test
-	public void shouldNotWriteCdNumberIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeCdNumber(StringUtils.EMPTY));
-	}
-	
-	@Test
-	public void shouldNotWriteTotalCdsIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeTotalCds(StringUtils.EMPTY));
-	}
-	
-	@Test
-	public void shouldWriteYear() throws Exception {
-		String year = "1990";
-		
-		metadataWriter.writeYear(year);
-		verify(tag).setField(FieldKey.YEAR, year);
-		verify(audioFile).commit();
-	}
-	
-	@Test
-	public void shouldNotWriteYearIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeYear(StringUtils.EMPTY));
-	}
-	
-	@Test
-	public void shouldWriteGenre() throws Exception {
+	public void shouldGetGenre() throws Exception {
 		String genre = "Minimal Techno";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
+		Metadata metadata = reader.getMetadata(file);
 		
-		metadataWriter.writeGenre(genre);
-		verify(tag).setField(FieldKey.GENRE, genre);
-		verify(audioFile).commit();
+		assertEquals(genre, metadata.getGenre());
 	}
 	
 	@Test
-	public void shouldNotWriteGenreIfEmptyString() throws Exception {
-		assertFalse(metadataWriter.writeGenre(StringUtils.EMPTY));
+	public void shouldGetArtist() throws Exception {
+		String artist = "Ferry Corsten";
+		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(artist, metadata.getArtist());
 	}
 	
 	@Test
-	public void shouldRemoveCoverArt() throws Exception {
-		assertTrue(metadataWriter.removeCoverArt());
+	public void shouldGetLength() throws Exception {
+		int length = 325;
+		when(header.getTrackLength()).thenReturn(length);
+		Metadata metadata = reader.getMetadata(file);
 		
-		verify(tag).deleteArtworkField();
-		verify(audioFile).commit();
+		assertEquals(length, metadata.getLength());
 	}
+	
+	@Test
+	public void shouldGetTitle() throws Exception {
+		String title = "A Magical Moment";
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(title, metadata.getTitle());
+	}
+
+	@Test
+	public void shouldGetTrackNumber() throws Exception {
+		String trackNumber = "11";
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(trackNumber);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(trackNumber, metadata.getTrackNumber());
+	}
+	
+	@Test
+	public void shouldGetTotalTracks() throws Exception {
+		String totalTracks = "20";
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(totalTracks);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(totalTracks, metadata.getTotalTracks());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTrackNumberWhenTagIsNull() throws Exception {
+		when(tag.getFirst(FieldKey.TRACK)).thenReturn(NULL);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTrackNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTotalTracksWhenTagIsNull() throws Exception {
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenReturn(NULL);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTrackNumberWhenNullPointer() throws Exception {
+		when(tag.getFirst(FieldKey.TRACK)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTrackNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTotalTracksWhenNullPointer() throws Exception {
+		when(tag.getFirst(FieldKey.TRACK_TOTAL)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
+	}
+
+	@Test
+	public void shouldReturnZEROInGettingCdNumberWhenNullPointer() throws Exception {
+		when(tag.getFirst(FieldKey.DISC_NO)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getCdNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInGettingTotalCdsWhenNullPointer() throws Exception {
+		when(tag.getFirst(FieldKey.DISC_TOTAL)).thenThrow(new NullPointerException());
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTotalCds());
+	}
+	
+	@Test
+	public void shouldReturnZEROInCdNumberWhenTagIsNull() throws Exception {
+		when(tag.getFirst(FieldKey.DISC_NO)).thenReturn(NULL);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getCdNumber());
+	}
+	
+	@Test
+	public void shouldReturnZEROInTotalCdsWhenTagIsNull() throws Exception {
+		when(tag.getFirst(FieldKey.DISC_TOTAL)).thenReturn(NULL);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(StringUtils.EMPTY, metadata.getTotalCds());
+	}
+	
+	@Test
+	public void shouldGetArtwork() throws Exception {
+		reader.getMetadata(file);
+		verify(artwork).getImage();
+	}
+	
+	@Test
+	public void shouldNotGetCoverArt() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenReturn(bufferedImage);
+		
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(bufferedImage, metadata.getCoverArt());
+	}
+	
+	@Test
+	public void shouldNotGetCoverArtIfNull() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(null);
+		Metadata metadata = reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		assertEquals(null, metadata.getCoverArt());
+	}
+	
+	/**
+	 * Bug in JAudioTagger null pointer exception when artwork.getImage()
+	 */
+	@Test
+	public void shouldNotGetCoverArtIfImageError() throws Exception {
+		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(artwork.getImage()).thenThrow(new NullPointerException());
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
+		
+		reader.getMetadata(file);
+		
+		verify(tag).getFirstArtwork();
+		verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
+	}
+	
 }

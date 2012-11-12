@@ -201,9 +201,12 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.metadata;
 
+package org.jas.metadata;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -216,35 +219,40 @@ import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jas.event.Events;
 import org.jas.helper.AudioFileHelper;
-import org.jas.metadata.Mp4Reader;
+import org.jas.helper.ReaderHelper;
+import org.jas.metadata.Mp3Reader;
 import org.jas.model.Metadata;
-import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.audio.mp3.MP3File;
 import org.jaudiotagger.tag.FieldKey;
+import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.jaudiotagger.tag.mp4.Mp4Tag;
+import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestMp4Reader{
+public class TestMp3Reader{
+	private static final String ARTIST = "Armin Van Buuren";
 	private static final String TITLE = "Control Freak (Sander Van Doorn Remix)";
+	private static final String YEAR = "2011";
 	private static final String NULL = "null";
 	
 	@InjectMocks
-	private Mp4Reader reader = new Mp4Reader();
+	private Mp3Reader reader = new Mp3Reader();
+	
+	@Mock
+	private MP3File audioFile;
 	@Mock
 	private File file;
 	@Mock
-	private Mp4Tag tag;
-	@Mock
-	private AudioFile audioFile;
-	@Mock
-	private AudioHeader header;
+	private Tag tag;
 	@Mock
 	private Artwork artwork;
+	@Mock
+	private AudioHeader header;
 	@Mock
 	private AudioFileHelper audioFileHelper;
 	@Mock
@@ -253,6 +261,8 @@ public class TestMp4Reader{
 	private ControlEngineConfigurator configurator;
 	@Mock
 	private ControlEngine controlEngine;
+	@Mock
+	private ReaderHelper readerHelper;
 	
 	@Before
 	public void setup() throws Exception {
@@ -262,14 +272,49 @@ public class TestMp4Reader{
 		when(audioFile.getAudioHeader()).thenReturn(header);
 		when(artwork.getImage()).thenReturn(bufferedImage);
 		when(tag.getFirstArtwork()).thenReturn(artwork);
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		when(header.getBitRate()).thenReturn("64");
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
 		reader.setControlEngine(configurator);
 	}
 	
 	@Test
+	public void shouldUpdateID3toV2() throws Exception {
+		when(audioFile.hasID3v2Tag()).thenReturn(false);
+		reader.getMetadata(file);
+		
+		((MP3File) verify(audioFile)).setID3v2TagOnly((AbstractID3v2Tag) anyObject());
+		((MP3File) verify(audioFile)).commit();
+	}
+	
+	@Test
+	public void shouldGetMetadata() throws Exception {
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		reader.getMetadata(file);
+		
+		((MP3File) verify(audioFile)).getTag();
+		((MP3File) verify(audioFile)).getAudioHeader();
+	}
+	
+	@Test
+	public void shouldGetArtist() throws Exception {
+		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(ARTIST);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(ARTIST, metadata.getArtist());
+	}
+
+	@Test
+	public void shouldGetTitle() throws Exception {
+		when(tag.getFirst(FieldKey.TITLE)).thenReturn(TITLE);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(TITLE, metadata.getTitle());
+	}
+	
+	@Test
 	public void shouldGetAlbum() throws Exception {
-		String album = "Simple Pleasures";
+		String album = "Nobody Seems To Care / Murder Weapon";
 		when(tag.getFirst(FieldKey.ALBUM)).thenReturn(album);
 		Metadata metadata = reader.getMetadata(file);
 		
@@ -280,38 +325,23 @@ public class TestMp4Reader{
 	public void shouldGetGenre() throws Exception {
 		String genre = "Minimal Techno";
 		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
+		when(readerHelper.getGenre(tag, genre)).thenReturn(genre);
+		
 		Metadata metadata = reader.getMetadata(file);
 		
 		assertEquals(genre, metadata.getGenre());
 	}
 	
 	@Test
-	public void shouldGetArtist() throws Exception {
-		String artist = "Ferry Corsten";
-		when(tag.getFirst(FieldKey.ARTIST)).thenReturn(artist);
+	public void shouldGetGenreByCode() throws Exception {
+		String genreAsCode = "31";
+		String genre = "Trance";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genreAsCode);
 		Metadata metadata = reader.getMetadata(file);
 		
-		assertEquals(artist, metadata.getArtist());
+		assertEquals(genre, metadata.getGenre());
 	}
 	
-	@Test
-	public void shouldGetLength() throws Exception {
-		int length = 325;
-		when(header.getTrackLength()).thenReturn(length);
-		Metadata metadata = reader.getMetadata(file);
-		
-		assertEquals(length, metadata.getLength());
-	}
-	
-	@Test
-	public void shouldGetTitle() throws Exception {
-		String title = "A Magical Moment";
-		when(tag.getFirst(FieldKey.TITLE)).thenReturn(title);
-		Metadata metadata = reader.getMetadata(file);
-		
-		assertEquals(title, metadata.getTitle());
-	}
-
 	@Test
 	public void shouldGetTrackNumber() throws Exception {
 		String trackNumber = "11";
@@ -346,6 +376,7 @@ public class TestMp4Reader{
 		assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
 	}
 	
+	
 	@Test
 	public void shouldReturnZEROInTrackNumberWhenNullPointer() throws Exception {
 		when(tag.getFirst(FieldKey.TRACK)).thenThrow(new NullPointerException());
@@ -361,7 +392,7 @@ public class TestMp4Reader{
 		
 		assertEquals(StringUtils.EMPTY, metadata.getTotalTracks());
 	}
-
+	
 	@Test
 	public void shouldReturnZEROInGettingCdNumberWhenNullPointer() throws Exception {
 		when(tag.getFirst(FieldKey.DISC_NO)).thenThrow(new NullPointerException());
@@ -395,11 +426,37 @@ public class TestMp4Reader{
 	}
 	
 	@Test
+	public void shouldGetLength() throws Exception {
+		int length = 325;
+		AudioHeader header = mock(AudioHeader.class);
+		when(header.getBitRate()).thenReturn("64");
+		when(audioFile.hasID3v2Tag()).thenReturn(true);
+		when(header.getTrackLength()).thenReturn(length);
+		when(audioFile.getAudioHeader()).thenReturn(header);
+		Metadata metadata = reader.getMetadata(file);
+		
+		assertEquals(length, metadata.getLength());
+	}
+	
+	@Test
 	public void shouldGetArtwork() throws Exception {
 		reader.getMetadata(file);
 		verify(artwork).getImage();
 	}
 	
+	@Test
+	public void shouldGetFile() throws Exception {
+		Metadata metadata = reader.getMetadata(file);
+		assertNotNull(metadata.getFile());
+	}
+	
+	@Test
+	public void shouldGetYear() throws Exception {
+		when(tag.getFirst(FieldKey.YEAR)).thenReturn(YEAR);
+		Metadata metadata = reader.getMetadata(file);
+		assertEquals(YEAR, metadata.getYear());
+	}
+
 	@Test
 	public void shouldNotGetCoverArt() throws Exception {
 		when(tag.getFirstArtwork()).thenReturn(artwork);
@@ -433,6 +490,14 @@ public class TestMp4Reader{
 		
 		verify(tag).getFirstArtwork();
 		verify(controlEngine).fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(TITLE));
+	}
+	
+	@Test
+	public void shouldKnowWhenMp3IsNotANumberInsideParenthesis() throws Exception {
+		String genre = "(None)";
+		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
+		reader.getMetadata(file);
+		verify(readerHelper).getGenre(tag, genre);
 	}
 	
 }
