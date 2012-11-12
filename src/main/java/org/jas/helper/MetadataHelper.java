@@ -4,9 +4,9 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.lastfm.metadata.MetadataReader;
-import org.lastfm.metadata.Mp3Reader;
-import org.lastfm.metadata.Mp4Reader;
+import org.jas.metadata.MetadataReader;
+import org.jas.metadata.Mp3Reader;
+import org.jas.metadata.Mp4Reader;
 import org.lastfm.model.MetadataAlbumValues;
 import org.springframework.stereotype.Service;
 

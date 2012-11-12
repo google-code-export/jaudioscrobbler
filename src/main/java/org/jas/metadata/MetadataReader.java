@@ -201,241 +201,168 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.metadata;
+package org.jas.metadata;
 
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jas.helper.ArtworkHelper;
-import org.jas.helper.AudioFileHelper;
-import org.jaudiotagger.audio.AudioFile;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.asmatron.messengine.event.ValueEvent;
+import org.jas.event.Events;
+import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.CannotWriteException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.FieldDataInvalidException;
 import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.lastfm.util.ImageUtils;
+import org.lastfm.model.Metadata;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who knows how to write metadata in a audio file
+ * @undestands A class who gather all common methods getting Metadata
  */
 
-public class MetadataWriter {
-	private Tag tag;
-	private AudioFile audioFile;
-	private AudioFileHelper audioFileIOHelper = new AudioFileHelper();
-	private ImageUtils imageUtils = new ImageUtils();
-	private ArtworkHelper artworkHelper = new ArtworkHelper();
-	private Log log = LogFactory.getLog(this.getClass());
+public abstract class MetadataReader {
+	private static final String NULL = "null";
+	protected Tag tag;
+	protected AudioHeader header;
+	protected Log log = LogFactory.getLog(this.getClass());
+	private ControlEngineConfigurator configurator;
+	
+	public abstract String getGenre();
+	public abstract Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException;
 
-	public void setFile(File file) {
-		try {
-			audioFile = audioFileIOHelper.read(file);
-			tag = audioFile.getTag();
-		} catch (CannotReadException nre) {
-			log.error(nre, nre);
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-		} catch (TagException tae) {
-			log.error(tae, tae);
-		} catch (ReadOnlyFileException roe) {
-			log.error(roe, roe);
-		} catch (InvalidAudioFrameException iae) {
-			log.error(iae, iae);
-		}
+	public MetadataReader() { 
+		turnOffLogMessages();
 	}
-
-	public void writeArtist(String artist) {
-		try {
-			tag.setField(FieldKey.ARTIST, artist);
-			audioFile.commit();
-		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
-		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
-		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
-		}
-	}
-
-	public void writeTitle(String trackName) {
-		try {
-			tag.setField(FieldKey.TITLE, trackName);
-			audioFile.commit();
-		} catch (KeyNotFoundException kne) {
-			log.error(kne, kne);
-		} catch (FieldDataInvalidException fie) {
-			log.error(fie, fie);
-		} catch (CannotWriteException nwe) {
-			log.error(nwe, nwe);
-		}
-	}
-
-	public boolean writeAlbum(String album) throws MetadataException {
-		try {
-			tag.setField(FieldKey.ALBUM, album);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		}
-	}
-
-	public boolean writeTrackNumber(String trackNumber) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(trackNumber)){
-				return false;
-			}
-			tag.setField(FieldKey.TRACK, trackNumber);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		}
-	}
-
-	public boolean writeTotalTracksNumber(String totalTracksNumber) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(totalTracksNumber)){
-				return false;
-			}
-			tag.setField(FieldKey.TRACK_TOTAL, totalTracksNumber);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		}
-	}
-
-	public boolean writeCoverArt(Image lastfmCoverArt) throws MetadataException {
-		try {
-			File coverArtFile = imageUtils.saveCoverArtToFile(lastfmCoverArt, StringUtils.EMPTY);
-			Artwork artwork = artworkHelper.createArtwork();
-			artwork.setFromFile(coverArtFile);
-			tag.setField(artwork);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		} catch (IOException ioe) {
-			throw new MetadataException(ioe.getMessage());
-		} catch (NullPointerException nue) {
-			throw new MetadataException(nue.getMessage());
+	
+	private void turnOffLogMessages() {
+		Handler[] handlers = Logger.getLogger("").getHandlers();
+		for (int index = 0; index < handlers.length; index++) {
+			handlers[index].setLevel(Level.OFF);
 		}
 	}
 	
-	public boolean removeCoverArt() throws MetadataException {
-		try {
-			tag.deleteArtworkField();
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		}	
+	private String getArtist(){
+		return tag.getFirst(FieldKey.ARTIST);
 	}
 
-	public boolean writeCdNumber(String cdNumber) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(cdNumber)){
-				return false;
-			}
-			tag.setField(FieldKey.DISC_NO, cdNumber);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		} catch (NullPointerException nue){
-			throw new MetadataException(nue.getMessage());
-		}
+	private String getTitle(){
+		return tag.getFirst(FieldKey.TITLE);
 	}
 
-	public boolean writeTotalCds(String totalCds) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(totalCds)){
-				return false;
-			}
-			tag.setField(FieldKey.DISC_TOTAL, totalCds);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		} catch (NullPointerException nue){
-			throw new MetadataException(nue.getMessage());
-		}
+	private String getAlbum(){
+		return tag.getFirst(FieldKey.ALBUM);
+	}
+	
+	
+	private String getYear() {
+		return tag.getFirst(FieldKey.YEAR);
 	}
 
-	public boolean writeYear(String year) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(year)){
-				return false;
-			}
-			tag.setField(FieldKey.YEAR, year);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
+	private int getLength(){
+		return header.getTrackLength();
+	}
+	
+	private int getBitRate() {
+		// Case variable bitRate
+		String bitRate = header.getBitRate().replace("~", "");
+		return Integer.parseInt(bitRate);
+	}
+
+	private String getTrackNumber(){
+		try{
+			String trackNumber = tag.getFirst(FieldKey.TRACK);
+			return trackNumber == NULL ? StringUtils.EMPTY : trackNumber;
 		} catch (NullPointerException nue){
-			throw new MetadataException(nue.getMessage());
+			log.warn("NullPointer Exception in getting TrackNumber at: " + getTitle());
+			return StringUtils.EMPTY;
 		}
 	}
 	
-	public boolean writeGenre(String genre) throws MetadataException {
-		try {
-			if(StringUtils.isEmpty(genre)){
-				return false;
-			}
-			tag.setField(FieldKey.GENRE, genre);
-			audioFile.commit();
-			return true;
-		} catch (KeyNotFoundException kne) {
-			throw new MetadataException(kne.getMessage());
-		} catch (FieldDataInvalidException fie) {
-			throw new MetadataException(fie.getMessage());
-		} catch (CannotWriteException nwe) {
-			throw new MetadataException(nwe.getMessage());
-		} catch (NullPointerException nue){
-			throw new MetadataException(nue.getMessage());
+	private String getTotalTracks(){
+		try{
+			String totalTracks = tag.getFirst(FieldKey.TRACK_TOTAL);
+			return totalTracks == NULL ? StringUtils.EMPTY : totalTracks;
+		} catch(NullPointerException nue){
+			log.warn("NullPointer Exception in getting Total Tracks at: " + getTitle());
+			return StringUtils.EMPTY;
 		}
 	}
 	
+	private String getCdNumber() {
+		try{
+			String cdNumber = tag.getFirst(FieldKey.DISC_NO);
+			return cdNumber == NULL ? StringUtils.EMPTY : cdNumber;
+		} catch (NullPointerException nue){
+			log.warn("NullPointer Exception in getting CD Number at: " + getTitle());
+			return StringUtils.EMPTY;
+		}
+	}
+	
+	private String getTotalCds() {
+		try{
+			String cdsTotal = tag.getFirst(FieldKey.DISC_TOTAL);
+			return cdsTotal == NULL ? StringUtils.EMPTY : cdsTotal;
+		} catch (NullPointerException nue){
+			log.warn("NullPointer Exception in getting Total CDs Number at: " + getTitle());
+			return StringUtils.EMPTY;
+		}
+	}
+
+	/**
+	 * Bug in JAudioTagger null pointer exception when artwork.getImage()
+	 */
+	private Image getCoverArt(Metadata metadata) throws MetadataException {
+		try{
+			if(tag == null) return null;
+			Artwork artwork = tag.getFirstArtwork();
+			log.info(getTitle() + " has cover art?: " + (artwork != null));
+			return artwork==null ? null: artwork.getImage();
+		} catch(IllegalArgumentException iae){
+			return handleCoverArtException(metadata, iae);
+		} catch (IOException ioe){
+			return handleCoverArtException(metadata, ioe);
+		} catch (NullPointerException nue){
+			return handleCoverArtException(metadata, nue);
+		}
+	}
+	
+	private Image handleCoverArtException(Metadata metadata, Exception exc) {
+		log.info("couldn't get coverArt for file: " + metadata.getTitle());
+		log.error("Exception: " + exc.getMessage());
+		configurator.getControlEngine().fireEvent(Events.LOAD_COVER_ART, new ValueEvent<String>(getTitle()));
+		return null;
+	}
+	
+	protected Metadata generateMetadata(File file) throws IOException, MetadataException {
+		Metadata metadata = new Metadata();
+		metadata.setCoverArt(getCoverArt(metadata));
+		metadata.setTitle(getTitle());
+		metadata.setArtist(getArtist());
+		metadata.setAlbum(getAlbum());
+		metadata.setGenre(getGenre());
+		metadata.setYear(getYear());
+		metadata.setLenght(getLength());
+		metadata.setTrackNumber(getTrackNumber());
+		metadata.setTotalTracks(getTotalTracks());
+		metadata.setCdNumber(getCdNumber());
+		metadata.setTotalCds(getTotalCds());
+		metadata.setBitRate(getBitRate());
+		metadata.setFile(file);
+		return metadata;
+	}
+	
+	public void setControlEngine(ControlEngineConfigurator configurator) {
+		this.configurator = configurator;
+	}
 }
