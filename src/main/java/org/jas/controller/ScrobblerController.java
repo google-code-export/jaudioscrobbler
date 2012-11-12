@@ -201,38 +201,51 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller;
+package org.jas.controller;
 
 import java.io.IOException;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
-import org.lastfm.helper.ExporterHelper;
-import org.lastfm.model.ExportPackage;
+import org.lastfm.helper.ScrobblerHelper;
+import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 /**
- * @understands A class who manage export metadata to file
+ * @understands A class who manage ALL scrobbler actions
  */
 
 @Controller
-public class ExporterController {
+public class ScrobblerController {
 	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
-	private ExporterHelper exporterHelper;
+	private ScrobblerHelper scrobblerHelper;
+	@Autowired
+	private ControlEngineConfigurator configurator;
 	
-	@RequestMethod(Actions.EXPORT_METADATA)
-	public ActionResult sendMetadata(ExportPackage exportPackage) {
+	@PostConstruct
+	public void setup() {
+		scrobblerHelper.setControlEngine(configurator.getControlEngine());
+	}
+
+	@RequestMethod(Actions.SEND_METADATA)
+	public ActionResult sendMetadata(Metadata metadata) {
 		try {
-			return exporterHelper.export(exportPackage);
+			log.info("Sending scrobbling for: " + metadata.getTitle());
+			return scrobblerHelper.send(metadata);
 		} catch (IOException ioe) {
 			log.error(ioe, ioe);
-		} 
+		} catch (InterruptedException ine) {
+			log.error(ine, ine);
+		}
 		return ActionResult.Error;
 	}
 

@@ -201,9 +201,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller;
+package org.jas.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
+
+import javax.swing.JFileChooser;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -211,45 +216,82 @@ import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jas.action.Actions;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
+import org.lastfm.controller.service.MetadataService;
 import org.lastfm.event.Events;
-import org.lastfm.helper.LastFMAuthenticator;
+import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.metadata.MetadataException;
+import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
-import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.umass.lastfm.Session;
-
-
 /**
- * @understands A class who control Login process
+ * @understands A class who knows how to load metadata from files
  */
 
 @Controller
-public class LoginController {
-	private LastFMAuthenticator lastfmAuthenticator = new LastFMAuthenticator();
+public class MetadataController {
+	private JFileChooser fileChooser = new JFileChooser();
 	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	@Autowired
 	private ControlEngineConfigurator configurator;
+	@Autowired
+	private MetadataService metadataExtractor;
+	private List<Metadata> metadataList;
 
-	@ActionMethod(Actions.LOGIN_ID)
-	public void login(User user) {
-		String username = user.getUsername();
-		String password = user.getPassword();
-		try {
-			Session session = lastfmAuthenticator.login(username, password);
-			if (session != null) {
-				user.setSession(session);
-				configurator.getControlEngine().set(Model.CURRENT_USER, user, null);
-				configurator.getControlEngine().fireEvent(Events.LOGGED, new ValueEvent<User>(user));
-			} else {
-				configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
+	@ActionMethod(Actions.GET_METADATA)
+	public void getMetadata() {
+		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		int selection = fileChooser.showOpenDialog(null);
+		if (selection == JFileChooser.APPROVE_OPTION) {
+			File root = fileChooser.getSelectedFile();
+			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
+			try {
+				metadataList = metadataExtractor.extractMetadata(root);
+				if(metadataList.isEmpty()){
+					configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
+				}  else {
+					Collections.sort(metadataList);
+					sendLoadedEvent(metadataList);
+				}
+			} catch (IOException e) {
+				handleException(e);
+			} catch (TagException e) {
+				handleException(e);
+			} catch (ReadOnlyFileException e) {
+				handleException(e);
+			} catch (InvalidAudioFrameException e) {
+				handleException(e);
+			} catch (InvalidId3VersionException e) {
+				handleException(e);
+			} catch (InterruptedException e) {
+				handleException(e);
+			} catch (CannotReadException e) {
+				handleException(e);
+			} catch (MetadataException e) {
+				handleException(e);
+			} catch (IllegalArgumentException e) {
+				sendLoadedEvent(metadataList);
+				handleException(e);
 			}
-		} catch (IOException ioe) {	
-			log.error(ioe, ioe);
-			configurator.getControlEngine().fireEvent(Events.LOGIN_FAILED);
+		} else {
+			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED_CANCEL);
 		}
 	}
 
+	private void sendLoadedEvent(List<Metadata> metadataList) {
+		configurator.getControlEngine().set(Model.METADATA, metadataList, null);
+		configurator.getControlEngine().fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
+		configurator.getControlEngine().fireEvent(Events.LOADED);
+	}
+
+	private void handleException(Exception e) {
+		log.error(e, e);
+		configurator.getControlEngine().fireEvent(Events.OPEN);
+	}
 }

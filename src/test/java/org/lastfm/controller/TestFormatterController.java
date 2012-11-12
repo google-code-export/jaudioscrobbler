@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import org.jas.action.ActionResult;
+import org.jas.controller.FormatterController;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.controller.service.FormatterService;

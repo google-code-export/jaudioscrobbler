@@ -213,6 +213,7 @@ import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
+import org.jas.controller.CompleteController;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.controller.service.LastfmService;

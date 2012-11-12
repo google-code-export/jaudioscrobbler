@@ -1,4 +1,4 @@
-package org.lastfm.controller;
+package org.jas.controller;
 
 import java.util.List;
 

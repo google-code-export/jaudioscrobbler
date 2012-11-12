@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.io.IOException;
 
 import org.jas.action.ActionResult;
+import org.jas.controller.ExporterController;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.helper.ExporterHelper;
