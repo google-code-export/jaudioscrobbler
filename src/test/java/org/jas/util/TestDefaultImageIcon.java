@@ -1,4 +1,4 @@
-package org.lastfm.util;
+package org.jas.util;
 
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.verify;
