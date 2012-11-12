@@ -6,9 +6,9 @@ import java.io.File;
 import java.util.Set;
 
 import org.jas.helper.MetadataHelper;
+import org.jas.metadata.MetadataReader;
+import org.jas.metadata.Mp4Reader;
 import org.junit.Test;
-import org.lastfm.metadata.MetadataReader;
-import org.lastfm.metadata.Mp4Reader;
 
 public class TestMetadataHelper {
 

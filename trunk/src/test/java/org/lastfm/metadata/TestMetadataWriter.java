@@ -215,6 +215,7 @@ import java.io.File;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.helper.ArtworkHelper;
 import org.jas.helper.AudioFileHelper;
+import org.jas.metadata.MetadataWriter;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;

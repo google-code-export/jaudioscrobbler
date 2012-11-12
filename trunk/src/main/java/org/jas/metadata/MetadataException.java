@@ -201,42 +201,17 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.metadata;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.jas.helper.AudioFileHelper;
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.FieldKey;
-import org.jaudiotagger.tag.TagException;
-import org.jaudiotagger.tag.mp4.Mp4Tag;
-import org.lastfm.model.Metadata;
+package org.jas.metadata;
 
 /**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @undestands This class knows how to read metadata from a m4a file
+ * @author joseluis.delacruz@gmail.com
+ * @understands A class who represents exceptions from Metadata project 
  */
 
-public class Mp4Reader extends MetadataReader {
-	private AudioFileHelper audioFileHelper = new AudioFileHelper();
+public class MetadataException extends Exception {
+	private static final long serialVersionUID = -1110345551784140359L;
 
-	public Metadata getMetadata(File file) throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
-		try{
-			AudioFile audioFile = audioFileHelper.read(file);
-			tag = (Mp4Tag) audioFile.getTag();
-			header = audioFile.getAudioHeader();
-			return generateMetadata(file);
-		} catch (CannotReadException cnr){
-			return null;
-		}
-	}
-
-	@Override
-	public String getGenre() {
-		return tag.getFirst(FieldKey.GENRE);
+	public MetadataException(String message) {
+		super(message);
 	}
 }
