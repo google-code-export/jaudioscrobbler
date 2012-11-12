@@ -261,7 +261,7 @@ import org.jas.action.Actions;
 import org.jas.dnd.ImageDropListener;
 import org.jas.dnd.MainFrameDragOverListener;
 import org.jas.dnd.MultiLayerDropTargetListener;
-import org.lastfm.event.Events;
+import org.jas.event.Events;
 import org.lastfm.helper.DialogHelper;
 import org.lastfm.helper.FileChooserHelper;
 import org.lastfm.helper.MetadataAdapter;
