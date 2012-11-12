@@ -208,10 +208,10 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Point;
 
-import org.lastfm.observ.NullObservable;
-import org.lastfm.observ.ObservValue;
-import org.lastfm.observ.Observable;
-import org.lastfm.observ.ObserverCollection;
+import org.jas.observer.NullObservable;
+import org.jas.observer.ObservValue;
+import org.jas.observer.Observable;
+import org.jas.observer.ObserverCollection;
 
 public class DragAndDropActionImpl implements DragAndDropAction {
 	private DnDListenerEntries<DropListener> dropListeners = DnDListenerEntries.empty();

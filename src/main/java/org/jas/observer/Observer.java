@@ -202,10 +202,9 @@
    limitations under the License.
 */
 
-package org.lastfm.observ;
+package org.jas.observer;
 
-public interface ObservableControl {
-	void suspend();
+public interface Observer<T extends ObserveObject> {
+	public void observe(T t);
 
-	void resume();
 }

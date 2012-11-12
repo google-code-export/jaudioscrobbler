@@ -219,8 +219,8 @@ import java.awt.dnd.DropTargetEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.observ.ObservValue;
-import org.lastfm.observ.Observer;
+import org.jas.observer.ObservValue;
+import org.jas.observer.Observer;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -210,9 +210,9 @@ import java.awt.Point;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.gui.ImagePanel;
-import org.lastfm.observ.ObservValue;
-import org.lastfm.observ.Observable;
-import org.lastfm.observ.ObserverCollection;
+import org.jas.observer.ObservValue;
+import org.jas.observer.Observable;
+import org.jas.observer.ObserverCollection;
 import org.lastfm.util.FileSystemValidatorLight;
 import org.lastfm.util.Picture;
 

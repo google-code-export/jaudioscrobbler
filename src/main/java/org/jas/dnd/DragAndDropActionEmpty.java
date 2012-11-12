@@ -207,9 +207,9 @@ package org.jas.dnd;
 import java.awt.Component;
 import java.awt.Point;
 
-import org.lastfm.observ.NullObservable;
-import org.lastfm.observ.ObservValue;
-import org.lastfm.observ.ObserverCollection;
+import org.jas.observer.NullObservable;
+import org.jas.observer.ObservValue;
+import org.jas.observer.ObserverCollection;
 
 public class DragAndDropActionEmpty implements DragAndDropAction {
 

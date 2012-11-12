@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm.observ;
+package org.jas.observer;
 
 public class PausableObservable<T extends ObserveObject> extends Observable<T> implements ObservableControl {
 	private boolean enabled = true;

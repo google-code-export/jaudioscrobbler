@@ -202,16 +202,11 @@
    limitations under the License.
 */
 
-package org.lastfm.observ;
+package org.jas.observer;
 
-public class ObservValue<T> extends ObserveObject {
-	private final T value;
+public interface ObserverCollection<T extends ObserveObject> {
+	public void add(Observer<T> l);
 
-	public ObservValue(T value) {
-		this.value = value;
-	}
+	public void remove(Observer<T> listener);
 
-	public T getValue() {
-		return value;
-	}
 }
