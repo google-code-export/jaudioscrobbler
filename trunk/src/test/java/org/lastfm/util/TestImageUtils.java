@@ -216,9 +216,9 @@ import java.io.File;
 import javax.swing.ImageIcon;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.ApplicationState;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.ImageService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

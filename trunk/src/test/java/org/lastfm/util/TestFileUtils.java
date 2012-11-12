@@ -209,9 +209,9 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.ApplicationState;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.helper.DateHelper;
 import org.lastfm.util.FileUtils;
 import org.mockito.InjectMocks;

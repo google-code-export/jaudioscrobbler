@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm;
+package org.jas;
 
 public interface Auth {
 	static final String KEY = "KEY";

@@ -207,6 +207,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.asmatron.messengine.engines.DefaultEngine;
+import org.jas.Launcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

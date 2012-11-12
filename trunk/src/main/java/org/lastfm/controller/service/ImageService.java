@@ -213,7 +213,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 import org.apache.commons.lang3.StringUtils;
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.springframework.stereotype.Service;
 
 @Service

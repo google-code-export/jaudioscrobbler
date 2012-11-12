@@ -211,7 +211,7 @@ import java.util.Iterator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.Auth;
+import org.jas.Auth;
 import org.lastfm.model.GenreTypes;
 
 import de.umass.lastfm.Album;

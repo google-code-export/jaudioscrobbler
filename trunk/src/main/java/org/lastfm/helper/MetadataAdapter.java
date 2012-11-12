@@ -203,7 +203,7 @@
 */
 package org.lastfm.helper;
 
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.lastfm.model.Metadata;
 
 public class MetadataAdapter {
