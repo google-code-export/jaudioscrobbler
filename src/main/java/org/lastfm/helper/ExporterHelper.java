@@ -207,7 +207,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
-import org.lastfm.action.ActionResult;
+import org.jas.action.ActionResult;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;

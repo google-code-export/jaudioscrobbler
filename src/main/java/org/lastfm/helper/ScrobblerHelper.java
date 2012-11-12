@@ -217,7 +217,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.ControlEngine;
-import org.lastfm.action.ActionResult;
+import org.jas.action.ActionResult;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;

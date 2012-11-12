@@ -214,9 +214,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;

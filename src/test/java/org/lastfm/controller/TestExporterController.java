@@ -5,9 +5,9 @@ import static org.mockito.Mockito.*;
 
 import java.io.IOException;
 
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.helper.ExporterHelper;
 import org.lastfm.model.ExportPackage;
 import org.mockito.InjectMocks;

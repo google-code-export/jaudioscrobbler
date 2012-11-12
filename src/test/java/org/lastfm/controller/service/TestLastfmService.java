@@ -213,9 +213,9 @@ import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
 
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.model.LastfmAlbum;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;

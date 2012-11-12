@@ -218,9 +218,9 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.helper.LastFMAlbumHelper;
 import org.lastfm.model.LastfmAlbum;
 import org.lastfm.model.Metadata;
