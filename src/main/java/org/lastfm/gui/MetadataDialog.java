@@ -229,7 +229,7 @@ import org.jas.collaborator.MetadataCollaborator;
 import org.jas.dnd.ImageDropListener;
 import org.jas.dnd.MainFrameDragOverListener;
 import org.jas.dnd.MultiLayerDropTargetListener;
-import org.lastfm.event.Events;
+import org.jas.event.Events;
 import org.lastfm.helper.MetadataHelper;
 import org.lastfm.model.Metadata;
 import org.lastfm.model.MetadataAlbumValues;

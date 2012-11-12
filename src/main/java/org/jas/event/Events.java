@@ -1,4 +1,4 @@
-package org.lastfm.event;
+package org.jas.event;
 
 import java.util.List;
 
