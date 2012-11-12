@@ -213,8 +213,8 @@ import java.awt.Window;
 
 import javax.swing.SwingUtilities;
 
-import org.lastfm.util.FileSystemValidatorLight;
-import org.lastfm.util.Picture;
+import org.jas.util.FileSystemValidatorLight;
+import org.jas.util.Picture;
 
 public class MainFrameDragOverListener implements DragOverListener {
 	private final Window frame;

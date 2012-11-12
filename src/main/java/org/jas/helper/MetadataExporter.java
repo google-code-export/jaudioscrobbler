@@ -13,7 +13,7 @@ import org.jas.model.ExportPackage;
 import org.jas.model.Metadata;
 import org.jas.service.FormatterService;
 import org.jas.service.MetadataService;
-import org.lastfm.util.FileUtils;
+import org.jas.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

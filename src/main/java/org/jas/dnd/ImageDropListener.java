@@ -213,8 +213,8 @@ import org.jas.gui.ImagePanel;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observable;
 import org.jas.observer.ObserverCollection;
-import org.lastfm.util.FileSystemValidatorLight;
-import org.lastfm.util.Picture;
+import org.jas.util.FileSystemValidatorLight;
+import org.jas.util.Picture;
 
 public class ImageDropListener implements DropListener {
 	private static final Class<?>[] classes = new Class<?>[] { Picture.class };

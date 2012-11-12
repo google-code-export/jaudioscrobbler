@@ -212,7 +212,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jas.model.ExportPackage;
 import org.jas.model.Metadata;
 import org.jas.service.MetadataService;
-import org.lastfm.util.ImageUtils;
+import org.jas.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -8,6 +8,8 @@ import javax.swing.ImageIcon;
 import static org.mockito.Mockito.*;
 
 import org.jas.service.ImageService;
+import org.jas.util.CloseImageIcon;
+import org.jas.util.ImageIconBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

@@ -1,4 +1,4 @@
-package org.lastfm.util;
+package org.jas.util;
 
 import javax.swing.ImageIcon;
 

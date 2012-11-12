@@ -216,7 +216,7 @@ import javax.swing.JComponent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.util.MethodWrapper;
+import org.jas.util.MethodWrapper;
 
 public class Jdk6u10TransparencyManager implements TransparencyManager {
 	private static final Log log = LogFactory.getLog(Jdk6u10TransparencyManager.class);

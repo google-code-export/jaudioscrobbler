@@ -212,7 +212,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.lastfm.util.FileSystemValidatorLight;
+import org.jas.util.FileSystemValidatorLight;
 
 public class DraggedObjectFileSystemGenerator extends SimpleDraggedObjectGenerator {
 
