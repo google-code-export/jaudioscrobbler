@@ -213,14 +213,14 @@ import java.awt.Image;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.helper.ArtworkHelper;
+import org.jas.helper.AudioFileHelper;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.ArtworkHelper;
-import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.util.ImageUtils;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

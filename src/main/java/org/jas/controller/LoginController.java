@@ -212,7 +212,7 @@ import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.jas.action.Actions;
 import org.jas.event.Events;
-import org.lastfm.helper.LastFMAuthenticator;
+import org.jas.helper.LastFMAuthenticator;
 import org.lastfm.model.Model;
 import org.lastfm.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

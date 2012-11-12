@@ -201,35 +201,18 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-package org.lastfm.helper;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
+package org.jas.helper;
 
-import org.jas.action.ActionResult;
-import org.lastfm.model.ExportPackage;
-import org.lastfm.model.Metadata;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
-@Service
-public class ExporterHelper {
-	
-	@Autowired
-	private ImageExporter imageExporter;
-	@Autowired
-	private MetadataExporter metadataExporter;
+public class OutStreamWriter {
 
-	public ActionResult export(ExportPackage exportPackage) throws IOException {
-		List<Metadata> metadatas = exportPackage.getMetadataList();
-		for (Metadata metadata : metadatas) {
-			metadata.setOrderByFile(true);
-		}
-		Collections.sort(metadatas);
-		exportPackage.setMetadataList(metadatas);
-		imageExporter.export(exportPackage);
-		metadataExporter.export(exportPackage);
-		return ActionResult.Exported;
+	public OutputStream getWriter(File file) throws FileNotFoundException {
+		return new FileOutputStream(file);
 	}
+
 }

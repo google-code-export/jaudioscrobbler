@@ -200,42 +200,42 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.lastfm.helper;
+ */
 
-import org.jas.ApplicationState;
+package org.jas.helper;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jas.service.MetadataService;
+import org.lastfm.model.ExportPackage;
 import org.lastfm.model.Metadata;
+import org.lastfm.util.ImageUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class MetadataAdapter {
+@Service
+public class ImageExporter {
+	
+	@Autowired
+	private MetadataService metadataService;
+	
+	private ImageUtils imageUtils = new ImageUtils();
 
-	public void update(Metadata metadata, int column, String value) {
-		if(column == ApplicationState.ARTIST_COLUMN){
-			metadata.setArtist(value);
+	public void export(ExportPackage exportPackage) throws IOException {
+		List<Metadata> metadataList = exportPackage.getMetadataList();
+		if(metadataList.get(0).getCoverArt() == null){
+			return;
 		}
-		if (column == ApplicationState.TITLE_COLUMN){
-			metadata.setTitle(value);
-		}
-		if (column == ApplicationState.ALBUM_COLUMN){
-			metadata.setAlbum(value);
-		}
-		if (column == ApplicationState.YEAR_COLUMN){
-			metadata.setYear(value);
-		}
-		if (column == ApplicationState.TRACK_NUMBER_COLUMN){
-			metadata.setTrackNumber(value);
-		}
-		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
-			metadata.setTotalTracks(value);
-		}
-		if (column == ApplicationState.CD_NUMBER_COLUMN){
-			metadata.setCdNumber(value);
-		}
-		if (column == ApplicationState.TOTAL_CDS_NUMBER_COLUMN){
-			metadata.setTotalCds(value);
-		}
-		if (column == ApplicationState.GENRE_COLUMN){
-			metadata.setGenre(value);
+		File root = exportPackage.getRoot();
+		if (metadataService.isSameAlbum(metadataList)){
+			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
+		} else { 
+			for (Metadata metadata : metadataList) {
+				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
+			}
 		}
 	}
-
 }

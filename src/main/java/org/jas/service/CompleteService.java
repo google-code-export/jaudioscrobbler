@@ -213,7 +213,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.action.ActionResult;
-import org.lastfm.helper.LastFMAlbumHelper;
+import org.jas.helper.LastFMAlbumHelper;
 import org.lastfm.model.CoverArt;
 import org.lastfm.model.CoverArtType;
 import org.lastfm.model.LastfmAlbum;

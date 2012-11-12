@@ -205,7 +205,7 @@
 package org.jas;
 
 import org.asmatron.messengine.engines.DefaultEngine;
-import org.lastfm.helper.ApplicationContextSingleton;
+import org.jas.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;
 
 /**

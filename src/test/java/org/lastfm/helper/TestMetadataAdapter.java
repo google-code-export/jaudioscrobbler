@@ -206,6 +206,7 @@ package org.lastfm.helper;
 import static org.mockito.Mockito.verify;
 
 import org.jas.ApplicationState;
+import org.jas.helper.MetadataAdapter;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.Metadata;

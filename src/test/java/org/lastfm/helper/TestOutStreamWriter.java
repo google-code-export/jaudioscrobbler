@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.io.OutputStream;
 
+import org.jas.helper.OutStreamWriter;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

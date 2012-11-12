@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
 
+import org.jas.helper.AudioFileHelper;
 import org.jaudiotagger.audio.AudioFile;
 import org.junit.Test;
 

@@ -210,6 +210,8 @@ import java.io.IOException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.jas.helper.ArtworkHelper;
+import org.jas.helper.AudioFileHelper;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
@@ -221,8 +223,6 @@ import org.jaudiotagger.tag.KeyNotFoundException;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
-import org.lastfm.helper.ArtworkHelper;
-import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.util.ImageUtils;
 
 /**

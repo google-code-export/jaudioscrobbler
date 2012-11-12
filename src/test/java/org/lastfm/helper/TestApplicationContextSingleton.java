@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.jas.gui.LoginWindow;
 import org.jas.gui.MainWindow;
+import org.jas.helper.ApplicationContextSingleton;
 import org.junit.Test;
 import org.springframework.context.ConfigurableApplicationContext;
 

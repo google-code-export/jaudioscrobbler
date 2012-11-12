@@ -201,50 +201,41 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
+import org.jas.ApplicationState;
+import org.lastfm.model.Metadata;
 
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.Auth;
-import org.lastfm.model.GenreTypes;
+public class MetadataAdapter {
 
-import de.umass.lastfm.Album;
-
-public class LastFMAlbumHelper {
-	private Log log = LogFactory.getLog(this.getClass());
-
-	public Album getAlbum(String artist, String album) {
-		return Album.getInfo(artist, album, Auth.KEY);
-	}
-
-	public String getYear(Date releaseDate) {
-		if(releaseDate == null){
-			return StringUtils.EMPTY;
+	public void update(Metadata metadata, int column, String value) {
+		if(column == ApplicationState.ARTIST_COLUMN){
+			metadata.setArtist(value);
 		}
-		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
-		String year = simpleDateformat.format(releaseDate);
-		log.info("Year: " + year);
-		return year;
-	}
-
-	public String getGenre(Album album) {
-		Collection<String> tags = album.getTags();
-		Iterator<String> iterator = tags.iterator();
-		while(iterator.hasNext()){
-			String lastFmTag = (String) iterator.next().toLowerCase();
-			log.info("lastFmTag: " + lastFmTag);
-			if(GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN){
-				log.info("lastFmTag matched in GenreTypes: " + GenreTypes.getGenreByName(lastFmTag).getName());
-				return GenreTypes.getGenreByName(lastFmTag).getName();
-			}
+		if (column == ApplicationState.TITLE_COLUMN){
+			metadata.setTitle(value);
 		}
-		return StringUtils.EMPTY;
+		if (column == ApplicationState.ALBUM_COLUMN){
+			metadata.setAlbum(value);
+		}
+		if (column == ApplicationState.YEAR_COLUMN){
+			metadata.setYear(value);
+		}
+		if (column == ApplicationState.TRACK_NUMBER_COLUMN){
+			metadata.setTrackNumber(value);
+		}
+		if (column == ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN){
+			metadata.setTotalTracks(value);
+		}
+		if (column == ApplicationState.CD_NUMBER_COLUMN){
+			metadata.setCdNumber(value);
+		}
+		if (column == ApplicationState.TOTAL_CDS_NUMBER_COLUMN){
+			metadata.setTotalCds(value);
+		}
+		if (column == ApplicationState.GENRE_COLUMN){
+			metadata.setGenre(value);
+		}
 	}
 
 }

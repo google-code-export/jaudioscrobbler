@@ -7,9 +7,9 @@ import java.io.IOException;
 
 import org.jas.action.ActionResult;
 import org.jas.controller.ExporterController;
+import org.jas.helper.ExporterHelper;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.ExporterHelper;
 import org.lastfm.model.ExportPackage;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

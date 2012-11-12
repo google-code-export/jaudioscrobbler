@@ -206,6 +206,7 @@ package org.lastfm.helper;
 
 import static org.junit.Assert.*;
 
+import org.jas.helper.FormatterHelper;
 import org.junit.Test;
 
 public class TestFormatterHelper {

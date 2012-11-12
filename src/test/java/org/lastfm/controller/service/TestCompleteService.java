@@ -219,11 +219,11 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
+import org.jas.helper.LastFMAlbumHelper;
 import org.jas.service.CompleteService;
 import org.jas.service.ImageService;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.LastFMAlbumHelper;
 import org.lastfm.model.LastfmAlbum;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
