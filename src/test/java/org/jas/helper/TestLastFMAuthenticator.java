@@ -201,71 +201,83 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.LastFMAlbumHelper;
+import org.jas.helper.AuthenticatorHelper;
+import org.jas.helper.LastFMAuthenticator;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Album;
+import de.umass.lastfm.Session;
 
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ */
 
-public class TestLastFMAlbumHelper {
-	private LastFMAlbumHelper lastFMAlbumHelper = new LastFMAlbumHelper();
-	private Date releaseDate = new Date();
+public class TestLastFMAuthenticator {
+	@InjectMocks
+	private LastFMAuthenticator controller = new LastFMAuthenticator();
+
 	@Mock
-	private Album album;
+	private AuthenticatorHelper authenticatorHelper;
+	@Mock
+	private Session session;
+	
+	int result;
+
 	
 	@Before
-	public void setup() throws Exception {
+	public void initialize(){
 		MockitoAnnotations.initMocks(this);
 	}
 	
 	@Test
-	public void shouldGetYear() throws Exception {
-		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
-		String currentYear = simpleDateformat.format(releaseDate);
-		String year = lastFMAlbumHelper.getYear(releaseDate);
-		assertEquals(currentYear, year);
+	public void shouldLogin() throws Exception {
+		String username = "josdem";
+		String password = "validPassword";
+
+		when(authenticatorHelper.getSession(username, password)).thenReturn(session);
+		
+		assertNotNull(controller.login(username, password));
 	}
 	
 	@Test
-	public void shouldGetEmptyYear() throws Exception {
-		assertEquals(StringUtils.EMPTY, lastFMAlbumHelper.getYear(null));
+	public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
+		String username = StringUtils.EMPTY;
+		String password = StringUtils.EMPTY;
+		
+		assertNull(controller.login(username, password));
+	}
+
+	@Test
+	public void shouldFailAtLoginIfNoUsername() throws Exception {
+		String username = StringUtils.EMPTY;
+		String password = "somePassword";
+		
+		assertNull(controller.login(username, password));
 	}
 	
 	@Test
-	public void shouldMatchAGenre() throws Exception {
-		Collection<String> tags = new ArrayList<String>();
-		String tag = "House";
-		tags.add(tag);
+	public void shouldFailAtLoginIfNoPassword() throws Exception {
+		String username = "someUsername";
+		String password = StringUtils.EMPTY;
 		
-		when(album.getTags()).thenReturn(tags);
-		
-		String result = lastFMAlbumHelper.getGenre(album);
-		assertEquals(tag, result);
+		assertNull(controller.login(username, password));
 	}
 	
 	@Test
-	public void shouldNotMatchAGenre() throws Exception {
-		Collection<String> tags = new ArrayList<String>();
-		String tag = "usa";
-		tags.add(tag);
+	public void shouldFailAtLogin() throws Exception {
+		String username = "josdem";
+		String password = "invalidPassword";
 		
-		when(album.getTags()).thenReturn(tags);
-		
-		String result = lastFMAlbumHelper.getGenre(album);
-		assertEquals(StringUtils.EMPTY, result);
+		assertNull(controller.login(username, password));
 	}
 }

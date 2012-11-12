@@ -200,24 +200,100 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
+*/
+package org.jas.helper;
 
-package org.lastfm.helper;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import static org.junit.Assert.*;
-
-import org.jas.helper.FormatterHelper;
+import org.apache.commons.lang3.StringUtils;
+import org.jas.helper.MusicBrainzDelegator;
+import org.jas.helper.TrackFinder;
+import org.jas.model.MusicBrainzTrack;
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 
-public class TestFormatterHelper {
+public class TestMusicBrainzDelegator {
+	private static final Object ZERO = "0";
 
-	private FormatterHelper helper = new FormatterHelper();
+	@InjectMocks
+	MusicBrainzDelegator service = new MusicBrainzDelegator();
+	
+	@Mock
+	private TrackFinder trackService;
+	
+	private String artistName = "";
+	private String trackName = "";
+
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+	}
 	
 	@Test
-	public void shouldFormatForComparison() throws Exception {
-		String word = "de - pazz";
-		String expectedWord = "depazz";
-		assertEquals(expectedWord, helper.getBasicFormat(word));
+	public void shouldNotGetAlbumIfNoArtistOrTrackName() throws Exception {
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(ZERO, result.getTrackNumber());
+		verify(trackService, never()).getAlbum(artistName, trackName);
 	}
+	
+	@Test
+	public void shouldNotGetAlbumIfNoTrackname() throws Exception {
+		artistName = "Tiesto";
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(ZERO, result.getTrackNumber());
+		verify(trackService, never()).getAlbum(artistName, trackName);
+	}
+	
+	@Test
+	public void shouldNotGetAlbumIfNoArtist() throws Exception {
+		trackName = "Here on Earth";
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(ZERO, result.getTrackNumber());
+		verify(trackService, never()).getAlbum(artistName, trackName);
+	}
+	
+	@Test
+	public void shouldGetAlbum() throws Exception {
+		artistName = "Deadmau5";
+		trackName = "Faxing Berlin";
+		String album = "Some Kind Of Blue";
+		MusicBrainzTrack track = new MusicBrainzTrack();
+		track.setAlbum(album);
+		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
 
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertEquals(album, result.getAlbum());
+	}
+	
+	@Test
+	public void shouldReturnTrackNumber() throws Exception {
+		artistName = "Above & Beyond";
+		trackName = "Anjunabeach";
+		String album = "Anjunabeach";
+		String trackNumber = "12";
+		
+		MusicBrainzTrack track = new MusicBrainzTrack();
+		track.setAlbum(album);
+		track.setTrackNumber(trackNumber);
+		
+		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
+		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		
+		assertEquals(album, result.getAlbum());
+		assertEquals(trackNumber, result.getTrackNumber());
+	}
 }

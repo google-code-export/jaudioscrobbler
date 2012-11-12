@@ -201,154 +201,90 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.asmatron.messengine.ControlEngine;
-import org.jas.action.ActionResult;
-import org.jas.helper.LastFMTrackHelper;
-import org.jas.helper.ScrobblerHelper;
-import org.jas.model.Metadata;
-import org.jas.model.Model;
-import org.jas.model.User;
+import org.jas.helper.TrackFinder;
+import org.jas.helper.TrackHelper;
+import org.jas.model.MusicBrainzTrack;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Session;
-import de.umass.lastfm.scrobble.ScrobbleResult;
+import com.slychief.javamusicbrainz.ServerUnavailableException;
+import com.slychief.javamusicbrainz.entities.Track;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
 
-public class TestScrobblerHelper {
-	private static final String TRACK_NUMBER = "1";
+public class TestTrackFinder {
+	private static final String TOTAL_TRACKS = "10";
+	private static final Object ZERO = "0";
+	private static final String CD_NUMBER = "1";
+	private static final String TOTAL_CDS = "2";
 
 	@InjectMocks
-	private ScrobblerHelper helperScrobbler = new ScrobblerHelper();
+	private TrackFinder trackFinder = new TrackFinder();
 	
 	@Mock
-	private Metadata metadata;
+	private TrackHelper trackHelper;
 	@Mock
-	private Map<Metadata, Long> metadataMap;
-	@Mock
-	private ControlEngine controlEngine;
-	@Mock
-	private User currentUser;
-	@Mock
-	private LastFMTrackHelper lastFMTrackHelper;
-	@Mock
-	private Session session;
-	
-	private ActionResult result;
-	private String username = "josdem";
-	private String password = "password";
+	private Track track;
+
+	private String artistname = "Sander Van Doorn";
+	private String trackname = "The Bottle Hymn 2.0";
+	private String album = "The Bottle Hymn 2.0 EP";
+	private List<Track> trackList= new ArrayList<Track>();
+
 
 	
 	@Before
-	public void setup(){
+	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(currentUser.getUsername()).thenReturn(username);
-		when(currentUser.getPassword()).thenReturn(password);
-		when(controlEngine.get(Model.CURRENT_USER)).thenReturn(currentUser);
-		helperScrobbler.setControlEngine(controlEngine);
-	}
-
-	@Test
-	public void shouldNotAddAScrobblingifTrackSmallerThan240() throws Exception {
-		setExpectations();
-		when(metadata.getArtist()).thenReturn("Above & Beyond");
-		when(metadata.getTitle()).thenReturn("Anjunabeach");
-
-		result = helperScrobbler.send(metadata);
-		
-		notSendToScrobblingMapAssertion();
-	}
-
-	@Test
-	public void shouldNotAddAScrobblingIfNoArtist() throws Exception {
-		setExpectations();
-		when(metadata.getArtist()).thenReturn(StringUtils.EMPTY);
-		when(metadata.getTitle()).thenReturn("Anjunabeach");
-
-		result = helperScrobbler.send(metadata);
-		
-		notSendToScrobblingMapAssertion();
-	}
-
-	private void notSendToScrobblingMapAssertion() {
-		verify(metadataMap, never()).size();
-		verify(metadataMap, never()).put(isA(Metadata.class), isA(Long.class));
-		assertEquals(ActionResult.Not_Scrobbleable, result);
-	}
-
-	@Test
-	public void shouldNotAddAScrobblingIfNoTitle() throws Exception {
-		setExpectations();
-		when(metadata.getArtist()).thenReturn("Above & Beyond");
-		when(metadata.getTitle()).thenReturn(StringUtils.EMPTY);
-
-		result = helperScrobbler.send(metadata);
-		notSendToScrobblingMapAssertion();
-	}
-
-	@Test
-	public void shouldFailWhenSubmitScrobbler() throws Exception {
-		ScrobbleResult result = mock(ScrobbleResult.class);
-		when(metadataMap.get(metadata)).thenReturn(100L);
-		setExpectations();
-		setMetadataTrackExpectations();
-		when(result.isSuccessful()).thenReturn(false);
-		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
-		
-		assertEquals(ActionResult.Sessionless, helperScrobbler.send(metadata));
-	}
-
-	private void setMetadataTrackExpectations() {
-		when(metadata.getLength()).thenReturn(300);
-		when(metadata.getArtist()).thenReturn("Above & Beyond");
-		when(metadata.getTitle()).thenReturn("Anjunabeach");
-	}
-
-	@Test
-	public void shouldSendAnScrobbler() throws Exception {
-		ScrobbleResult result = mock(ScrobbleResult.class);
-		when(metadataMap.get(metadata)).thenReturn(100L);
-		when(currentUser.getSession()).thenReturn(session);
-		setExpectations();
-		setMetadataTrackExpectations();
-		when(result.isSuccessful()).thenReturn(true);
-		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
-		
-		assertEquals(ActionResult.Sent, helperScrobbler.send(metadata));
+		trackList.add(track);
 	}
 	
-	private void setExpectations() {
-		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
-		when(metadata.getLength()).thenReturn(1);
-		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
+	@Test
+	public void shouldNotFindAnyAlbum() throws Exception {
+		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
+		
+		assertTrue(StringUtils.isEmpty(result.getAlbum()));
+		assertEquals(ZERO, result.getTrackNumber());
 	}
-
 	
 	@Test
-	public void shouldReturnIfNoLogin() throws Exception {
-		setMetadataTrackExpectations();
-		when(currentUser.getUsername()).thenReturn(StringUtils.EMPTY);
+	public void shouldGetAlbum() throws Exception {
+		String expectedTrack = "2";
+		setTrackHelperExpectations();
+
+		MusicBrainzTrack result = trackFinder.getAlbum(artistname, trackname);
 		
-		assertEquals(ActionResult.NotLogged, helperScrobbler.send(metadata));
+		verifyTrackHelperExpectations(expectedTrack, result);
+	}
+
+	private void verifyTrackHelperExpectations(String expectedTrack, MusicBrainzTrack result) {
+		assertEquals(album, result.getAlbum());
+		assertEquals(expectedTrack, result.getTrackNumber());
+		assertEquals(TOTAL_TRACKS, result.getTotalTrackNumber());
+		assertEquals(CD_NUMBER, result.getCdNumber());
+		assertEquals(TOTAL_CDS, result.getTotalCds());
 	}
 	
 
+	private void setTrackHelperExpectations() throws ServerUnavailableException {
+		when(trackHelper.findByTitle(trackname)).thenReturn(trackList);
+		when(trackHelper.getArtist(track)).thenReturn(artistname);
+		when(trackHelper.getTrackNumber(track)).thenReturn("1");
+		when(trackHelper.getAlbum(track)).thenReturn(album);
+		when(trackHelper.getTotalTrackNumber(track)).thenReturn(Integer.valueOf(TOTAL_TRACKS));
+		when(trackHelper.getCdNumber(track)).thenReturn(CD_NUMBER);
+		when(trackHelper.getTotalCds(track)).thenReturn(TOTAL_CDS);
+	}
 }

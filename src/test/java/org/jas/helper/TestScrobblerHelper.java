@@ -200,43 +200,155 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
+*/
+package org.jas.helper;
 
-package org.lastfm.helper;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import org.jas.helper.ExporterHelper;
-import org.jas.helper.ImageExporter;
-import org.jas.helper.MetadataExporter;
-import org.jas.model.ExportPackage;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.asmatron.messengine.ControlEngine;
+import org.jas.action.ActionResult;
+import org.jas.helper.LastFMTrackHelper;
+import org.jas.helper.ScrobblerHelper;
+import org.jas.model.Metadata;
+import org.jas.model.Model;
+import org.jas.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-public class TestExporterHelper {
+import de.umass.lastfm.Session;
+import de.umass.lastfm.scrobble.ScrobbleResult;
+
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ */
+
+public class TestScrobblerHelper {
+	private static final String TRACK_NUMBER = "1";
+
 	@InjectMocks
-	private ExporterHelper exporterHelper = new ExporterHelper();
+	private ScrobblerHelper helperScrobbler = new ScrobblerHelper();
 	
 	@Mock
-	private ImageExporter imageExporter;
+	private Metadata metadata;
 	@Mock
-	private MetadataExporter metadataExporter;
+	private Map<Metadata, Long> metadataMap;
 	@Mock
-	private ExportPackage exportPackage;
+	private ControlEngine controlEngine;
+	@Mock
+	private User currentUser;
+	@Mock
+	private LastFMTrackHelper lastFMTrackHelper;
+	@Mock
+	private Session session;
 	
+	private ActionResult result;
+	private String username = "josdem";
+	private String password = "password";
+
 	
 	@Before
-	public void setup() throws Exception {
+	public void setup(){
 		MockitoAnnotations.initMocks(this);
+		when(currentUser.getUsername()).thenReturn(username);
+		when(currentUser.getPassword()).thenReturn(password);
+		when(controlEngine.get(Model.CURRENT_USER)).thenReturn(currentUser);
+		helperScrobbler.setControlEngine(controlEngine);
+	}
+
+	@Test
+	public void shouldNotAddAScrobblingifTrackSmallerThan240() throws Exception {
+		setExpectations();
+		when(metadata.getArtist()).thenReturn("Above & Beyond");
+		when(metadata.getTitle()).thenReturn("Anjunabeach");
+
+		result = helperScrobbler.send(metadata);
+		
+		notSendToScrobblingMapAssertion();
+	}
+
+	@Test
+	public void shouldNotAddAScrobblingIfNoArtist() throws Exception {
+		setExpectations();
+		when(metadata.getArtist()).thenReturn(StringUtils.EMPTY);
+		when(metadata.getTitle()).thenReturn("Anjunabeach");
+
+		result = helperScrobbler.send(metadata);
+		
+		notSendToScrobblingMapAssertion();
+	}
+
+	private void notSendToScrobblingMapAssertion() {
+		verify(metadataMap, never()).size();
+		verify(metadataMap, never()).put(isA(Metadata.class), isA(Long.class));
+		assertEquals(ActionResult.Not_Scrobbleable, result);
+	}
+
+	@Test
+	public void shouldNotAddAScrobblingIfNoTitle() throws Exception {
+		setExpectations();
+		when(metadata.getArtist()).thenReturn("Above & Beyond");
+		when(metadata.getTitle()).thenReturn(StringUtils.EMPTY);
+
+		result = helperScrobbler.send(metadata);
+		notSendToScrobblingMapAssertion();
+	}
+
+	@Test
+	public void shouldFailWhenSubmitScrobbler() throws Exception {
+		ScrobbleResult result = mock(ScrobbleResult.class);
+		when(metadataMap.get(metadata)).thenReturn(100L);
+		setExpectations();
+		setMetadataTrackExpectations();
+		when(result.isSuccessful()).thenReturn(false);
+		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
+		
+		assertEquals(ActionResult.Sessionless, helperScrobbler.send(metadata));
+	}
+
+	private void setMetadataTrackExpectations() {
+		when(metadata.getLength()).thenReturn(300);
+		when(metadata.getArtist()).thenReturn("Above & Beyond");
+		when(metadata.getTitle()).thenReturn("Anjunabeach");
+	}
+
+	@Test
+	public void shouldSendAnScrobbler() throws Exception {
+		ScrobbleResult result = mock(ScrobbleResult.class);
+		when(metadataMap.get(metadata)).thenReturn(100L);
+		when(currentUser.getSession()).thenReturn(session);
+		setExpectations();
+		setMetadataTrackExpectations();
+		when(result.isSuccessful()).thenReturn(true);
+		when(lastFMTrackHelper.scrobble(metadata.getArtist(), metadata.getTitle(), metadataMap.get(metadata).intValue(), currentUser.getSession())).thenReturn(result);
+		
+		assertEquals(ActionResult.Sent, helperScrobbler.send(metadata));
 	}
 	
-	@Test
-	public void shouldExportImage() throws Exception {
-		exporterHelper.export(exportPackage);
-		Mockito.verify(imageExporter).export(exportPackage);
-		Mockito.verify(metadataExporter).export(exportPackage);
+	private void setExpectations() {
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		when(metadata.getLength()).thenReturn(1);
+		when(metadata.getTrackNumber()).thenReturn(TRACK_NUMBER);
 	}
+
+	
+	@Test
+	public void shouldReturnIfNoLogin() throws Exception {
+		setMetadataTrackExpectations();
+		when(currentUser.getUsername()).thenReturn(StringUtils.EMPTY);
+		
+		assertEquals(ActionResult.NotLogged, helperScrobbler.send(metadata));
+	}
+	
 
 }
