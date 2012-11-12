@@ -201,143 +201,93 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller.service;
+package org.jas.service;
 
-import java.awt.Image;
+import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.Date;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.jas.action.ActionResult;
-import org.lastfm.helper.LastFMAlbumHelper;
-import org.lastfm.model.CoverArt;
-import org.lastfm.model.CoverArtType;
-import org.lastfm.model.LastfmAlbum;
+import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.jaudiotagger.audio.exceptions.CannotReadException;
+import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
+import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
+import org.jaudiotagger.tag.TagException;
+import org.lastfm.exception.InvalidId3VersionException;
+import org.lastfm.helper.MetadataHelper;
+import org.lastfm.metadata.MetadataException;
+import org.lastfm.metadata.MetadataReader;
+import org.lastfm.metadata.Mp4Reader;
 import org.lastfm.model.Metadata;
+import org.lastfm.model.Model;
+import org.lastfm.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import de.umass.lastfm.Album;
-import de.umass.lastfm.ImageSize;
+/**
+ * @understands A class who know how extract metadata from files using a root directory
+ */
 
 @Service
-public class CompleteService {
-	private LastFMAlbumHelper helper = new LastFMAlbumHelper();
-	private HashMap<String, Album> cachedAlbums = new HashMap<String, Album>();
+public class MetadataService {
+	private List<Metadata> metadataList;
+	private Set<File> filesWithoutMinimumMetadata;
+	private FileUtils fileUtils = new FileUtils();
 	private Log log = LogFactory.getLog(this.getClass());
-	private Album info;
 	
 	@Autowired
-	private ImageService imageService;
+	private ControlEngineConfigurator configurator;
+	@Autowired
+	private MetadataHelper metadataHelper;
+	@Autowired
+	private ExtractService extractService;
 
-	public boolean canLastFMHelpToComplete(Metadata metadata) {
-		String artist = metadata.getArtist();
-		String album = metadata.getAlbum();
+	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
+		metadataList = new ArrayList<Metadata>();
+		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
+		List<File> fileList = fileUtils.getFileList(root);
+		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
+		return getMetadataList(fileList);
+	}
 
-		if (isMetadataIncomplete(metadata) && hasAlbumAndArtist(artist, album)) {
-			info = cachedAlbums.get(metadata.getAlbum());
-			if(info==null){
-				info = helper.getAlbum(artist, album);
-				if(info!=null){
-					String imageUrl = info.getImageURL(ImageSize.EXTRALARGE);
-					if(!StringUtils.isEmpty(imageUrl)){
-						cachedAlbums.put(metadata.getAlbum(), info);
-					}
-				}
+	private List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
+			InvalidId3VersionException, MetadataException {
+
+		for (File file : fileList) {
+			Metadata metadata = null;
+			if (fileUtils.isMp3File(file)) {
+				MetadataReader mp3Reader = metadataHelper.createMp3Reader();
+				mp3Reader.setControlEngine(configurator);
+				metadata = mp3Reader.getMetadata(file);
+			} else if (fileUtils.isM4aFile(file)) {
+				Mp4Reader mp4Reader = metadataHelper.createMp4Reader();
+				mp4Reader.setControlEngine(configurator);
+				metadata = mp4Reader.getMetadata(file);
 			}
-			return info == null ? false : true;
-		}
-		return false;
-	}
 
-	private boolean hasAlbumAndArtist(String artist, String album) {
-		return (!StringUtils.isEmpty(album) && !StringUtils.isEmpty(artist));
+			if (metadata == null) {
+				log.info(file.getAbsoluteFile() + " is not a valid Audio File");
+			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
+				metadataList.add(metadata);
+			} else {
+				metadataList.add(extractService.extractFromFileName(metadata));
+				filesWithoutMinimumMetadata.add(file);
+			}
+		}
+		return metadataList;
 	}
-
-	private boolean isMetadataIncomplete(Metadata metadata) {
-		return (metadata.getCoverArt() == null || StringUtils.isEmpty(metadata.getYear()) || StringUtils.isEmpty(metadata.getGenre()));
-	}
-
-	public LastfmAlbum getLastFM(Metadata metadata) throws MalformedURLException, IOException {
-		LastfmAlbum lastfmAlbum = new LastfmAlbum();
-		setCoverArt(metadata, lastfmAlbum);
-		setYear(metadata, lastfmAlbum);
-		setGenre(metadata, lastfmAlbum);
-		return lastfmAlbum;
-	}
-
-	private void setCoverArt(Metadata metadata, LastfmAlbum lastfmAlbum) throws MalformedURLException, IOException {
-		if(metadata.getCoverArt() != null){
-			return;
+	
+	public boolean isSameAlbum(List<Metadata> metadatas) {
+		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
+			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
+				return false;
+			}
 		}
-		String imageURL = StringUtils.EMPTY;
-		Album album = cachedAlbums.get(metadata.getAlbum());
-		if(album!=null){
-			imageURL = album.getImageURL(ImageSize.EXTRALARGE);
-			log.info("imageURL: " + imageURL + " from album: " + album.getName());
-		}
-		if (!StringUtils.isEmpty(imageURL)) {
-			Image image = imageService.readImage(imageURL);
-			lastfmAlbum.setImageIcon(image);
-		}
-	}
-
-	private void setGenre(Metadata metadata, LastfmAlbum lastfmAlbum) {
-		if(!StringUtils.isEmpty(metadata.getGenre()) || StringUtils.isEmpty(metadata.getAlbum())){
-			return;
-		}
-		Album album = cachedAlbums.get(metadata.getAlbum());
-		String genre = StringUtils.EMPTY;
-		if(album != null){
-			genre = helper.getGenre(album);
-		} else {
-			genre = helper.getGenre(info);
-		}
-		if(!StringUtils.isEmpty(genre)){
-			log.info("Genre from lastFM: " + genre);
-			lastfmAlbum.setGenre(genre);
-		} else {
-			lastfmAlbum.setGenre(StringUtils.EMPTY);
-		}
-	}
-
-	private void setYear(Metadata metadata, LastfmAlbum lastfmAlbum) {
-		if(!StringUtils.isEmpty(metadata.getYear())){
-			return;
-		}
-		Date release = null;
-		Album album = cachedAlbums.get(metadata.getAlbum());
-		if(album != null) {
-			release = album.getReleaseDate();
-		} else {
-			release = info.getReleaseDate();
-		}
-		if(release != null){
-			log.info("Year date format: " + release);
-			lastfmAlbum.setYear(helper.getYear(release));
-			log.info("Year metadata format: " + lastfmAlbum.getYear());
-		} else {
-			lastfmAlbum.setYear(StringUtils.EMPTY);
-		}
-	}
-
-	public ActionResult isSomethingNew(LastfmAlbum lastfmAlbum, Metadata metadata) {
-		if(lastfmAlbum.getImageIcon() == null && StringUtils.isEmpty(lastfmAlbum.getYear()) && StringUtils.isEmpty(lastfmAlbum.getGenre())){
-			return ActionResult.Complete;
-		}
-		CoverArt coverArt = new CoverArt(lastfmAlbum.getImageIcon(), CoverArtType.LAST_FM);
-		metadata.setNewCoverArt(coverArt);
-		if(StringUtils.isEmpty(metadata.getYear())){
-			metadata.setYear(lastfmAlbum.getYear());
-		}
-		if(StringUtils.isEmpty(metadata.getGenre())){
-			metadata.setGenre(lastfmAlbum.getGenre());
-		}
-		return ActionResult.New;
+		return true;
 	}
 
 }

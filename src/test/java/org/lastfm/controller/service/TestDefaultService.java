@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.service.DefaultService;
+import org.jas.service.MetadataService;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.Metadata;

@@ -200,42 +200,47 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.lastfm.controller.service;
+ */
+package org.jas.service;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.jas.action.ActionResult;
-import org.lastfm.model.LastfmAlbum;
-import org.lastfm.model.Metadata;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.imageio.ImageIO;
+
+import org.apache.commons.lang3.StringUtils;
+import org.jas.ApplicationState;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LastfmService {
-	
-	@Autowired
-	private CompleteService completeService;
-	
-	private Log log = LogFactory.getLog(this.getClass());
+public class ImageService {
 
-	public synchronized ActionResult completeLastFM(Metadata metadata) {
-		try {
-			if (completeService.canLastFMHelpToComplete(metadata)) {
-				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
-				return completeService.isSomethingNew(lastfmAlbum, metadata);
-			} else {
-				return ActionResult.Complete;
-			}
-		} catch (MalformedURLException mfe) {
-			log.error(mfe, mfe);
-			return ActionResult.Error;
-		} catch (IOException ioe) {
-			log.error(ioe, ioe);
-			return ActionResult.Error;
-		} 
+	public Image readDefaultImage() throws MalformedURLException, IOException {
+		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
 	}
+
+	public File createTempFile(String prefix) throws IOException {
+		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
+	}
+
+	public void write(Image bufferedImage, File file) throws IOException {
+		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
+	}
+
+	public Image readDragImage() throws MalformedURLException, IOException {
+		return ImageIO.read(new File(ApplicationState.DRAG_IMAGE));
+	}
+
+	public Image readCloseImage() throws MalformedURLException, IOException {
+		return ImageIO.read(new File(ApplicationState.CLOSE_IMAGE));
+	}
+	
+	public Image readImage(String imageURL) throws MalformedURLException, IOException {
+		return ImageIO.read(new URL(imageURL));
+	}
+
 }

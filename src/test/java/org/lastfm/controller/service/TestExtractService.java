@@ -5,6 +5,7 @@ import static org.mockito.Mockito.when;
 
 import java.io.File;
 
+import org.jas.service.ExtractService;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.Metadata;

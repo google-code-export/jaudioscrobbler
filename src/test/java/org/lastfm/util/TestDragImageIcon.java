@@ -7,9 +7,9 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import static org.mockito.Mockito.*;
 
+import org.jas.service.ImageService;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.controller.service.ImageService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

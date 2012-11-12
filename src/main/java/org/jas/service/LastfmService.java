@@ -201,93 +201,41 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller.service;
+package org.jas.service;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.net.MalformedURLException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
-import org.lastfm.exception.InvalidId3VersionException;
-import org.lastfm.helper.MetadataHelper;
-import org.lastfm.metadata.MetadataException;
-import org.lastfm.metadata.MetadataReader;
-import org.lastfm.metadata.Mp4Reader;
+import org.jas.action.ActionResult;
+import org.lastfm.model.LastfmAlbum;
 import org.lastfm.model.Metadata;
-import org.lastfm.model.Model;
-import org.lastfm.util.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * @understands A class who know how extract metadata from files using a root directory
- */
-
 @Service
-public class MetadataService {
-	private List<Metadata> metadataList;
-	private Set<File> filesWithoutMinimumMetadata;
-	private FileUtils fileUtils = new FileUtils();
+public class LastfmService {
+	
+	@Autowired
+	private CompleteService completeService;
+	
 	private Log log = LogFactory.getLog(this.getClass());
-	
-	@Autowired
-	private ControlEngineConfigurator configurator;
-	@Autowired
-	private MetadataHelper metadataHelper;
-	@Autowired
-	private ExtractService extractService;
 
-	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
-		metadataList = new ArrayList<Metadata>();
-		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
-		List<File> fileList = fileUtils.getFileList(root);
-		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
-		return getMetadataList(fileList);
-	}
-
-	private List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
-			InvalidId3VersionException, MetadataException {
-
-		for (File file : fileList) {
-			Metadata metadata = null;
-			if (fileUtils.isMp3File(file)) {
-				MetadataReader mp3Reader = metadataHelper.createMp3Reader();
-				mp3Reader.setControlEngine(configurator);
-				metadata = mp3Reader.getMetadata(file);
-			} else if (fileUtils.isM4aFile(file)) {
-				Mp4Reader mp4Reader = metadataHelper.createMp4Reader();
-				mp4Reader.setControlEngine(configurator);
-				metadata = mp4Reader.getMetadata(file);
-			}
-
-			if (metadata == null) {
-				log.info(file.getAbsoluteFile() + " is not a valid Audio File");
-			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
-				metadataList.add(metadata);
+	public synchronized ActionResult completeLastFM(Metadata metadata) {
+		try {
+			if (completeService.canLastFMHelpToComplete(metadata)) {
+				LastfmAlbum lastfmAlbum = completeService.getLastFM(metadata);
+				return completeService.isSomethingNew(lastfmAlbum, metadata);
 			} else {
-				metadataList.add(extractService.extractFromFileName(metadata));
-				filesWithoutMinimumMetadata.add(file);
+				return ActionResult.Complete;
 			}
-		}
-		return metadataList;
+		} catch (MalformedURLException mfe) {
+			log.error(mfe, mfe);
+			return ActionResult.Error;
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+			return ActionResult.Error;
+		} 
 	}
-	
-	public boolean isSameAlbum(List<Metadata> metadatas) {
-		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
-			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
-				return false;
-			}
-		}
-		return true;
-	}
-
 }
