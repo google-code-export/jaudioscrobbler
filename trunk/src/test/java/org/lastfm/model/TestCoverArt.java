@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.awt.Image;
 
+import org.jas.model.CoverArt;
+import org.jas.model.CoverArtType;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

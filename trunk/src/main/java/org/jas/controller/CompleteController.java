@@ -214,10 +214,10 @@ import org.jas.action.Actions;
 import org.jas.helper.MusicBrainzDelegator;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataWriter;
+import org.jas.model.CoverArt;
+import org.jas.model.Metadata;
+import org.jas.model.MusicBrainzTrack;
 import org.jas.service.LastfmService;
-import org.lastfm.model.CoverArt;
-import org.lastfm.model.Metadata;
-import org.lastfm.model.MusicBrainzTrack;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

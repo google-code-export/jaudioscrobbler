@@ -5,10 +5,10 @@ import static org.mockito.Mockito.*;
 
 import org.jas.action.ActionResult;
 import org.jas.controller.FormatterController;
+import org.jas.model.Metadata;
 import org.jas.service.FormatterService;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

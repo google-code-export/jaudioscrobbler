@@ -209,9 +209,9 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.model.ExportPackage;
+import org.jas.model.Metadata;
 import org.jas.service.MetadataService;
-import org.lastfm.model.ExportPackage;
-import org.lastfm.model.Metadata;
 import org.lastfm.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -201,50 +201,33 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.model;
+package org.jas.model;
 
-import org.apache.commons.lang3.StringUtils;
+import de.umass.lastfm.Session;
 
-public class MusicBrainzTrack {
-	private String album;
-	private String trackNumber;
-	private String totalTrackNumber;
-	private String cdNumber;
-	private String totalCds;
+public class User {
+	private final String username;
+	private final String password;
+	private Session session;
 
-	public MusicBrainzTrack() {
-		album = StringUtils.EMPTY;
-		trackNumber = "0";
+	public User(String username, String password) {
+		this.username = username;
+		this.password = password;
 	}
 	
-	public String getAlbum() {
-		return album;
+	public String getUsername() {
+		return username;
 	}
-	public void setAlbum(String album) {
-		this.album = album;
+	
+	public String getPassword() {
+		return password;
 	}
-	public String getTrackNumber() {
-		return trackNumber;
+
+	public void setSession(Session session) {
+		this.session = session;
 	}
-	public void setTrackNumber(String trackNumber) {
-		this.trackNumber = trackNumber;
-	}
-	public String getTotalTrackNumber() {
-		return totalTrackNumber;
-	}
-	public void setTotalTrackNumber(String totalTrackNumber) {
-		this.totalTrackNumber = totalTrackNumber;
-	}
-	public void setCdNumber(String cdNumber) {
-		this.cdNumber = cdNumber;
-	}
-	public String getCdNumber() {
-		return cdNumber;
-	}
-	public void setTotalCds(String totalCds) {
-		this.totalCds = totalCds;
-	}
-	public String getTotalCds() {
-		return totalCds;
+	
+	public Session getSession() {
+		return session;
 	}
 }

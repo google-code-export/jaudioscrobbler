@@ -221,12 +221,12 @@ import org.jas.event.Events;
 import org.jas.gui.MainWindow;
 import org.jas.gui.MetadataDialog;
 import org.jas.helper.MetadataHelper;
+import org.jas.model.Metadata;
+import org.jas.model.MetadataAlbumValues;
+import org.jas.model.Model;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.model.Metadata;
-import org.lastfm.model.MetadataAlbumValues;
-import org.lastfm.model.Model;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

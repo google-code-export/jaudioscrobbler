@@ -208,8 +208,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.jas.action.ActionResult;
-import org.lastfm.model.ExportPackage;
-import org.lastfm.model.Metadata;
+import org.jas.model.ExportPackage;
+import org.jas.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

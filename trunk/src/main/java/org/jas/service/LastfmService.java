@@ -209,8 +209,8 @@ import java.net.MalformedURLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.action.ActionResult;
-import org.lastfm.model.LastfmAlbum;
-import org.lastfm.model.Metadata;
+import org.jas.model.LastfmAlbum;
+import org.jas.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

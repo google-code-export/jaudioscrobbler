@@ -219,13 +219,13 @@ import org.jas.action.Actions;
 import org.jas.event.Events;
 import org.jas.exception.InvalidId3VersionException;
 import org.jas.metadata.MetadataException;
+import org.jas.model.Metadata;
+import org.jas.model.Model;
 import org.jas.service.MetadataService;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.model.Metadata;
-import org.lastfm.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

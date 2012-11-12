@@ -207,9 +207,9 @@ import static org.mockito.Mockito.verify;
 
 import org.jas.ApplicationState;
 import org.jas.helper.MetadataAdapter;
+import org.jas.model.Metadata;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.model.Metadata;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

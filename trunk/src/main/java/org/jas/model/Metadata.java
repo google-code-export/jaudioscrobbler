@@ -202,82 +202,144 @@
    limitations under the License.
 */
 
-package org.lastfm.model;
+package org.jas.model;
 
 import java.awt.Image;
+import java.io.File;
 
-public class MetadataAlbumValues {
-	private String genre;
-	private String album;
-	private String tracks;
-	private String cd;
-	private String cds;
-	private Image coverArt;
-	private String year;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class Metadata implements Comparable<Metadata>{
+	private String title;
 	private String artist;
-
-	public void setGenre(String genre) {
-		this.genre = genre;
-	}
+	private String album;
+	private String genre;
+	private String trackNumber;
+	private String totalTracks;
+	private Image coverArt;
+	private int length;
+	private int bitRate;
+	private File file;
+	private String cdNumber;
+	private String totalCds;
+	private String year;
+	private CoverArt newCoverArt;
+	private Log log = LogFactory.getLog(this.getClass());
+	private boolean metadataFromFile;
+	private boolean orderByFile=false;
 	
-	public String getGenre() {
-		return genre;
+	public File getFile() {
+		return file;
 	}
-
-	public void setAlbum(String album) {
-		this.album = album;
+	public String getTitle() {
+		return title;
 	}
-	
-	public String getAlbum() {
-		return album;
+	public void setTitle(String title) {
+		this.title = title;
 	}
-
-	public void setTracks(String tracks) {
-		this.tracks = tracks;
-	}
-	
-	public String getTracks() {
-		return tracks;
-	}
-
-	public void setCd(String cd) {
-		this.cd = cd;
-	}
-	
-	public String getCd() {
-		return cd;
-	}
-
-	public void setCds(String cds) {
-		this.cds = cds;
-	}
-	
-	public String getCds() {
-		return cds;
-	}
-
-	public void setCoverart(Image coverArt) {
-		this.coverArt = coverArt;
-	}
-	
-	public Image getCoverArt() {
-		return coverArt;
-	}
-
-	public void setYear(String year) {
-		this.year = year;
-	}
-	
-	public String getYear() {
-		return year;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
-	}
-	
 	public String getArtist() {
 		return artist;
 	}
-
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+	public String getAlbum() {
+		return album;
+	}
+	public void setAlbum(String album) {
+		this.album = album;
+	}
+	public String getGenre() {
+		return genre;
+	}
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+	public void setLenght(int length) {
+		this.length = length;
+	}
+	
+	public int getLength() {
+		return length;
+	}
+	public void setBitRate(int bitRate) {
+		this.bitRate = bitRate;
+	}
+	
+	public int getBitRate() {
+		return bitRate;
+	}
+	public void setFile(File file) {
+		this.file = file;
+	}
+	public String getTrackNumber() {
+		return trackNumber;
+	}
+	public void setTrackNumber(String trackNumber) {
+		this.trackNumber = trackNumber;
+	}
+	public String getTotalTracks() {
+		return totalTracks;
+	}
+	public void setTotalTracks(String totalTracks) {
+		this.totalTracks = totalTracks;
+	}
+	public void setCdNumber(String cdNumber) {
+		this.cdNumber = cdNumber;
+	}
+	public String getCdNumber() {
+		return cdNumber;
+	}
+	public void setTotalCds(String totalCds) {
+		this.totalCds = totalCds;
+	}
+	public String getTotalCds() {
+		return totalCds;
+	}
+	public void setYear(String year) {
+		this.year = year;
+	}
+	public String getYear() {
+		return year;
+	}
+	public Image getCoverArt() {
+		return coverArt;
+	}
+	public void setCoverArt(Image artwork) {
+		this.coverArt = artwork;
+	}
+	public void setNewCoverArt(CoverArt coverArt) {
+		this.newCoverArt = coverArt;
+	}
+	public CoverArt getNewCoverArt() {
+		return newCoverArt;
+	}
+	public boolean isMetadataFromFile() {
+		return metadataFromFile ;
+	}
+	public void setMetadataFromFile(boolean metadataFromFile) {
+		this.metadataFromFile = metadataFromFile;
+	}
+	
+	public boolean isOrderByFile() {
+		return orderByFile;
+	}
+	
+	public void setOrderByFile(boolean orderByFile) {
+		this.orderByFile = orderByFile;
+	}
+	
+	public int compareTo(Metadata metadata) {
+		if(metadata.isOrderByFile()){
+			return getFile().getName().compareTo(metadata.getFile().getName());
+		}
+		try{
+			int thisTrackNumer = Integer.valueOf(getTrackNumber());
+			return thisTrackNumer > Integer.valueOf(metadata.getTrackNumber()) ? 1 : -1;
+		} catch (NumberFormatException nfe){
+			log.error("Metadata : " + metadata.getTitle() + " has an incorrect trackNumber: " + nfe.getMessage());
+			return 0;
+		}
+	}
 }

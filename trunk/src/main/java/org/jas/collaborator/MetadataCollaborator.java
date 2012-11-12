@@ -3,7 +3,7 @@ package org.jas.collaborator;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.lastfm.model.Metadata;
+import org.jas.model.Metadata;
 
 public class MetadataCollaborator {
 

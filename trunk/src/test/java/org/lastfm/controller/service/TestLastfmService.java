@@ -214,12 +214,12 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.jas.action.ActionResult;
+import org.jas.model.LastfmAlbum;
+import org.jas.model.Metadata;
 import org.jas.service.CompleteService;
 import org.jas.service.LastfmService;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.model.LastfmAlbum;
-import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

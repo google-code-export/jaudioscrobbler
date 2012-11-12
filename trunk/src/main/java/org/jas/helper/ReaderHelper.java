@@ -1,8 +1,8 @@
 package org.jas.helper;
 
+import org.jas.model.GenreTypes;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
-import org.lastfm.model.GenreTypes;
 
 public class ReaderHelper {
 

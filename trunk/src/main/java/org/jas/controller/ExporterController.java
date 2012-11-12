@@ -211,7 +211,7 @@ import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
 import org.jas.helper.ExporterHelper;
-import org.lastfm.model.ExportPackage;
+import org.jas.model.ExportPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

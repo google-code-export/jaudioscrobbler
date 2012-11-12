@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.awt.Image;
 
+import org.jas.model.MetadataAlbumValues;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
