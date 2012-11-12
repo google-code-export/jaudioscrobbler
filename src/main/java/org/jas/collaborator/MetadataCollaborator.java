@@ -1,4 +1,4 @@
-package org.lastfm.collaborator;
+package org.jas.collaborator;
 
 import java.util.List;
 

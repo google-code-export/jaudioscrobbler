@@ -225,7 +225,7 @@ import javax.swing.JTextField;
 
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
-import org.lastfm.collaborator.MetadataCollaborator;
+import org.jas.collaborator.MetadataCollaborator;
 import org.lastfm.dnd.ImageDropListener;
 import org.lastfm.dnd.MainFrameDragOverListener;
 import org.lastfm.dnd.MultiLayerDropTargetListener;
