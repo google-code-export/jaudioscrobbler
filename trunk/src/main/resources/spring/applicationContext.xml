@@ -7,7 +7,7 @@
            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
            http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
            
-    <context:component-scan base-package="org.lastfm" />       
+    <context:component-scan base-package="org.jas" />       
 	
 	<bean class="org.asmatron.messengine.engines.DefaultEngine" id="applicationEngine" />
 	<bean class="org.asmatron.messengine.engines.support.ViewEngineConfigurator" id="viewEngineConfigurator">
@@ -20,7 +20,7 @@
 		<constructor-arg ref="applicationEngine" />
 	</bean>
 	
-	<bean id="loginWindow" class="org.lastfm.gui.LoginWindow" />
-	<bean id="mainWindow" class="org.lastfm.gui.MainWindow" />
+	<bean id="loginWindow" class="org.jas.gui.LoginWindow" />
+	<bean id="mainWindow" class="org.jas.gui.MainWindow" />
 	
 </beans>
