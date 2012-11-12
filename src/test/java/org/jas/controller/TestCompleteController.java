@@ -201,86 +201,180 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller;
+package org.jas.controller;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.io.IOException;
+import java.awt.Image;
+import java.io.File;
 
-import org.asmatron.messengine.ControlEngine;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.apache.commons.lang3.StringUtils;
 import org.jas.action.ActionResult;
-import org.jas.controller.ScrobblerController;
-import org.jas.helper.ScrobblerHelper;
+import org.jas.controller.CompleteController;
+import org.jas.helper.MusicBrainzDelegator;
+import org.jas.metadata.MetadataException;
+import org.jas.metadata.MetadataWriter;
+import org.jas.model.CoverArt;
 import org.jas.model.Metadata;
+import org.jas.model.MusicBrainzTrack;
+import org.jas.service.LastfmService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestScrobblerController {
-	@InjectMocks
-	private ScrobblerController controller = new ScrobblerController();
+import com.slychief.javamusicbrainz.ServerUnavailableException;
 
+
+public class TestCompleteController {
+	private static final String ERROR = "Error";
+
+	@InjectMocks
+	private CompleteController controller = new CompleteController();
+	
 	@Mock
-	private ScrobblerHelper scrobblerHelper;
+	private MusicBrainzDelegator musicBrainzDelegator;
+	@Mock
+	private MetadataWriter metadataWriter;
 	@Mock
 	private Metadata metadata;
 	@Mock
-	private ControlEngineConfigurator configurator;
+	private File file;
 	@Mock
-	private ControlEngine controlEngine;
+	private LastfmService coverArtService;
+	@Mock
+	private CoverArt coverArt;
+	@Mock
+	private Image imageIcon;
+
+	private String artist = "Dave Deen";
+	private String title = "Footprints (Original Mix)";
+	private String album = "Footprints EP";
+	private String genre = "Trance";
+	private String trackNumber = "10";
+	private String totalTracks = "25";
+	private String year = "1990";
+	private String cdNumber = "1";
+	private String totalCds = "2";
 
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		when(metadata.getArtist()).thenReturn(artist);
+		when(metadata.getTitle()).thenReturn(title);
+		when(metadata.getAlbum()).thenReturn(album);
+		when(metadata.getTrackNumber()).thenReturn(trackNumber);
+		when(metadata.getTotalTracks()).thenReturn(totalTracks);
+		when(metadata.getCdNumber()).thenReturn(cdNumber);
+		when(metadata.getTotalCds()).thenReturn(totalCds);
+		when(metadata.getYear()).thenReturn(year);
+		when(metadata.getGenre()).thenReturn(genre);
+		when(coverArtService.completeLastFM(metadata)).thenReturn(ActionResult.Complete);
 	}
-
+	
 	@Test
-	public void shouldSendMetadata() throws Exception {
-		when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.New);
-
-		ActionResult result = controller.sendMetadata(metadata);
-
-		verify(scrobblerHelper).send(metadata);
+	public void shouldCompleteMetadata() throws Exception {
+		MusicBrainzTrack musicBrainzTrack = setExpectations();
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
+		when(metadata.getAlbum()).thenReturn(StringUtils.EMPTY);
+		
+		ActionResult result = controller.completeAlbumMetadata(metadata);
+		
+		verify(musicBrainzDelegator).getAlbum(artist, title);
+		verify(metadata).setAlbum(album);
+		verify(metadata).setTrackNumber(trackNumber);
+		verify(metadata).setTotalTracks(totalTracks);
 		assertEquals(ActionResult.New, result);
 	}
 
-	@Test
-	public void shouldDetectWhenErrorInScrobbling() throws Exception {
-		when(scrobblerHelper.send(metadata)).thenReturn(ActionResult.Error);
 
-		ActionResult result = controller.sendMetadata(metadata);
+	private MusicBrainzTrack setExpectations() {
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		musicBrainzTrack.setAlbum(album);
+		musicBrainzTrack.setTrackNumber(trackNumber);
+		musicBrainzTrack.setTotalTrackNumber(totalTracks);
+		return musicBrainzTrack;
+	}
+	
+	@Test
+	public void shouldDetectAnErrorInService() throws Exception {
+		when(metadata.getAlbum()).thenReturn("");
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenThrow(new ServerUnavailableException());
+		
+		ActionResult result = controller.completeAlbumMetadata(metadata);
+		
+		assertEquals(ActionResult.Error, result);
+	}
+	
+	@Test
+	public void shouldNotFoundAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn("");
+		MusicBrainzTrack musicBrainzTrack = new MusicBrainzTrack();
+		when(musicBrainzDelegator.getAlbum(artist, title)).thenReturn(musicBrainzTrack);
+		
+		ActionResult result = controller.completeAlbumMetadata(metadata);
 
-		verify(scrobblerHelper).send(metadata);
+		verify(metadata, never()).setAlbum(album);
+		assertEquals(ActionResult.Not_Found, result);
+	}
+	
+	@Test
+	public void shouldCompleteAlbumInMetadata() throws Exception {
+		when(metadata.getFile()).thenReturn(file);
+		
+		ActionResult result = controller.completeAlbum(metadata);
+		
+		verify(metadataWriter).setFile(file);
+		verify(metadataWriter).writeArtist(artist);
+		verify(metadataWriter).writeTitle(title);
+		verify(metadataWriter).writeAlbum(album);
+		verify(metadataWriter).writeTrackNumber(trackNumber.toString());
+		verify(metadataWriter).writeTotalTracksNumber(totalTracks.toString());
+		verify(metadataWriter).writeCdNumber(cdNumber);
+		verify(metadataWriter).writeTotalCds(totalCds);
+		verify(metadataWriter).writeYear(year);
+		verify(metadataWriter).writeGenre(genre);
+		assertEquals(ActionResult.Updated, result);
+	}
+	
+	@Test
+	public void shouldRemoveCoverArt() throws Exception {
+		when(metadata.getNewCoverArt()).thenReturn(coverArt);
+		when(coverArt.getImageIcon()).thenReturn(imageIcon);
+		
+		ActionResult result = controller.completeAlbum(metadata);
+		
+		verify(metadataWriter).removeCoverArt();
+		verify(metadataWriter).writeCoverArt(imageIcon);
+		verify(metadata).setCoverArt(imageIcon);
+		assertEquals(ActionResult.Updated, result);
+	}
+	
+	@Test
+	public void shouldNotUpdateMetadata() throws Exception {
+		when(metadata.getFile()).thenReturn(file);
+		when(metadataWriter.writeAlbum(album)).thenThrow(new MetadataException(ERROR));
+		
+		ActionResult result = controller.completeAlbum(metadata);
+		
 		assertEquals(ActionResult.Error, result);
 	}
 	
 	@Test
-	public void shouldSetup() throws Exception {
-		controller.setup();
-		verify(scrobblerHelper).setControlEngine(controlEngine);
+	public void shouldReturnMetadataCompleteIfHasAlbum() throws Exception {
+		when(metadata.getAlbum()).thenReturn(album);
+		ActionResult result = controller.completeAlbumMetadata(metadata);
+		
+		assertEquals(ActionResult.Complete, result);
 	}
 	
 	@Test
-	public void shouldCatchIOException() throws Exception {
-		when(scrobblerHelper.send(metadata)).thenThrow(new IOException());
-		
-		ActionResult result = controller.sendMetadata(metadata);
-		
-		assertEquals(ActionResult.Error, result);
-	}
-	
-	@Test
-	public void shouldCatchInterruptedException() throws Exception {
-		when(scrobblerHelper.send(metadata)).thenThrow(new InterruptedException());
-		
-		ActionResult result = controller.sendMetadata(metadata);
-		
-		assertEquals(ActionResult.Error, result);
+	public void shouldCompleteCoverArtMetadata() throws Exception {
+		controller.completeLastFmMetadata(metadata);
+		verify(coverArtService).completeLastFM(metadata);
 	}
 }

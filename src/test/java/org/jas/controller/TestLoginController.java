@@ -201,222 +201,89 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.controller;
+package org.jas.controller;
 
-import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.JFileChooser;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
-import org.jas.controller.MetadataController;
+import org.jas.controller.LoginController;
 import org.jas.event.Events;
-import org.jas.exception.InvalidId3VersionException;
-import org.jas.metadata.MetadataException;
-import org.jas.model.Metadata;
+import org.jas.helper.LastFMAuthenticator;
 import org.jas.model.Model;
-import org.jas.service.MetadataService;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
+import org.jas.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import de.umass.lastfm.Session;
 
-@SuppressWarnings("unchecked")
-public class TestMetadataController {
-	
+
+
+public class TestLoginController {
 	@InjectMocks
-	private MetadataController controller = new MetadataController();
+	private LoginController controller = new LoginController();
 	
 	@Mock
-	private JFileChooser fileChooser;
+	private LastFMAuthenticator lastfmAuthenticator;
 	@Mock
 	private ControlEngineConfigurator configurator;
 	@Mock
-	private MetadataService metadataExtractor;
-	@Mock
-	private File root;
-	@Mock
 	private ControlEngine controlEngine;
 	@Mock
-	private Metadata metadata;
+	private Session session;
 
-	private List<Metadata> metadataList = new ArrayList<Metadata>();
-
+	private String username = "josdem";
+	private String password = "password";
+	private User credentials;
+	
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(fileChooser.getSelectedFile()).thenReturn(root);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
+		
+		credentials = new User(username, password);
+	}
+	
+	
+	@Test
+	@SuppressWarnings("unchecked")
+	public void shouldLogin() throws Exception {
+		when(lastfmAuthenticator.login(username, password)).thenReturn(session);
+		
+		controller.login(credentials);
+		
+		verify(lastfmAuthenticator).login(username, password);
+		verify(controlEngine).set(Model.CURRENT_USER, credentials, null);
+		verify(controlEngine).fireEvent(eq(Events.LOGGED), isA(ValueEvent.class));
 	}
 	
 	@Test
-	public void shouldGetMetadata() throws Exception {
-		setFileChooserExpectations();
-		metadataList.add(metadata);
-		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
+	public void shouldfailAtLogin() throws Exception {
+		controller.login(credentials);
 		
-		controller.getMetadata();
-		
-		fileChooserSetupExpectations();
-		verify(fileChooser).getSelectedFile();
-		verify(controlEngine).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
-		verify(controlEngine).set(Model.METADATA, metadataList, null);
-		verify(metadataExtractor).extractMetadata(root);
-		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(metadataList));
-		verify(controlEngine).fireEvent(Events.LOADED);
+		verify(lastfmAuthenticator).login(username, password);
+		verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
+		verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
 	}
 	
 	@Test
-	public void shouldGetAnOrderListByTrackNumnber() throws Exception {
-		setFileChooserExpectations();
+	public void shouldKnowAIOException() throws Exception {
+		when(lastfmAuthenticator.login(username, password)).thenThrow(new IOException());
 		
-		Metadata firstTrack = new Metadata();
-		firstTrack.setTrackNumber("1");
+		controller.login(credentials);
 		
-		Metadata secondTrack = new Metadata();
-		secondTrack.setTrackNumber("2");
-		
-		metadataList.add(secondTrack);
-		metadataList.add(firstTrack);
-		
-		controller.getMetadata();
-		
-		assertEquals("1", metadataList.get(0).getTrackNumber());
-		assertEquals("2", metadataList.get(1).getTrackNumber());
-	}
-
-	private void setFileChooserExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
-			InvalidId3VersionException, MetadataException {
-		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
-		when(fileChooser.getSelectedFile()).thenReturn(root);
-		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
-	}
-
-	private void fileChooserSetupExpectations() {
-		verify(fileChooser).setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		verify(fileChooser).showOpenDialog(null);
+		verify(controlEngine, never()).set(Model.CURRENT_USER, credentials, null);
+		verify(controlEngine).fireEvent(Events.LOGIN_FAILED);
 	}
 	
-	@Test
-	public void shouldKnowWhenUserCancel() throws Exception {
-		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.CANCEL_OPTION);
-		
-		controller.getMetadata();
-		
-		fileChooserSetupExpectations();
-		verify(fileChooser, never()).getSelectedFile();
-		verify(controlEngine, never()).fireEvent(eq(Events.DIRECTORY_SELECTED), isA(ValueEvent.class));
-		verify(metadataExtractor, never()).extractMetadata(root);
-		verify(controlEngine, never()).fireEvent(Events.LOADED);
-	}
-	
-	@Test
-	public void shouldNotFindAnyAudioFile() throws Exception {
-		setFileChooserExpectations();
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.DIRECTORY_EMPTY);
-		verify(controlEngine, never()).fireEvent(Events.LOADED);
-	}
-	
-	@Test
-	public void shouldCatchAnIOException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new IOException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnTagException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new TagException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnReadOnlyFileException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new ReadOnlyFileException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnInvalidAudioFrameException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidAudioFrameException(null));
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnInvalidId3VersionException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidId3VersionException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnInterruptedException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new InterruptedException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnCannotReadException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new CannotReadException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnMetadataException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new MetadataException(null));
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).fireEvent(Events.OPEN);
-	}
-	
-	@Test
-	public void shouldCatchAnIllegalArgumentException() throws Exception {
-		when(metadataExtractor.extractMetadata(root)).thenThrow(new IllegalArgumentException());
-		
-		controller.getMetadata();
-		
-		verify(controlEngine).set(Model.METADATA, null, null);
-		verify(controlEngine).fireEvent(Events.LOAD, new ValueEvent<List<Metadata>>(null));
-		verify(controlEngine).fireEvent(Events.LOADED);
-	}
 }
