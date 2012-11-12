@@ -1,4 +1,4 @@
-package org.lastfm.util;
+package org.jas.util;
 
 import static org.junit.Assert.*;
 
@@ -8,17 +8,18 @@ import javax.swing.ImageIcon;
 import static org.mockito.Mockito.*;
 
 import org.jas.service.ImageService;
-import org.jas.util.DragImageIcon;
+import org.jas.util.CloseImageIcon;
+import org.jas.util.ImageIconBase;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestDragImageIcon {
+public class TestCloseImageIcon {
 
 	@InjectMocks
-	private DragImageIcon dragImageIcon = new DragImageIcon();
+	private CloseImageIcon closeImageIcon = new CloseImageIcon();
 	
 	@Mock
 	private ImageService imageService;
@@ -32,10 +33,13 @@ public class TestDragImageIcon {
 	
 	@Test
 	public void shouldGetImageIcon() throws Exception {
-		when(imageService.readDragImage()).thenReturn(image);
-		ImageIcon imageIcon = dragImageIcon.getImageIcon();
-		verify(imageService).readDragImage();
+		when(imageService.readCloseImage()).thenReturn(image);
+		
+		ImageIcon imageIcon = closeImageIcon.getImageIcon();
+		
+		verify(imageService).readCloseImage();
+		assertTrue(closeImageIcon instanceof ImageIconBase);
 		assertNotNull(imageIcon);
 	}
-
+	
 }
