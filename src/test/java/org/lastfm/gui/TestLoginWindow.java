@@ -214,6 +214,7 @@ import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.fest.swing.fixture.FrameFixture;
 import org.jas.action.Actions;
+import org.jas.gui.LoginWindow;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

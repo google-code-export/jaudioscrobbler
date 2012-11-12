@@ -201,165 +201,176 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.gui;
 
+package org.jas.gui;
+
+import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-import org.asmatron.messengine.annotations.EventMethod;
-import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
-import org.jas.ApplicationState;
-import org.jas.action.Actions;
-import org.jas.event.Events;
-import org.lastfm.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.lastfm.util.CloseImageIcon;
+import org.lastfm.util.ImageIconBase;
 
 /**
- * @understands UI components for logging window
+ * @understands
+ * This class decorates the dialog borders avoiding code duplication in every
+ * dialog</br> </br> <b>Note:</b> Call {@code initializeContentPane()} in the
+ * contructor of every subclass but before setting the dialog visible
  */
 
-public class LoginWindow {
-	private JButton sendButton;
-	private JTextField usernameTextfield;
-	private JTextField passwordTextfield;
-	private JFrame frame;
-	private JPanel panel;
-	private static final String USERNAME_TEXTFIELD_NAME = "usernameTextfield";
-	private static final String PASSWORD_TEXTFIELD_NAME = "passwordTextfield";
-	private static final String SEND_BUTTON_LABEL = "Login";
-	private static final String SEND_BUTTON_NAME = "sendButton";
-	private static final Rectangle FRAME_BOUNDS = new Rectangle(300, 300, 300, 122);
-	private static final int TEXT_COLUMNS = 10;
-	private JLabel usernameLabel;
-	private JLabel passwordLabel;
+public abstract class AllDialog extends JDialog {
+	private static final long serialVersionUID = -9135593375722062618L;
+	private static final Insets TITLE_LABEL_INSETS = new Insets(1, 0, 0, 0);
+	private static final Insets EXIT_BUTTON_INSETS = new Insets(2, 0, 0, 0);
+	private static final Dimension TITLE_PANEL_DEFAULT_SIZE = new Dimension(560, 24);
+	private static final Dimension EXIT_BUTTON_SIZE = new Dimension(15, 15);
+	protected static final Insets TITLE_PANEL_INSETS = new Insets(0, 5, 0, 5);
+	protected static final Insets CONTENT_PANEL_INSETS = new Insets(0, 5, 4, 5);
+	private static final String EXIT_BUTTON_NAME = "closeDialogButton";
+	private static final String ROOT_PANE_NAME = "RootPane";
+	protected static final int TITLE_HEIGHT = 24;
+	protected static final int BORDER = 5;
+	private JPanel titlePanel;
+	private JLabel titleLabel;
+	private JButton exitButton;
 	
-	@Autowired
-	private ViewEngineConfigurator configurator;
-	
-	public LoginWindow() {
-		doLayout();
-	}
-	
-	private void doLayout(){
-		getFrame().add(getPanel());
-		getFrame().setVisible(false);
-		
-		getSendButton().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
-			}
-		});
-		
-		getSendButton().addKeyListener(new KeyAdapter() {
-			
-			@Override
-			public void keyPressed(KeyEvent e) {
-				configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
-			}
-		});
-		
-		getPasswordTextfield().addKeyListener(new KeyAdapter() {
+	/**
+	 * Set the title of the dialog
+	 * 
+	 * @param titleLabel
+	 */
+	abstract String dialogTitle();
 
-			@Override
-			public void keyPressed(KeyEvent e) {
-				int key = e.getKeyCode();
-				if(key == KeyEvent.VK_ENTER){
-					configurator.getViewEngine().sendValueAction(Actions.LOGIN, new User(usernameTextfield.getText(), passwordTextfield.getText()));
-				}
-			}
-		});
+	/**
+	 * Obtains the panel with the components for the dialog
+	 * 
+	 * @return JComponent dialog contents
+	 */
+	abstract JComponent getContentComponent();
+	
+	public AllDialog(JFrame frame, boolean modal, String message) {
+		super(frame, modal);
+		initialize();
 	}
 	
-	@EventMethod(Events.USER_LOGGED)
-	private void onUserLogged(){
-		this.getFrame().dispose();
+	private void initialize() {
+		setUndecorated(true);
+		setModalityType(Dialog.DEFAULT_MODALITY_TYPE);
+		getRootPane().setName(ROOT_PANE_NAME);
 	}
 	
-	private JPanel getPanel() {
-		if(panel == null){
-			panel = new JPanel(new GridBagLayout());
-			GridBagConstraints c = new GridBagConstraints();
-			c.gridx = 0;
-			c.gridy = 0;
-			panel.add(getUserNameLabel(), c);
-			c.gridx = 1;
-			c.gridy = 0;
-			panel.add(getUsernameTextfield(), c);
-			c.gridx = 0;
-			c.gridy = 1;
-			panel.add(getPasswordLabel(), c);
-			c.gridx = 1;
-			c.gridy = 1;
-			panel.add(getPasswordTextfield(), c);
-			c.insets = new Insets(0, 40, 0, 0);
-			c.gridx = 1;
-			c.gridy = 2;
-			panel.add(getSendButton(), c);
-		}
-		return panel;
+	protected void changeSize(int width, int height) {
+		Dimension preferredSize = new Dimension(width, height);
+		this.setPreferredSize(preferredSize);
+		this.setMinimumSize(preferredSize);
+		this.setMaximumSize(preferredSize);
+		this.setSize(preferredSize);
+		this.validate();
 	}
+	
+	/**
+	 * Call this method from the classes which extends this, after initialize
+	 * all their components and before setting it visible.
+	 */
+	protected void initializeContentPane() {
+		// setting the layout of the dialog
+		GridBagConstraints titlePanelConstraints = new GridBagConstraints();
+		titlePanelConstraints.gridx = 0;
+		titlePanelConstraints.gridy = 0;
+		titlePanelConstraints.fill = GridBagConstraints.HORIZONTAL;
+		titlePanelConstraints.weightx = 1;
+		titlePanelConstraints.insets = TITLE_PANEL_INSETS;
+		GridBagConstraints contentPanelConstraints = new GridBagConstraints();
+		contentPanelConstraints.gridx = 0;
+		contentPanelConstraints.gridy = 1;
+		contentPanelConstraints.fill = GridBagConstraints.BOTH;
+		contentPanelConstraints.weightx = 1;
+		contentPanelConstraints.weighty = 1;
+		contentPanelConstraints.insets = CONTENT_PANEL_INSETS;
 
-	private JLabel getPasswordLabel() {
-		if(passwordLabel == null){
-			passwordLabel = new JLabel();
-			passwordLabel.setText(ApplicationState.PASSWORD_LABEL);
-		}
-		return passwordLabel;
+		getContentPane().setLayout(new GridBagLayout());
+		getContentPane().add(getTitlePanel(), titlePanelConstraints);
+		getContentPane().add(getContentComponent(), contentPanelConstraints);
+
+		// setting the size according to the content component
+		Dimension contentSize = getContentComponent().getPreferredSize();
+		int w = (int) contentSize.getWidth() + BORDER * 2;
+		int h = (int) contentSize.getHeight() + BORDER + TITLE_HEIGHT;
+		changeSize(w, h);
+		setLocationRelativeTo(getParent());
+		pack();
 	}
+	
+	protected JPanel getTitlePanel() {
+		if (titlePanel == null) {
+			GridBagConstraints titleLabelConstraints = new GridBagConstraints();
+			titleLabelConstraints.gridx = 0;
+			titleLabelConstraints.gridy = 0;
+			titleLabelConstraints.insets = TITLE_LABEL_INSETS;
+			titleLabelConstraints.weightx = 1;
+			titleLabelConstraints.fill = GridBagConstraints.HORIZONTAL;
+			GridBagConstraints exitButtonConstraints = new GridBagConstraints();
+			exitButtonConstraints.gridx = 1;
+			exitButtonConstraints.gridy = 0;
+			exitButtonConstraints.insets = EXIT_BUTTON_INSETS;
+			exitButtonConstraints.anchor = GridBagConstraints.CENTER;
 
-	private JLabel getUserNameLabel() {
-		if(usernameLabel == null){
-			usernameLabel = new JLabel();
-			usernameLabel.setText(ApplicationState.USERNAME_LABEL);
-			
+			titlePanel = new JPanel();
+			titlePanel.setLayout(new GridBagLayout());
+			titlePanel.setPreferredSize(TITLE_PANEL_DEFAULT_SIZE);
+			titlePanel.setMinimumSize(TITLE_PANEL_DEFAULT_SIZE);
+			titlePanel.setMaximumSize(TITLE_PANEL_DEFAULT_SIZE);
+			titlePanel.add(getTitleLabel(), titleLabelConstraints);
+			titlePanel.add(getExitButton(), exitButtonConstraints);
 		}
-		return usernameLabel;
+		return titlePanel;
 	}
-
-	private JTextField getUsernameTextfield() {
-		if(usernameTextfield == null){
-			usernameTextfield = new JTextField(TEXT_COLUMNS);
-			usernameTextfield.setName(USERNAME_TEXTFIELD_NAME);
+	
+	protected JLabel getTitleLabel() {
+		if (titleLabel == null) {
+			titleLabel = new JLabel();
 		}
-		return usernameTextfield;
+		return titleLabel;
 	}
-
-	private JTextField getPasswordTextfield() {
-		if(passwordTextfield == null){
-			passwordTextfield = new JPasswordField(TEXT_COLUMNS);
-			passwordTextfield.setName(PASSWORD_TEXTFIELD_NAME);
+	
+	protected JButton getExitButton() {
+		if (exitButton == null) {
+			exitButton = new JButton();
+			exitButton.setName(EXIT_BUTTON_NAME);
+			exitButton.setPreferredSize(EXIT_BUTTON_SIZE);
+			exitButton.setMinimumSize(EXIT_BUTTON_SIZE);
+			exitButton.setMaximumSize(EXIT_BUTTON_SIZE);
+			exitButton.setMnemonic(KeyEvent.VK_UNDEFINED);
+			ImageIconBase imageIconBase = new CloseImageIcon();
+			exitButton.setIcon(imageIconBase.getImageIcon());
+			exitButton.addActionListener(new CloseListener());
 		}
-		return passwordTextfield;
+		return exitButton;
 	}
-
-	public JFrame getFrame() {
-		if(frame == null){
-			frame = new JFrame();
-			frame.setBounds(FRAME_BOUNDS);
-			frame.setResizable(false);
-		}
-		return frame;
+	
+	protected void closeDialog() {
+		Window window = AllDialog.this;
+		window.dispatchEvent(new WindowEvent(window, WindowEvent.WINDOW_CLOSING));
 	}
-
-	private JButton getSendButton() {
-		if (sendButton == null) {
-			sendButton = new JButton(SEND_BUTTON_LABEL);
-			sendButton.setName(SEND_BUTTON_NAME);
+	
+	class CloseListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			closeDialog();
 		}
-		return sendButton;
 	}
 }

@@ -218,6 +218,8 @@ import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
 import org.fest.swing.fixture.FrameFixture;
 import org.jas.event.Events;
+import org.jas.gui.MainWindow;
+import org.jas.gui.MetadataDialog;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

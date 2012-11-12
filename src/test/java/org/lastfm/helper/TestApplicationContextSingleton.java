@@ -3,9 +3,9 @@ package org.lastfm.helper;
 import static org.junit.Assert.assertNotNull;
 
 import org.asmatron.messengine.engines.DefaultEngine;
+import org.jas.gui.LoginWindow;
+import org.jas.gui.MainWindow;
 import org.junit.Test;
-import org.lastfm.gui.LoginWindow;
-import org.lastfm.gui.MainWindow;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class TestApplicationContextSingleton {

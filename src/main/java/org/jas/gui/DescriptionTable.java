@@ -201,7 +201,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.gui;
+package org.jas.gui;
 
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
