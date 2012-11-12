@@ -272,8 +272,8 @@ import org.jas.model.Metadata;
 import org.jas.model.MetadataAlbumValues;
 import org.jas.model.Model;
 import org.jas.model.User;
-import org.lastfm.observ.ObservValue;
-import org.lastfm.observ.Observer;
+import org.jas.observer.ObservValue;
+import org.jas.observer.Observer;
 import org.lastfm.util.ImageUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 

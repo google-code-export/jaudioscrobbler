@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm.observ;
+package org.jas.observer;
 
 public class ObserveObject {
 	public static final ObserveObject EMPTY = new ObserveObject();

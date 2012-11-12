@@ -202,25 +202,10 @@
    limitations under the License.
 */
 
-package org.lastfm.observ;
+package org.jas.observer;
 
-public class ObservePropertyChanged<S, V> extends ObservValue<V> {
+public interface ObservableControl {
+	void suspend();
 
-	private final S source;
-	private final V oldValue;
-
-	public ObservePropertyChanged(S s, V newValue, V oldValue) {
-		super(newValue);
-		this.oldValue = oldValue;
-		this.source = s;
-	}
-
-	public V getOldValue() {
-		return oldValue;
-	}
-
-	public S getSource() {
-		return source;
-	}
-
+	void resume();
 }
