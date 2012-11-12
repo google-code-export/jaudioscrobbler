@@ -200,100 +200,101 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.lastfm.helper;
+ */
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.never;
+package org.jas.helper;
+
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+
+import java.io.File;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.MusicBrainzDelegator;
-import org.jas.helper.TrackFinder;
-import org.jas.model.MusicBrainzTrack;
+import org.jas.ApplicationState;
+import org.jas.helper.MetadataExporter;
+import org.jas.helper.OutStreamWriter;
+import org.jas.model.ExportPackage;
+import org.jas.model.Metadata;
+import org.jas.service.FormatterService;
+import org.jas.service.MetadataService;
+import org.jas.util.FileUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestMusicBrainzDelegator {
-	private static final Object ZERO = "0";
-
+public class TestMetadataExporter {
+	private static final String NEW_LINE = "\n";
+	private static final String DASH = " - ";
+	private static final String DOT = ". ";
+	private static final String PAR_OPEN = " (";
+	private static final String PAR_CLOSE = ")";
+	private static final String BY = " by ";
+	
 	@InjectMocks
-	MusicBrainzDelegator service = new MusicBrainzDelegator();
+	private MetadataExporter metadataExporter = new MetadataExporter();
 	
 	@Mock
-	private TrackFinder trackService;
+	private FileUtils fileUtils;
+	@Mock
+	private FormatterService formatter;
+	@Mock
+	private Metadata metadata;
+	@Mock
+	private File file;
+	@Mock
+	private OutStreamWriter outputStreamWriter;
+	@Mock
+	private OutputStream writer;
+	@Mock
+	private ExportPackage exportPackage;
+	@Mock
+	private MetadataService metadataService;
 	
-	private String artistName = "";
-	private String trackName = "";
-
+	private String album = "Bliksem";
+	private String artist = "Sander van Doorn";
+	private String title = "Bliksem";
+	int lenght = 397;
+	private String lenghtFormated = "6:37";
+	private List<Metadata> metadatas = new ArrayList<Metadata>();
+	
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		when(metadata.getAlbum()).thenReturn(album);
+		when(metadata.getArtist()).thenReturn(artist);
+		when(metadata.getTitle()).thenReturn(title);
+		when(metadata.getLength()).thenReturn(lenght);
+		when(formatter.getDuration(metadata.getLength())).thenReturn(lenghtFormated);
+		metadatas.add(metadata);
+		when(exportPackage.getRoot()).thenReturn(file);
+		when(exportPackage.getMetadataList()).thenReturn(metadatas);
+		when(fileUtils.createFile(file, StringUtils.EMPTY, ApplicationState.FILE_EXT)).thenReturn(file);
+		when(outputStreamWriter.getWriter(file)).thenReturn(writer);
 	}
 	
 	@Test
-	public void shouldNotGetAlbumIfNoArtistOrTrackName() throws Exception {
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+	public void shouldExport() throws Exception {
+		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
 		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoTrackname() throws Exception {
-		artistName = "Tiesto";
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		metadataExporter.export(exportPackage);
 		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldNotGetAlbumIfNoArtist() throws Exception {
-		trackName = "Here on Earth";
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
+		verify(writer, times(2)).write(metadata.getAlbum().getBytes());
+		verify(writer).write(BY.getBytes());
+		verify(writer, times(2)).write(metadata.getArtist().getBytes());
+		verify(writer, times(3)).write(NEW_LINE.getBytes());
 		
-		assertTrue(StringUtils.isEmpty(result.getAlbum()));
-		assertEquals(ZERO, result.getTrackNumber());
-		verify(trackService, never()).getAlbum(artistName, trackName);
-	}
-	
-	@Test
-	public void shouldGetAlbum() throws Exception {
-		artistName = "Deadmau5";
-		trackName = "Faxing Berlin";
-		String album = "Some Kind Of Blue";
-		MusicBrainzTrack track = new MusicBrainzTrack();
-		track.setAlbum(album);
-		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
-
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertEquals(album, result.getAlbum());
-	}
-	
-	@Test
-	public void shouldReturnTrackNumber() throws Exception {
-		artistName = "Above & Beyond";
-		trackName = "Anjunabeach";
-		String album = "Anjunabeach";
-		String trackNumber = "12";
-		
-		MusicBrainzTrack track = new MusicBrainzTrack();
-		track.setAlbum(album);
-		track.setTrackNumber(trackNumber);
-		
-		when(trackService.getAlbum(artistName, trackName)).thenReturn(track);
-		MusicBrainzTrack result = service.getAlbum(artistName, trackName);
-		
-		assertEquals(album, result.getAlbum());
-		assertEquals(trackNumber, result.getTrackNumber());
+		verify(metadataService).isSameAlbum(metadatas);
+		verify(writer).write(Integer.toString(1).getBytes());
+		verify(writer).write(DOT.getBytes());
+		verify(writer).write(DASH.getBytes());
+		verify(writer, times(2)).write(metadata.getTitle().getBytes());
+		verify(writer).write(PAR_OPEN.getBytes());
+		verify(writer).write(formatter.getDuration(metadata.getLength()).getBytes());
+		verify(writer).write(PAR_CLOSE.getBytes());
 	}
 }

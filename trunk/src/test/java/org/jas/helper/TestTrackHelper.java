@@ -201,83 +201,115 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
-import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.AuthenticatorHelper;
-import org.jas.helper.LastFMAuthenticator;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jas.helper.TrackHelper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Session;
+import com.slychief.javamusicbrainz.entities.Artist;
+import com.slychief.javamusicbrainz.entities.Release;
+import com.slychief.javamusicbrainz.entities.ReleaseList;
+import com.slychief.javamusicbrainz.entities.Track;
+import com.slychief.javamusicbrainz.entities.TrackList;
 
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- */
 
-public class TestLastFMAuthenticator {
+public class TestTrackHelper {
 	@InjectMocks
-	private LastFMAuthenticator controller = new LastFMAuthenticator();
-
-	@Mock
-	private AuthenticatorHelper authenticatorHelper;
-	@Mock
-	private Session session;
+	private TrackHelper trackHelper = new TrackHelper();
 	
-	int result;
+	@Mock
+	private Track track;
+	@Mock
+	private ReleaseList releaseList;
+	@Mock
+	private Release release;
+	@Mock
+	private TrackList trackList;
+	@Mock
+	private List<Track> tracks;
+	@SuppressWarnings("rawtypes")
+	@Mock
+	private Artist artist;
 
+	private List<Release> releases;
+	private String trackNumber = "3";
+	private int totalTracks = 10;
+
+	private String album = "Indigo (Original Mix)";
+	private String artistName = "Activa Pres Solar Movement";
+	private static final String ONE = "1";
+	private static final String ID = "35188948-6b68-2113-a75e-f4ead4fd2047";
 	
 	@Before
-	public void initialize(){
+	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
+		releases = new ArrayList<Release>();
+		releases.add(release);
+	}
+	@Test
+	public void shouldGetTrackNumber() throws Exception {
+		setReleaseExpectations();
+		when(release.getTrackList()).thenReturn(trackList);
+		when(trackList.getOffset()).thenReturn(trackNumber);
+		
+		assertEquals (trackNumber, trackHelper.getTrackNumber(track));
+		
 	}
 	
 	@Test
-	public void shouldLogin() throws Exception {
-		String username = "josdem";
-		String password = "validPassword";
-
-		when(authenticatorHelper.getSession(username, password)).thenReturn(session);
+	public void shouldGetTotalNumbers() throws Exception {
+		setReleaseExpectations();
+		when(release.getTracks()).thenReturn(tracks);
+		when(tracks.size()).thenReturn(totalTracks);
 		
-		assertNotNull(controller.login(username, password));
+		assertEquals(totalTracks, trackHelper.getTotalTrackNumber(track));
+	}
+	
+	private void setReleaseExpectations() {
+		when(track.getReleases()).thenReturn(releaseList);
+		when(releaseList.getReleases()).thenReturn(releases);
 	}
 	
 	@Test
-	public void shouldFailAtLoginIfNoUsernameAndPassword() throws Exception {
-		String username = StringUtils.EMPTY;
-		String password = StringUtils.EMPTY;
+	public void shouldGetAlbum() throws Exception {
+		setReleaseExpectations();
+		when(release.getTitle()).thenReturn(album);
 		
-		assertNull(controller.login(username, password));
-	}
-
-	@Test
-	public void shouldFailAtLoginIfNoUsername() throws Exception {
-		String username = StringUtils.EMPTY;
-		String password = "somePassword";
-		
-		assertNull(controller.login(username, password));
+		assertEquals(album, trackHelper.getAlbum(track));
 	}
 	
 	@Test
-	public void shouldFailAtLoginIfNoPassword() throws Exception {
-		String username = "someUsername";
-		String password = StringUtils.EMPTY;
+	public void shouldGetArtist() throws Exception {
+		when(track.getArtist()).thenReturn(artist);
+		when(artist.getName()).thenReturn(artistName);
 		
-		assertNull(controller.login(username, password));
+		assertEquals(artistName, trackHelper.getArtist(track));
 	}
 	
 	@Test
-	public void shouldFailAtLogin() throws Exception {
-		String username = "josdem";
-		String password = "invalidPassword";
+	public void shouldGetMusicBrainzID() throws Exception {
+		when(track.getId()).thenReturn(ID);
 		
-		assertNull(controller.login(username, password));
+		assertEquals(ID, trackHelper.getMusicBrainzID(track));
 	}
-}
+	
+	@Test
+	public void shouldGetCdNumber() throws Exception {
+		assertEquals(ONE, trackHelper.getCdNumber(track));
+	}
+	
+	@Test
+	public void shouldGetTotalCds() throws Exception {
+		assertEquals(ONE, trackHelper.getTotalCds(track));
+	}
+}	

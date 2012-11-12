@@ -200,103 +200,101 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
+*/
+package org.jas.helper;
 
-package org.lastfm.helper;
-
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
-import java.awt.Image;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jas.helper.ImageExporter;
-import org.jas.model.ExportPackage;
+import org.jas.ApplicationState;
+import org.jas.helper.MetadataAdapter;
 import org.jas.model.Metadata;
-import org.jas.service.MetadataService;
-import org.jas.util.ImageUtils;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-public class TestImageExporter {
-	@InjectMocks
-	private ImageExporter imageExporter = new ImageExporter();
 
-	@Mock
-	private ImageUtils imageUtils;
+public class TestMetadataAdapter {
+	private MetadataAdapter adapter = new MetadataAdapter();
+	
 	@Mock
 	private Metadata metadata;
-	@Mock
-	private Image coverArt;
-	@Mock
-	private MetadataService metadataService;
+	private final static String ARTIST = "Daniel Kandi";
+	private final static String TITLE = "Make Me Believe";
+	private final static String ALBUM = "Anjunabeats 5";
+	private final static String TRACK_NUMBER = "5";
+	private final static String TOTAL_TRACKS = "13";
+	private final static String GENRE_COLUMN = "Minimal Techno";
+	private final static String YEAR_COLUMN = "2001";
+	private final static String CD_NUMBER = "1";
 
-	private String album = "Bliksem";
-	private String artist = "Sander van Doorn";
-	private String title = "Bliksem";
+	private static final String TOTAL_CDS_NUMBER = null;
 	
-	private List<Metadata> metadatas = new ArrayList<Metadata>();
-	private ExportPackage exportPackage;
-	@Mock
-	private File root; 
-
 	@Before
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		when(metadata.getAlbum()).thenReturn(album);
-		when(metadata.getArtist()).thenReturn(artist);
-		when(metadata.getTitle()).thenReturn(title);
-		metadatas.add(metadata);
-		exportPackage = new ExportPackage(root, metadatas);
 	}
 	
 	@Test
-	public void shouldExportASingleImage() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+	public void shouldUpdateArtist() throws Exception {
+		adapter.update(metadata, ApplicationState.ARTIST_COLUMN, ARTIST);
+		
+		verify(metadata).setArtist(ARTIST);
 	}
 	
 	@Test
-	public void shouldExportASingleImageWhenSameAlbum() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		when(metadataService.isSameAlbum(metadatas)).thenReturn(true);
-		metadatas.add(metadata);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+	public void shouldUpdateTitle() throws Exception {
+		adapter.update(metadata, ApplicationState.TITLE_COLUMN, TITLE);
+		
+		verify(metadata).setTitle(TITLE);
 	}
 	
 	@Test
-	public void shouldExportTwoImagesWhenDifAlbum() throws Exception {
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		Metadata metadata = setSecondMetadataExpectations();
-		metadatas.add(metadata);
-		imageExporter.export(exportPackage);
-		verify(imageUtils).saveCoverArtToFile(coverArt, root, "Sander van Doorn" + "-" + "Bliksem");
-		verify(imageUtils).saveCoverArtToFile(coverArt, root, "ATA" + "-" + "Blue Skies (Andy Tau Remix)");
-	}
-
-	private Metadata setSecondMetadataExpectations() {
-		Metadata metadata = mock(Metadata.class);
-		when(metadata.getAlbum()).thenReturn("Blue Skies");
-		when(metadata.getArtist()).thenReturn("ATA");
-		when(metadata.getTitle()).thenReturn("Blue Skies (Andy Tau Remix)");
-		when(metadata.getCoverArt()).thenReturn(coverArt);
-		return metadata;
+	public void shouldUpdateAlbum() throws Exception {
+		adapter.update(metadata, ApplicationState.ALBUM_COLUMN, ALBUM);
+		
+		verify(metadata).setAlbum(ALBUM);
 	}
 	
 	@Test
-	public void shouldNotExportIfNoImage() throws Exception {
-		imageExporter.export(exportPackage);
-		verify(imageUtils, never()).saveCoverArtToFile(metadatas.get(0).getCoverArt(), root, StringUtils.EMPTY);
+	public void shouldUpdateTrackNumber() throws Exception {
+		adapter.update(metadata, ApplicationState.TRACK_NUMBER_COLUMN, TRACK_NUMBER);
+		
+		verify(metadata).setTrackNumber(TRACK_NUMBER);
+	}
+	
+	@Test
+	public void shouldUpdateTotalTracksNumber() throws Exception {
+		adapter.update(metadata, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN, TOTAL_TRACKS);
+		
+		verify(metadata).setTotalTracks(TOTAL_TRACKS);
+	}
+	
+	@Test
+	public void shouldUpdateGenre() throws Exception {
+		adapter.update(metadata, ApplicationState.GENRE_COLUMN, GENRE_COLUMN);
+		
+		verify(metadata).setGenre(GENRE_COLUMN);
+	}
+	
+	@Test
+	public void shouldUpdateYear() throws Exception {
+		adapter.update(metadata, ApplicationState.YEAR_COLUMN, YEAR_COLUMN);
+		
+		verify(metadata).setYear(YEAR_COLUMN);
+	}
+	
+	@Test
+	public void shouldUpdateCdNumber() throws Exception {
+		adapter.update(metadata, ApplicationState.CD_NUMBER_COLUMN, CD_NUMBER);
+		
+		verify(metadata).setCdNumber(CD_NUMBER);
+	}
+	
+	@Test
+	public void shouldUpdateTotalCds() throws Exception {
+		adapter.update(metadata, ApplicationState.TOTAL_CDS_NUMBER_COLUMN, TOTAL_CDS_NUMBER);
+		
+		verify(metadata).setTotalCds(TOTAL_CDS_NUMBER);
 	}
 }
