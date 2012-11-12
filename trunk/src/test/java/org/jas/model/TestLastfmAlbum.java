@@ -201,23 +201,39 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.model;
+package org.jas.model;
 
 import static org.junit.Assert.assertEquals;
 
-import org.jas.model.User;
-import org.junit.Test;
+import java.awt.Image;
 
-public class TestCredentials {
-	private User credentials;
+import org.jas.model.LastfmAlbum;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+
+public class TestLastfmAlbum {
+	@Mock
+	private Image imageIcon;
+	private String year = "2011";
+	private String genre = "Minimal Techno";
 	
+	@Before
+	public void setup() throws Exception {
+		MockitoAnnotations.initMocks(this);
+	}
+
 	@Test
-	public void shouldCreateCredentials() throws Exception {
-		String username = "josdem";
-		String password = "password";
-		credentials = new User(username, password);
+	public void shouldCreateALastfmAlbum() throws Exception {
+		LastfmAlbum lastfmAlbum = new LastfmAlbum();
+		lastfmAlbum.setYear(year);
+		lastfmAlbum.setGenre(genre );
+		lastfmAlbum.setImageIcon(imageIcon);
 		
-		assertEquals(username, credentials.getUsername());
-		assertEquals(password, credentials.getPassword());
+		assertEquals(year, lastfmAlbum.getYear());
+		assertEquals(genre, lastfmAlbum.getGenre());
+		assertEquals(imageIcon, lastfmAlbum.getImageIcon());
 	}
 }

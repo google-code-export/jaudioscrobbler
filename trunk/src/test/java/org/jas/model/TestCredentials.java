@@ -201,41 +201,23 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.model;
+package org.jas.model;
 
 import static org.junit.Assert.assertEquals;
 
 import org.jas.model.User;
-import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
-import de.umass.lastfm.Session;
-
-
-public class TestUser {
-	private User user;
-	private String username = "josdem";
-	private String password = "password";
-	@Mock
-	private Session session;
+public class TestCredentials {
+	private User credentials;
 	
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-		user = new User(username, password);
-	}
-
 	@Test
-	public void shouldGetUsernameAndPassword() throws Exception {
-		assertEquals(username, user.getUsername());
-		assertEquals(password, user.getPassword());
-	}
-
-	@Test
-	public void shouldGetSession() throws Exception {
-		user.setSession(session);
-		assertEquals(session, user.getSession());
+	public void shouldCreateCredentials() throws Exception {
+		String username = "josdem";
+		String password = "password";
+		credentials = new User(username, password);
+		
+		assertEquals(username, credentials.getUsername());
+		assertEquals(password, credentials.getPassword());
 	}
 }

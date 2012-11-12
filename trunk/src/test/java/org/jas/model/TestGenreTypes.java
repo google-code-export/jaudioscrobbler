@@ -201,39 +201,59 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.model;
+package org.jas.model;
 
 import static org.junit.Assert.assertEquals;
 
-import java.awt.Image;
-
-import org.jas.model.LastfmAlbum;
-import org.junit.Before;
+import org.apache.commons.lang3.StringUtils;
+import org.jas.model.GenreTypes;
 import org.junit.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 
 
-public class TestLastfmAlbum {
-	@Mock
-	private Image imageIcon;
-	private String year = "2011";
-	private String genre = "Minimal Techno";
+public class TestGenreTypes {
 	
-	@Before
-	public void setup() throws Exception {
-		MockitoAnnotations.initMocks(this);
-	}
-
 	@Test
-	public void shouldCreateALastfmAlbum() throws Exception {
-		LastfmAlbum lastfmAlbum = new LastfmAlbum();
-		lastfmAlbum.setYear(year);
-		lastfmAlbum.setGenre(genre );
-		lastfmAlbum.setImageIcon(imageIcon);
+	public void shouldGetMinimalAsGenre() throws Exception {
+		int minimalCode = 152;
+		assertEquals("Minimal", GenreTypes.getGenreByCode(minimalCode));
+	}
+	
+	@Test
+	public void shouldGetHouseAsGenre() throws Exception {
+		int houseCode = 35;
+		assertEquals("House", GenreTypes.getGenreByCode(houseCode));
+	}
+	
+	@Test
+	public void shouldReturnEmptyStringIfNoGenre() throws Exception {
+		int unknownCode = 500;
+		assertEquals(StringUtils.EMPTY, GenreTypes.getGenreByCode(unknownCode));
+	}
+	
+	@Test
+	public void shouldGetGenreByCode() throws Exception {
+		int genreAsCode = 18;
+		String genre = "Techno";
 		
-		assertEquals(year, lastfmAlbum.getYear());
-		assertEquals(genre, lastfmAlbum.getGenre());
-		assertEquals(imageIcon, lastfmAlbum.getImageIcon());
+		String result = GenreTypes.getGenreByCode(genreAsCode);
+		assertEquals(genre, result);
+	}
+	
+	@Test
+	public void shouldGetCodeByGenre() throws Exception {
+		int genreAsCode = 18;
+		String genre = "Techno";
+		
+		GenreTypes genreType = GenreTypes.getGenreByName(genre);
+		assertEquals(genreAsCode, genreType.getCode());
+	}
+	
+	@Test
+	public void shouldGetUnknownCodeByGenre() throws Exception {
+		int genreAsCode = 148;
+		String genre = "Minimal Techno";
+		
+		GenreTypes genreType = GenreTypes.getGenreByName(genre);
+		assertEquals(genreAsCode, genreType.getCode());
 	}
 }
