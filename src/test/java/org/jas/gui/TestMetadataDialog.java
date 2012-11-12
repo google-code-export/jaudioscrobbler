@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm.gui;
+package org.jas.gui;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
