@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm.gui;
+package org.jas.gui;
 
 import java.awt.Image;
 import java.awt.Rectangle;

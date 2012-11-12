@@ -202,7 +202,7 @@
    limitations under the License.
 */
 
-package org.lastfm.gui;
+package org.jas.gui;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;

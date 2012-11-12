@@ -231,6 +231,8 @@ import org.fest.swing.fixture.FrameFixture;
 import org.jas.ApplicationState;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
+import org.jas.gui.LoginWindow;
+import org.jas.gui.MainWindow;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
