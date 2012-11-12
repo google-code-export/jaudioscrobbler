@@ -204,7 +204,7 @@
 package org.jas.helper;
 
 import org.jas.ApplicationState;
-import org.lastfm.model.Metadata;
+import org.jas.model.Metadata;
 
 public class MetadataAdapter {
 

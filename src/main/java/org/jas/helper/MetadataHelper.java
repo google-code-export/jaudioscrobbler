@@ -7,7 +7,7 @@ import java.util.Set;
 import org.jas.metadata.MetadataReader;
 import org.jas.metadata.Mp3Reader;
 import org.jas.metadata.Mp4Reader;
-import org.lastfm.model.MetadataAlbumValues;
+import org.jas.model.MetadataAlbumValues;
 import org.springframework.stereotype.Service;
 
 @Service

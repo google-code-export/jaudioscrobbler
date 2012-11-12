@@ -1,4 +1,4 @@
-package org.lastfm.model;
+package org.jas.model;
 
 import java.io.File;
 import java.util.List;

@@ -204,7 +204,7 @@
 package org.jas.helper;
 
 import org.apache.commons.lang3.StringUtils;
-import org.lastfm.model.MusicBrainzTrack;
+import org.jas.model.MusicBrainzTrack;
 
 import com.slychief.javamusicbrainz.ServerUnavailableException;
 

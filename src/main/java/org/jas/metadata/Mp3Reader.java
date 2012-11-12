@@ -208,6 +208,8 @@ import java.io.IOException;
 
 import org.jas.helper.AudioFileHelper;
 import org.jas.helper.ReaderHelper;
+import org.jas.model.GenreTypes;
+import org.jas.model.Metadata;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.CannotWriteException;
@@ -218,8 +220,6 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
-import org.lastfm.model.GenreTypes;
-import org.lastfm.model.Metadata;
 
 /**
  * @undestands This class knows how to read metadata from a mp3 file

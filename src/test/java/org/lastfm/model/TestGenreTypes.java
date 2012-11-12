@@ -206,6 +206,7 @@ package org.lastfm.model;
 import static org.junit.Assert.assertEquals;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.model.GenreTypes;
 import org.junit.Test;
 
 

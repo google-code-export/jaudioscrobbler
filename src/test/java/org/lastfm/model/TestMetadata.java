@@ -210,10 +210,10 @@ import static org.junit.Assert.assertEquals;
 import java.awt.Image;
 import java.io.File;
 
+import org.jas.model.CoverArt;
+import org.jas.model.Metadata;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.model.CoverArt;
-import org.lastfm.model.Metadata;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 

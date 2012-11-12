@@ -224,7 +224,7 @@ import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.jas.ApplicationState;
 import org.jas.action.Actions;
 import org.jas.event.Events;
-import org.lastfm.model.User;
+import org.jas.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

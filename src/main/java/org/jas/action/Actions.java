@@ -8,9 +8,9 @@ import org.asmatron.messengine.action.ActionId;
 import org.asmatron.messengine.action.EmptyAction;
 import org.asmatron.messengine.action.RequestAction;
 import org.asmatron.messengine.action.ValueAction;
-import org.lastfm.model.ExportPackage;
-import org.lastfm.model.Metadata;
-import org.lastfm.model.User;
+import org.jas.model.ExportPackage;
+import org.jas.model.Metadata;
+import org.jas.model.User;
 
 public interface Actions {
 	String LOGIN_ID = "login";

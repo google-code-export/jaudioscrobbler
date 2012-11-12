@@ -205,6 +205,7 @@ package org.lastfm.model;
 
 import static org.junit.Assert.assertEquals;
 
+import org.jas.model.User;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

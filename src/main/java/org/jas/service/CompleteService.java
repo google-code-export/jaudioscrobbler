@@ -214,10 +214,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.action.ActionResult;
 import org.jas.helper.LastFMAlbumHelper;
-import org.lastfm.model.CoverArt;
-import org.lastfm.model.CoverArtType;
-import org.lastfm.model.LastfmAlbum;
-import org.lastfm.model.Metadata;
+import org.jas.model.CoverArt;
+import org.jas.model.CoverArtType;
+import org.jas.model.LastfmAlbum;
+import org.jas.model.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

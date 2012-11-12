@@ -201,36 +201,83 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.model;
+
+package org.jas.model;
 
 import java.awt.Image;
 
-public class LastfmAlbum {
-	private Image imageIcon;
-	private String year;
+public class MetadataAlbumValues {
 	private String genre;
+	private String album;
+	private String tracks;
+	private String cd;
+	private String cds;
+	private Image coverArt;
+	private String year;
+	private String artist;
 
-	public Image getImageIcon() {
-		return imageIcon;
-	}
-
-	public void setImageIcon(Image imageIcon) {
-		this.imageIcon = imageIcon;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 	
-	public String getYear() {
-		return year;
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setAlbum(String album) {
+		this.album = album;
+	}
+	
+	public String getAlbum() {
+		return album;
+	}
+
+	public void setTracks(String tracks) {
+		this.tracks = tracks;
+	}
+	
+	public String getTracks() {
+		return tracks;
+	}
+
+	public void setCd(String cd) {
+		this.cd = cd;
+	}
+	
+	public String getCd() {
+		return cd;
+	}
+
+	public void setCds(String cds) {
+		this.cds = cds;
+	}
+	
+	public String getCds() {
+		return cds;
+	}
+
+	public void setCoverart(Image coverArt) {
+		this.coverArt = coverArt;
+	}
+	
+	public Image getCoverArt() {
+		return coverArt;
 	}
 
 	public void setYear(String year) {
 		this.year = year;
 	}
 	
-	public void setGenre(String genre) {
-		this.genre = genre;
+	public String getYear() {
+		return year;
 	}
 
-	public String getGenre() {
-		return genre;
+	public void setArtist(String artist) {
+		this.artist = artist;
 	}
+	
+	public String getArtist() {
+		return artist;
+	}
+
 }

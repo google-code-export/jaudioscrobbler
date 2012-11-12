@@ -5,9 +5,9 @@ import java.util.List;
 import org.asmatron.messengine.event.EmptyEvent;
 import org.asmatron.messengine.event.EventId;
 import org.asmatron.messengine.event.ValueEvent;
-import org.lastfm.model.Metadata;
-import org.lastfm.model.MetadataAlbumValues;
-import org.lastfm.model.User;
+import org.jas.model.Metadata;
+import org.jas.model.MetadataAlbumValues;
+import org.jas.model.User;
 
 import static org.asmatron.messengine.event.EventId.ev;
 
