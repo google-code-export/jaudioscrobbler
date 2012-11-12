@@ -210,7 +210,7 @@ import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.ActionMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
-import org.lastfm.action.Actions;
+import org.jas.action.Actions;
 import org.lastfm.event.Events;
 import org.lastfm.helper.LastFMAuthenticator;
 import org.lastfm.model.Model;

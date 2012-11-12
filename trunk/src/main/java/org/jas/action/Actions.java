@@ -1,4 +1,4 @@
-package org.lastfm.action;
+package org.jas.action;
 
 import static org.asmatron.messengine.action.ActionId.cm;
 

@@ -211,9 +211,9 @@ import java.io.IOException;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.helper.ScrobblerHelper;
 import org.lastfm.model.Metadata;
 import org.mockito.InjectMocks;

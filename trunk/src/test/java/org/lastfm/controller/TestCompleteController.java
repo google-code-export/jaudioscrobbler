@@ -212,9 +212,9 @@ import java.awt.Image;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.action.ActionResult;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.action.ActionResult;
 import org.lastfm.controller.service.LastfmService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.MetadataException;
