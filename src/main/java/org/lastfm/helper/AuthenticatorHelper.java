@@ -203,7 +203,7 @@
 */
 package org.lastfm.helper;
 
-import org.lastfm.Auth;
+import org.jas.Auth;
 
 import de.umass.lastfm.Authenticator;
 import de.umass.lastfm.Session;

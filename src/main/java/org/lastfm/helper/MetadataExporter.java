@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.lastfm.controller.service.FormatterService;
 import org.lastfm.controller.service.MetadataService;
 import org.lastfm.model.ExportPackage;

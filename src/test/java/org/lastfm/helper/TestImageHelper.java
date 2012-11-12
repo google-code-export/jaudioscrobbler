@@ -7,8 +7,8 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.ApplicationState;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.ImageService;
 
 public class TestImageHelper {

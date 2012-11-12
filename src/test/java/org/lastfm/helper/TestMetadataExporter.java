@@ -213,9 +213,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.ApplicationState;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.ApplicationState;
 import org.lastfm.controller.service.FormatterService;
 import org.lastfm.controller.service.MetadataService;
 import org.lastfm.model.ExportPackage;

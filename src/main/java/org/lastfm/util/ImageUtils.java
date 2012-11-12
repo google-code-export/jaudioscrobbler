@@ -216,7 +216,7 @@ import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.lastfm.controller.service.ImageService;
 
 /**

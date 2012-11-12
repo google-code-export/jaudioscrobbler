@@ -255,7 +255,7 @@ import org.asmatron.messengine.action.ResponseCallback;
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.lastfm.action.ActionResult;
 import org.lastfm.action.Actions;
 import org.lastfm.dnd.ImageDropListener;

@@ -221,7 +221,7 @@ import javax.swing.JTextField;
 
 import org.asmatron.messengine.annotations.EventMethod;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
-import org.lastfm.ApplicationState;
+import org.jas.ApplicationState;
 import org.lastfm.action.Actions;
 import org.lastfm.event.Events;
 import org.lastfm.model.User;
