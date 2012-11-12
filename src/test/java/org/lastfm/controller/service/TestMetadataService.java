@@ -218,6 +218,7 @@ import java.util.Set;
 
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
+import org.jas.exception.InvalidId3VersionException;
 import org.jas.service.ExtractService;
 import org.jas.service.MetadataService;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
@@ -226,7 +227,6 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.exception.InvalidId3VersionException;
 import org.lastfm.helper.MetadataHelper;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.Mp3Reader;
