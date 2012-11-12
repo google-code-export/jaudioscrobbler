@@ -214,6 +214,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
+import org.jas.helper.MetadataExporter;
+import org.jas.helper.OutStreamWriter;
 import org.jas.service.FormatterService;
 import org.jas.service.MetadataService;
 import org.junit.Before;

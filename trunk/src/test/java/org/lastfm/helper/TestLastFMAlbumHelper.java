@@ -212,6 +212,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.helper.LastFMAlbumHelper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;

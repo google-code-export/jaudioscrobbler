@@ -2,6 +2,7 @@ package org.lastfm.helper;
 
 import static org.junit.Assert.assertNotNull;
 
+import org.jas.helper.ArtworkHelper;
 import org.jaudiotagger.tag.datatype.Artwork;
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package org.lastfm.helper;
+package org.jas.helper;
 
 import java.io.File;
 

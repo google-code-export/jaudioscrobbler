@@ -208,6 +208,8 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.when;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.helper.AuthenticatorHelper;
+import org.jas.helper.LastFMAuthenticator;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;

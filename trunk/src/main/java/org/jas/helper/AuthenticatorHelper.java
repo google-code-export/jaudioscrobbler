@@ -200,35 +200,18 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
-package org.lastfm.helper;
+*/
+package org.jas.helper;
 
-import org.apache.commons.lang3.StringUtils;
+import org.jas.Auth;
 
-public class FormatterHelper {
+import de.umass.lastfm.Authenticator;
+import de.umass.lastfm.Session;
 
-	public String getBasicFormat(String word) {
-		if(word.length() == 2){
-			return word;
-		}
-		String formatted = word.replace("-", StringUtils.EMPTY);
-		formatted = formatted.replace("(", StringUtils.EMPTY);
-		formatted = formatted.replace(")", StringUtils.EMPTY);
-		formatted = formatted.replace("0", StringUtils.EMPTY);
-		formatted = formatted.replace("1", StringUtils.EMPTY);
-		formatted = formatted.replace("2", StringUtils.EMPTY);
-		formatted = formatted.replace("3", StringUtils.EMPTY);
-		formatted = formatted.replace("4", StringUtils.EMPTY);
-		formatted = formatted.replace("5", StringUtils.EMPTY);
-		formatted = formatted.replace("6", StringUtils.EMPTY);
-		formatted = formatted.replace("7", StringUtils.EMPTY);
-		formatted = formatted.replace("8", StringUtils.EMPTY);
-		formatted = formatted.replace("9", StringUtils.EMPTY);
-		formatted = formatted.replace("'", StringUtils.EMPTY);
-		formatted = formatted.replace(",", StringUtils.EMPTY);
-		formatted = formatted.replace("I", StringUtils.EMPTY);
-		formatted = formatted.replace("&", StringUtils.EMPTY);
-		return formatted.replace(" ", StringUtils.EMPTY);
+public class AuthenticatorHelper {
+
+	public Session getSession(String username, String password) {
+		return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
 	}
-
+	
 }

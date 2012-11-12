@@ -200,42 +200,24 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+*/
+package org.jas.helper;
+
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+/**
+ * @understands a class who knows how to get the application context from spring
  */
 
-package org.lastfm.helper;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.jas.service.MetadataService;
-import org.lastfm.model.ExportPackage;
-import org.lastfm.model.Metadata;
-import org.lastfm.util.ImageUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-@Service
-public class ImageExporter {
+public class ApplicationContextSingleton {
+	private static ConfigurableApplicationContext applicationContext;
 	
-	@Autowired
-	private MetadataService metadataService;
-	
-	private ImageUtils imageUtils = new ImageUtils();
-
-	public void export(ExportPackage exportPackage) throws IOException {
-		List<Metadata> metadataList = exportPackage.getMetadataList();
-		if(metadataList.get(0).getCoverArt() == null){
-			return;
+	public static ConfigurableApplicationContext getApplicationContext(){
+		if (applicationContext == null) {
+			applicationContext = new ClassPathXmlApplicationContext( "spring/applicationContext.xml" );
 		}
-		File root = exportPackage.getRoot();
-		if (metadataService.isSameAlbum(metadataList)){
-			imageUtils.saveCoverArtToFile(metadataList.get(0).getCoverArt(), root, StringUtils.EMPTY);
-		} else { 
-			for (Metadata metadata : metadataList) {
-				imageUtils.saveCoverArtToFile(metadata.getCoverArt(), root, metadata.getArtist() + "-" + metadata.getTitle());
-			}
-		}
+		return applicationContext;
 	}
 }

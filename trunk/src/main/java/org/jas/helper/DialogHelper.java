@@ -1,4 +1,4 @@
-package org.lastfm.helper;
+package org.jas.helper;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

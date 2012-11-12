@@ -206,6 +206,7 @@ package org.lastfm.metadata;
 import java.io.File;
 import java.io.IOException;
 
+import org.jas.helper.AudioFileHelper;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
@@ -213,7 +214,6 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
-import org.lastfm.helper.AudioFileHelper;
 import org.lastfm.model.Metadata;
 
 /**

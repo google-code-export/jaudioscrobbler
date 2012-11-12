@@ -215,6 +215,8 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.jas.action.ActionResult;
+import org.jas.helper.LastFMTrackHelper;
+import org.jas.helper.ScrobblerHelper;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.Metadata;

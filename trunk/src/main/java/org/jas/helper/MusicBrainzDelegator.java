@@ -201,17 +201,26 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import org.jas.Auth;
+import org.apache.commons.lang3.StringUtils;
+import org.lastfm.model.MusicBrainzTrack;
 
-import de.umass.lastfm.Authenticator;
-import de.umass.lastfm.Session;
+import com.slychief.javamusicbrainz.ServerUnavailableException;
 
-public class AuthenticatorHelper {
+/**
+ * @author josdem (joseluis.delacruz@gmail.com)
+ * @understands A class who knows how to get Album and track number using MusicBrainz in the top abstraction level
+ */
 
-	public Session getSession(String username, String password) {
-		return Authenticator.getMobileSession(username, password, Auth.KEY, Auth.SECRET);
+public class MusicBrainzDelegator {
+	private TrackFinder trackFinder = new TrackFinder();
+
+	public MusicBrainzTrack getAlbum(String artistName, String trackName) throws ServerUnavailableException {
+		if(StringUtils.isEmpty(artistName) || StringUtils.isEmpty(trackName)){
+			return new MusicBrainzTrack();
+		} else {
+			return trackFinder.getAlbum(artistName, trackName);
+		}
 	}
-	
 }

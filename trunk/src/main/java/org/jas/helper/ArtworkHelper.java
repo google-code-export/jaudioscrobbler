@@ -201,21 +201,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import java.io.File;
-import java.io.IOException;
+import org.jaudiotagger.tag.datatype.Artwork;
 
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFileIO;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
+public class ArtworkHelper {
 
-public class AudioFileHelper {
-	
-	public AudioFile read(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException {
-		return AudioFileIO.read(file);
+	public Artwork createArtwork() {
+		return new Artwork();
 	}
+
 }

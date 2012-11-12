@@ -3,6 +3,7 @@ package org.lastfm.helper;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
+import org.jas.helper.ReaderHelper;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.junit.Before;

@@ -211,11 +211,11 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.exception.InvalidId3VersionException;
+import org.jas.helper.DateHelper;
 import org.jaudiotagger.audio.exceptions.CannotReadException;
 import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
 import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.TagException;
-import org.lastfm.helper.DateHelper;
 
 public class FileUtils {
 	private List<File> fileList;

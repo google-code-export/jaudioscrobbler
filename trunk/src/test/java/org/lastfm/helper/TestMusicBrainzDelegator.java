@@ -210,10 +210,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jas.helper.MusicBrainzDelegator;
+import org.jas.helper.TrackFinder;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.helper.MusicBrainzDelegator;
-import org.lastfm.helper.TrackFinder;
 import org.lastfm.model.MusicBrainzTrack;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;

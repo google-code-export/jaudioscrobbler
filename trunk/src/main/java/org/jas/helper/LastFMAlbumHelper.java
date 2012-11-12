@@ -201,14 +201,50 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.lastfm.helper;
+package org.jas.helper;
 
-import org.jaudiotagger.tag.datatype.Artwork;
+import java.text.SimpleDateFormat;
+import java.util.Collection;
+import java.util.Date;
+import java.util.Iterator;
 
-public class ArtworkHelper {
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.jas.Auth;
+import org.lastfm.model.GenreTypes;
 
-	public Artwork createArtwork() {
-		return new Artwork();
+import de.umass.lastfm.Album;
+
+public class LastFMAlbumHelper {
+	private Log log = LogFactory.getLog(this.getClass());
+
+	public Album getAlbum(String artist, String album) {
+		return Album.getInfo(artist, album, Auth.KEY);
+	}
+
+	public String getYear(Date releaseDate) {
+		if(releaseDate == null){
+			return StringUtils.EMPTY;
+		}
+		SimpleDateFormat simpleDateformat = new SimpleDateFormat("yyyy");
+		String year = simpleDateformat.format(releaseDate);
+		log.info("Year: " + year);
+		return year;
+	}
+
+	public String getGenre(Album album) {
+		Collection<String> tags = album.getTags();
+		Iterator<String> iterator = tags.iterator();
+		while(iterator.hasNext()){
+			String lastFmTag = (String) iterator.next().toLowerCase();
+			log.info("lastFmTag: " + lastFmTag);
+			if(GenreTypes.getGenreByName(lastFmTag) != GenreTypes.UNKNOWN){
+				log.info("lastFmTag matched in GenreTypes: " + GenreTypes.getGenreByName(lastFmTag).getName());
+				return GenreTypes.getGenreByName(lastFmTag).getName();
+			}
+		}
+		return StringUtils.EMPTY;
 	}
 
 }

@@ -204,6 +204,9 @@
 
 package org.lastfm.helper;
 
+import org.jas.helper.ExporterHelper;
+import org.jas.helper.ImageExporter;
+import org.jas.helper.MetadataExporter;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.ExportPackage;

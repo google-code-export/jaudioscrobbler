@@ -200,27 +200,36 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.lastfm.helper;
-
-import org.apache.commons.lang3.StringUtils;
-import org.lastfm.model.MusicBrainzTrack;
-
-import com.slychief.javamusicbrainz.ServerUnavailableException;
-
-/**
- * @author josdem (joseluis.delacruz@gmail.com)
- * @understands A class who knows how to get Album and track number using MusicBrainz in the top abstraction level
  */
+package org.jas.helper;
 
-public class MusicBrainzDelegator {
-	private TrackFinder trackFinder = new TrackFinder();
+import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 
-	public MusicBrainzTrack getAlbum(String artistName, String trackName) throws ServerUnavailableException {
-		if(StringUtils.isEmpty(artistName) || StringUtils.isEmpty(trackName)){
-			return new MusicBrainzTrack();
-		} else {
-			return trackFinder.getAlbum(artistName, trackName);
+import org.jas.action.ActionResult;
+import org.lastfm.model.ExportPackage;
+import org.lastfm.model.Metadata;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ExporterHelper {
+	
+	@Autowired
+	private ImageExporter imageExporter;
+	@Autowired
+	private MetadataExporter metadataExporter;
+
+	public ActionResult export(ExportPackage exportPackage) throws IOException {
+		List<Metadata> metadatas = exportPackage.getMetadataList();
+		for (Metadata metadata : metadatas) {
+			metadata.setOrderByFile(true);
 		}
+		Collections.sort(metadatas);
+		exportPackage.setMetadataList(metadatas);
+		imageExporter.export(exportPackage);
+		metadataExporter.export(exportPackage);
+		return ActionResult.Exported;
 	}
 }

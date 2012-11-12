@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import java.util.Set;
 
+import org.jas.helper.MetadataHelper;
 import org.junit.Test;
 import org.lastfm.metadata.MetadataReader;
 import org.lastfm.metadata.Mp4Reader;
