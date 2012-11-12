@@ -214,6 +214,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 
 import org.jas.action.ActionResult;
+import org.jas.service.CompleteService;
+import org.jas.service.LastfmService;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.model.LastfmAlbum;

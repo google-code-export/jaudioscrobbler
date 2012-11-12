@@ -209,7 +209,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
-import org.lastfm.controller.service.MetadataService;
+import org.jas.service.MetadataService;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.model.Metadata;
 import org.lastfm.util.ImageUtils;

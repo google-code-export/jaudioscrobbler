@@ -211,7 +211,7 @@ import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
-import org.lastfm.controller.service.LastfmService;
+import org.jas.service.LastfmService;
 import org.lastfm.helper.MusicBrainzDelegator;
 import org.lastfm.metadata.MetadataException;
 import org.lastfm.metadata.MetadataWriter;

@@ -8,8 +8,8 @@ import java.io.File;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
+import org.jas.service.ImageService;
 import org.junit.Test;
-import org.lastfm.controller.service.ImageService;
 
 public class TestImageHelper {
 

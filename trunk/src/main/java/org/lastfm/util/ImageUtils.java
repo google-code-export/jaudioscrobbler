@@ -217,7 +217,7 @@ import javax.swing.ImageIcon;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.ApplicationState;
-import org.lastfm.controller.service.ImageService;
+import org.jas.service.ImageService;
 
 /**
  * @understands A class who knows how to resize an image

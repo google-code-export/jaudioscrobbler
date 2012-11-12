@@ -214,10 +214,10 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
+import org.jas.service.FormatterService;
+import org.jas.service.MetadataService;
 import org.junit.Before;
 import org.junit.Test;
-import org.lastfm.controller.service.FormatterService;
-import org.lastfm.controller.service.MetadataService;
 import org.lastfm.model.ExportPackage;
 import org.lastfm.model.Metadata;
 import org.lastfm.util.FileUtils;

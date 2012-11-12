@@ -1,4 +1,4 @@
-package org.lastfm.controller.service;
+package org.jas.service;
 
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
