@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 import java.util.List;
 
 import org.jas.action.ActionResult;
+import org.jas.controller.DefaultController;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.controller.service.DefaultService;

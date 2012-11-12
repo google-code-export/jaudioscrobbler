@@ -200,28 +200,40 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
- */
+*/
+package org.jas.controller;
 
-package org.lastfm.controller;
+import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.annotations.RequestMethod;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
-import org.lastfm.controller.service.FormatterService;
-import org.lastfm.model.Metadata;
+import org.lastfm.helper.ExporterHelper;
+import org.lastfm.model.ExportPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+/**
+ * @understands A class who manage export metadata to file
+ */
+
 @Controller
-public class FormatterController {
-	
+public class ExporterController {
+	private Log log = LogFactory.getLog(this.getClass());
+
 	@Autowired
-	private FormatterService formatterService;
+	private ExporterHelper exporterHelper;
 	
-	@RequestMethod(Actions.COMPLETE_FORMATTER_METADATA)
-	public synchronized ActionResult format(Metadata metadata) {
-		boolean formatted = formatterService.isABadFormat(metadata);
-		boolean capitalized = formatterService.isNotCamelized(metadata);
-		return formatted || capitalized ? ActionResult.New : ActionResult.Complete;
+	@RequestMethod(Actions.EXPORT_METADATA)
+	public ActionResult sendMetadata(ExportPackage exportPackage) {
+		try {
+			return exporterHelper.export(exportPackage);
+		} catch (IOException ioe) {
+			log.error(ioe, ioe);
+		} 
+		return ActionResult.Error;
 	}
+
 }

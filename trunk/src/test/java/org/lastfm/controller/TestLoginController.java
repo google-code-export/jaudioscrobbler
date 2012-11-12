@@ -214,6 +214,7 @@ import java.io.IOException;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
+import org.jas.controller.LoginController;
 import org.junit.Before;
 import org.junit.Test;
 import org.lastfm.event.Events;
