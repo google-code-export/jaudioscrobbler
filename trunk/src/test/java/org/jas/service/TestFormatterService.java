@@ -695,4 +695,37 @@ public class TestFormatterService {
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
+	@Test
+	public void shouldDetectAGraveFormatInTitle() throws Exception {
+		String title = "Déj&agrave; Vu";
+		String expectedTitle = "Déjà Vu";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectAGraveFormatInArtist() throws Exception {
+		String artist = "Déj&agrave; Vu";
+		String expectedArtist = "Déjà Vu";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectAGraveFormatInAlbum() throws Exception {
+		String album = "Déj&agrave; Vu";
+		String expectedAlbum = "Déjà Vu";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
 }
