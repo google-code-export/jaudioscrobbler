@@ -728,4 +728,37 @@ public class TestFormatterService {
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
+	@Test
+	public void shouldDetectDegreeFormatInTitle() throws Exception {
+		String title = "Beatniks&deg;";
+		String expectedTitle = "Beatniks°";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectDegreeFormatInArtist() throws Exception {
+		String artist = "Beatniks&deg;";
+		String expectedArtist = "Beatniks°";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectDegreeFormatInAlbum() throws Exception {
+		String album = "Beatniks&deg;";
+		String expectedAlbum = "Beatniks°";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
 }
