@@ -19,21 +19,22 @@ public class FormatterService {
 				|| metadata.getAlbum().contains("&eacute;") || metadata.getTitle().contains("&aacute;") || metadata.getArtist().contains("&aacute;") || metadata.getAlbum().contains("&aacute;")
 				|| metadata.getTitle().contains("&iacute;") || metadata.getArtist().contains("&iacute;") || metadata.getAlbum().contains("&iacute;") || metadata.getTitle().contains("&oacute;")
 				|| metadata.getArtist().contains("&oacute;") || metadata.getAlbum().contains("&oacute;") || metadata.getTitle().contains("&uacute;") || metadata.getArtist().contains("&uacute;")
-				|| metadata.getAlbum().contains("&uacute;") || metadata.getTitle().contains("&acute;") || metadata.getArtist().contains("&acute;") || metadata.getAlbum().contains("&acute;") 
-				|| metadata.getTitle().contains("&egrave;") || metadata.getArtist().contains("&egrave;") || metadata.getAlbum().contains("&egrave;") || metadata.getTitle().contains("&Eacute;") 
+				|| metadata.getAlbum().contains("&uacute;") || metadata.getTitle().contains("&acute;") || metadata.getArtist().contains("&acute;") || metadata.getAlbum().contains("&acute;")
+				|| metadata.getTitle().contains("&egrave;") || metadata.getArtist().contains("&egrave;") || metadata.getAlbum().contains("&egrave;") || metadata.getTitle().contains("&Eacute;")
 				|| metadata.getArtist().contains("&Eacute;") || metadata.getAlbum().contains("&Eacute;") || metadata.getTitle().contains("&ecirc;") || metadata.getArtist().contains("&ecirc;")
 				|| metadata.getAlbum().contains("&ecirc;") || metadata.getTitle().contains("&uuml;") || metadata.getArtist().contains("&uuml;") || metadata.getAlbum().contains("&uuml;")
-				|| metadata.getTitle().contains("&ouml;") || metadata.getArtist().contains("&ouml;") || metadata.getAlbum().contains("&ouml;") || metadata.getTitle().contains("&szlig;") 
-				|| metadata.getArtist().contains("&szlig;") || metadata.getAlbum().contains("&szlig;") || metadata.getTitle().contains("&agrave;") || metadata.getArtist().contains("&agrave;") 
-				|| metadata.getAlbum().contains("&agrave;")) {
+				|| metadata.getTitle().contains("&ouml;") || metadata.getArtist().contains("&ouml;") || metadata.getAlbum().contains("&ouml;") || metadata.getTitle().contains("&szlig;")
+				|| metadata.getArtist().contains("&szlig;") || metadata.getAlbum().contains("&szlig;") || metadata.getTitle().contains("&agrave;") || metadata.getArtist().contains("&agrave;")
+				|| metadata.getAlbum().contains("&agrave;") || metadata.getTitle().contains("&deg;") || metadata.getArtist().contains("&deg;") || metadata.getAlbum().contains("&deg;")) {
 			String title = metadata.getTitle().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
 					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
-					.replace("&szlig;", "ß").replace("&agrave;", "à");
+					.replace("&szlig;", "ß").replace("&agrave;", "à").replace("&deg;", "°");
 			String artist = metadata.getArtist().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
-					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&uuml;", "ü").replace("&ouml;", "ö")
-					.replace("&szlig;", "ß").replace("&agrave;", "à");
+					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&uuml;", "ü")
+					.replace("&ouml;", "ö").replace("&szlig;", "ß").replace("&agrave;", "à").replace("&deg;", "°");
 			String album = metadata.getAlbum().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
-					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö").replace("&szlig;", "ß").replace("&agrave;", "à");
+					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö").replace("&szlig;", "ß")
+					.replace("&agrave;", "à").replace("&deg;", "°");
 			metadata.setTitle(title);
 			metadata.setArtist(artist);
 			metadata.setAlbum(album);
