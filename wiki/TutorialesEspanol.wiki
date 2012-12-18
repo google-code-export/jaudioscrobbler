@@ -19,3 +19,7 @@ Enviar Scrobblings a [LastFM]
 Exportar Metadata
 
 <wiki:video url="http://www.youtube.com/watch?v=xIZ5wRkS7Z8"/>
+
+Completar automáticamente información para un album
+
+<wiki:video url="http://www.youtube.com/watch?v=trcguWkgTVo"/>
