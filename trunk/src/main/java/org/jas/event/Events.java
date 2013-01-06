@@ -43,5 +43,7 @@ public interface Events {
 	String COVER_ART_FAILED = "coverArtFailed";
 	EventId<ValueEvent<String>> LOAD_COVER_ART = ev(COVER_ART_FAILED);
 	
+	String LOAD_FILE_FAILED = "loadFileFailed";
+	EventId<ValueEvent<String>> LOAD_FILE = ev(LOAD_FILE_FAILED);
 	
 }

@@ -401,6 +401,14 @@ public class MainWindow extends JFrame {
 		sb.append(ApplicationState.CORRUPTED_METADATA_LABEL);
 		dialogHelper.showMessageDialog(this, sb.toString());
 	}
+	
+	@EventMethod(Events.LOAD_FILE_FAILED)
+	void onLoadFileFailed(String fileName) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ApplicationState.FILE_NOT_FOUND);
+		sb.append(fileName);
+		dialogHelper.showMessageDialog(this, sb.toString());
+	}
 
 	@EventMethod(Events.USER_LOGIN_FAILED)
 	void onUserLoginFailed() {

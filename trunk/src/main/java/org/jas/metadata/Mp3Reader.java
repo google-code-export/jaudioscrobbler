@@ -204,8 +204,11 @@
 package org.jas.metadata;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.asmatron.messengine.event.ValueEvent;
+import org.jas.event.Events;
 import org.jas.helper.AudioFileHelper;
 import org.jas.helper.ReaderHelper;
 import org.jas.model.GenreTypes;
@@ -234,6 +237,10 @@ public class Mp3Reader extends MetadataReader {
 		try{
 			audioFile = audioFileHelper.read(file);
 		} catch (InvalidAudioFrameException ina){
+			return null;
+		} catch (FileNotFoundException fnf){
+			log.error("File: " + file.getAbsolutePath() + " Not found");
+			configurator.getControlEngine().fireEvent(Events.LOAD_FILE, new ValueEvent<String>(file.getAbsolutePath()));
 			return null;
 		}
 		if (audioFile instanceof MP3File) {
