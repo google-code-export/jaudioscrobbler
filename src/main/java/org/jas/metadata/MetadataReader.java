@@ -236,7 +236,7 @@ public abstract class MetadataReader {
 	protected Tag tag;
 	protected AudioHeader header;
 	protected Log log = LogFactory.getLog(this.getClass());
-	private ControlEngineConfigurator configurator;
+	protected ControlEngineConfigurator configurator;
 	
 	public abstract String getGenre();
 	public abstract Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException;
