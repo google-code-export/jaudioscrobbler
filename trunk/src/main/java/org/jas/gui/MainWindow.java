@@ -204,9 +204,11 @@
 package org.jas.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.dnd.DropTarget;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -295,20 +297,26 @@ public class MainWindow extends JFrame {
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
-	private static final String SEND_BUTTON_NAME = "sendButton";
-	private static final String WRITE_BUTTON_NAME = "writeButton";
-	private static final String EXPORT_BUTTON_NAME = "exportButton";
-	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 	private static final String MENU_NAME = "menuName";
 	
-	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLoginSignUp";
+	/**
+	 * 	Default button style
+	 *	private static final String SEND_BUTTON_NAME = "buttonStyle";
+	 */
+	private static final String BUTTON_NAME = "buttonTopLoginStyle";
 	private static final String PROGRESS_BAR_NAME = "bigProgressBar";
 	private static final int PROGRESS_BAR_DEFAULT_VALUE = 0;
 	private static final int PROGRESS_BAR_MAXIMUM_VALUE = 100;
+	private static final Rectangle LABEL_BOUNDS = new Rectangle(10, 10, 100, 20);
+	private static final Rectangle OPEN_BUTTON_BOUNDS = new Rectangle(100, 10, 110, 28);
+	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(220, 10, 110, 28);
+	private static final Rectangle COMPLETE_BUTTON_BOUNDS = new Rectangle(340, 10, 110, 28);
+	private static final Rectangle APPLY_BUTTON_BOUNDS = new Rectangle(460, 10, 110, 28);
+	private static final Rectangle EXPORT_BUTTON_BOUNDS = new Rectangle(580, 10, 110, 28);
 
 	private JPanel panel;
 	private JButton openButton;
@@ -614,6 +622,9 @@ public class MainWindow extends JFrame {
 	private JPanel getBottomPanel() {
 		if (bottomPanel == null) {
 			bottomPanel = new JPanel();
+			bottomPanel.setLayout(null);
+			bottomPanel.setBounds(0, 500, 1024, 100);
+			bottomPanel.setBackground(Color.RED);
 			bottomPanel.add(getLabel());
 			bottomPanel.add(getDirectoryField());
 			bottomPanel.add(getProgressBar());
@@ -639,35 +650,22 @@ public class MainWindow extends JFrame {
 	private JPanel getPanel() {
 		if (panel == null) {
 			panel = new JPanel();
-			panel.setLayout(new BorderLayout());
-			panel.add(getTopPanel(), BorderLayout.PAGE_START);
-			panel.add(getMiddlePanel(), BorderLayout.CENTER);
-			panel.add(getBottomPanel(), BorderLayout.PAGE_END);
+			panel.setLayout(null);
+			panel.add(getTopPanel());
+			panel.add(getMiddlePanel());
+			panel.add(getBottomPanel());
 		}
 		return panel;
 	}
 
 	private JPanel getMiddlePanel() {
 		if (middlePanel == null) {
-			middlePanel = new JPanel(new GridBagLayout());
-			GridBagConstraints c = new GridBagConstraints();
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = 0;
-			c.gridy = 0;
-			middlePanel.add(getImageLabel(), c);
-			c.fill = GridBagConstraints.VERTICAL;
-			c.gridx = 0;
-			c.gridy = 1;
-			middlePanel.add(getImagePanel(), c);
-			c.fill = GridBagConstraints.BOTH;
-			c.gridx = 1;
-			c.gridy = 0;
-			c.ipadx = 240;
-			c.ipady = 40;
-			c.weightx = 1.0;
-			c.weighty = 1.0;
-			c.gridheight = 2;
-			middlePanel.add(getScrollPane(), c);
+			middlePanel = new JPanel();
+			middlePanel.setLayout(null);
+			middlePanel.setBounds(0,100,1024,400);
+			middlePanel.add(getImageLabel());
+			middlePanel.add(getImagePanel());
+			middlePanel.add(getScrollPane());
 		}
 		return middlePanel;
 	}
@@ -691,6 +689,8 @@ public class MainWindow extends JFrame {
 	private JPanel getTopPanel() {
 		if (topPanel == null) {
 			topPanel = new JPanel();
+			topPanel.setLayout(null);
+			topPanel.setBounds(0,0,1024,100);
 			topPanel.add(getLoginLabel());
 		}
 		return topPanel;
@@ -725,6 +725,7 @@ public class MainWindow extends JFrame {
 		if (label == null) {
 			label = new JLabel(STATUS_LABEL);
 			label.setName(STATUS_LABEL_NAME);
+			label.setBounds(LABEL_BOUNDS);
 		}
 		return label;
 	}
@@ -740,8 +741,9 @@ public class MainWindow extends JFrame {
 	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ActionResult.Complete.toString());
-			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
+			completeMetadataButton.setName(BUTTON_NAME);
 			completeMetadataButton.setEnabled(false);
+			completeMetadataButton.setBounds(COMPLETE_BUTTON_BOUNDS);
 
 			completeMetadataButton.addActionListener(new ActionListener() {
 
@@ -764,8 +766,9 @@ public class MainWindow extends JFrame {
 	public JButton getApplyButton() {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
-			applyButton.setName(WRITE_BUTTON_NAME);
+			applyButton.setName(BUTTON_NAME);
 			applyButton.setEnabled(false);
+			applyButton.setBounds(APPLY_BUTTON_BOUNDS);
 
 			applyButton.addActionListener(new ActionListener() {
 
@@ -781,8 +784,9 @@ public class MainWindow extends JFrame {
 	public JButton getExportButton() {
 		if (exportButton == null) {
 			exportButton = new JButton(ApplicationState.EXPORT);
-			exportButton.setName(EXPORT_BUTTON_NAME);
+			exportButton.setName(BUTTON_NAME);
 			exportButton.setEnabled(false);
+			exportButton.setBounds(EXPORT_BUTTON_BOUNDS);
 
 			exportButton.addActionListener(new ActionListener() {
 
@@ -803,8 +807,9 @@ public class MainWindow extends JFrame {
 	public JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
-			sendButton.setName(SEND_BUTTON_NAME);
+			sendButton.setName(BUTTON_NAME);
 			sendButton.setEnabled(false);
+			sendButton.setBounds(SEND_BUTTON_BOUNDS);
 
 			sendButton.addActionListener(new ActionListener() {
 
@@ -819,7 +824,8 @@ public class MainWindow extends JFrame {
 	public JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
-			openButton.setName(SIGN_UP_BUTTON_NAME);
+			openButton.setName(BUTTON_NAME);
+			openButton.setBounds(OPEN_BUTTON_BOUNDS);
 
 			openButton.addActionListener(new ActionListener() {
 
