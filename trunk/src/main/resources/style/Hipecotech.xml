@@ -1627,7 +1627,7 @@
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<insets top="1" left="1" right="1" bottom="1" />
 		<state>
-			<object id="progresSliderPainter" class="com.all.style.painter.ProgresSliderPainter" />
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgresSliderPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -2371,7 +2371,7 @@
 
 	<style id="TableHeaderStyle">
 		<state>
-			<object id="tableHeaderPanelPainter" class="com.all.style.painter.TableHeaderPanelPainter" />
+			<object id="tableHeaderPanelPainter" class="org.jas.laf.painter.TableHeaderPanelPainter" />
 			<imagePainter method="panelBackground" idref="tableHeaderPanelPainter" />
 		</state>
 	</style>
@@ -2386,7 +2386,7 @@
 			<defaultsProperty key="Table.descendingSortIcon"
 				type="idref" value="tableDescendingSortIcon" />
 			<object id="tableHeaderPanelPainter"
-				class="com.all.style.painter.TableSelectedHeaderPanelPainter" />
+				class="org.jas.laf.painter.TableSelectedHeaderPanelPainter" />
 			<imagePainter method="panelBackground" idref="tableHeaderPanelPainter" />
 		</state>
 	</style>
@@ -4087,7 +4087,7 @@
 		<property key="Slider.trackBorder" type="Integer" value="0" />
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
-			<object id="progresSliderPainter" class="com.all.style.painter.ProgressBarPainter" />
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBarPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -4100,7 +4100,7 @@
 		<property key="Slider.trackBorder" type="Integer" value="0" />
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
-			<object id="progresSliderPainter" class="com.all.style.painter.ProgressBigBarPainter" />
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBigBarPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -4113,7 +4113,7 @@
 		<property key="Slider.trackBorder" type="Integer" value="0" />
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
-			<object id="progresSliderPainter" class="com.all.style.painter.ProgressBigBarGrayPainter" />
+			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBigBarGrayPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -4127,7 +4127,7 @@
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
 			<object id="progresSliderPainter"
-				class="com.all.style.painter.ProgressBarPainterAlwaysEnabled" />
+				class="org.jas.laf.painter.ProgressBarPainterAlwaysEnabled" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -4140,7 +4140,7 @@
 		<property key="Slider.trackBorder" type="Integer" value="0" />
 		<property key="Slider.paintValue" type="Boolean" value="false" />
 		<state>
-			<object id="progresSliderPainter" class="com.all.style.painter.DeviceProgressBarPainter" />
+			<object id="progresSliderPainter" class="org.jas.laf.painter.DeviceProgressBarPainter" />
 			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
 			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
 		</state>
@@ -4277,7 +4277,7 @@
 	<style id="TableDownloadSelectedHeaderStyle">
 		<state>
 			<object id="tableDownloadSelectedHeaderPanelPainter"
-				class="com.all.style.painter.TableDownloadSelectedHeaderPanelPainter" />
+				class="org.jas.laf.painter.TableDownloadSelectedHeaderPanelPainter" />
 			<imagePainter method="panelBackground"
 				idref="tableDownloadSelectedHeaderPanelPainter" />
 		</state>
@@ -4289,7 +4289,7 @@
 	<style id="TableSearchSelectedHeaderStyle">
 		<state>
 			<object id="tableSearchSelectedHeaderPanelPainter"
-				class="com.all.style.painter.TableSearchSelectedHeaderPanelPainter" />
+				class="org.jas.laf.painter.TableSearchSelectedHeaderPanelPainter" />
 			<imagePainter method="panelBackground"
 				idref="tableSearchSelectedHeaderPanelPainter" />
 		</state>
