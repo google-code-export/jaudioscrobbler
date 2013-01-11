@@ -294,7 +294,6 @@ public class MainWindow extends JFrame {
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
-	private static final String OPEN_BUTTON_NAME = "openButton";
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String WRITE_BUTTON_NAME = "writeButton";
 	private static final String EXPORT_BUTTON_NAME = "exportButton";
@@ -304,6 +303,8 @@ public class MainWindow extends JFrame {
 	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 	private static final String MENU_NAME = "menuName";
+	
+	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLoginSignUp";
 
 	private JPanel panel;
 	private JButton openButton;
@@ -806,7 +807,7 @@ public class MainWindow extends JFrame {
 	public JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
-			openButton.setName(OPEN_BUTTON_NAME);
+			openButton.setName(SIGN_UP_BUTTON_NAME);
 
 			openButton.addActionListener(new ActionListener() {
 

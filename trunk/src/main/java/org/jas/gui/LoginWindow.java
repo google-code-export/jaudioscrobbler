@@ -237,14 +237,18 @@ public class LoginWindow {
 	private JTextField passwordTextfield;
 	private JFrame frame;
 	private JPanel panel;
-	private static final String USERNAME_TEXTFIELD_NAME = "usernameTextfield";
-	private static final String PASSWORD_TEXTFIELD_NAME = "passwordTextfield";
 	private static final String SEND_BUTTON_LABEL = "Login";
-	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final Rectangle FRAME_BOUNDS = new Rectangle(300, 300, 300, 122);
 	private static final int TEXT_COLUMNS = 10;
 	private JLabel usernameLabel;
 	private JLabel passwordLabel;
+	
+	private static final String USERNAME_TEXTFIELD_NAME = "loginTextField";
+	private static final String PASSWORD_TEXTFIELD_NAME = "passwordLoginField";
+	private static final Rectangle USERNAME_TEXTFIELD_BOUNDS = new Rectangle(478, 97, 220, 34);
+	private static final Rectangle PASSWORD_TEXTFIELD_BOUNDS = new Rectangle(478, 147, 220, 34);
+	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLoginCreate";
+	private static final Rectangle SIGN_UP_BUTTON_BOUNDS = new Rectangle(548, 318, 150, 34);
 	
 	@Autowired
 	private ViewEngineConfigurator configurator;
@@ -333,6 +337,7 @@ public class LoginWindow {
 	private JTextField getUsernameTextfield() {
 		if(usernameTextfield == null){
 			usernameTextfield = new JTextField(TEXT_COLUMNS);
+			usernameTextfield.setBounds(USERNAME_TEXTFIELD_BOUNDS);
 			usernameTextfield.setName(USERNAME_TEXTFIELD_NAME);
 		}
 		return usernameTextfield;
@@ -341,6 +346,7 @@ public class LoginWindow {
 	private JTextField getPasswordTextfield() {
 		if(passwordTextfield == null){
 			passwordTextfield = new JPasswordField(TEXT_COLUMNS);
+			passwordTextfield.setBounds(PASSWORD_TEXTFIELD_BOUNDS);
 			passwordTextfield.setName(PASSWORD_TEXTFIELD_NAME);
 		}
 		return passwordTextfield;
@@ -358,7 +364,8 @@ public class LoginWindow {
 	private JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_BUTTON_LABEL);
-			sendButton.setName(SEND_BUTTON_NAME);
+			sendButton.setName(SIGN_UP_BUTTON_NAME);
+			sendButton.setBounds(SIGN_UP_BUTTON_BOUNDS);
 		}
 		return sendButton;
 	}
