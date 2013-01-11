@@ -204,6 +204,11 @@
 
 package org.jas;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.asmatron.messengine.engines.DefaultEngine;
 import org.jas.helper.ApplicationContextSingleton;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -214,12 +219,26 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 
 public class Launcher {
+	private static final String HIPECOTECH_LNF = "org.jas.laf.HipecotechLookAndFeel";
+	private static final Log log = LogFactory.getLog(Launcher.class);
+	
 	public Launcher(ConfigurableApplicationContext applicationContext) {
 		DefaultEngine defaultEngine = applicationContext.getBean(DefaultEngine.class);
 		defaultEngine.start();
 	}
 	
 	public static void main(String[] args) {
+		try {
+			UIManager.setLookAndFeel(HIPECOTECH_LNF);
+		} catch (ClassNotFoundException e) {
+			log.error(e, e);
+		} catch (InstantiationException e) {
+			log.error(e, e);
+		} catch (IllegalAccessException e) {
+			log.error(e, e);
+		} catch (UnsupportedLookAndFeelException e) {
+			log.error(e, e);
+		}
 		new Launcher(ApplicationContextSingleton.getApplicationContext());
 	}
 }
