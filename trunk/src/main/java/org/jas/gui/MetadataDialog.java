@@ -263,13 +263,8 @@ public class MetadataDialog extends AllDialog {
 	private static final Rectangle CDS_LABEL_BOUNDS = new Rectangle(24, 290, 226, 18);
 	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(200, 330, 80, 22);
 	private static final Rectangle CANCEL_BUTTON_BOUNDS = new Rectangle(109, 330, 80, 22);
-	private static final String ARTIST_INPUT = "artistInput";
-	private static final String ALBUM_INPUT = "albumInput";
-	private static final String GENRE_INPUT = "genreInput";
-	private static final String YEAR_INPUT = "yearImput";
-	private static final String TRACKS_INPUT = "tracksInput";
-	private static final String CD_INPUT = "cdInput";
-	private static final String CDS_INPUT = "cdsInput";
+	
+	private static final String TEXTFIELD_NAME = "searchTextField";
 	private static final String IMAGE_LABEL = "imageLabel";
 	private static final String ARTIST_LABEL = "artistLabel";
 	private static final String ALBUM_LABEL = "albumLabel";
@@ -278,8 +273,7 @@ public class MetadataDialog extends AllDialog {
 	private static final String TRACKS_LABEL = "tracksLabel";
 	private static final String CD_LABEL = "cdLabel";
 	private static final String CDS_LABEL = "cdsLabel";
-	private static final String APPLY_BUTTON_NAME = "applyButton";
-	private static final String CANCEL_BUTTON_NAME = "cancelButton";
+	private static final String BUTTON_NAME = "buttonCancel";
 	private static final String APPLY = "Apply";
 	private static final String IMAGE = "Cover Art";
 	private static final String ARTIST = "Artist";
@@ -396,7 +390,7 @@ public class MetadataDialog extends AllDialog {
 		if (artistTextField == null) {
 			artistTextField = new JTextField();
 			artistTextField.setBounds(ARTIST_TEXTFIELD_BOUNDS);
-			artistTextField.setName(ARTIST_INPUT);
+			artistTextField.setName(TEXTFIELD_NAME);
 			artistTextField.setText(metadataCollaborator.getArtist());
 		}
 		return artistTextField;
@@ -417,7 +411,7 @@ public class MetadataDialog extends AllDialog {
 		if (albumTextField == null) {
 			albumTextField = new JTextField();
 			albumTextField.setBounds(ALBUM_TEXTFIELD_BOUNDS);
-			albumTextField.setName(ALBUM_INPUT);
+			albumTextField.setName(TEXTFIELD_NAME);
 			albumTextField.setText(metadataCollaborator.getAlbum());
 		}
 		return albumTextField;
@@ -438,7 +432,7 @@ public class MetadataDialog extends AllDialog {
 		if (yearTextField == null) {
 			yearTextField = new JTextField();
 			yearTextField.setBounds(YEAR_TEXTFIELD_BOUNDS);
-			yearTextField.setName(YEAR_INPUT);
+			yearTextField.setName(TEXTFIELD_NAME);
 			yearTextField.setText(metadataCollaborator.getYear());
 		}
 		return yearTextField;
@@ -485,7 +479,7 @@ public class MetadataDialog extends AllDialog {
 		if (cdsTextField == null) {
 			cdsTextField = new JTextField();
 			cdsTextField.setBounds(CDS_TEXTFIELD_BOUNDS);
-			cdsTextField.setName(CDS_INPUT);
+			cdsTextField.setName(TEXTFIELD_NAME);
 			cdsTextField.setText(metadataCollaborator.getTotalCds());
 		}
 		return cdsTextField;
@@ -506,7 +500,7 @@ public class MetadataDialog extends AllDialog {
 		if (cdTextField == null) {
 			cdTextField = new JTextField();
 			cdTextField.setBounds(CD_TEXTFIELD_BOUNDS);
-			cdTextField.setName(CD_INPUT);
+			cdTextField.setName(TEXTFIELD_NAME);
 			cdTextField.setText(metadataCollaborator.getCdNumber());
 		}
 		return cdTextField;
@@ -527,7 +521,7 @@ public class MetadataDialog extends AllDialog {
 		if (tracksTextField == null) {
 			tracksTextField = new JTextField();
 			tracksTextField.setBounds(TRACKS_TEXTFIELD_BOUNDS);
-			tracksTextField.setName(TRACKS_INPUT);
+			tracksTextField.setName(TEXTFIELD_NAME);
 			tracksTextField.setText(metadataCollaborator.getTotalTracks());
 		}
 		return tracksTextField;
@@ -548,7 +542,7 @@ public class MetadataDialog extends AllDialog {
 		if (genreTextField == null) {
 			genreTextField = new JTextField();
 			genreTextField.setBounds(GENRE_TEXTFIELD_BOUNDS);
-			genreTextField.setName(GENRE_INPUT);
+			genreTextField.setName(TEXTFIELD_NAME);
 			genreTextField.setText(metadataCollaborator.getGenre());
 			genreTextField.addFocusListener(new FocusListener());
 			genreTextField.addKeyListener(new KeyListener());
@@ -560,7 +554,7 @@ public class MetadataDialog extends AllDialog {
 		if (applyButton == null) {
 			applyButton = new JButton();
 			applyButton.setBounds(SEND_BUTTON_BOUNDS);
-			applyButton.setName(APPLY_BUTTON_NAME);
+			applyButton.setName(BUTTON_NAME);
 			applyButton.setText(APPLY);
 			applyButton.setMnemonic(KeyEvent.VK_A);
 			applyButton.setEnabled(true);
@@ -590,7 +584,7 @@ public class MetadataDialog extends AllDialog {
 		if (cancelButton == null) {
 			cancelButton = new JButton();
 			cancelButton.setBounds(CANCEL_BUTTON_BOUNDS);
-			cancelButton.setName(CANCEL_BUTTON_NAME);
+			cancelButton.setName(BUTTON_NAME);
 			cancelButton.setText(CANCEL);
 			cancelButton.setMnemonic(KeyEvent.VK_C);
 			cancelButton.addActionListener(new CloseListener());

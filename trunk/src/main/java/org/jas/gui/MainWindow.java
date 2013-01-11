@@ -235,6 +235,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -305,6 +306,9 @@ public class MainWindow extends JFrame {
 	private static final String MENU_NAME = "menuName";
 	
 	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLoginSignUp";
+	private static final String PROGRESS_BAR_NAME = "bigProgressBar";
+	private static final int PROGRESS_BAR_DEFAULT_VALUE = 0;
+	private static final int PROGRESS_BAR_MAXIMUM_VALUE = 100;
 
 	private JPanel panel;
 	private JButton openButton;
@@ -315,7 +319,7 @@ public class MainWindow extends JFrame {
 	private JTextField directorySelected;
 	private JPanel bottomPanel;
 	private JTable descriptionTable;
-	private JProgressBar progressBar;
+	private JSlider progressBar;
 	private JLabel label;
 	private JLabel imageLabel;
 	private JLabel loginLabel;
@@ -701,9 +705,17 @@ public class MainWindow extends JFrame {
 		return directorySelected;
 	}
 
-	private JProgressBar getProgressBar() {
+	private JSlider getProgressBar() {
 		if (progressBar == null) {
-			progressBar = new JProgressBar();
+			progressBar = new JSlider();
+			progressBar.setName(PROGRESS_BAR_NAME);
+			progressBar.setMaximum(PROGRESS_BAR_MAXIMUM_VALUE);
+			progressBar.setRequestFocusEnabled(false);
+			progressBar.setValue(PROGRESS_BAR_DEFAULT_VALUE);
+			progressBar.setPaintLabels(false);
+			progressBar.setOpaque(false);
+			progressBar.setFocusable(false);
+			progressBar.setEnabled(false);
 			progressBar.setVisible(true);
 		}
 		return progressBar;
