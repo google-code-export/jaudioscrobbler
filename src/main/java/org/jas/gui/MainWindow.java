@@ -299,7 +299,6 @@ public class MainWindow extends JFrame {
 	private static final String LOG_OUT = "logged out";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
-	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 	private static final String MENU_NAME = "menuName";
 	
@@ -307,16 +306,23 @@ public class MainWindow extends JFrame {
 	 * 	Default button style
 	 *	private static final String SEND_BUTTON_NAME = "buttonStyle";
 	 */
+	private static final String TEXTFIELD_NAME = "searchTextField";
 	private static final String BUTTON_NAME = "buttonTopLoginStyle";
 	private static final String PROGRESS_BAR_NAME = "bigProgressBar";
 	private static final int PROGRESS_BAR_DEFAULT_VALUE = 0;
 	private static final int PROGRESS_BAR_MAXIMUM_VALUE = 100;
-	private static final Rectangle LABEL_BOUNDS = new Rectangle(10, 10, 100, 20);
-	private static final Rectangle OPEN_BUTTON_BOUNDS = new Rectangle(100, 10, 110, 28);
-	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(220, 10, 110, 28);
-	private static final Rectangle COMPLETE_BUTTON_BOUNDS = new Rectangle(340, 10, 110, 28);
-	private static final Rectangle APPLY_BUTTON_BOUNDS = new Rectangle(460, 10, 110, 28);
-	private static final Rectangle EXPORT_BUTTON_BOUNDS = new Rectangle(580, 10, 110, 28);
+
+	private static final Rectangle BOTTOM_PANEL_BOUNDS = new Rectangle(0, 500, 1024, 100);
+	private static final Rectangle LABEL_BOUNDS = new Rectangle(10, 10, 50, 20);
+	private static final Rectangle DIRECTORY_BOUNDS = new Rectangle(60, 10, 195, 20);
+	private static final Rectangle PROGRESS_BAR_BOUNDS = new Rectangle(265, 10, 150, 20);
+	private static final Rectangle OPEN_BUTTON_BOUNDS = new Rectangle(425, 10, 110, 28);
+	private static final Rectangle SEND_BUTTON_BOUNDS = new Rectangle(545, 10, 110, 28);
+	private static final Rectangle COMPLETE_BUTTON_BOUNDS = new Rectangle(665, 10, 110, 28);
+	private static final Rectangle APPLY_BUTTON_BOUNDS = new Rectangle(785, 10, 110, 28);
+	private static final Rectangle EXPORT_BUTTON_BOUNDS = new Rectangle(905, 10, 110, 28);
+	
+	
 
 	private JPanel panel;
 	private JButton openButton;
@@ -623,8 +629,7 @@ public class MainWindow extends JFrame {
 		if (bottomPanel == null) {
 			bottomPanel = new JPanel();
 			bottomPanel.setLayout(null);
-			bottomPanel.setBounds(0, 500, 1024, 100);
-			bottomPanel.setBackground(Color.RED);
+			bottomPanel.setBounds(BOTTOM_PANEL_BOUNDS);
 			bottomPanel.add(getLabel());
 			bottomPanel.add(getDirectoryField());
 			bottomPanel.add(getProgressBar());
@@ -699,7 +704,8 @@ public class MainWindow extends JFrame {
 	private JTextField getDirectoryField() {
 		if (directorySelected == null) {
 			directorySelected = new JTextField(DIRECTORY_SELECTED_LENGHT);
-			directorySelected.setName(DIRECTORY_SELECTED_TEXTFIELD_NAME);
+			directorySelected.setName(TEXTFIELD_NAME);
+			directorySelected.setBounds(DIRECTORY_BOUNDS);
 			directorySelected.setEnabled(false);
 		}
 		return directorySelected;
@@ -709,6 +715,7 @@ public class MainWindow extends JFrame {
 		if (progressBar == null) {
 			progressBar = new JSlider();
 			progressBar.setName(PROGRESS_BAR_NAME);
+			progressBar.setBounds(PROGRESS_BAR_BOUNDS);
 			progressBar.setMaximum(PROGRESS_BAR_MAXIMUM_VALUE);
 			progressBar.setRequestFocusEnabled(false);
 			progressBar.setValue(PROGRESS_BAR_DEFAULT_VALUE);
