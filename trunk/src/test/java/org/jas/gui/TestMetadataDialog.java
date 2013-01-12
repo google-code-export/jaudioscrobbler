@@ -241,15 +241,15 @@ public class TestMetadataDialog {
 	private static final String CD = "1";
 	private static final String CDS = "1";
 	
-	private static final String ARTIST_INPUT = "artistInput";
-	private static final String ALBUM_INPUT = "albumInput";
-	private static final String GENRE_INPUT = "genreInput";
-	private static final String YEAR_INPUT = "yearImput";
-	private static final String TRACKS_INPUT = "tracksInput";
-	private static final String CD_INPUT = "cdInput";
-	private static final String CDS_INPUT = "cdsInput";
+	private static final String ARTIST_INPUT = "artistTextField";
+	private static final String ALBUM_INPUT = "albumTextField";
+	private static final String GENRE_INPUT = "genreTextField";
+	private static final String YEAR_INPUT = "yearTextField";
+	private static final String TRACKS_INPUT = "tracksTextField";
+	private static final String CD_INPUT = "cdTextField";
+	private static final String CDS_INPUT = "cdsTextField";
 
-	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String APPLY_BUTTON_NAME = "buttonApply";
 	
 	@Mock
 	private ControlEngineConfigurator controlEngineConfigurator;

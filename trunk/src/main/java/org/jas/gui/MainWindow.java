@@ -304,7 +304,7 @@ public class MainWindow extends JFrame {
 	
 	/**
 	 * 	Default button style
-	 *	private static final String SEND_BUTTON_NAME = "buttonStyle";
+	 *	private static final String SEND_BUTTON_NAME = "button[A-Za-z0-9]+";
 	 */
 	private static final String TEXTFIELD_NAME = "searchTextField";
 	private static final String BUTTON_NAME = "buttonTopLoginStyle";

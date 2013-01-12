@@ -252,7 +252,7 @@ public final class LoginWindow extends JPanel {
 	private static final Rectangle PASSWORD_LABEL_BOUNDS = new Rectangle(20, 70, 120, 22);
 	private static final Rectangle USERNAME_TEXTFIELD_BOUNDS = new Rectangle(140, 27, 220, 34);
 	private static final Rectangle PASSWORD_TEXTFIELD_BOUNDS = new Rectangle(140, 71, 220, 34);
-	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLoginStyle";
+	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLogin";
 	private static final Rectangle SIGN_UP_BUTTON_BOUNDS = new Rectangle(140, 114, 220, 34);
 	
 	private static final Color COLOR_SELECTION_TEXTFIELDS = SelectedTextForeground.SELECTED_FOREGROUND_COLOR;

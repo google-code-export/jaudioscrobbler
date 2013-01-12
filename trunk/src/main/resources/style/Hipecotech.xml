@@ -1320,6 +1320,83 @@
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="searchTextField" />
+	
+	<style id="artistTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="artistTextField" />
+	
+	<style id="albumTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="albumTextField" />
+	
+	<style id="genreTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="genreTextField" />
+	
+	<style id="yearTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="yearTextField" />
+	
+	<style id="tracksTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="tracksTextField" />
+	
+	<style id="cdTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="cdTextField" />
+	
+	<style id="cdsTextFieldStyle">
+		<insets top="3" left="2" right="2" bottom="3" />
+		<state>
+			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
+				sourceInsets="0 0 0 0" />
+			<font idref="defaultFont" />
+			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
+		</state>
+	</style>
+	<bind style="searchTextFieldStyle" type="name" key="cdsTextField" />
 
 	<style id="checkBoxMenuItemStyle">
 		<imageIcon id="check_invisible" path="/images/checkbox/Check Invisible.png" />
@@ -6662,8 +6739,7 @@
 				path="/images/login/buttonCenterLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonCenterLoginStyle" type="name"
-		key="buttonCenterLogin[A-Za-z0-9]+" />
+	<bind style="buttonCenterLoginStyle" type="name" key="buttonCenterLogin" />
 		
 	<style id="invalidPasswordLoginFieldStyle">
 		<insets left="10" right="10" />
