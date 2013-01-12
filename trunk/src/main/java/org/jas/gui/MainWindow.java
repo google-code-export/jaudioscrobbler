@@ -312,6 +312,9 @@ public class MainWindow extends JFrame {
 	private static final int PROGRESS_BAR_DEFAULT_VALUE = 0;
 	private static final int PROGRESS_BAR_MAXIMUM_VALUE = 100;
 
+	/**
+	 * Bottom panel bounds
+	 */
 	private static final Rectangle BOTTOM_PANEL_BOUNDS = new Rectangle(0, 500, 1024, 100);
 	private static final Rectangle LABEL_BOUNDS = new Rectangle(10, 10, 50, 20);
 	private static final Rectangle DIRECTORY_BOUNDS = new Rectangle(60, 10, 195, 20);
@@ -322,7 +325,19 @@ public class MainWindow extends JFrame {
 	private static final Rectangle APPLY_BUTTON_BOUNDS = new Rectangle(785, 10, 110, 28);
 	private static final Rectangle EXPORT_BUTTON_BOUNDS = new Rectangle(905, 10, 110, 28);
 	
+	/**
+	 * Top panel bounds
+	 */
+	private static final Rectangle TOP_PANEL_BOUNDS = new Rectangle(0, 0, 1024, 40);
+	private static final Rectangle LOGIN_LABEL_BOUNDS = new Rectangle(450, 10, 200, 20);
 	
+	/**
+	 * Middle panel bounds
+	 */
+	private static final Rectangle MIDDLE_PANEL_BOUNDS = new Rectangle(0, 50, 1024, 400);
+	private static final Rectangle IMAGE_PANEL_BOUNDS = new Rectangle(10, 10, 300, 300);
+	private static final Rectangle IMAGE_LABEL_BOUNDS = new Rectangle(100, 320, 200, 20);
+	private static final Rectangle SCROLL_PANE_BOUNDS = new Rectangle(320, 10, 693, 390);
 
 	private JPanel panel;
 	private JButton openButton;
@@ -667,7 +682,7 @@ public class MainWindow extends JFrame {
 		if (middlePanel == null) {
 			middlePanel = new JPanel();
 			middlePanel.setLayout(null);
-			middlePanel.setBounds(0,100,1024,400);
+			middlePanel.setBounds(MIDDLE_PANEL_BOUNDS);
 			middlePanel.add(getImageLabel());
 			middlePanel.add(getImagePanel());
 			middlePanel.add(getScrollPane());
@@ -678,6 +693,7 @@ public class MainWindow extends JFrame {
 	private JPanel getImagePanel() {
 		if (imagePanel == null) {
 			imagePanel = new JPanel();
+			imagePanel.setBounds(IMAGE_PANEL_BOUNDS);
 			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 		}
 		return imagePanel;
@@ -687,6 +703,7 @@ public class MainWindow extends JFrame {
 		if (imageLabel == null) {
 			imageLabel = new JLabel();
 			imageLabel.setName(IMAGE_LABEL_NAME);
+			imageLabel.setBounds(IMAGE_LABEL_BOUNDS);
 		}
 		return imageLabel;
 	}
@@ -695,7 +712,7 @@ public class MainWindow extends JFrame {
 		if (topPanel == null) {
 			topPanel = new JPanel();
 			topPanel.setLayout(null);
-			topPanel.setBounds(0,0,1024,100);
+			topPanel.setBounds(TOP_PANEL_BOUNDS);
 			topPanel.add(getLoginLabel());
 		}
 		return topPanel;
@@ -741,6 +758,7 @@ public class MainWindow extends JFrame {
 		if (loginLabel == null) {
 			loginLabel = new JLabel(LOG_OUT);
 			loginLabel.setName(LOGIN_LABEL_NAME);
+			loginLabel.setBounds(LOGIN_LABEL_BOUNDS);
 		}
 		return loginLabel;
 	}
@@ -850,6 +868,7 @@ public class MainWindow extends JFrame {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane(getDescriptionTable());
+			scrollPane.setBounds(SCROLL_PANE_BOUNDS);
 		}
 		return scrollPane;
 	}
