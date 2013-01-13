@@ -263,6 +263,7 @@ public class TestMainWindow {
 	private static final String SEND_BUTTON_NAME = "sendButton";
 	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
 	private static final String EXPORT_BUTTON_NAME = "exportButton";
+	private static final String APPLY_BUTTON_NAME = "applyButton";
 	private static final String ARTIST = "Armin Van Buuren";
 	private static final String ALBUM = "Mirage";
 	private static final String TITLE = "I Don't Own You";
@@ -276,9 +277,8 @@ public class TestMainWindow {
 	private static final String USERNAME = "josdem";
 	private static final String PATH = "/User/josdem/music";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
-	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "directorySelectedTextFieldName";
+	private static final String DIRECTORY_SELECTED_TEXTFIELD_NAME = "searchTextField";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
-	private static final String WRITE_BUTTON_NAME = "writeButton";
 	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
 
 	private FrameFixture window;
@@ -320,7 +320,6 @@ public class TestMainWindow {
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
 	private ImageIcon imageIcon = new ImageIcon("src/test/resources/images/A Flock of Bleeps.png");
 	private JFrame frame = new JFrame();
-
 
 	@Before
 	public void setup() throws Exception {
@@ -731,7 +730,7 @@ public class TestMainWindow {
 		
 		verify(metadata).setNewCoverArt(isA(CoverArt.class));
 		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		assertTrue(window.button(WRITE_BUTTON_NAME).target.isEnabled());
+		assertTrue(window.button(APPLY_BUTTON_NAME).target.isEnabled());
 	}
 	
 	@Test
@@ -739,7 +738,7 @@ public class TestMainWindow {
 		when(metadata.isMetadataFromFile()).thenReturn(true);
 		mainWindow.onLoadMetadata(metadatas);
 		assertEquals(ApplicationState.NEW, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
-		assertTrue(window.button(WRITE_BUTTON_NAME).target.isEnabled());
+		assertTrue(window.button(APPLY_BUTTON_NAME).target.isEnabled());
 	}
 	
 	@Test

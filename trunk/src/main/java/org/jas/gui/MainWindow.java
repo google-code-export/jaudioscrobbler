@@ -307,7 +307,11 @@ public class MainWindow extends JFrame {
 	 *	private static final String SEND_BUTTON_NAME = "button[A-Za-z0-9]+";
 	 */
 	private static final String TEXTFIELD_NAME = "searchTextField";
-	private static final String BUTTON_NAME = "buttonTopLoginStyle";
+	private static final String OPEN_BUTTON_NAME = "openButton";
+	private static final String SEND_BUTTON_NAME = "sendButton";
+	private static final String APPLY_BUTTON_NAME = "applyButton";
+	private static final String COMPLETE_BUTTON_NAME = "completeMetadataButton";
+	private static final String EXPORT_BUTTON_NAME = "exportButton";
 	private static final String PROGRESS_BAR_NAME = "bigProgressBar";
 	private static final int PROGRESS_BAR_DEFAULT_VALUE = 0;
 	private static final int PROGRESS_BAR_MAXIMUM_VALUE = 100;
@@ -766,7 +770,7 @@ public class MainWindow extends JFrame {
 	public JButton getCompleteMetadataButton() {
 		if (completeMetadataButton == null) {
 			completeMetadataButton = new JButton(ActionResult.Complete.toString());
-			completeMetadataButton.setName(BUTTON_NAME);
+			completeMetadataButton.setName(COMPLETE_BUTTON_NAME);
 			completeMetadataButton.setEnabled(false);
 			completeMetadataButton.setBounds(COMPLETE_BUTTON_BOUNDS);
 
@@ -791,7 +795,7 @@ public class MainWindow extends JFrame {
 	public JButton getApplyButton() {
 		if (applyButton == null) {
 			applyButton = new JButton(ApplicationState.APPLY);
-			applyButton.setName(BUTTON_NAME);
+			applyButton.setName(APPLY_BUTTON_NAME);
 			applyButton.setEnabled(false);
 			applyButton.setBounds(APPLY_BUTTON_BOUNDS);
 
@@ -809,7 +813,7 @@ public class MainWindow extends JFrame {
 	public JButton getExportButton() {
 		if (exportButton == null) {
 			exportButton = new JButton(ApplicationState.EXPORT);
-			exportButton.setName(BUTTON_NAME);
+			exportButton.setName(EXPORT_BUTTON_NAME);
 			exportButton.setEnabled(false);
 			exportButton.setBounds(EXPORT_BUTTON_BOUNDS);
 
@@ -832,7 +836,7 @@ public class MainWindow extends JFrame {
 	public JButton getSendButton() {
 		if (sendButton == null) {
 			sendButton = new JButton(SEND_SCROBBLINGS);
-			sendButton.setName(BUTTON_NAME);
+			sendButton.setName(SEND_BUTTON_NAME);
 			sendButton.setEnabled(false);
 			sendButton.setBounds(SEND_BUTTON_BOUNDS);
 
@@ -849,7 +853,7 @@ public class MainWindow extends JFrame {
 	public JButton getOpenButton() {
 		if (openButton == null) {
 			openButton = new JButton(LOAD_FILES);
-			openButton.setName(BUTTON_NAME);
+			openButton.setName(OPEN_BUTTON_NAME);
 			openButton.setBounds(OPEN_BUTTON_BOUNDS);
 
 			openButton.addActionListener(new ActionListener() {
