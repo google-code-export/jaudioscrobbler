@@ -6776,8 +6776,147 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name"
-		key="buttonTopLogin[A-Za-z0-9]+" />
+	<bind style="buttonTopLoginStyle" type="name" key="buttonTopLogin" />
+	
+	<style id="openButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonTopLoginStyle" type="name" key="openButton" />
+	
+	<style id="sendButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonTopLoginStyle" type="name" key="sendButton" />
+	
+	<style id="completeMetadataButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonTopLoginStyle" type="name" key="completeMetadataButton" />
+	
+	<style id="exportButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonTopLoginStyle" type="name" key="exportButton" />
+	
+	<style id="applyButtonStyle">
+		<state value="PRESSED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="MOUSE_OVER">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state value="DISABLED">
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
+		</state>
+		<state>
+			<font name="Dialog" size="14" style="BOLD" />
+			<color value="#ffffff" type="TEXT_FOREGROUND" />
+			<imagePainter method="buttonBackground"
+				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
+		</state>
+	</style>
+	<bind style="buttonTopLoginStyle" type="name" key="applyButton" />
 
 	<style id="passwordTopLoginFieldStyle">
 		<insets left="10" right="10" />
