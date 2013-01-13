@@ -233,8 +233,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @understands UI components for logging window
  */
 
-public final class LoginWindow extends JPanel {
-	private static final long serialVersionUID = -8335316093543211530L;
+public class LoginWindow {
 	private JButton sendButton;
 	private JTextField usernameTextfield;
 	private JPasswordField passwordTextfield;
