@@ -974,7 +974,7 @@ public class MainWindow extends JFrame {
 			SwingWorker<Boolean, Integer> swingWorker = new SwingWorker<Boolean, Integer>() {
 
 				protected Boolean doInBackground() throws Exception {
-					getLabel().setText(ApplicationState.WRITTING_METADATA);
+					getLabel().setText(ApplicationState.WRITING_METADATA);
 					counter = 0;
 					working = true;
 					log.info("Starting to write...");
