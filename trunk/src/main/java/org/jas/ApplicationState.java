@@ -252,7 +252,7 @@ public interface ApplicationState {
 	static final String GETTING_LAST_FM = "Getting Last.fm Metadata";
 	static final String COMPLETE_DEFAULT_VALUES = "Completing default values";
 	static final String GETTING_FORMATTER = "Formatting metadata";
-	static final String WRITTING_METADATA = "Writting Metadata";
+	static final String WRITING_METADATA = "Writing Metadata";
 	static final String USERNAME_LABEL = "username:";
 	static final String PASSWORD_LABEL = "password:";
 	static final int THREE_HUNDRED = 300;
