@@ -203,8 +203,9 @@
 */
 package org.jas.gui;
 
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import org.jas.gui.table.DescriptionTableStyle;
 
 /**
  * 
@@ -212,9 +213,9 @@ import javax.swing.table.DefaultTableModel;
  *
  */
 
-public class DescriptionTable extends JTable{
+public class DescriptionTable extends DescriptionTableStyle {
 	private static final long serialVersionUID = 1L;
-
+	
 	static String[] columnNames = {"Artist",
             "Track",
             "Album",
