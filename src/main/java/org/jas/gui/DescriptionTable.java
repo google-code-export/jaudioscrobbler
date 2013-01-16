@@ -244,31 +244,63 @@ public class DescriptionTable extends DescriptionTableStyle {
 		
 		TableColumn artistColumn = new TableColumn();
 		artistColumn.setHeaderValue("Artist");
+		artistColumn.setMinWidth(68);
+		artistColumn.setMaxWidth(68);
 		tableColumnModel.addColumn(artistColumn);
 		
 		TableColumn trackColumn = new TableColumn();
 		trackColumn.setHeaderValue("Track");
+		trackColumn.setMinWidth(180);
+		trackColumn.setMaxWidth(180);
 		tableColumnModel.addColumn(trackColumn);
+		
+		TableColumn albumColumn = new TableColumn();
+		albumColumn.setHeaderValue("Album");
+		albumColumn.setMinWidth(68);
+		albumColumn.setMaxWidth(68);
+		tableColumnModel.addColumn(albumColumn);
 		
 		TableColumn genreColumn = new TableColumn();
 		genreColumn.setHeaderValue("Genre");
+		genreColumn.setMinWidth(67);
+		genreColumn.setMaxWidth(67);
 		tableColumnModel.addColumn(genreColumn);
 		
 		TableColumn yearColumn = new TableColumn();
 		yearColumn.setHeaderValue("Year");
+		yearColumn.setMinWidth(50);
+		yearColumn.setMaxWidth(50);
 		tableColumnModel.addColumn(yearColumn);
 		
+		TableColumn trackNumberColumn = new TableColumn();
+		trackNumberColumn.setHeaderValue("# Trk");
+		trackNumberColumn.setMinWidth(50);
+		trackNumberColumn.setMaxWidth(50);
+		tableColumnModel.addColumn(trackNumberColumn);
+		
 		TableColumn totalTracksColumn = new TableColumn();
-		totalTracksColumn.setHeaderValue("# Trk");
+		totalTracksColumn.setHeaderValue("# Trks");
+		totalTracksColumn.setMinWidth(50);
+		totalTracksColumn.setMaxWidth(50);
 		tableColumnModel.addColumn(totalTracksColumn);
 		
 		TableColumn cdsColumn = new TableColumn();
 		cdsColumn.setHeaderValue("# CD");
+		cdsColumn.setMinWidth(50);
+		cdsColumn.setMaxWidth(50);
 		tableColumnModel.addColumn(cdsColumn);
 		
 		TableColumn totalCdsColumn = new TableColumn();
 		totalCdsColumn.setHeaderValue("# CDs");
+		totalCdsColumn.setMinWidth(50);
+		totalCdsColumn.setMaxWidth(50);
 		tableColumnModel.addColumn(totalCdsColumn);
+		
+		TableColumn statusColumn = new TableColumn();
+		statusColumn.setHeaderValue("Status");
+		statusColumn.setMinWidth(60);
+		statusColumn.setMaxWidth(60);
+		tableColumnModel.addColumn(statusColumn);
 		
 		this.setTableHeader(new DescriptionTableHeader(tableColumnModel));
 		setPreferredWidth();

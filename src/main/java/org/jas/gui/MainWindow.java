@@ -392,6 +392,7 @@ public class MainWindow extends JFrame {
 		registerKeyStrokeAction();
 		this.setBounds(0, 0, ApplicationState.WIDTH, ApplicationState.HEIGHT);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
 		this.setJMenuBar(getMenubar());
 		this.add(getPanel());
 		this.setVisible(true);
