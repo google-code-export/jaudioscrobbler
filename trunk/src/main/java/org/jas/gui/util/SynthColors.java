@@ -30,7 +30,7 @@ public interface SynthColors {
 
 		Color GRAY170_170_170 = UIManager.getDefaults().getColor("Color.gray170_170_170");
 
-		Color BLUE_201_202_230 = UIManager.getDefaults().getColor("contactTree.selectionOnlineBackground");
+		Color BLUE_201_202_230 = UIManager.getDefaults().getColor("cont actTree.selectionOnlineBackground");
 
 		Color CLEAR_GRAY220_220_220 = UIManager.getDefaults().getColor("contactTree.selectionBackground");
 		
