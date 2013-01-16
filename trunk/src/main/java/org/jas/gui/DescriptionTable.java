@@ -203,8 +203,12 @@
 */
 package org.jas.gui;
 
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
+import org.jas.gui.table.DescriptionTableHeader;
 import org.jas.gui.table.DescriptionTableStyle;
 
 /**
@@ -236,6 +240,37 @@ public class DescriptionTable extends DescriptionTableStyle {
 		DefaultTableModel model = new DefaultTableModel(data,columnNames);
 		this.setModel(model);
 		this.setName("descriptionTable");
+		TableColumnModel tableColumnModel = new DefaultTableColumnModel();
+		
+		TableColumn artistColumn = new TableColumn();
+		artistColumn.setHeaderValue("Artist");
+		tableColumnModel.addColumn(artistColumn);
+		
+		TableColumn trackColumn = new TableColumn();
+		trackColumn.setHeaderValue("Track");
+		tableColumnModel.addColumn(trackColumn);
+		
+		TableColumn genreColumn = new TableColumn();
+		genreColumn.setHeaderValue("Genre");
+		tableColumnModel.addColumn(genreColumn);
+		
+		TableColumn yearColumn = new TableColumn();
+		yearColumn.setHeaderValue("Year");
+		tableColumnModel.addColumn(yearColumn);
+		
+		TableColumn totalTracksColumn = new TableColumn();
+		totalTracksColumn.setHeaderValue("# Trk");
+		tableColumnModel.addColumn(totalTracksColumn);
+		
+		TableColumn cdsColumn = new TableColumn();
+		cdsColumn.setHeaderValue("# CD");
+		tableColumnModel.addColumn(cdsColumn);
+		
+		TableColumn totalCdsColumn = new TableColumn();
+		totalCdsColumn.setHeaderValue("# CDs");
+		tableColumnModel.addColumn(totalCdsColumn);
+		
+		this.setTableHeader(new DescriptionTableHeader(tableColumnModel));
 		setPreferredWidth();
 	}
 

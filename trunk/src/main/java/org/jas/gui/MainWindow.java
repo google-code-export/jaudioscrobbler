@@ -859,7 +859,6 @@ public class MainWindow extends JFrame {
 			openButton.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					System.err.println("hola");
 					openButton.setEnabled(false);
 					getCompleteMetadataButton().setEnabled(false);
 					getExportButton().setEnabled(false);
