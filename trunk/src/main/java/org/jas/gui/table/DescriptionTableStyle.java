@@ -2,7 +2,6 @@ package org.jas.gui.table;
 
 import java.awt.Color;
 import java.awt.Component;
-
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
@@ -40,7 +39,12 @@ public class DescriptionTableStyle extends JTable {
         } else {
         	c.setBackground(getEvenRowColor());
         }
+        
+        if (isRowSelected(rowIndex)) {
+        	c.setBackground(getSelectedRowColor());
+		}
+        
         return c;
     }
-
+	
 }
