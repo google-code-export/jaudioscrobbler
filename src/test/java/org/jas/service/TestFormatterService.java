@@ -761,4 +761,37 @@ public class TestFormatterService {
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
+	@Test
+	public void shouldDetectNtildeInTitle() throws Exception {
+		String title = "Ni&ntilde;a";
+		String expectedTitle = "Niña";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectNtildeInArtist() throws Exception {
+		String artist = "Ni&ntilde;a";
+		String expectedArtist = "Niña";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectNtildeInAlbum() throws Exception {
+		String album = "Ni&ntilde;a";
+		String expectedAlbum = "Niña";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
 }
