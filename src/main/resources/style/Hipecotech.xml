@@ -299,9 +299,6 @@
 	<defaultsProperty key="icons.createAccountBullet"
 		type="idref" value="createAccountBullet" />
 
-	<imageIcon id="allActiveIcon" path="/icons/alerts/allActiveIcon.png" />
-	<imageIcon id="allInactiveIcon" path="/icons/alerts/allInactiveIcon.png" />
-
 	<imageIcon id="notificationActiveIcon" path="/images/alerts/notificationActiveIcon.png" />
 	<imageIcon id="notificationInactiveIcon" path="/images/alerts/notificationInactiveIcon.png" />
 
@@ -380,10 +377,6 @@
 	<defaultsProperty key="icons.notificationInactive"
 		type="idref" value="notificationInactiveIcon" />
 
-	<defaultsProperty key="icons.allActive" type="idref"
-		value="allActiveIcon" />
-	<defaultsProperty key="icons.allInactive" type="idref"
-		value="allInactiveIcon" />
 	<defaultsProperty key="icons.deleteRed" type="idref"
 		value="iconsDeleteIconRed" />
 	<defaultsProperty key="icons.trackWhite" type="idref"
@@ -2824,51 +2817,6 @@
 	<defaultsProperty key="alertDrawerWhiteColor" type="idref"
 		value="alertDrawerWhiteColor" />
 
-	<imageIcon id="contactAlertActiveIcon" path="/icons/alerts/contactAlertActiveIcon.png" />
-	<defaultsProperty key="contactAlertActiveIcon" type="idref"
-		value="contactAlertActiveIcon" />
-
-	<imageIcon id="contactAlertInactiveIcon" path="/icons/alerts/contactAlertInactiveIcon.png" />
-	<defaultsProperty key="contactAlertInactiveIcon" type="idref"
-		value="contactAlertInactiveIcon" />
-
-	<imageIcon id="musicAlertInactiveIcon" path="/icons/alerts/musicAlertInactiveIcon.png" />
-	<defaultsProperty key="musicAlertInactiveIcon" type="idref"
-		value="musicAlertInactiveIcon" />
-
-	<imageIcon id="musicAlertActiveIcon" path="/icons/alerts/musicAlertActiveIcon.png" />
-	<defaultsProperty key="musicAlertActiveIcon" type="idref"
-		value="musicAlertActiveIcon" />
-
-	<imageIcon id="mcRequestAlertInactiveIcon" path="/icons/alerts/mcRequestAlertInactiveIcon.png" />
-	<defaultsProperty key="mcRequestAlertInactiveIcon"
-		type="idref" value="mcRequestAlertInactiveIcon" />
-
-	<imageIcon id="mcRequestAlertActiveIcon" path="/icons/alerts/mcRequestAlertActiveIcon.png" />
-	<defaultsProperty key="mcRequestAlertActiveIcon" type="idref"
-		value="mcRequestAlertActiveIcon" />
-
-	<imageIcon id="alertReceivedIcon" path="/icons/alerts/alertIcon.png" />
-	<defaultsProperty key="alertReceivedIcon" type="idref"
-		value="alertReceivedIcon" />
-
-	<imageIcon id="updateIcon" path="/icons/alerts/autoUpdateIcon.png" />
-	<defaultsProperty key="updateIcon" type="idref" value="updateIcon" />
-
-	<imageIcon id="importITunesIcon" path="/icons/alerts/iconiTunes.png" />
-	<defaultsProperty key="importITunesIcon" type="idref"
-		value="importITunesIcon" />
-
-	<imageIcon id="libraryIcon" path="/icons/alerts/libraryIcon.png" />
-	<defaultsProperty key="libraryIcon" type="idref"
-		value="libraryIcon" />
-
-	<imageIcon id="sendingMediaIcon" path="/icons/alerts/sendingMedia.png" />
-	<defaultsProperty key="sendingMediaIcon" type="idref"
-		value="sendingMediaIcon" />
-
-	<imageIcon id="searchIcon" path="/icons/searchIcon.png" />
-	<defaultsProperty key="searchIcon" type="idref" value="searchIcon" />
 	<!-- END OF Drawer -->
 
 	<!-- MAIN FRAME Buttons Styles -->
@@ -8104,14 +8052,6 @@
 	</style>
 	<bind style="feedTopHundredIconNameStyle" type="name" key="topHundredIconName" />
 	
-	<style id="feedTotalTracksNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/LibraryIcon.png" />
-		</state>
-	</style>
-	<bind style="feedTotalTracksNameStyle" type="name" key="feedTotalTracksName" />
-
 	<style id="feedFriendshipIconNameStyle">
 		<state>
 			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
