@@ -11,22 +11,19 @@ public class DescriptionTableStyle extends JTable {
 
 	private static final long serialVersionUID = -1153564046400612566L;
 
-	public Color getEvenRowColor() {
+	private Color getEvenRowColor() {
 		return SynthColors.CLEAR_GRAY245_245_245;
 	}
 
-	public Color getOddRowColor() {
+	private Color getOddRowColor() {
 		return SynthColors.WHITE255_255_255;
 	}
 
-	public Color getSelectedRowColor() {
+	private Color getSelectedRowColor() {
 		return SynthColors.BLUE175_205_225;
 	}
 
-	public Color getSelectedSeparatorColor() {
-		return SynthColors.WHITE255_255_255;
-	}
-
+	@Override
 	public Color getGridColor() {
 		return SynthColors.GRAY150_150_150;
 	}
