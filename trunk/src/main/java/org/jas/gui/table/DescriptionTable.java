@@ -201,15 +201,13 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-package org.jas.gui;
+package org.jas.gui.table;
 
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import org.jas.gui.table.DescriptionTableHeader;
-import org.jas.gui.table.DescriptionTableStyle;
 
 /**
  * 

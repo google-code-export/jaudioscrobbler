@@ -265,6 +265,7 @@ import org.jas.dnd.ImageDropListener;
 import org.jas.dnd.MainFrameDragOverListener;
 import org.jas.dnd.MultiLayerDropTargetListener;
 import org.jas.event.Events;
+import org.jas.gui.table.DescriptionTable;
 import org.jas.helper.DialogHelper;
 import org.jas.helper.FileChooserHelper;
 import org.jas.helper.MetadataAdapter;
