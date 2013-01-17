@@ -3,7 +3,7 @@ package org.jas.gui.table;
 public enum DescriptionTableColumns {
 	
 	ARTIST("Artist", 68, 68), TRACK("Track", 180, 180), ALBUM("Album", 68, 68), GENRE("Genre", 67, 67), 
-	YEAR("Year", 60, 60), N_TRACK("# Trk", 50, 50), N_TRACKS("# Trks", 50, 50), N_CD("# CD", 50, 50), 
+	YEAR("Year", 50, 50), N_TRACK("# Trk", 50, 50), N_TRACKS("# Trks", 50, 50), N_CD("# CD", 50, 50), 
 	N_CDS("# CDS", 50, 50), STATUS("Status", 60, 60);
 	
 	private final String name;
