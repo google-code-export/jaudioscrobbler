@@ -361,11 +361,6 @@
 	<imageIcon id="iconsFolderGray" path="/images/tree/TreeFolderGray.png" />
 	<imageIcon id="iconsFileGray" path="/images/tree/TreeFileGray.png" />
 
-	<imageIcon id="bigWarningIcon" path="/icons/dialog/warningBig.png" />
-	
-	<imageIcon id="invisibleIconId" path="/icons/dialog/invisibleIcon.png" />
-	<defaultsProperty key="invisibleIcon" type="idref" value="invisibleIconId" />
-	
 	<imageIcon id="devicesHdIcon" path="/images/devices/hard_disk_icon.png" />
 	<defaultsProperty key="Devices.hdIcon" type="idref" value="devicesHdIcon" />
 
@@ -486,9 +481,6 @@
 	<defaultsProperty key="icons.fileGray" type="idref"
 		value="iconsFileGray" />
 
-	<defaultsProperty key="icons.warningBig" type="idref"
-		value="bigWarningIcon" />
-		
 	<defaultsProperty key="Tree.background" type="idref"
 		value="treeBackgroundColor" />	
 		
@@ -6015,14 +6007,6 @@
 	</style>
 	<bind style="sendContentNumberOfTracksPanelStyle" type="name"
 		key="sendContentNumberOfTracksPanel" />
-	<style id="MCIconStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="labelBackground" path="/icons/dialog/MCicon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="MCIconStyle" type="name" key="MCIcon" />
 
 	<style id="boldItalicFont14Purple49_19_49Style">
 		<state>
