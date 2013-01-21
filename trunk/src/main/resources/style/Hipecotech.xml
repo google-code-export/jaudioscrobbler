@@ -3364,9 +3364,6 @@
 
 		<font id="contactTreeFont" name="Dialog" size="11" style="PLAIN" />
 
-		<imageIcon id="contactTreeOnlineLeafIcon" path="/icons/contacts/OnlineUserIcon.png" />
-		<imageIcon id="contactTreeOfflineLeafIcon" path="/icons/contacts/OfflineUserIcon.png" />
-		<imageIcon id="contactTreePendingLeafIcon" path="/icons/contacts/PendingEmail.png" />
 		<imageIcon id="contactTreeOnlineFacebookLeafIcon"
 			path="/icons/facebook/FacebookIconStatusAvailable.png" />
 		<imageIcon id="contactTreeOfflineFacebookLeafIcon"
@@ -3410,12 +3407,6 @@
 		<defaultsProperty key="contactTree.selectionOnlineBackground"
 			type="idref" value="contactTreeSelectionOnlineBackgroundColor" />
 
-		<defaultsProperty key="contactTree.leafOnlineIcon"
-			type="idref" value="contactTreeOnlineLeafIcon" />
-		<defaultsProperty key="contactTree.leafOfflineIcon"
-			type="idref" value="contactTreeOfflineLeafIcon" />
-		<defaultsProperty key="contactTree.leafPendingIcon"
-			type="idref" value="contactTreePendingLeafIcon" />
 		<defaultsProperty key="contactTree.leafOnlineFacebokIcon"
 			type="idref" value="contactTreeOnlineFacebookLeafIcon" />
 		<defaultsProperty key="contactTree.leafOfflineFacebokIcon"
@@ -3441,25 +3432,6 @@
 	</style>
 	<bind style="contactListHeaderStyle" type="name" key="contactListHeader" />
 	<!-- END OF Contact List Header Panel Background -->
-
-	<!-- AddContactListButton -->
-	<style id="addContactButtonStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/icons/contacts/addContactButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" path="/icons/contacts/addContactButtonOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/contacts/addContactButtonNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="addContactButtonStyle" type="name" key="addContactButton" />
-	<!-- END OF AddContactListButton -->
 
 	<!-- EditProfileButton -->
 	<style id="editHeaderProfileButtonStyle">
