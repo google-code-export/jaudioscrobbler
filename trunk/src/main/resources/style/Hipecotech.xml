@@ -932,25 +932,6 @@
 	<bind style="cancelUploadBottomButtonStyle" type="name"
 		key="cancelUploadBottomButton" />
 
-	<style id="closeLibraryButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/icons/commons/CloseLibraryButtonPressed.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/icons/commons/CloseLibraryButtonMouseOver.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/icons/commons/CloseLibraryButtonNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="closeLibraryButtonStyle" type="name" key="closeLibraryButton" />
-
 	<style id="refreshLibraryButtonStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -4712,16 +4693,6 @@
 	<bind style="showRemoteLibraryButtonStyle" type="name"
 		key="showRemoteLibraryButton" />
 
-
-	<style id="userIconOnlineLabelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="labelBackground" path="/icons/chat/onlineStatus.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="userIconOnlineLabelStyle" type="name" key="userIconOnlineLabel" />
-
 	<style id="userIconFacebookLabelStyle">
 		<state>
 			<imagePainter method="labelBackground"
@@ -4748,15 +4719,6 @@
 	</style>
 	<bind style="userIconFacebookOfflineLabelStyle" type="name"
 		key="userIconFacebookOfflineLabel" />
-
-	<style id="userIconOfflineLabelStyle">
-		<state>
-			<imagePainter method="labelBackground" path="/icons/chat/offlineStatus.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="userIconOfflineLabelStyle" type="name"
-		key="userIconOfflineLabel" />
 
 	<style id="sendMessageChatButtonStyle">
 		<state value="PRESSED">
