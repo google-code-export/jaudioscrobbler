@@ -2921,71 +2921,9 @@
 	</style>
 	<bind style="buttonStyle" type="name" key="button[A-Za-z0-9]+" />
 
-	<style id="maleToggleButtonStyle">
-		<imageIcon id="maleToggleButtonSelected" path="/icons/profile/maleToggleButtonSelected.png" />
-		<imageIcon id="maleToggleButtonDefault" path="/icons/profile/maleToggleButtonNormal.png" />
-		<imageIcon id="maleToggleButtonPressed" path="/icons/profile/maleToggleButtonPressed.png" />
-		<imageIcon id="maleToggleButtonOver" path="/icons/profile/maleToggleButtonOver.png" />
-		<property key="ToggleButton.icon" value="maleToggleButtonDefault" />
-		<state value="MOUSE_OVER">
-			<property key="ToggleButton.icon" value="maleToggleButtonOver" />
-		</state>
-		<state value="PRESSED">
-			<property key="ToggleButton.icon" value="maleToggleButtonPressed" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="maleToggleButtonSelected" />
-		</state>
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="maleToggleButtonDefault" />
-		</state>
-	</style>
-	<bind style="maleToggleButtonStyle" type="name" key="maleToggleButton" />
-
-	<style id="maleToggleButtonFocusStyle">
-		<imageIcon id="maleToggleButtonFocused" path="/icons/profile/maleToggleButtonFocused.png" />
-		<property key="ToggleButton.icon" value="maleToggleButtonDefault" />
-		<state>
-			<property key="ToggleButton.icon" value="maleToggleButtonFocused" />
-		</state>
-	</style>
-	<bind style="maleToggleButtonFocusStyle" type="name"
-		key="maleToggleButtonFocus" />
-
 	<!--
 		ENABLED MOUSE_OVER PRESSED DISABLED FOCUSED SELECTED DEFAULT
 	-->
-	<style id="femaleToggleButtonStyle">
-		<imageIcon id="femaleToggleButtonSelected" path="/icons/profile/femaleToggleButtonSelected.png" />
-		<imageIcon id="femaleToggleButtonDefault" path="/icons/profile/femaleToggleButtonNormal.png" />
-		<imageIcon id="femaleToggleButtonPressed" path="/icons/profile/femaleToggleButtonPressed.png" />
-		<imageIcon id="femaleToggleButtonOver" path="/icons/profile/femaleToggleButtonOver.png" />
-		<property key="ToggleButton.icon" value="femaleToggleButtonDefault" />
-		<state value="MOUSE_OVER">
-			<property key="ToggleButton.icon" value="femaleToggleButtonOver" />
-		</state>
-		<state value="PRESSED">
-			<property key="ToggleButton.icon" value="femaleToggleButtonPressed" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="femaleToggleButtonSelected" />
-		</state>
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="femaleToggleButtonDefault" />
-		</state>
-	</style>
-	<bind style="femaleToggleButtonStyle" type="name" key="femaleToggleButton" />
-
-	<style id="femaleToggleButtonFocusStyle">
-		<imageIcon id="femaleToggleButtonFocused" path="/icons/profile/femaleToggleButtonFocused.png" />
-		<property key="ToggleButton.icon" value="femaleToggleButtonDefault" />
-		<state>
-			<property key="ToggleButton.icon" value="femaleToggleButtonFocused" />
-		</state>
-	</style>
-	<bind style="femaleToggleButtonFocusStyle" type="name"
-		key="femaleToggleButtonFocus" />
-
 	<style id="bottomPanelSeparatorStyle">
 		<state>
 			<imagePainter method="panelBackground" path="/images/separator/SeparatorDialog.png"
