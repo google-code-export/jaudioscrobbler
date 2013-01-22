@@ -1456,24 +1456,6 @@
 	</style>
 	<bind style="loginMenuBarStyle" type="NAME" key="loginMenuBar" />
 
-	<style id="menuSonStyle">
-		<imageIcon id="arrowMenu" path="/icons/menu/arrowMenu.png" />
-		<property key="Menu.arrowIcon" value="arrowMenu" />
-		<state value="SELECTED">
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="WHITE" type="TEXT_FOREGROUND" />
-			<imagePainter method="menuBackground" path="/images/menu/MenuItemOver.png"
-				sourceInsets="0 3 0 3" />
-		</state>
-		<state>
-			<insets top="1" left="8" bottom="1" right="5"></insets>
-			<font name="Dialog" size="10" style="PLAIN" />
-			<color value="#c5c6c8" type="FOREGROUND" />
-			<color value="#4d4d4d" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="menuSonStyle" type="NAME" key="sonMenu" />
-
 	<style id="menuParentStyle">
 		<state value="SELECTED">
 			<font name="Dialog" size="10" style="PLAIN" />
