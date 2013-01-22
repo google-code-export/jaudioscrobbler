@@ -250,6 +250,7 @@ public class MetadataController {
 		int selection = fileChooser.showOpenDialog(null);
 		if (selection == JFileChooser.APPROVE_OPTION) {
 			File root = fileChooser.getSelectedFile();
+			log.info("\nDIRECTORY to SCAN: " + root);
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
 			try {
 				metadataList = metadataExtractor.extractMetadata(root);
