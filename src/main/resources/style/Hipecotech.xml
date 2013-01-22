@@ -1703,20 +1703,6 @@
 		</state>
 	</style>
 	<bind style="trackIconDragStyle" type="name" key="dragTrack" />
-	<style id="contactIconDragStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/icons/dnd/dragusericon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="contactIconDragStyle" type="name" key="dragContacts" />
-	<style id="pendingEmailIconDragStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/icons/dnd/dragPendingEmail.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="pendingEmailIconDragStyle" type="name" key="dragPendingEmail" />
 	
 	<style id="playlistIconDragStyle">
 		<state>
