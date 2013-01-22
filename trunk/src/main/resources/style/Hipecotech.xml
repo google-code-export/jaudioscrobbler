@@ -3339,12 +3339,6 @@
 
 		<font id="contactTreeFont" name="Dialog" size="11" style="PLAIN" />
 
-		<imageIcon id="contactTreeOnlineFacebookLeafIcon"
-			path="/icons/facebook/FacebookIconStatusAvailable.png" />
-		<imageIcon id="contactTreeOfflineFacebookLeafIcon"
-			path="/icons/facebook/FacebookIconStatusOffline.png" />
-		<imageIcon id="contactTreeAwayFacebookLeafIcon" path="/icons/facebook/FacebookIconStatusAway.png" />
-
 		<color id="contactTreeForegroundColor" value="#4D4D4D" type="FOREGROUND" />
 		<color id="contactTreeBackgroundColor" value="#F3F3F7" type="BACKGROUND" />
 		<color id="contactTreeSelectionBackgroundColor" value="#DCDCDC"
@@ -3381,13 +3375,6 @@
 			type="idref" value="contactTreeOnlineBackgroundColor" />
 		<defaultsProperty key="contactTree.selectionOnlineBackground"
 			type="idref" value="contactTreeSelectionOnlineBackgroundColor" />
-
-		<defaultsProperty key="contactTree.leafOnlineFacebokIcon"
-			type="idref" value="contactTreeOnlineFacebookLeafIcon" />
-		<defaultsProperty key="contactTree.leafOfflineFacebokIcon"
-			type="idref" value="contactTreeOfflineFacebookLeafIcon" />
-		<defaultsProperty key="contactTree.leafAwayFacebookIcon"
-			type="idref" value="contactTreeAwayFacebookLeafIcon" />
 	</style>
 	<bind style="contactListTreeStyle" type="name" key="contactListTree" />
 
@@ -4639,33 +4626,6 @@
 	</style>
 	<bind style="showRemoteLibraryButtonStyle" type="name"
 		key="showRemoteLibraryButton" />
-
-	<style id="userIconFacebookLabelStyle">
-		<state>
-			<imagePainter method="labelBackground"
-				path="/icons/facebook/FacebookIconStatusAvailable.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="userIconFacebookLabelStyle" type="name"
-		key="userIconFacebookLabel" />
-
-	<style id="userIconFacebookAwayLabelStyle">
-		<state>
-			<imagePainter method="labelBackground"
-				path="/icons/facebook/FacebookIconStatusAway.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="userIconFacebookAwayLabelStyle" type="name"
-		key="userIconFacebookAwayLabel" />
-
-	<style id="userIconFacebookOfflineLabelStyle">
-		<state>
-			<imagePainter method="labelBackground"
-				path="/icons/facebook/FacebookIconStatusOffline.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="userIconFacebookOfflineLabelStyle" type="name"
-		key="userIconFacebookOfflineLabel" />
 
 	<style id="sendMessageChatButtonStyle">
 		<state value="PRESSED">
