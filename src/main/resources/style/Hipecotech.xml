@@ -1525,10 +1525,6 @@
 		<imageIcon id="speakerInvisibleIcon" path="/images/table/SpeakerInvisible.png" />
 		<defaultsProperty key="Table.speakerInvisibleIcon"
 			type="idref" value="speakerInvisibleIcon" />
-		<imageIcon id="newIcon" path="/images/table/newTrackIcon.png" />
-		<defaultsProperty key="Table.newIcon" type="idref"
-			value="newIcon" />
-
 		<imageIcon id="downloadingTrackIcon" path="/icons/table/icon-download.png" />
 		<imageIcon id="downloadingErrorIcon" path="/icons/table/icon-download-error.png" />
 		<imageIcon id="downloadingQueueIcon" path="/icons/table/icon-download-queue.png" />
@@ -3919,22 +3915,6 @@
 	<bind style="ImportContactCloseButtonStyle" type="name"
 		key="importContactCloseButton" />
 
-	<style id="hotmailIconStyle">
-		<state>
-			<imagePainter method="labelBackground" path="/images/crawler/hotmailIcon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="hotmailIconStyle" type="name" key="hotmailIcon" />
-
-	<style id="gmailIconStyle">
-		<state>
-			<imagePainter method="labelBackground" path="/images/crawler/gmailIcon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="gmailIconStyle" type="name" key="gmailIcon" />
-
 	<style id="yahooIconStyle">
 		<state>
 			<imagePainter method="labelBackground" path="/images/crawler/yahooIcon.png"
@@ -3948,14 +3928,6 @@
 		* Progress Panel
 		**********************************************************************************
 	-->
-	<style id="syncMusicIconLabelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="labelBackground" path="/images/bottompanel/syncMusicIcon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="syncMusicIconLabelStyle" type="name" key="syncMusicIcon" />
 
 	<style id="syncMusicProgressBarStyle">
 		<property key="Slider.thumbWidth" type="Integer" value="140" />
@@ -4022,13 +3994,6 @@
 		</state>
 	</style>
 	<bind style="deviceSilderBarStyle" type="name" key="deviceSilderBar" />
-
-	<style id="receiveContentMailIconStyle">
-		<imagePainter method="panelBackground" path="/images/dialog/receiveContentMailIcon.png"
-			sourceInsets="0 0 0 0" />
-	</style>
-	<bind style="receiveContentMailIconStyle" type="name"
-		key="receiveContent.mailIcon" />
 
 	<!--
 		**********************************************************************************
@@ -7060,24 +7025,19 @@
 	<bind style="toolbarSearchButtonStyle" type="name" key="toolbarSearchButton" />
 
 	<style id="toolbarDownloadsButtonStyle">
-		<imageIcon id="toolbarDownloadsIcon" path="/icons/toolbar/toolbarDownloadsIcon.png" />
-		<property key="ToggleButton.icon" value="toolbarDownloadsIcon" />
 		<font name="Dialog" size="12" style="BOLD" />
 		<state value="SELECTED">
 			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<property key="ToggleButton.icon" value="toolbarDownloadsIcon" />
 			<imagePainter method="toggleButtonBackground"
 				path="/images/toolbar/toolbarMiddleButtonActive.png" sourceInsets="11 11 11 11" />
 		</state>
 		<state value="PRESSED">
 			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<property key="ToggleButton.icon" value="toolbarDownloadsIcon" />
 			<imagePainter method="toggleButtonBackground"
 				path="/images/toolbar/toolbarMiddleButtonPressed.png" sourceInsets="11 11 11 11" />
 		</state>
 		<state value="MOUSE_OVER">
 			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<property key="ToggleButton.icon" value="toolbarDownloadsIcon" />
 			<imagePainter method="toggleButtonBackground"
 				path="/images/toolbar/toolbarMiddleButtonOver.png" sourceInsets="11 11 11 11" />
 		</state>
@@ -7881,129 +7841,6 @@
 		********************************************************************************
 	-->
 
-	<style id="feedRLBIconStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/RLBrowsingIcon.png" />
-		</state>
-	</style>
-	<bind style="feedRLBIconStyle" type="name" key="feedRLBIconName" />
-
-	<style id="feedQuoteIconNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/QuoteIcon.png" />
-		</state>
-	</style>
-	<bind style="feedQuoteIconNameStyle" type="name" key="feedQuoteIconName" />
-
-	<style id="feedAvatarIconNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/PhotoIcon.png" />
-		</state>
-	</style>
-	<bind style="feedAvatarIconNameStyle" type="name" key="feedAvatarIconName" />
-	
-	<style id="feedTopHundredIconNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/Top100Icon.png" />
-		</state>
-	</style>
-	<bind style="feedTopHundredIconNameStyle" type="name" key="topHundredIconName" />
-	
-	<style id="feedFriendshipIconNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/FriendshipIcon.png" />
-		</state>
-	</style>
-	<bind style="feedFriendshipIconNameStyle" type="name"
-		key="feedFriendshipIconName" />
-		
-		<style id="feedProfileIconNameStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/ProfileIcon.png" />
-		</state>
-	</style>
-	<bind style="feedProfileIconNameStyle" type="name"
-		key="feedProfileIconName" />
-
-	<imageIcon id="feed.folderIcon" path="/icons/Feeds/folderIcon.png" />
-	<defaultsProperty key="feed.folderIcon" type="idref"
-		value="feed.folderIcon" />
-
-	<imageIcon id="feed.playlistIcon" path="/icons/Feeds/playlistIcon.png" />
-	<defaultsProperty key="feed.playlistIcon" type="idref"
-		value="feed.playlistIcon" />
-
-	<imageIcon id="feed.musicIcon" path="/icons/Feeds/TrackIcon.png" />
-	<defaultsProperty key="feed.musicIcon" type="idref"
-		value="feed.musicIcon" />
-
-	<style id="feedTwitterIconNameStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/icons/Feeds/TwitterIcon.png" />
-		</state>
-	</style>
-	<bind style="feedTwitterIconNameStyle" type="name" key="feedTwitterIconName" />
-
-	<style id="feedImportIconNameStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/icons/Feeds/MusicIcon.png" />
-		</state>
-	</style>
-	<bind style="feedImportIconNameStyle" type="name" key="feedImportIconName" />
-
-	<style id="feedImportItunesIconNameStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/icons/Feeds/iTunesIcon.png" />
-		</state>
-	</style>
-	<bind style="feedImportItunesIconNameStyle" type="name" key="feedImportItunesIconName" />
-
-	<style id="feedFacebookIconNameStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/icons/Feeds/FacebookIcon.png" />
-		</state>
-	</style>
-	<bind style="feedFacebookIconNameStyle" type="name" key="feedFacebookIconName" />
-
-	<style id="feedDeviceExportIconStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/DeviceIcon.png" />
-		</state>
-	</style>
-	<bind style="feedDeviceExportIconStyle" type="name"
-		key="feedDeviceExportIconName" />
-
-	<style id="feedSendMediaIconStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/MailIcon.png" />
-		</state>
-	</style>
-	<bind style="feedSendMediaIconStyle" type="name" key="feedSendMediaIconName" />
-	
-	<style id="feedContactsIconStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/icons/Feeds/TotalFriendsIcon.png" />
-		</state>
-	</style>
-	<bind style="feedContactsIconStyle" type="name" key="feedContactsIconName" />
-	
 	 <style id="colorD5D5D5SeparatorStyle">
         <state>
             <imagePainter method="panelBackground"
