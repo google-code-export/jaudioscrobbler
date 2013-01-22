@@ -921,27 +921,6 @@
 	<bind style="cancelUploadBottomButtonStyle" type="name"
 		key="cancelUploadBottomButton" />
 
-	<style id="refreshLibraryButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/icons/library/refreshLibraryPress.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/icons/library/refreshLibraryOver.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/icons/library/refreshLibraryNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="refreshLibraryButtonStyle" type="name"
-		key="refreshLibraryButton" />
-
-
 	<style id="libraryDropDownStyle">
 		<state>
 			<imagePainter method="panelBackground" path="/images/combobox/DropDownRemoteLibrary.png"
@@ -1402,49 +1381,7 @@
 		</state>
 	</style>
 	<bind style="radioButtonStyle" type="name" key="radioButton" />
-
-	<style id="musicButtonStyle">
-		<imageIcon id="activeMusic" path="/icons/library/Music.png" />
-		<imageIcon id="inactiveMusic" path="/icons/library/Music.png" />
-		<property key="ToggleButton.icon" value="inactiveMusic" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactiveMusic" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeMusic" />
-		</state>
-	</style>
-	<bind style="musicButtonStyle" type="name" key="musicButton" />
-	<style id="videoButtonStyle">
-		<imageIcon id="activeVideo" path="/icons/library/Video.png" />
-		<imageIcon id="inactiveVideo" path="/icons/library/Video.png" />
-		<property key="ToggleButton.icon" value="inactiveVideo" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactiveVideo" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeVideo" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactiveVideo" />
-		</state>
-	</style>
-	<bind style="videoButtonStyle" type="name" key="videoButton" />
-	<style id="photoButtonStyle">
-		<imageIcon id="activePhoto" path="/icons/library/Photos.png" />
-		<imageIcon id="inactivePhoto" path="/icons/library/Photos.png" />
-		<property key="ToggleButton.icon" value="inactivePhoto" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactivePhoto" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activePhoto" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactivePhoto" />
-		</state>
-	</style>
-	<bind style="photoButtonStyle" type="name" key="photoButton" />
+	
 	<style id="podcastButtonStyle">
 		<imageIcon id="activePodcast" path="/icons/library/Podcast.png" />
 		<imageIcon id="inactivePodcast" path="/icons/library/Podcast.png" />
@@ -1460,65 +1397,8 @@
 		</state>
 	</style>
 	<bind style="podcastButtonStyle" type="name" key="podcastButton" />
-	<!--
-		<style id="radioButtonStyle"> <imageIcon id="activeRadio"
-		path="/images/icon_radio_active.png" /> <imageIcon id="inactiveRadio"
-		path="/images/icon_radio_inactive.png" /> <property
-		key="ToggleButton.icon" value="inactiveRadio" /> <state
-		value="DEFAULT"> <property key="ToggleButton.icon"
-		value="inactiveRadio" /> </state> <state value="SELECTED"> <property
-		key="ToggleButton.icon" value="activeRadio" /> </state> <state
-		value="DISABLED"> <property key="ToggleButton.icon"
-		value="inactiveRadio" /> </state> </style> <bind
-		style="radioButtonStyle" type="name" key="radioButton" />
-	-->
-	<style id="audiobookButtonStyle">
-		<imageIcon id="activeAudiobook" path="/icons/library/AudioBook.png" />
-		<imageIcon id="inactiveAudiobook" path="/icons/library/AudioBook.png" />
-		<property key="ToggleButton.icon" value="inactiveAudiobook" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactiveAudiobook" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeAudiobook" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactiveAudiobook" />
-		</state>
-	</style>
-	<bind style="audiobookButtonStyle" type="name" key="audiobookButton" />
-	<style id="fileButtonStyle">
-		<imageIcon id="activeFile" path="/icons/library/Files.png" />
-		<imageIcon id="inactiveFile" path="/icons/library/Files.png" />
-		<property key="ToggleButton.icon" value="inactiveFile" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactiveFile" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeFile" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactiveFile" />
-		</state>
-	</style>
-	<bind style="fileButtonStyle" type="name" key="fileButton" />
-	<style id="gameButtonStyle">
-		<imageIcon id="activeGame" path="/icons/library/Games.png" />
-		<imageIcon id="inactiveGame" path="/icons/library/Games.png" />
-		<property key="ToggleButton.icon" value="inactiveGame" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactiveGame" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeGame" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactiveGame" />
-		</state>
-	</style>
-	<bind style="gameButtonStyle" type="name" key="gameButton" />
 
-	<style>
+		<style>
 		<imageIcon id="speakerIcon" path="/images/table/Speaker.png" />
 		<defaultsProperty key="Table.speakerIcon" type="idref"
 			value="speakerIcon" />
@@ -2235,57 +2115,6 @@
 	</style>
 	<bind style="collapsedPanelBubbleStyle" type="name"
 		key="collapsedPanelBubble" />
-
-	<style id="expandCollapsedLibraryBigButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/library/expand-ll-press.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" path="/icons/library/expand-ll-over.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/library/expand-ll-normal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="expandCollapsedLibraryBigButtonStyle" type="name"
-		key="expandCollapsedLibraryBigButton" />
-
-	<style id="expandCollapsedLibrarySmallButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/library/expand-rl-press.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" path="/icons/library/expand-rl-over.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/library/expand-rl-normal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="expandCollapsedLibrarySmallButtonStyle" type="name"
-		key="expandCollapsedLibrarySmallButton" />
-
-	<style id="closeCollapsedLibraryButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/library/closeb-rl-press.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" path="/icons/library/closeb-rl-over.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/library/closeb-rl-normal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="closeCollapsedLibraryButtonStyle" type="name"
-		key="closeCollapsedLibraryButton" />
 
 	<style id="myMusicDragOverLabelStyle">
 		<font name="Dialog" size="13" style="BOLD" />
