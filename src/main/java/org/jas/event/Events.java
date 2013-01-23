@@ -22,6 +22,9 @@ public interface Events {
 	String MUSIC_DIRECTORY_SELECTED = "musicDirectorySelected";
 	EventId<ValueEvent<String>> DIRECTORY_SELECTED = ev(MUSIC_DIRECTORY_SELECTED);
 	
+	String MUSIC_DIRECTORY_NOT_EXIST = "musicDirectoryNotExist";
+	EventId<ValueEvent<String>> DIRECTORY_NOT_EXIST = ev(MUSIC_DIRECTORY_NOT_EXIST);
+	
 	String MUSIC_DIRECTORY_SELECTED_CANCEL = "musicDirectorySelectedCancel";
 	EventId<EmptyEvent> DIRECTORY_SELECTED_CANCEL = ev(MUSIC_DIRECTORY_SELECTED_CANCEL);
 	
