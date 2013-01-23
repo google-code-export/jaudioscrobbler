@@ -251,34 +251,38 @@ public class MetadataController {
 		if (selection == JFileChooser.APPROVE_OPTION) {
 			File root = fileChooser.getSelectedFile();
 			log.info("\nDIRECTORY to SCAN: " + root);
-			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
-			try {
-				metadataList = metadataExtractor.extractMetadata(root);
-				if(metadataList.isEmpty()){
-					configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
-				}  else {
-					Collections.sort(metadataList);
+			if(root.exists()){
+				configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED, new ValueEvent<String>(root.getAbsolutePath()));
+				try {
+					metadataList = metadataExtractor.extractMetadata(root);
+					if(metadataList.isEmpty()){
+						configurator.getControlEngine().fireEvent(Events.DIRECTORY_EMPTY);
+					}  else {
+						Collections.sort(metadataList);
+						sendLoadedEvent(metadataList);
+					}
+				} catch (IOException e) {
+					handleException(e);
+				} catch (TagException e) {
+					handleException(e);
+				} catch (ReadOnlyFileException e) {
+					handleException(e);
+				} catch (InvalidAudioFrameException e) {
+					handleException(e);
+				} catch (InvalidId3VersionException e) {
+					handleException(e);
+				} catch (InterruptedException e) {
+					handleException(e);
+				} catch (CannotReadException e) {
+					handleException(e);
+				} catch (MetadataException e) {
+					handleException(e);
+				} catch (IllegalArgumentException e) {
 					sendLoadedEvent(metadataList);
+					handleException(e);
 				}
-			} catch (IOException e) {
-				handleException(e);
-			} catch (TagException e) {
-				handleException(e);
-			} catch (ReadOnlyFileException e) {
-				handleException(e);
-			} catch (InvalidAudioFrameException e) {
-				handleException(e);
-			} catch (InvalidId3VersionException e) {
-				handleException(e);
-			} catch (InterruptedException e) {
-				handleException(e);
-			} catch (CannotReadException e) {
-				handleException(e);
-			} catch (MetadataException e) {
-				handleException(e);
-			} catch (IllegalArgumentException e) {
-				sendLoadedEvent(metadataList);
-				handleException(e);
+			} else {
+				configurator.getControlEngine().fireEvent(Events.DIRECTORY_NOT_EXIST, new ValueEvent<String>(root.toString()));
 			}
 		} else {
 			configurator.getControlEngine().fireEvent(Events.DIRECTORY_SELECTED_CANCEL);

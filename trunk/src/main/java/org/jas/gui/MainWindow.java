@@ -463,6 +463,15 @@ public class MainWindow extends JFrame {
 		getDirectoryField().setText(path);
 		getLabel().setText(ApplicationState.WORKING);
 	}
+	
+	@EventMethod(Events.MUSIC_DIRECTORY_NOT_EXIST)
+	void onMusicDirectoryNotExist(String path) {
+		StringBuilder sb = new StringBuilder();
+		sb.append(ApplicationState.DIRECTORY_NOT_FOUND);
+		sb.append(path);
+		dialogHelper.showMessageDialog(this, sb.toString());
+		getOpenButton().setEnabled(true);
+	}	
 
 	@EventMethod(Events.MUSIC_DIRECTORY_SELECTED_CANCEL)
 	void onMusicDirectorySelectedCancel() {
