@@ -289,19 +289,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class MainWindow extends JFrame {
 	private static final long serialVersionUID = 1311230231101552007L;
 	private static final String JMENU_ITEM_LABEL = "Sign in Last.fm";
-	private static final String JMENU_LABEL = "Last.fm";
+	private static final String JMENU_EXIT_LABEL = "Exit";
+	private static final String JMENU_LABEL = "File";
 	private static final int DIRECTORY_SELECTED_LENGHT = 20;
 	private static final String STATUS_LABEL = "Status";
 	private static final String CTRL_O = "CTRL+O";
 	private static final String ENTER = "ENTER";
 	private static final String LOGIN_MENU_ITEM = "loginMenuItem";
+	private static final String EXIT_MENU_ITEM = "exitMenuItem";
 	private static final String SEND_SCROBBLINGS = "Send";
 	private static final String LOAD_FILES = "Open";
 	private static final String LOG_OUT = "logged out";
 	private static final String LOGIN_LABEL_NAME = "loginLabel";
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
-	private static final String MENU_NAME = "menuName";
+	private static final String MAIN_MENU_NAME = "mainMenuName";
 	
 	/**
 	 * 	Default button style
@@ -361,8 +363,9 @@ public class MainWindow extends JFrame {
 	private JPanel topPanel;
 	private JPanel imagePanel;
 	private JMenuBar menuBar;
-	private JMenu menu;
-	private JMenuItem menuItem;
+	private JMenu mainMenu;
+	private JMenuItem lastFmMenuItem;
+	private JMenuItem exitMenuItem;
 	private InputMap inputMap;
 	private JScrollPane scrollPane;
 	private ImageUtils imageUtils = new ImageUtils();
@@ -624,27 +627,29 @@ public class MainWindow extends JFrame {
 	private JMenuBar getMenubar() {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
-			menuBar.add(getMenu());
+			menuBar.add(getLastFmMenu());
 		}
 		return menuBar;
 	}
 
-	private JMenu getMenu() {
-		if (menu == null) {
-			menu = new JMenu(JMENU_LABEL);
-			menu.setName(MENU_NAME);
-			menu.setMnemonic(KeyEvent.VK_L);
-			menu.add(getMenuItem());
+	private JMenu getLastFmMenu() {
+		if (mainMenu == null) {
+			mainMenu = new JMenu(JMENU_LABEL);
+			mainMenu.setName(MAIN_MENU_NAME);
+			mainMenu.setMnemonic(KeyEvent.VK_F);
+			mainMenu.add(getLastFmMenuItem());
+			mainMenu.add(getExitMenuItem());
 		}
-		return menu;
+		return mainMenu;
 	}
+	
+	private JMenuItem getLastFmMenuItem() {
+		if (lastFmMenuItem == null) {
+			lastFmMenuItem = new JMenuItem(JMENU_ITEM_LABEL);
+			lastFmMenuItem.setName(LOGIN_MENU_ITEM);
+			lastFmMenuItem.setMnemonic(KeyEvent.VK_S);
 
-	private JMenuItem getMenuItem() {
-		if (menuItem == null) {
-			menuItem = new JMenuItem(JMENU_ITEM_LABEL);
-			menuItem.setName(LOGIN_MENU_ITEM);
-
-			menuItem.addActionListener(new ActionListener() {
+			lastFmMenuItem.addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
 					loginWindow.getFrame().setLocationRelativeTo(MainWindow.this);
@@ -652,7 +657,23 @@ public class MainWindow extends JFrame {
 				}
 			});
 		}
-		return menuItem;
+		return lastFmMenuItem;
+	}
+	
+	private JMenuItem getExitMenuItem() {
+		if (exitMenuItem == null) {
+			exitMenuItem = new JMenuItem(JMENU_EXIT_LABEL);
+			exitMenuItem.setName(EXIT_MENU_ITEM);
+			exitMenuItem.setMnemonic(KeyEvent.VK_E);
+
+			exitMenuItem.addActionListener(new ActionListener() {
+
+				public void actionPerformed(ActionEvent e) {
+					System.exit(0);
+				}
+			});
+		}
+		return exitMenuItem;
 	}
 
 	private JPanel getBottomPanel() {
