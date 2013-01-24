@@ -302,7 +302,6 @@
 	<imageIcon id="notificationActiveIcon" path="/images/alerts/notificationActiveIcon.png" />
 	<imageIcon id="notificationInactiveIcon" path="/images/alerts/notificationInactiveIcon.png" />
 
-	<imageIcon id="iconsDeleteIconRed" path="/icons/send/DeleteIconRed.png" />
 	<imageIcon id="iconsTrackIcon" path="/images/tree/iconmusic.png" />
 	<imageIcon id="iconsPlaylistIcon" path="/images/tree/iconplaylist.png" />
 	<imageIcon id="iconsFolderIcon" path="/images/tree/iconfolder.png" />
@@ -369,8 +368,6 @@
 	<defaultsProperty key="icons.notificationInactive"
 		type="idref" value="notificationInactiveIcon" />
 
-	<defaultsProperty key="icons.deleteRed" type="idref"
-		value="iconsDeleteIconRed" />
 	<defaultsProperty key="icons.trackWhite" type="idref"
 		value="iconsTrackIcon" />
 	<defaultsProperty key="icons.playlistWhite" type="idref"
