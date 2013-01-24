@@ -4030,33 +4030,6 @@
 	</style>
 	<bind style="searchTabCloseButtonStyle" type="name"
 		key="searchTabCloseButton" />
-	<style id="buttonDownloadInSearchStyle">
-		<imageIcon id="downloadButtonNormal" path="/icons/downloadButtonNormal.png" />
-		<imageIcon id="downloadButtonDisabled" path="/icons/downloadButtonDisabled.png" />
-		<imageIcon id="downloadButtonPressed" path="/icons/downloadButtonPressed.png" />
-
-		<font name="Dialog" size="13" style="BOLD" />
-
-		<property key="ToggleButton.icon" value="downloadButtonNormal" />
-		<state value="PRESSED">
-			<property key="ToggleButton.icon" value="downloadButtonPressed" />
-			<color value="#5a285a" type="TEXT_FOREGROUND" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="downloadButtonDisabled" />
-			<color value="#784678" type="TEXT_FOREGROUND" />
-		</state>
-		<state value="MOUSE_OVER">
-			<property key="ToggleButton.icon" value="downloadButtonNormal" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<property key="ToggleButton.icon" value="downloadButtonNormal" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="buttonDownloadInSearchStyle" type="name"
-		key="btnDownloadInSearch" />
 
 	<style id="downloadSearchTextFieldStyle">
 		<insets top="3" left="36" right="2" bottom="3" />
