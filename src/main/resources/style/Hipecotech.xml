@@ -481,14 +481,6 @@
 	<defaultsProperty key="Tree.background" type="idref"
 		value="treeBackgroundColor" />	
 		
-	<imageIcon id="youtube.inactiveIcon" path="/icons/table/YoutubeInactive.png" />
-	<defaultsProperty key="youtube.inactiveIcon" type="idref"
-		value="youtube.inactiveIcon" />		
-
-	<imageIcon id="youtube.activeIcon" path="/icons/table/YoutubeActive.png" />
-	<defaultsProperty key="youtube.activeIcon" type="idref"
-		value="youtube.activeIcon" />		
-		
 	<style id="boldItalicFont12Purple320f32Style">
 		<state>
 			<font name="Dialog" size="12" style="BOLD ITALIC" />
@@ -1394,25 +1386,6 @@
 		</state>
 	</style>
 	<bind style="podcastButtonStyle" type="name" key="podcastButton" />
-
-		<style>
-		<imageIcon id="speakerIcon" path="/images/table/Speaker.png" />
-		<defaultsProperty key="Table.speakerIcon" type="idref"
-			value="speakerIcon" />
-		<imageIcon id="speakerInvisibleIcon" path="/images/table/SpeakerInvisible.png" />
-		<defaultsProperty key="Table.speakerInvisibleIcon"
-			type="idref" value="speakerInvisibleIcon" />
-		<imageIcon id="downloadingTrackIcon" path="/icons/table/icon-download.png" />
-		<imageIcon id="downloadingErrorIcon" path="/icons/table/icon-download-error.png" />
-		<imageIcon id="downloadingQueueIcon" path="/icons/table/icon-download-queue.png" />
-		<defaultsProperty key="Table.downloadingTrackIcon"
-			type="idref" value="downloadingTrackIcon" />
-		<defaultsProperty key="Table.downloadingErrorIcon"
-			type="idref" value="downloadingErrorIcon" />
-		<defaultsProperty key="Table.downloadingQueueIcon"
-			type="idref" value="downloadingQueueIcon" />
-	</style>
-
 
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
@@ -2996,48 +2969,7 @@
 	</object>
 	<defaultsProperty key="newAccount.textForegroundColor"
 		type="idref" value="newAccountTextForegroundColor" />
-
-	<!--
-		********************************************************************************
-		* Icons for the rating Spinner
-		********************************************************************************
-	-->
-	<style id="ratingPositiveStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/table/PositivePress.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/table/PositiveSelected.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="ratingPositiveStyle" type="name" key="ratingPositive" />
-
-	<style id="ratingRegularStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/table/RegularPress.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/table/RegularSelected.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="ratingRegularStyle" type="name" key="ratingRegular" />
-
-	<style id="ratingNegativeStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/icons/table/NegativePress.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/icons/table/NegativeSelected.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="ratingNegativeStyle" type="name" key="ratingNegative" />
-
+	
 	<!--
 		**********************************************************************************
 		* Contacts List Tree
