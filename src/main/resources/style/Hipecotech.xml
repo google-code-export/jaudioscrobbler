@@ -299,9 +299,6 @@
 	<defaultsProperty key="icons.createAccountBullet"
 		type="idref" value="createAccountBullet" />
 
-	<imageIcon id="notificationActiveIcon" path="/images/alerts/notificationActiveIcon.png" />
-	<imageIcon id="notificationInactiveIcon" path="/images/alerts/notificationInactiveIcon.png" />
-
 	<imageIcon id="iconsTrackIcon" path="/images/tree/iconmusic.png" />
 	<imageIcon id="iconsPlaylistIcon" path="/images/tree/iconplaylist.png" />
 	<imageIcon id="iconsFolderIcon" path="/images/tree/iconfolder.png" />
@@ -310,11 +307,6 @@
 	<imageIcon id="iconsFolderBlue" path="/images/tree/Tree.folder.png" />
 	<imageIcon id="iconsTrackBlue" path="/images/filechooser/music_file.png" />
 	<imageIcon id="iconsSmartPlaylistBlue" path="/images/library/Smartplaylist.png" />
-
-	<imageIcon id="pulseAnimationFrame0" path="/images/alerts/pulseAnimationFrame0.png" />
-	<imageIcon id="pulseAnimationFrame1" path="/images/alerts/pulseAnimationFrame1.png" />
-	<imageIcon id="pulseAnimationFrame2" path="/images/alerts/pulseAnimationFrame2.png" />
-	<imageIcon id="pulseAnimationFrame3" path="/images/alerts/pulseAnimationFrame3.png" />
 
 	<imageIcon id="loaderAnimationFrame1" path="/images/loader/loader0001.png" />
 	<imageIcon id="loaderAnimationFrame2" path="/images/loader/loader0002.png" />
@@ -363,11 +355,6 @@
 	<imageIcon id="devicesHdIcon" path="/images/devices/hard_disk_icon.png" />
 	<defaultsProperty key="Devices.hdIcon" type="idref" value="devicesHdIcon" />
 
-	<defaultsProperty key="icons.notificationActive" type="idref"
-		value="notificationActiveIcon" />
-	<defaultsProperty key="icons.notificationInactive"
-		type="idref" value="notificationInactiveIcon" />
-
 	<defaultsProperty key="icons.trackWhite" type="idref"
 		value="iconsTrackIcon" />
 	<defaultsProperty key="icons.playlistWhite" type="idref"
@@ -382,15 +369,6 @@
 		value="iconsTrackBlue" />
 	<defaultsProperty key="icons.smartPlaylistBlue" type="idref"
 		value="iconsSmartPlaylistBlue" />
-
-	<defaultsProperty key="icons.pulseAnimationFrame0"
-		type="idref" value="pulseAnimationFrame0" />
-	<defaultsProperty key="icons.pulseAnimationFrame1"
-		type="idref" value="pulseAnimationFrame1" />
-	<defaultsProperty key="icons.pulseAnimationFrame2"
-		type="idref" value="pulseAnimationFrame2" />
-	<defaultsProperty key="icons.pulseAnimationFrame3"
-		type="idref" value="pulseAnimationFrame3" />
 
 	<defaultsProperty key="icons.loaderAnimationFrame1"
 		type="idref" value="loaderAnimationFrame1" />
@@ -652,25 +630,6 @@
 	</style>
 	<bind style="popUpMenuSeparatorStyle" type="region" key="PopupMenuSeparator" />
 
-	<style id="notificationLinkButtonStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/notificationLinkButtonNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/notificationLinkButtonOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/notificationLinkButtonPress.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="notificationLinkButtonStyle" type="name"
-		key="notificationLinkButton" />
-
-
 	<style id="actionButtonStyle">
 		<property key="Button.textShiftOffset" type="integer" value="1" />
 		<insets top="15" left="15" right="15" bottom="15" />
@@ -814,24 +773,6 @@
 	</style>
 	<bind style="separatorStyle" type="region" key="Separator" />
 	
-	<style id="blackGradientPanelStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/images/toppanel/PanelSuperiorBackground.png" />
-		</state>
-	</style>
-	<bind style="blackGradientPanelStyle" type="name" key="topPanelBackground" />
-
-
-	<style id="darkGrayContactInfo">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="1 1 1 1"
-				path="/images/dialog/contactInfoBackground.png" />
-		</state>
-	</style>
-	<bind style="darkGrayContactInfo" type="name" key="selectedContactInfoPanel" />
-
 	<style id="contactEmailNameStyle">
 		<state>
 			<font name="Dialog" size="12" style="BOLD" />
@@ -848,49 +789,6 @@
 	</style>
 	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME"
 		key="boldItalicFont11Gray77_77_77" />
-
-	<style id="notFoundEmailStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="1 1 1 1"
-				path="/images/dialog/SearchErrorBackground.png" />
-		</state>
-	</style>
-	<bind style="notFoundEmailStyle" type="name" key="notFoundEmailPanel" />
-
-	<style id="searchContactsResultStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="1 1 1 1"
-				path="/colors/color_e1e1e1.png" />
-		</state>
-	</style>
-	<bind style="searchContactsResultStyle" type="name" key="searchResultsPanel" />
-
-	<style id="bottomPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/window/BottomPanel.png"
-				sourceInsets="2 0 2 0" stretch="false" />
-		</state>
-	</style>
-	<bind style="bottomPanelStyle" type="name" key="bottomPanel" />
-
-	<style id="bottomProgressPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/window/BottomProgressPanelBackground.png"
-				sourceInsets="0 0 0 0" stretch="false" />
-		</state>
-		<insets bottom="0" left="0" right="0" top="0"></insets>
-	</style>
-	<bind style="bottomProgressPanelStyle" type="name" key="bottomProgressPanel" />
-
-	<style id="bottomResizePanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/window/BottomResizePanel.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="bottomResizePanelStyle" type="name" key="bottomResizePanel" />
 
 	<style id="cancelUploadBottomButtonStyle">
 		<state value="PRESSED">
@@ -909,14 +807,6 @@
 	</style>
 	<bind style="cancelUploadBottomButtonStyle" type="name"
 		key="cancelUploadBottomButton" />
-
-	<style id="libraryDropDownStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/combobox/DropDownRemoteLibrary.png"
-				sourceInsets="0 10 0 20" stretch="false" />
-		</state>
-	</style>
-	<bind style="libraryDropDownStyle" type="name" key="libraryDropDown" />
 
 	<!--
 		**********************************************************************************
@@ -2453,14 +2343,6 @@
 		* Drawer
 		**********************************************************************************
 	-->
-	<style id="drawerPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/alerts/DrawerPanel.png"
-				sourceInsets="1 14 1 26" />
-		</state>
-	</style>
-	<bind style="drawerPanelStyle" type="name" key="drawerPanel" />
-
 	<style id="headerDrawerStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -2468,30 +2350,6 @@
 		</state>
 	</style>
 	<bind style="headerDrawerStyle" type="name" key="headerDrawer" />
-
-	<style id="drawerTexturePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/alerts/DrawerTexture.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="drawerTexturePanelStyle" type="name" key="drawerTexturePanel" />
-
-	<style id="closeDrawerButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/closeDrawerPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/closeDrawerOver.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/closeDrawerNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="closeDrawerButtonStyle" type="name" key="closeDrawerButton" />
 
 	<style id="nextDrawerButtonStyle">
 		<state value="PRESSED">
@@ -2508,23 +2366,6 @@
 		</state>
 	</style>
 	<bind style="nextDrawerButtonStyle" type="name" key="nextDrawerButton" />
-
-	<style id="previousDrawerButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/previousDrawerButtonPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/previousDrawerButtonDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/previousDrawerButtonNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="previousDrawerButtonStyle" type="name"
-		key="previousDrawerButton" />
 
 	<style id="drawerMessageGrayStyle">
 		<state>
@@ -2678,43 +2519,6 @@
 		</state>
 	</style>
 	<bind style="BubbleRightSideStyle" type="name" key="BubbleRight" />
-
-	<style id="pulseBubbleButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/alerts/PulsePressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" path="/images/alerts/PulseOver.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/alerts/PulseDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/alerts/PulseNormal.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="pulseBubbleButtonStyle" type="name" key="pulseBubbleButton" />
-
-	<style id="purplePulseBubbleButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/PulsePressedPurple.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/PulseOverPurple.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/alerts/PulseNormalPurple.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="purplePulseBubbleButtonStyle" type="name"
-		key="purplePulseBubbleButton" />
 
 	<!--  DEVICE ITEMS -->
 	<style id="externalDeviceNormalPanelStyle">
@@ -4943,28 +4747,6 @@
 	</style>
 	<bind style="textFieldSearchInvalidStyle" type="name"
 		key="searchTextFieldInvalid" />
-
-	<style id="twitterBubbleButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/alerts/twitterPressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/alerts/twitterMouseOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="twitterBubbleButtonStyle" type="name" key="twitterBubbleButton" />
-
-	<style id="GrayTwitterBubbleButtonStyle">
-		<state>
-			<imagePainter method="buttonBackground" path="/images/alerts/twitterNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="GrayTwitterBubbleButtonStyle" type="name"
-		key="GrayTwitterBubbleButton" />
-
 
 	<style id="twitterLoginBackgroundPanelStyle">
 		<state>
