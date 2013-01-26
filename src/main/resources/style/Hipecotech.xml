@@ -2895,17 +2895,6 @@
 		key="editHeaderProfileButton" />
 	<!-- END OF EditProfileButton -->
 
-	<!-- Contact Profile Picture Mask -->
-	<style id="contactListHeaderProfilePictureMaskStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/avatar/marco42por42.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="contactListHeaderProfilePictureMaskStyle" type="name"
-		key="contactListHeaderProfilePictureMask" />
-	<!-- END OF Contact Profile Picture Mask -->
-
 	<style id="myContactsPanelStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -3087,15 +3076,6 @@
 		</state>
 	</style>
 	<bind style="editProfilePanelStyle" type="name" key="editProfilePanel" />
-
-	<style id="editProfilePictureMaskStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/avatar/marco96x96.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="editProfilePictureMaskStyle" type="name"
-		key="editProfilePictureMask" />
 
 	<style id="roundedBlackTransparentBackgroundLabelStyle">
 		<insets top="5" left="5" right="5" bottom="5" />
@@ -4308,33 +4288,6 @@
 	</style>
 	<bind style="profileTwitterPortraitMaskStyle" type="name"
 		key="profileTwitterPortraitMask" />
-
-	<style id="profilePortraitMask72x72DarkerStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/avatar/marco72x72Darker.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profilePortraitMask72x72DarkerStyle" type="name"
-		key="profilePortrait72DarkerMask" />
-
-	<style id="profilePortraitHightLightMaskStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/avatar/profileMask72x72HightLight.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profilePortraitHightLightMaskStyle" type="name"
-		key="profilePortraitHightLightMask" />
-
-	<style id="profilePortraitMask98x98Style">
-		<state>
-			<imagePainter method="panelBackground" path="/images/avatar/profileMask98x98.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profilePortraitMask98x98Style" type="name"
-		key="profilePortrait98Mask" />
 
 	<style id="replyWallButtonStyle">
 		<state value="PRESSED">
