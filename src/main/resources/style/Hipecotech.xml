@@ -3124,24 +3124,6 @@
 	</style>
 	<bind style="cropPanelStyle" type="name" key="cropPanel" />
 
-	<style id="offlineLabelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="labelBackground" path="/images/bottompanel/offline.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="offlineLabelStyle" type="name" key="iconLabelOffline" />
-
-	<style id="onlineLabelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="labelBackground" path="/images/bottompanel/online.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="onlineLabelStyle" type="name" key="iconLabelOnline" />
-
 	<style id="separatorVerticalPanelStyle">
 		<!--  opaque value="FALSE" />-->
 		<state>
