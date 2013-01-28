@@ -794,4 +794,37 @@ public class TestFormatterService {
 		assertEquals(expectedAlbum , metadata.getAlbum());
 	}
 	
+	@Test
+	public void shouldDetectAUmlautMarkInTitle() throws Exception {
+		String title = "J&auml;hdytin";
+		String expectedTitle = "Jähdytin";
+		
+		metadata.setTitle(title);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedTitle , metadata.getTitle());
+	}
+	
+	@Test
+	public void shouldDetectAUmlautMarkInArtist() throws Exception {
+		String artist = "J&auml;hdytin";
+		String expectedArtist = "Jähdytin";
+		
+		metadata.setArtist(artist);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedArtist , metadata.getArtist());
+	}
+	
+	@Test
+	public void shouldDetectAUmlautMarkInAlbum() throws Exception {
+		String album = "J&auml;hdytin";
+		String expectedAlbum = "Jähdytin";
+		
+		metadata.setAlbum(album);
+		
+		assertTrue(formatter.isABadFormat(metadata));
+		assertEquals(expectedAlbum , metadata.getAlbum());
+	}
+	
 }
