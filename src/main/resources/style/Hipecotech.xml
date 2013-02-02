@@ -1199,30 +1199,6 @@
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="cdsTextField" />
 
-	<style id="checkBoxMenuItemStyle">
-		<imageIcon id="check_invisible" path="/images/checkbox/Check Invisible.png" />
-		<imageIcon id="check_visible" path="/images/checkbox/Check Visible.png" />
-		<property key="CheckBoxMenuItem.checkIcon" value="check_invisible" />
-		<state value="SELECTED">
-			<property key="CheckBoxMenuItem.checkIcon" value="check_visible" />
-		</state>
-		<state value="DISABLED">
-			<property key="CheckBoxMenuItem.checkIcon" value="check_invisible" />
-		</state>
-	</style>
-	<bind style="checkBoxMenuItemStyle" type="region" key="checkBoxMenuItem" />
-	
-	<style id="radioButtonMenuItemStyle">
-		<property key="RadioButtonMenuItem.checkIcon" value="check_invisible" />
-		<state value="SELECTED">
-			<property key="RadioButtonMenuItem.checkIcon" value="check_visible" />
-		</state>
-		<state value="DISABLED">
-			<property key="RadioButtonMenuItem.checkIcon" value="check_invisible" />
-		</state>
-	</style>
-	<bind style="radioButtonMenuItemStyle" type="region" key="radioButtonMenuItem" />
-
 	<style id="radioButtonStyle">
 		<imageIcon id="radiobutton_on" path="/images/radiobutton/radiobutton_on.png" />
 		<imageIcon id="radiobutton_off" path="/images/radiobutton/radiobutton_off.png" />
@@ -1463,16 +1439,6 @@
 		</state>
 	</style>
 	<bind style="closeDialogButtonStyle" type="name" key="closeDialogButton" />
-
-	<style id="checkbox">
-		<imageIcon id="check_off" path="/images/checkbox/checkbox2.png" />
-		<imageIcon id="check_on" path="/images/checkbox/checkbox.png" />
-		<property key="CheckBox.icon" value="check_off" />
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="check_on" />
-		</state>
-	</style>
-	<bind style="checkbox" type="region" key="Checkbox" />
 
 	<style id="acceptConditionsCheckBoxStyle">
 		<imageIcon id="checkfocus_off" path="/images/login/checkbox2-glow.png" />
@@ -1960,67 +1926,6 @@
 	</style>
 	<bind style="libraryBackgroundPanelStyle" type="name"
 		key="libraryBackgroundPanel" />
-
-	<style id="checkboxRendererTableStyle">
-		<imageIcon id="checkTable_off" path="/images/checkbox/CheckboxTableInactivated.png" />
-		<imageIcon id="checkTable_on" path="/images/checkbox/CheckboxTableActivated.png" />
-		<imageIcon id="checkTable_disabled" path="/images/checkbox/CheckboxTableDisabled.png" />
-		<property key="CheckBox.icon" value="checkTable_off" />
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="checkTable_on" />
-		</state>
-		<state>
-			<font idref="plainFont" />
-			<color type="TEXT_FOREGROUND" value="#4D4D4D" />
-		</state>
-	</style>
-	<bind style="checkboxRendererTableStyle" type="name"
-		key="checkboxRendererTable" />
-
-	<style id="checkboxEditorTableStyle">
-		<imageIcon id="checkTablee_off" path="/images/checkbox/CheckboxTableInactivated.png" />
-		<imageIcon id="checkTablee_on" path="/images/checkbox/CheckboxTableActivated.png" />
-		<property key="CheckBox.icon" value="checkTablee_off" />
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="checkTablee_on" />
-		</state>
-		<state>
-			<font idref="plainFont" />
-			<color type="TEXT_FOREGROUND" value="#4D4D4D" />
-			<color type="BACKGROUND" value="#AFCDE1" />
-		</state>
-	</style>
-	<bind style="checkboxEditorTableStyle" type="name" key="checkboxEditorTable" />
-
-	<style id="checkboxEditorReferenceTableStyle">
-		<imageIcon id="checkTableee_off" path="/images/checkbox/CheckboxTableInactivated.png" />
-		<imageIcon id="checkTableee_on" path="/images/checkbox/CheckboxTableActivated.png" />
-		<property key="CheckBox.icon" value="checkTablee_off" />
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="checkTableee_on" />
-		</state>
-		<state>
-			<color type="TEXT_FOREGROUND" value="#828282" />
-			<color type="BACKGROUND" value="#AFCDE1" />
-		</state>
-	</style>
-	<bind style="checkboxEditorReferenceTableStyle" type="name"
-		key="checkboxEditorReferenceTable" />
-
-	<style id="checkboxEditorReferenceSelectedTableStyle">
-		<imageIcon id="checkTableeee_off" path="/images/checkbox/CheckboxTableInactivated.png" />
-		<imageIcon id="checkTableeee_on" path="/images/checkbox/CheckboxTableActivated.png" />
-		<property key="CheckBox.icon" value="checkTableee_off" />
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="checkTableeee_on" />
-		</state>
-		<state>
-			<color type="TEXT_FOREGROUND" value="#828282" />
-			<color type="BACKGROUND" value="#AFCDE1" />
-		</state>
-	</style>
-	<bind style="checkboxEditorReferenceSelectedTableStyle" type="name"
-		key="checkboxEditorReferenceSelectedTable" />
 
 	<style id="TableHeaderStyle">
 		<state>
@@ -5466,20 +5371,6 @@
 		</state>
 	</style>
 	<bind style="plaintFont12WhiteStyle" type="name" key="plaintFont12White" />
-
-	<style id="loginCheckboxStyle">
-		<state value="SELECTED">
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="check_on" />
-		</state>
-		<state>
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="check_off" />
-		</state>
-	</style>
-	<bind style="loginCheckboxStyle" type="name" key="loginCheckBox" />
 
 	<style id="serverDownPanelBackgroundStyle">
 		<state>
