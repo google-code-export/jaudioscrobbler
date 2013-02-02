@@ -630,26 +630,6 @@
 	</style>
 	<bind style="popUpMenuSeparatorStyle" type="region" key="PopupMenuSeparator" />
 
-	<style id="actionButtonStyle">
-		<property key="Button.textShiftOffset" type="integer" value="1" />
-		<insets top="15" left="15" right="15" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground" path="/images/button/Disabled Button.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button Pressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="actionButtonStyle" type="name" key="action[A-Za-z0-9]+" />
-
 	<!-- Define Arroy Up and Down from scrollbars -->
 	<style id="scrollBarArrowStyle">
 		<state>
@@ -1524,27 +1504,7 @@
 	</style>
 	<bind style="acceptConditionsCheckBoxFocusStyle" type="name"
 		key="acceptConditionsFocusCheckBox" />
-
-	<style id="grayButtonStyle">
-		<font name="Dialog" size="11" style="BOLD" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button Pressed.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="DISABLED">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground" path="/images/button/Disabled Button.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="SELECTED">
-			<property key="CheckBox.icon" value="check_on" />
-		</state>
-	</style>
-	<bind style="grayButtonStyle" type="name" key="gray" />
+	
 	<style id="deleteOnlyReferenceButtonStyle">
 		<insets top="15" left="54" right="20" bottom="15" />
 		<font idref="defaultFont" />
@@ -2085,29 +2045,6 @@
 	</style>
 	<bind style="TableSortedHeaderStyle" type="name" key="tableSortedHeader" />
 
-	<style id="tableButtonStyle">
-		<font name="Dialog" size="11" style="BOLD" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button Pressed.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="SELECTED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
-				sourceInsets="0 15 0 15" />
-			<color type="BACKGROUND" value="#A0A0A0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="DISABLED">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground" path="/images/button/Disabled Button.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="tableButtonStyle" type="name" key="tableButton" />
-
 	<style id="collapseButtonStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -2278,27 +2215,6 @@
 	</style>
 	<bind style="fileFilterMacComboBoxStyle" type="name"
 		key="fileFilterMacComboBox" />
-
-	<style id="importFileChooserButtonStyle">
-		<insets bottom="3" left="0" right="0" top="4" />
-		<font name="Dialog" size="11" style="BOLD" />
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
-				sourceInsets="9 9 9 9" />
-		</state>
-		<state value="DISABLED">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground" path="/images/button/Disabled Button.png"
-				sourceInsets="9 9 9 9" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button Pressed.png"
-				sourceInsets="9 9 9 9" />
-		</state>
-	</style>
-	<bind style="importFileChooserButtonStyle" type="name"
-		key="importFileChooserButton" />
-	<!--/Filechooser-->
 
 	<style id="libraryAddButtonStyle">
 		<opaque value="FALSE" />
