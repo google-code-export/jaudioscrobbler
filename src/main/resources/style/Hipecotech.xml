@@ -3864,104 +3864,6 @@
 	</style>
 	<bind style="boldFont26WhiteStyle" type="name" key="boldFont26White" />
 
-	<style id="headerPanelDialogChatStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/chat/headerChatDialog.png" />
-		</state>
-	</style>
-	<bind style="headerPanelDialogChatStyle" type="name"
-		key="headerPanelDialogChat" />
-
-	<style id="footerPanelDialogChatStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/chat/footerChatDialog.png" />
-		</state>
-	</style>
-	<bind style="footerPanelDialogChatStyle" type="name"
-		key="footerPanelDialogChat" />
-
-	<style id="friendInfoPanelChatStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="10 10 10 10"
-				path="/images/chat/friendInfoPanelChat.png" />
-		</state>
-	</style>
-	<bind style="friendInfoPanelChatStyle" type="name" key="friendInfoPanelChat" />
-
-	<style id="leftMessagePanelChatStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="40 40 40 40"
-				path="/images/chat/leftMessageChatPanel.png" />
-		</state>
-	</style>
-	<bind style="leftMessagePanelChatStyle" type="name"
-		key="leftMessageChatPanel" />
-
-	<style id="rightMessagePanelChatStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="40 40 40 40"
-				path="/images/chat/rightMessageChatPanel.png" />
-		</state>
-	</style>
-	<bind style="rightMessagePanelChatStyle" type="name"
-		key="rightMessageChatPanel" />
-
-	<style id="showRemoteLibraryButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/showRemoteLibraryButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/showRemoteLibraryButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/showRemoteLibraryButton.png" />
-		</state>
-	</style>
-	<bind style="showRemoteLibraryButtonStyle" type="name"
-		key="showRemoteLibraryButton" />
-
-	<style id="sendMessageChatButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/sendButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/sendButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/sendButton.png" />
-		</state>
-	</style>
-	<bind style="sendMessageChatButtonStyle" type="name"
-		key="sendMessageChatButton" />
-
-	<style id="emoticonChatButtonStyle">
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/emoticonDisabled.png" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/emoticonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/emoticonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/chat/emoticon.png" />
-		</state>
-	</style>
-	<bind style="emoticonChatButtonStyle" type="name" key="emoticonChatButton" />
-
 	<style id="addFriendButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="12" style="BOLD" />
@@ -3983,14 +3885,6 @@
 		</state>
 	</style>
 	<bind style="addFriendButtonStyle" type="name" key="addFriendButton" />
-
-	<style id="chatPortraitMaskStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/chat/chatMask.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="chatPortraitMaskStyle" type="name" key="chatPortraitMask" />
 
 	<style id="boldItalicFont15_73_25_73Style">
 		<state>
@@ -4411,14 +4305,6 @@
 	</style>
 	<bind style="plainFont14Purple102_45_145Style" type="NAME"
 		key="plainFont14Purple102_45_145" />
-
-	<style id="emoticonPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/chat/emoticonPanelBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="emoticonPanelStyle" type="name" key="emoticonPanel" />
 
 	<style id="emoticonFacebookPanelStyle">
 		<state>
