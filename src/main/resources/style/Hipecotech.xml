@@ -1486,14 +1486,6 @@
 	<defaultsProperty key="icons.myMusicDndArrowWhite"
 		type="idref" value="myMusicDndArrowWhite" />
 
-	<style id="myMusicPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/dialog/Preview Tree Top Normal.png" sourceInsets="8 0 8 0" />
-		</state>
-	</style>
-	<bind style="myMusicPanelStyle" type="name" key="myMusicPanel" />
-
 	<style id="myMusicPanelGlow01Style">
 		<state>
 			<imagePainter method="panelBackground" path="/images/library/glow01.png"
@@ -1543,15 +1535,6 @@
 	</style>
 	<bind style="myMusicDragOverLabelStyle" type="name"
 		key="myMusicDragOverLabel" />
-
-	<style id="myMusicPanelBottomLibStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/dialog/Preview Tree Bottom.png"
-				sourceInsets="0 10 0 10" />
-		</state>
-	</style>
-	<bind style="myMusicPanelBottomLibStyle" type="name"
-		key="myMusicBottomLibPanel" />
 
 	<style id="headerBlackPanelStyle">
 		<state>
@@ -1717,22 +1700,6 @@
 		</state>
 	</style>
 	<bind style="headerDrawerStyle" type="name" key="headerDrawer" />
-
-	<style id="nextDrawerButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/dialog/nextDrawerButtonPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/dialog/nextDrawerButtonDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/dialog/nextDrawerButtonNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="nextDrawerButtonStyle" type="name" key="nextDrawerButton" />
 
 	<style id="drawerMessageGrayStyle">
 		<state>
@@ -1919,22 +1886,6 @@
 		</state>
 	</style>
 	<bind style="LogoSidePanelStyle" type="Name" key="logoSidePanel" />
-
-	<!--
-		********************************************************************************
-		* Create user account dialog
-		********************************************************************************
-	-->
-	<style id="newUserAccountPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/dialog/userAccountDialogPanel.png" sourceInsets="90 0 40 0"
-				stretch="false" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="newUserAccountPanelStyle" type="NAME" key="newUserAccountPanel" />
 
 	<style id="textFieldStyle">
 		<insets left="10" right="10" />
@@ -2828,15 +2779,6 @@
 	<bind style="disclaimerTextAreaBackgroundStyle" type="name"
 		key="disclaimerTextAreaBackground" />
 
-	<style id="UnimportedMusicIconStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="3 3 3 3"
-				path="/images/dialog/unimportedContentMusic.png" />
-		</state>
-	</style>
-	<bind style="UnimportedMusicIconStyle" type="name"
-		key="unimportedItunes.musicIcon" />
-
 	<style id="wizardMacPanelStyle">
 		<state>
 			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
@@ -2945,15 +2887,6 @@
 	</style>
 	<bind style="plainFont12_80_80_80Style" type="NAME"
 		key="plainFont12_80_80_80" />
-
-	<style id="profileFriendsBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="30 30 30 30"
-				path="/images/friends/profileFriendsBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="profileFriendsBackgroundPanelStyle" type="name"
-		key="profileFriendsBackgroundPanel" />
 
 	<style id="profileWallBackgroundPanelStyle">
 		<state>
@@ -3307,32 +3240,6 @@
 	<bind style="plainFont14Purple102_45_145Style" type="NAME"
 		key="plainFont14Purple102_45_145" />
 
-	<style id="addAsAFriendPanelProfileStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/dialog/addFriendBackground.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="addAsAFriendPanelProfileStyle" type="name"
-		key="addAsAFriendPanelProfile" />
-
-	<style id="addAsAFriendCloseButtonProfileStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/dialog/addAsAFriendCloseButtonButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/dialog/addAsAFriendCloseButtonButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/dialog/addAsAFriendCloseButtonButton.png" />
-		</state>
-	</style>
-	<bind style="addAsAFriendCloseButtonProfileStyle" type="name"
-		key="addAsAFriendCloseButtonProfile" />
-
 	<style id="boldFont12Purple90_74_103Style">
 		<font name="Dialog" size="12" style="BOLD" />
 		<state>
@@ -3351,15 +3258,6 @@
 	<bind style="plainFont11Purple90_74_103Style" type="name"
 		key="plainFont11Purple90_74_103" />
 
-	<style id="HighlightAddFriendsCellProfileStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/friends/highlightAddFriendsCell.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="HighlightAddFriendsCellProfileStyle" type="name"
-		key="HighlightAddFriendsCellProfile" />
-
 	<style id="separatorPanelStyle">
 		<state>
 			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
@@ -3377,21 +3275,6 @@
 	<bind style="splashWindowBackgroundShadowedStyle" type="name"
 		key="splashWindowBackgroundShadowed" />
 
-
-	<!--
-		**********************************************************************************
-		* browse members panel
-		**********************************************************************************
-	-->
-
-	<style id="friendsPanelBackroundStyle">
-		<state>
-			<imagePainter method="viewportBackground"
-				path="/images/friends/backgroundFriendsPanel.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="friendsPanelBackroundStyle" type="name"
-		key="friendsPanelBackround" />
 
 	<style id="allIconTaskBarStyle">
 		<imageIcon id="allIconTaskBar" path="/images/taskbar/allTaskBar.png" />
@@ -5145,33 +5028,6 @@
 	</style>
 	<bind style="separatorSocialPanelBackgroundStyle" type="name"
 		key="separatorSocialPanelBackground" />
-
-	<style id="profileFriendsFeedButtonStyle">
-		<state value="PRESSED">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#646464" type="TEXT_FOREGROUND" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#8C8C8C" type="TEXT_FOREGROUND" />
-		</state>
-		<state value="SELECTED">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#6B537D" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#8C8C8C" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="profileFriendsFeedButtonStyle" type="name"
-		key="profileFriendsFeedButton" />
-
-	<!--
-		********************************************************************************
-		* Feed Style
-		********************************************************************************
-	-->
 
 	 <style id="colorD5D5D5SeparatorStyle">
         <state>
