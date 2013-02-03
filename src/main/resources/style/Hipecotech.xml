@@ -665,27 +665,6 @@
 	<bind style="cancelUploadBottomButtonStyle" type="name"
 		key="cancelUploadBottomButton" />
 
-	<!--Define Search Buttons-->
-	<style id="lupaSearchButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/textfield/LocalSearchLensLeft.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/textfield/LocalSearchLensLeft.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/textfield/LocalSearchLensLeft.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/textfield/LocalSearchLensLeft.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="lupaSearchButtonStyle" type="name" key="lupaSearchButton" />
-
 	<style id="searchTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
@@ -774,24 +753,6 @@
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="cdsTextField" />
 
-	<style id="radioButtonStyle">
-		<imageIcon id="radiobutton_on" path="/images/radiobutton/radiobutton_on.png" />
-		<imageIcon id="radiobutton_off" path="/images/radiobutton/radiobutton_off.png" />
-		<state value="PRESSED">
-			<property key="RadioButton.icon" value="radiobutton_on" />
-		</state>
-		<state value="SELECTED">
-			<property key="RadioButton.icon" value="radiobutton_on" />
-		</state>
-		<state value="ENABLED">
-			<property key="RadioButton.icon" value="radiobutton_off" />
-		</state>
-		<state>
-			<property key="RadioButton.icon" value="radiobutton_on" />
-		</state>
-	</style>
-	<bind style="radioButtonStyle" type="name" key="radioButton" />
-	
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
 		<defaultsProperty key="Info.alertIcon" type="idref"
@@ -1701,94 +1662,6 @@
 				idref="tableSearchSelectedHeaderPanelPainter" />
 		</state>
 	</style>
-	<bind style="TableSearchSelectedHeaderStyle" type="name"
-		key="tableSearchSelectedHeader" />
-	<style id="searchMiddlePannelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/search/searchMiddlePanel.png" />
-		</state>
-	</style>
-	<bind style="searchMiddlePannelBackgroundStyle" type="name"
-		key="searchMiddlePannelBackground" />
-
-	<style id="searchTabPannelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/search/searchTabPannelBackground.png" />
-		</state>
-	</style>
-	<bind style="searchTabPannelBackgroundStyle" type="name"
-		key="searchTabPannelBackground" />
-
-	<style id="searchTabPannelArrowLeftStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowLeftEnabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowLeftOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowLeftPressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowLeftDisabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="searchTabPannelArrowLeftStyle" type="name"
-		key="searchTabPannelArrowLeft" />
-
-	<style id="searchTabPannelArrowRigthStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowRigthEnabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<color type="TEXT_FOREGROUND" value="GRAY" />
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowRigthOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowRigthPressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabPannelArrowRigthDisabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="searchTabPannelArrowRigthStyle" type="name"
-		key="searchTabPannelArrowRigth" />
-
-	<style id="searchTabInactivePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="2 5 5 5"
-				path="/images/search/searchTabInactivePanel.png" />
-		</state>
-	</style>
-	<bind style="searchTabInactivePanelStyle" type="name"
-		key="searchTabInactivePanel" />
-
-	<style id="searchTabActivePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="2 5 5 5"
-				path="/images/search/searchTabActivePanel.png" />
-		</state>
-	</style>
-	<bind style="searchTabActivePanelStyle" type="name"
-		key="searchTabActivePanel" />
 
 	<style id="boldFont12Gray100_100_100Style">
 		<state>
@@ -1816,37 +1689,6 @@
 	</style>
 	<bind style="boldFont14Gray100_100_100Style" type="name"
 		key="boldFont14Gray100_100_100" />
-
-	<style id="searchBottomPannelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 144"
-				path="/images/search/searchBottomPanel.png" />
-		</state>
-	</style>
-	<bind style="searchBottomPannelBackgroundStyle" type="name"
-		key="searchBottomPannelBackground" />
-
-	<style id="searchTabCloseButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabCloseButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabCloseButtonMouseOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabCloseButtonDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/search/searchTabCloseButtonEnabled.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="searchTabCloseButtonStyle" type="name"
-		key="searchTabCloseButton" />
 
 	<style id="wizardMacPanelStyle">
 		<state>
