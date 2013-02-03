@@ -1043,49 +1043,6 @@
 	<bind style="lupaDownloadButtonStyle" type="name"
 		key="lupaDownloadSearchButton" />
 
-	<style id="clearSearchButtonStyleVisible">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightDelete.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightDelete.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightDelete.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightDelete.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="clearSearchButtonStyleVisible" type="name"
-		key="clearSearchButtonVisible" />
-
-	<style id="clearSearchButtonStyleInvisible">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightEmpty.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightEmpty.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightEmpty.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<!--		SearchCen Delete Text Button Not Visible     Delete Text Button-->
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightEmpty.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="clearSearchButtonStyleInvisible" type="name"
-		key="clearSearchButtonInvisible" />
-
 	<style id="searchTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
@@ -1446,185 +1403,6 @@
 	<bind style="acceptConditionsCheckBoxFocusStyle" type="name"
 		key="acceptConditionsFocusCheckBox" />
 	
-	<style id="deleteOnlyReferenceButtonStyle">
-		<insets top="15" left="54" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Reference Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Reference Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Reference Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Reference Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteOnlyReferenceButtonStyle" type="name"
-		key="deleteOnlyReference" />
-	<style id="deleteFileButtonStyle">
-		<insets top="15" left="54" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete File Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete File Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete File Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete File Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteFileButtonStyle" type="name" key="deleteFile" />
-	<style id="deletePlaylistButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deletePlaylistButtonStyle" type="name"
-		key="deletePlaylistButton" />
-	<style id="deletePlaylistFilesButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Files Pressed.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Files Mouse Over.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Files Selected.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Playlist Files Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deletePlaylistFilesButtonStyle" type="name"
-		key="deletePlaylistFilesButton" />
-	<style id="deleteFolderButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteFolderButtonStyle" type="name" key="deleteFolderButton" />
-	<style id="deleteFolderFilesButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Files Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Files Mouse Over.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Files Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Folder Files Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteFolderFilesButtonStyle" type="name"
-		key="deleteFolderFilesButton" />
-	<style id="deleteFolderPlaylistButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteFolderPlaylistButtonStyle" type="name"
-		key="deleteFolderPlaylistButton" />
-	<style id="deleteFolderPlaylistFilesButtonStyle">
-		<insets top="15" left="60" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Files Pressed.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Files Mouse Over.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="FOCUSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Files Selected.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/Delete Both Files Normal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteFolderPlaylistFilesButtonStyle" type="name"
-		key="deleteFolderPlaylistFilesButton" />
-		
 	<style id="deviceButtonStyle">
 		<insets top="1" left="1" right="3" bottom="3" />
 		<font name="Dialog" size="11" style="BOLD" />
@@ -2891,31 +2669,6 @@
 	</style>
 	<bind style="pauseDownloadButtonStyle" type="name" key="pauseDownloadButton" />
 
-	<style id="deleteDownloadButtonStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/deleteNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/deleteMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/deletePressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/deleteDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DEFAULT">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/deleteNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="deleteDownloadButtonStyle" type="name"
-		key="deleteDownloadButton" />
-
 	<style id="cleanUpDownloadButtonStyle">
 		<state value="ENABLED">
 			<imagePainter method="buttonBackground"
@@ -3144,51 +2897,6 @@
 	</style>
 	<bind style="downloadClearSearchTextFieldVisiableStyle" type="name"
 		key="downloadClearSearchTextFieldVisiable" />
-
-	<!--
-		**********************************************************************************
-		* Delete download dialog
-		**********************************************************************************
-	-->
-	<style id="deleteEverythingButtonStyle">
-		<insets top="15" left="22" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteEverythingButtonPressed.png"
-				sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteEverythingButtonOver.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteEverythingButtonNormal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteEverythingButtonStyle" type="name"
-		key="deleteEverythingButton" />
-
-
-	<style id="deleteDownloadRefButtonStyle">
-		<insets top="15" left="22" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteDownloadButtonPress.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteDownloadButtonOver.png" sourceInsets="0 15 0 15" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/delete/deleteDownloadButtonNormal.png" sourceInsets="0 15 0 15" />
-		</state>
-	</style>
-	<bind style="deleteDownloadRefButtonStyle" type="name"
-		key="deleteDownloadRefButton" />
 
 	<style id="downloadAllButtonStyle">
 		<property key="Button.textShiftOffset" type="integer" value="1" />
@@ -3848,16 +3556,6 @@
 	</style>
 	<bind style="lupaSearchInvalidButtonStyle" type="name"
 		key="lupaSearchInvalidButton" />
-
-	<style id="clearSearchButtonInvalidInvisibleStyle">
-		<state>
-			<!--		SearchCen Delete Text Button Not Visible     Delete Text Button-->
-			<imagePainter method="buttonBackground"
-				path="/images/textfield/LocalSearchLensRightInvalidEmpty.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="clearSearchButtonInvalidInvisibleStyle" type="name"
-		key="clearSearchButtonInvalidInvisible" />
 
 	<style id="textFieldSearchInvalidStyle">
 		<state>
