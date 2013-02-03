@@ -1378,25 +1378,6 @@
 	</style>
 	<bind style="contactListScrollStyle" key="contactListScroll" type="name" />
 
-	<style id="sendContentBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/send/sendContactsPanel.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="sendContentBackgroundPanelStyle" type="name"
-		key="sendContentBackgroundPanel" />
-
-	<style id="sendContentSuccessLabelStyle">
-		<state>
-			<imagePainter method="labelBackground" path="/images/send/succesIcon.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="sendContentSuccessLabelStyle" type="name"
-		key="sendContentSuccessLabel" />
-
-
 	<style id="joinInvitationtextFieldStyle">
 		<color value="#4D4D4D" type="TEXT_FOREGROUND" />
 		<font name="Dialog" size="12" style="PLAIN" />
@@ -1590,15 +1571,6 @@
 	</style>
 	<bind style="grayRoundedBorderPanelStyle" type="name"
 		key="grayRoundedBorderPanel" />
-
-	<style id="blueRoundedBorderPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/send/backgroundAzul50x50.png"
-				sourceInsets="10 10 10 10" />
-		</state>
-	</style>
-	<bind style="blueRoundedBorderPanelStyle" type="name"
-		key="blueRoundedBorderPanel" />
 
 	<style id="syncMusicProgressBarStyle">
 		<property key="Slider.thumbWidth" type="Integer" value="140" />
@@ -2327,33 +2299,6 @@
 	<bind style="twitterMentionOverPanelStyle" type="name"
 		key="twitterMentionOverPanelStyle" />
 
-	<style id="sendContentBluePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/send/sendContentBluePanel.png" />
-		</state>
-	</style>
-	<bind style="sendContentBluePanelStyle" type="name"
-		key="sendContentBluePanel" />
-
-	<style id="sendContentGrayPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/send/sendContentGrayPanel.png" />
-		</state>
-	</style>
-	<bind style="sendContentGrayPanelStyle" type="name"
-		key="sendContentGrayPanel" />
-
-	<style id="sendContentVeticalSeparatorPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/send/sendContentVeticalSeparatorPanel.png" />
-		</state>
-	</style>
-	<bind style="sendContentVeticalSeparatorPanelStyle" type="name"
-		key="sendContentVeticalSeparatorPanel" />
-
 	<style id="whiteDialogBold12Style">
 		<state>
 			<color value="WHITE" type="TEXT_FOREGROUND" />
@@ -2361,24 +2306,6 @@
 		</state>
 	</style>
 	<bind style="whiteDialogBold12Style" type="name" key="whiteDialogBold12" />
-
-	<style id="sendContentClockPanelStyle">
-		<state>
-			<imagePainter method="labelBackground" sourceInsets="0 0 0 0"
-				path="/images/send/sendContentClockPanel.png" />
-		</state>
-	</style>
-	<bind style="sendContentClockPanelStyle" type="name"
-		key="sendContentClockPanel" />
-
-	<style id="sendContentNumberOfTracksPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/send/sendContentNumberOfTracksPanel.png" />
-		</state>
-	</style>
-	<bind style="sendContentNumberOfTracksPanelStyle" type="name"
-		key="sendContentNumberOfTracksPanel" />
 
 	<style id="boldItalicFont14Purple49_19_49Style">
 		<state>
