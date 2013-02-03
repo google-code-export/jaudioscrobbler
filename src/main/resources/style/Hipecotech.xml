@@ -302,11 +302,8 @@
 	<imageIcon id="iconsTrackIcon" path="/images/tree/iconmusic.png" />
 	<imageIcon id="iconsPlaylistIcon" path="/images/tree/iconplaylist.png" />
 	<imageIcon id="iconsFolderIcon" path="/images/tree/iconfolder.png" />
-	<imageIcon id="iconsPlaylistBlue"
-		path="/images/tree/icon_library_music_playlist_normal.png" />
 	<imageIcon id="iconsFolderBlue" path="/images/tree/Tree.folder.png" />
 	<imageIcon id="iconsTrackBlue" path="/images/filechooser/music_file.png" />
-	<imageIcon id="iconsSmartPlaylistBlue" path="/images/library/Smartplaylist.png" />
 
 	<imageIcon id="loaderAnimationFrame1" path="/images/loader/loader0001.png" />
 	<imageIcon id="loaderAnimationFrame2" path="/images/loader/loader0002.png" />
@@ -358,14 +355,10 @@
 		value="iconsPlaylistIcon" />
 	<defaultsProperty key="icons.folderWhite" type="idref"
 		value="iconsFolderIcon" />
-	<defaultsProperty key="icons.playlistBlue" type="idref"
-		value="iconsPlaylistBlue" />
 	<defaultsProperty key="icons.folderBlue" type="idref"
 		value="iconsFolderBlue" />
 	<defaultsProperty key="icons.trackBlue" type="idref"
 		value="iconsTrackBlue" />
-	<defaultsProperty key="icons.smartPlaylistBlue" type="idref"
-		value="iconsSmartPlaylistBlue" />
 
 	<defaultsProperty key="icons.loaderAnimationFrame1"
 		type="idref" value="loaderAnimationFrame1" />
@@ -464,119 +457,6 @@
 	</style>
 	<bind style="boldItalicFont12Purple320f32Style" type="NAME"
 		key="boldItalicFont12Purple320f32" />
-
-	<!--
-		**********************************************************************************
-		* PreviewTree
-		**********************************************************************************
-	-->
-	<style id="previewTreeStyle">
-		<imageIcon id="treeCollapsedIcon" path="/images/tree/Tree.collapsedIcon.png" />
-		<imageIcon id="treeExpandedIcon" path="/images/tree/Tree.expandedIcon.png" />
-
-		<imageIcon id="treeLeafIcon"
-			path="/images/tree/icon_library_music_playlist_normal.png" />
-		<imageIcon id="treeOpenIcon" path="/images/tree/Tree.folder.png" />
-		<imageIcon id="treeClosedIcon" path="/images/tree/Tree.folder.png" />
-
-		<imageIcon id="treeNewLeafIcon"
-			path="/images/tree/icon_library_music_newplaylist_normal.png" />
-		<imageIcon id="treeNewOpenIcon" path="/images/tree/Tree.newFolder.png" />
-		<imageIcon id="treeNewClosedIcon" path="/images/tree/Tree.newFolder.png" />
-
-		<color id="skyblue11521505" value="#AFCDE1" type="BACKGROUND" />
-		<color id="skyblue12508400" value="#BEDCF0" type="BACKGROUND" />
-		<color id="whiteblue15462645" value="#EBF0F5" type="BACKGROUND" />
-
-		<!-- Tree built-in properties -->
-		<property key="Tree.collapsedIcon" value="treeCollapsedIcon" />
-		<property key="Tree.expandedIcon" value="treeExpandedIcon" />
-
-		<property key="Tree.leftChildIndent" type="integer" value="6" />
-		<property key="Tree.rightChildIndent" type="integer" value="9" />
-		<property key="Tree.scrollsHorizontallyAndVertically" type="boolean"
-			value="true" />
-		<property key="Tree.rowHeight" type="integer" value="-1" />
-		<property key="Tree.drawHorizontalLines" type="boolean"
-			value="false" />
-		<property key="Tree.drawVerticalLines" type="boolean" value="false" />
-
-		<defaultsProperty key="Color.skyblue11521505" type="idref"
-			value="skyblue11521505" />
-		<defaultsProperty key="Color.skyblue12508400" type="idref"
-			value="skyblue12508400" />
-
-		<defaultsProperty key="Color.whiteblue15462645" type="idref"
-			value="whiteblue15462645" />
-		<defaultsProperty key="Tree.openIcon" type="idref"
-			value="treeOpenIcon" />
-		<defaultsProperty key="Tree.closedIcon" type="idref"
-			value="treeClosedIcon" />
-		<defaultsProperty key="Tree.leafIcon" type="idref"
-			value="treeLeafIcon" />
-
-		<defaultsProperty key="Tree.newOpenIcon" type="idref"
-			value="treeNewOpenIcon" />
-		<defaultsProperty key="Tree.newClosedIcon" type="idref"
-			value="treeNewClosedIcon" />
-		<defaultsProperty key="Tree.newLeafIcon" type="idref"
-			value="treeNewLeafIcon" />
-	</style>
-	<bind style="previewTreeStyle" type="name" key="previewTree" />
-
-	<style id="smartPlaylistTreeStyle">
-		<!-- Tree built-in properties -->
-		<property key="Tree.collapsedIcon" value="treeCollapsedIcon" />
-		<property key="Tree.expandedIcon" value="treeExpandedIcon" />
-
-		<property key="Tree.leftChildIndent" type="integer" value="6" />
-		<property key="Tree.rightChildIndent" type="integer" value="2" />
-		<property key="Tree.scrollsHorizontallyAndVertically" type="boolean"
-			value="true" />
-		<property key="Tree.drawHorizontalLines" type="boolean"
-			value="false" />
-		<property key="Tree.drawVerticalLines" type="boolean" value="false" />
-	</style>
-	<bind style="smartPlaylistTreeStyle" type="name" key="smartPlaylistTree" />
-
-	<!--
-		********************************************************************************
-		* DescriptionTable
-		********************************************************************************
-	-->
-
-
-
-
-	<!--
-		**********************************************************************************
-		* FolderTree
-		**********************************************************************************
-	-->
-
-	<style id="folderTreeStyle">
-		<property key="Tree.collapsedIcon" value="treeCollapsedIcon" />
-		<property key="Tree.expandedIcon" value="treeExpandedIcon" />
-		<property key="Tree.leafIcon" value="treeLeafIcon" />
-		<property key="Tree.openIcon" value="treeOpenIcon" />
-		<property key="Tree.closedIcon" value="treeClosedIcon" />
-		<property key="Tree.leftChildIndent" type="integer" value="4" />
-		<property key="Tree.rightChildIndent" type="integer" value="12" />
-		<property key="Tree.scrollsHorizontallyAndVertically" type="boolean"
-			value="true" />
-		<property key="Tree.rowHeight" type="integer" value="-1" />
-		<property key="Tree.drawHorizontalLines" type="boolean"
-			value="false" />
-		<property key="Tree.drawVerticalLines" type="boolean" value="false" />
-		<state value="SELECTED">
-			<color type="TEXT_FOREGROUND" value="WHITE" />
-			<color type="TEXT_BACKGROUND" value="GRAY" />
-		</state>
-		<state>
-			<color type="BACKGROUND" value="WHITE" />
-		</state>
-	</style>
-	<bind style="folderTreeStyle" type="name" key="folderTree" />
 
 	<style id="tooltip" clone="defaultStyle">
 		<insets top="2" left="10" bottom="2" right="10" />
@@ -1112,22 +992,6 @@
 	</style>
 	<bind style="radioButtonStyle" type="name" key="radioButton" />
 	
-	<style id="podcastButtonStyle">
-		<imageIcon id="activePodcast" path="/icons/library/Podcast.png" />
-		<imageIcon id="inactivePodcast" path="/icons/library/Podcast.png" />
-		<property key="ToggleButton.icon" value="inactivePodcast" />
-		<state value="DEFAULT">
-			<property key="ToggleButton.icon" value="inactivePodcast" />
-		</state>
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activePodcast" />
-		</state>
-		<state value="DISABLED">
-			<property key="ToggleButton.icon" value="inactivePodcast" />
-		</state>
-	</style>
-	<bind style="podcastButtonStyle" type="name" key="podcastButton" />
-
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
 		<defaultsProperty key="Info.alertIcon" type="idref"
@@ -1319,93 +1183,6 @@
 	</style>
 	<bind style="closeDialogButtonStyle" type="name" key="closeDialogButton" />
 
-	<style id="acceptConditionsCheckBoxStyle">
-		<imageIcon id="checkfocus_off" path="/images/login/checkbox2-glow.png" />
-		<imageIcon id="checkfocus_on" path="/images/login/checkbox1-glow.png" />
-		<font name="Dialog" size="11" style="BOLD" />
-		<state value="SELECTED">
-			<color idref="gray909090" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="checkfocus_on" />
-		</state>
-		<state>
-			<color idref="gray909090" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="checkfocus_off" />
-		</state>
-	</style>
-	<bind style="acceptConditionsCheckBoxStyle" type="name"
-		key="acceptConditionsCheckBox" />
-
-	<style id="acceptConditionsCheckBoxFocusStyle">
-		<!--<property key="CheckBox.icon" value="checkfocus_off" />-->
-		<font name="Dialog" size="12" style="BOLD" />
-		<state value="SELECTED">
-			<color idref="gray909090" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="checkfocus_on" />
-		</state>
-		<state>
-			<color idref="gray909090" type="TEXT_FOREGROUND" />
-			<property key="CheckBox.icon" value="checkfocus_off" />
-		</state>
-	</style>
-	<bind style="acceptConditionsCheckBoxFocusStyle" type="name"
-		key="acceptConditionsFocusCheckBox" />
-	
-	<style id="collapsablePanelSeparatorStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/colors/color_contactSeparator.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="collapsablePanelSeparatorStyle" type="name"
-		key="collapsablePanelSeparator" />
-
-	<style id="PreviewTreeBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_999999.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="PreviewTreeBackgroundStyle" type="name"
-		key="previewTreeBackground" />
-
-	<style id="ContactSeparatorStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_969696.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="ContactSeparatorStyle" type="name"
-		key="contactSeparatorBackground" />
-		
-	<style id="feedLightBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_FCFCFC.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="feedLightBackgroundStyle" type="name"
-		key="feedLightBackground" />
-		
-	<style id="feedDarkBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_F0F0F0.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="feedDarkBackgroundStyle" type="name"
-		key="feedDarkBackground" />
-
-	<style id="trashPanelStyle">
-		<opaque value="TRUE" />
-		<color value="#999999" type="TEXT_FOREGROUND" />
-		<font name="Dialog" size="11" style="BOLD" />
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_999999.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="trashPanelStyle" type="name" key="trashPanel" />
-
 	<style id="boldFont23Purple130_60_165Style">
 		<state>
 			<font name="Dialog" size="23" style="BOLD" />
@@ -1441,56 +1218,6 @@
 	<defaultsProperty key="icons.myMusicDndArrowWhite"
 		type="idref" value="myMusicDndArrowWhite" />
 
-	<style id="myMusicPanelGlow01Style">
-		<state>
-			<imagePainter method="panelBackground" path="/images/library/glow01.png"
-				sourceInsets="8 0 8 0" />
-		</state>
-	</style>
-	<bind style="myMusicPanelGlow01Style" type="name" key="myMusicPanelGlow01" />
-
-	<style id="myMusicPanelGlow02Style">
-		<state>
-			<imagePainter method="panelBackground" path="/images/library/glow02.png"
-				sourceInsets="8 0 8 0" />
-		</state>
-	</style>
-	<bind style="myMusicPanelGlow02Style" type="name" key="myMusicPanelGlow02" />
-
-	<style id="myMusicPanelGlow03Style">
-		<state>
-			<imagePainter method="panelBackground" path="/images/library/glow03.png"
-				sourceInsets="8 0 8 0" />
-		</state>
-	</style>
-	<bind style="myMusicPanelGlow03Style" type="name" key="myMusicPanelGlow03" />
-
-	<style id="collapsedPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/library/collapsedFondo.png" sourceInsets="45 0 0 0" />
-		</state>
-	</style>
-	<bind style="collapsedPanelBackgroundStyle" type="name"
-		key="collapsedPanelBackground" />
-
-	<style id="collapsedPanelBubbleStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/library/collapsedBurbuja.png" sourceInsets="10 0 10 0" />
-		</state>
-	</style>
-	<bind style="collapsedPanelBubbleStyle" type="name"
-		key="collapsedPanelBubble" />
-
-	<style id="myMusicDragOverLabelStyle">
-		<font name="Dialog" size="13" style="BOLD" />
-		<opaque value="FALSE" />
-		<insets top="-4" left="0" bottom="0" right="0" />
-	</style>
-	<bind style="myMusicDragOverLabelStyle" type="name"
-		key="myMusicDragOverLabel" />
-
 	<style id="headerBlackPanelStyle">
 		<state>
 			<color id="blackBg" value="BLACK" type="BACKGROUND" />
@@ -1498,24 +1225,6 @@
 	</style>
 
 	<bind style="headerBlackPanelStyle" type="name" key="headerBlackPanel" />
-	<style id="headerBackgroundStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" path="/images/library/LibraryHeaderPanel.png"
-				sourceInsets="8 8 0 0" />
-		</state>
-	</style>
-	<bind style="headerBackgroundStyle" type="name" key="headerBackground" />
-	
-	<style id="libraryBackgroundPanelStyle">
-		<insets top="3" left="3" right="0" bottom="3" />
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/library/LibraryBackgroundPanel.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="libraryBackgroundPanelStyle" type="name"
-		key="libraryBackgroundPanel" />
 
 	<style id="TableHeaderStyle">
 		<state>
@@ -1539,22 +1248,6 @@
 		</state>
 	</style>
 	<bind style="TableSortedHeaderStyle" type="name" key="tableSortedHeader" />
-
-	<style id="collapseButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/library/CollapsePressedButton.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/library/CollapseOverButton.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/library/CollapseNormalButton.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="collapseButtonStyle" type="name" key="collapseButton" />
 
 	<!-- The style for the list renderer of JComboBox -->
 	<style id="comboBoxListRenderer">
@@ -1605,23 +1298,6 @@
 	<bind style="ButtonStyle" type="name" key="SynthFileChooser.cancelButton" />
 	<bind style="ButtonStyle" type="name" key="SynthFileChooser.approveButton" />
 
-	<style id="libraryAddButtonStyle">
-		<opaque value="FALSE" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/library/Library Add Button Pressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/library/Library Add Button Over.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/library/Library Add Button Normal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="libraryAddButtonStyle" type="name" key="libraryAddButton" />
-	
 	<style id="highlightTreeNodeStyle">
 		<imageIcon id="highlightTreeNodeIcon" path="/images/dnd/HighlightDragOver.png" />
 		<defaultsProperty key="Tree.highlight" type="idref"
@@ -2018,88 +1694,6 @@
 	<defaultsProperty key="newAccount.textForegroundColor"
 		type="idref" value="newAccountTextForegroundColor" />
 	
-	<!--
-		**********************************************************************************
-		* Contacts List Tree
-		**********************************************************************************
-	-->
-	<style id="contactFolderTreeStyle">
-		<insets bottom="0" left="7" right="0" top="0" />
-
-		<imageIcon id="contactTreeCollapsedIcon" path="/images/tree/Tree.collapsedIcon.png" />
-		<imageIcon id="contactTreeExpandedIcon" path="/images/tree/Tree.expandedIcon.png" />
-
-		<property key="Tree.collapsedIcon" value="contactTreeCollapsedIcon" />
-		<property key="Tree.expandedIcon" value="contactTreeExpandedIcon" />
-
-		<imageIcon id="contactFolderDraggingBG" path="/images/contactTreeHiglight.png" />
-		<color id="contactFolderNormalBg" value="#F3F3F7" type="BACKGROUND" />
-		<color id="contactFolderSelectedBg" value="#C9CAE6" type="BACKGROUND" />
-
-		<property key="Tree.leftChildIndent" type="integer" value="0" />
-		<property key="Tree.rightChildIndent" type="integer" value="10" />
-		<property key="Tree.scrollsHorizontallyAndVertically" type="boolean"
-			value="true" />
-		<property key="Tree.rowHeight" type="integer" value="-1" />
-		<property key="Tree.drawHorizontalLines" type="boolean"
-			value="false" />
-		<property key="Tree.drawVerticalLines" type="boolean" value="false" />
-
-		<defaultsProperty key="contactFolder.DraggingBG"
-			type="idref" value="contactFolderDraggingBG" />
-		<defaultsProperty key="contactFolder.NormalBg" type="idref"
-			value="contactFolderNormalBg" />
-		<defaultsProperty key="contactFolder.SelectedBg"
-			type="idref" value="contactFolderSelectedBg" />
-
-
-	</style>
-	<bind style="contactFolderTreeStyle" type="name" key="contactFolderTree" />
-
-	<style id="contactListTreeStyle">
-		<insets bottom="0" left="7" right="0" top="0" />
-
-		<font id="contactTreeFont" name="Dialog" size="11" style="PLAIN" />
-
-		<color id="contactTreeForegroundColor" value="#4D4D4D" type="FOREGROUND" />
-		<color id="contactTreeBackgroundColor" value="#F3F3F7" type="BACKGROUND" />
-		<color id="contactTreeSelectionBackgroundColor" value="#DCDCDC"
-			type="BACKGROUND" />
-		<color id="contactTreeOnlineBackgroundColor" value="#E5E5EB"
-			type="BACKGROUND" />
-		<color id="contactTreeSelectionOnlineBackgroundColor" value="#C9CAE6"
-			type="BACKGROUND" />
-
-		<!-- Tree built-in properties -->
-		<property key="Tree.collapsedIcon" value="contactTreeCollapsedIcon" />
-		<property key="Tree.expandedIcon" value="contactTreeExpandedIcon" />
-
-		<property key="Tree.leftChildIndent" type="integer" value="0" />
-		<property key="Tree.rightChildIndent" type="integer" value="6" />
-		<property key="Tree.scrollsHorizontallyAndVertically" type="boolean"
-			value="true" />
-		<property key="Tree.rowHeight" type="integer" value="-1" />
-		<property key="Tree.drawHorizontalLines" type="boolean"
-			value="false" />
-		<property key="Tree.drawVerticalLines" type="boolean" value="false" />
-
-		<!-- Custom Properties bindings. -->
-		<defaultsProperty key="contactTree.font" type="idref"
-			value="contactTreeFont" />
-
-		<defaultsProperty key="contactTree.foregroundColor"
-			type="idref" value="contactTreeForegroundColor" />
-		<defaultsProperty key="contactTree.background" type="idref"
-			value="contactTreeBackgroundColor" />
-		<defaultsProperty key="contactTree.selectionBackground"
-			type="idref" value="contactTreeSelectionBackgroundColor" />
-		<defaultsProperty key="contactTree.onlineBackground"
-			type="idref" value="contactTreeOnlineBackgroundColor" />
-		<defaultsProperty key="contactTree.selectionOnlineBackground"
-			type="idref" value="contactTreeSelectionOnlineBackgroundColor" />
-	</style>
-	<bind style="contactListTreeStyle" type="name" key="contactListTree" />
-
 	<style id="contactListScrollStyle">
 		<state>
 			<color type="BACKGROUND" value="#FF3333" />
@@ -2764,23 +2358,6 @@
 	<bind style="plainFont12_107_83_125Style" type="name"
 		key="plainFont12_107_83_125" />
 
-	<style id="showRemoteLibraryProfileButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/showRemoteLibraryProfileButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/showRemoteLibraryProfileButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/showRemoteLibraryProfileButton.png" />
-		</state>
-	</style>
-	<bind style="showRemoteLibraryProfileButtonStyle" type="name"
-		key="showRemoteLibraryProfileButton" />
-
 	<style id="editProfileInfoButtonStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
@@ -2797,14 +2374,6 @@
 	</style>
 	<bind style="editProfileInfoButtonStyle" type="name"
 		key="editProfileInfoButton" />
-
-	<style id="closeProfileButtonStyle">
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/showRemoteLibraryProfileButton.png" />
-		</state>
-	</style>
-	<bind style="closeProfileButtonStyle" type="name" key="closeProfileButton" />
 
 	<style id="wallTextAreaStyle">
 		<state>
@@ -4359,31 +3928,7 @@
 		</state>
 	</style>
 	<bind style="portraitWhitePanelStyle" type="name" key="portraitWhitePanel" />
-	<style id="chatSelectionPanelStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="contactFolderNormalBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="chatSelectionPanelStyle" type="name" key="chatSelectionPanel" />
 
-	<style id="panelChatAccountStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="contactFolderNormalBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="panelChatAccountStyle" type="name" key="panelChatAccount" />
-
-	<style id="panelChatAccountSelectedStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="contactFolderSelectedBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="panelChatAccountSelectedStyle" type="name"
-		key="panelChatAccountSelected" />
-	
 	<style id="MessageTextAreaStyle">
 		<font name="Dialog" size="11" style="PLAIN" />
 		<color value="#4D4D4D" type="FOREGROUND" />
