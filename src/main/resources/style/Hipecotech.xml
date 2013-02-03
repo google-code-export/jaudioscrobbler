@@ -1468,14 +1468,6 @@
 	<bind style="plainFont12Gray51_51_51Style" type="name"
 		key="plainFont12Gray51_51_51" />
 
-	<style id="editProfilePanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/contacts/editProfilePanelBackground.png" sourceInsets="1 8 1 8" />
-		</state>
-	</style>
-	<bind style="editProfilePanelStyle" type="name" key="editProfilePanel" />
-
 	<style id="roundedBlackTransparentBackgroundLabelStyle">
 		<insets top="5" left="5" right="5" bottom="5" />
 		<state>
@@ -1496,16 +1488,6 @@
 		</state>
 	</style>
 	<bind style="cropPanelStyle" type="name" key="cropPanel" />
-
-	<style id="separatorSocialVerticalPanelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/social/verticalSocialSeparator.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="separatorSocialVerticalPanelStyle" type="name"
-		key="verticalSocialSeparator" />
 
 	<style id="plaintFont11WhiteStyle">
 		<font name="Dialog" size="11" style="PLAIN" />
@@ -1743,24 +1725,6 @@
 	<bind style="plainFont12_80_80_80Style" type="NAME"
 		key="plainFont12_80_80_80" />
 
-	<style id="profileWallBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/twitter/profileWallBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="profileWallBackgroundPanelStyle" type="name"
-		key="profileWallBackgroundPanel" />
-
-	<style id="profileInfoBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="10 10 10 10"
-				path="/images/social/profileInfoBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="profileInfoBackgroundPanelStyle" type="name"
-		key="profileInfoBackgroundPanel" />
-
 	<style id="plainFont12_123_119_130Style">
 		<state>
 			<font name="Dialog" size="12" style="PLAIN" />
@@ -1815,23 +1779,6 @@
 	<bind style="plainFont12_107_83_125Style" type="name"
 		key="plainFont12_107_83_125" />
 
-	<style id="editProfileInfoButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/editProfileInfoButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/editProfileInfoButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/editProfileInfoButton.png" />
-		</state>
-	</style>
-	<bind style="editProfileInfoButtonStyle" type="name"
-		key="editProfileInfoButton" />
-
 	<style id="wallTextAreaStyle">
 		<state>
 			<imagePainter method="viewportBackground" sourceInsets="18 18 18 18"
@@ -1848,65 +1795,6 @@
 	</style>
 	<bind style="invalidWallTextAreaStyle" type="name" key="invalidWallTextArea" />
 
-	<style id="enterWallTextProfileButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/enterWallTextProfileButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/enterWallTextProfileButtonOver.png" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/enterWallTextProfileButtonDisabled.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/enterWallTextProfileButton.png" />
-		</state>
-	</style>
-	<bind style="enterWallTextProfileButtonStyle" type="name"
-		key="enterWallTextProfileButton" />
-
-	<style id="profilePortraitMaskStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/social/profileMask.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profilePortraitMaskStyle" type="name" key="profilePortraitMask" />
-
-	<style id="profileTwitterPortraitMaskStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/twitter/twitterProfilePhotoMask.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profileTwitterPortraitMaskStyle" type="name"
-		key="profileTwitterPortraitMask" />
-
-	<style id="replyWallButtonStyle">
-		<state value="PRESSED">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#b4b4b4" />
-			<imagePainter method="buttonBackground" sourceInsets="6 6 6 6"
-				path="/images/twitter/replyWallButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#662d91" />
-			<imagePainter method="buttonBackground" sourceInsets="6 6 6 6"
-				path="/images/twitter/replyWallButtonOver.png" />
-		</state>
-		<state>
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#e6e6e6" />
-			<imagePainter method="buttonBackground" sourceInsets="6 6 6 6"
-				path="/images/twitter/replyWallButton.png" />
-		</state>
-	</style>
-	<bind style="replyWallButtonStyle" type="name" key="replyWallButton" />
 	<!--
 		**********************************************************************************
 		*Twitter Follow Buttons
@@ -1955,16 +1843,6 @@
 		</state>
 	</style>
 	<bind style="unfollowButtonStyle" type="name" key="unfollowButton" />
-
-	<style id="profileWallInitialBackgroundMessageStyle">
-		<opaque value="true" />
-		<state>
-			<color type="BACKGROUND" value="#fcfcfc" />
-			<color type="TEXT_BACKGROUND" value="#fcfcfc" />
-		</state>
-	</style>
-	<bind style="profileWallInitialBackgroundMessageStyle" type="name"
-		key="profileWallInitialBackgroundMessage" />
 
 	<style id="plainFont12Gray100_100_100Style">
 		<state>
@@ -2027,39 +1905,6 @@
 	</style>
 	<bind style="boldFont10_180_180_180Style" type="name"
 		key="boldFont10_180_180_180" />
-
-	<style id="profileWallSeparatorBackgroundMessageStyle">
-		<opaque value="true" />
-		<state>
-			<color type="BACKGROUND" value="#646464" />
-			<color type="TEXT_BACKGROUND" value="#646464" />
-		</state>
-	</style>
-	<bind style="profileWallSeparatorBackgroundMessageStyle" type="name"
-		key="profileWallSeparatorBackgroundMessage" />
-
-	<style id="profileQuoteBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/social/profileQuoteBackground.png" sourceInsets="8 8 8 8" />
-		</state>
-	</style>
-	<bind style="profileQuoteBackgroundStyle" type="name"
-		key="profileQuoteBackground" />
-
-
-	<style id="editQuoteProfileButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/editQuoteProfileButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/editQuoteProfileButtonPressed.png" />
-		</state>
-	</style>
-	<bind style="editQuoteProfileButtonStyle" type="name"
-		key="editQuoteProfileButton" />
 
 	<style id="plainFont14Purple102_45_145Style">
 		<state>
@@ -2182,15 +2027,6 @@
 	</style>
 	<bind style="twitterActivityButtonStyle" type="name"
 		key="twitterActivityButton" />
-
-	<style id="profileTabPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/social/profileTabPanelBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="profileTabPanelBackgroundStyle" type="Name"
-		key="profileTabPanelBackground" />
 
 	<style id="boldFont15Purple87_63_106Style">
 		<state>
@@ -3259,40 +3095,6 @@
 	</style>
 	<bind style="boldFont11Blue17520525Style" type="name"
 		key="boldFont11Blue17520525" />
-
-	<style id="reloadButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/reloadButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/reloadButtonOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/social/reloadButton.png" />
-		</state>
-	</style>
-	<bind style="reloadButtonStyle" type="name" key="reloadButton" />
-
-	<style id="socialHeaderPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/images/social/socialHeaderPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="socialHeaderPanelBackgroundStyle" type="name"
-		key="socialHeaderPanelBackground" />
-
-	<style id="separatorSocialPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/social/separatorSocial.png" />
-		</state>
-	</style>
-	<bind style="separatorSocialPanelBackgroundStyle" type="name"
-		key="separatorSocialPanelBackground" />
 
 	 <style id="colorD5D5D5SeparatorStyle">
         <state>
