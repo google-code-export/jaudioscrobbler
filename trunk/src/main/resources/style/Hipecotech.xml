@@ -623,13 +623,6 @@
 	</style>
 	<bind style="ContactListStyle" type="name" key="ContactList" />
 
-
-	<style id="separatorStyle">
-		<imagePainter path="/images/separator/FilterPanel.png"
-			sourceInsets="0 0 0 0" paintCenter="true" stretch="true" />
-	</style>
-	<bind style="separatorStyle" type="region" key="Separator" />
-	
 	<style id="contactEmailNameStyle">
 		<state>
 			<font name="Dialog" size="12" style="BOLD" />
@@ -1292,18 +1285,6 @@
 	</style>
 	<bind style="buttonStyle" type="name" key="button[A-Za-z0-9]+" />
 
-	<!--
-		ENABLED MOUSE_OVER PRESSED DISABLED FOCUSED SELECTED DEFAULT
-	-->
-	<style id="bottomPanelSeparatorStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/separator/SeparatorDialog.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="bottomPanelSeparatorStyle" type="name"
-		key="bottomPanelSeparator" />
-
 	<style id="privacyTextAreaStyle">
 		<font name="Dialog" size="10" style="PLAIN" />
 		<state>
@@ -1515,15 +1496,6 @@
 		</state>
 	</style>
 	<bind style="cropPanelStyle" type="name" key="cropPanel" />
-
-	<style id="separatorVerticalPanelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="panelBackground" path="/images/separator/verticalSeparator.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="separatorVerticalPanelStyle" type="name" key="verticalSeparator" />
 
 	<style id="separatorSocialVerticalPanelStyle">
 		<!--  opaque value="FALSE" />-->
