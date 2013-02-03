@@ -872,18 +872,6 @@
 				path="/images/player/StopButtonNormal.png" sourceInsets="1 1 1 1" />
 		</state>
 	</style>
-	<bind style="stopButtonStyle" type="name" key="stopButton" />
-	<style id="pauseButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/PauseButtonPressed.png" sourceInsets="6 6 6 6" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/PauseButtonNormal.png" sourceInsets="6 6 6 6" />
-		</state>
-	</style>
-	<bind style="pauseButtonStyle" type="name" key="pauseButton" />
 	<style id="fordwardButtonStyle">
 		<font idref="defaultWhiteFont" />
 		<state value="PRESSED">
@@ -1017,28 +1005,6 @@
 		</state>
 	</style>
 	<bind style="lupaSearchButtonStyle" type="name" key="lupaSearchButton" />
-
-	<!--Define Search Buttons-->
-	<style id="lupaDownloadButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/DownloadSearchLensLeft.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/DownloadSearchLensLeft.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/DownloadSearchLensLeft.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/DownloadSearchLensLeft.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="lupaDownloadButtonStyle" type="name"
-		key="lupaDownloadSearchButton" />
 
 	<style id="searchTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -1428,17 +1394,6 @@
 	</style>
 	<bind style="feedDarkBackgroundStyle" type="name"
 		key="feedDarkBackground" />
-
-	<!-- DOWNLOAD UPLOAD PANEL STYLE -->
-	<style id="downloadUploadPanelStyle">
-		<opaque value="TRUE" />
-		<font name="Dialog" size="11" />
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_999999.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="downloadUploadPanelStyle" type="name" key="downloadUploadPanel" />
 
 	<style id="trashPanelStyle">
 		<opaque value="TRUE" />
@@ -2453,99 +2408,6 @@
 	</style>
 	<bind style="commonProgressBarStyle" type="name" key="commonProgressBar" />
 
-	<style id="bottomDownloadPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/images/downloads/bottomDownloadPanel.png" />
-		</state>
-	</style>
-	<bind style="bottomDownloadPanelStyle" type="name" key="bottomDownloadPanel" />
-
-	<style id="resumeDownloadButtonStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/resumeNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/resumeMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/resumePressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/resumeDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DEFAULT">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/resumeNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="resumeDownloadButtonStyle" type="name"
-		key="resumeDownloadButton" />
-
-	<style id="pauseDownloadButtonStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/downloads/pauseNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/pauseMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/pausePressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/pauseDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DEFAULT">
-			<imagePainter method="buttonBackground" path="/images/downloads/pauseNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="pauseDownloadButtonStyle" type="name" key="pauseDownloadButton" />
-
-	<style id="cleanUpDownloadButtonStyle">
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/cleanUpNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/cleanUpMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/cleanUpPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/cleanUpDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DEFAULT">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/cleanUpNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="cleanUpDownloadButtonStyle" type="name"
-		key="cleanUpDownloadButton" />
-
-	<style id="TableDownloadSelectedHeaderStyle">
-		<state>
-			<object id="tableDownloadSelectedHeaderPanelPainter"
-				class="org.jas.laf.painter.TableDownloadSelectedHeaderPanelPainter" />
-			<imagePainter method="panelBackground"
-				idref="tableDownloadSelectedHeaderPanelPainter" />
-		</state>
-	</style>
-	<bind style="TableDownloadSelectedHeaderStyle" type="name"
-		key="tableDownloadSelectedHeader" />
-
 	<!-- Styles for the flood search. -->
 	<style id="TableSearchSelectedHeaderStyle">
 		<state>
@@ -2701,64 +2563,6 @@
 	</style>
 	<bind style="searchTabCloseButtonStyle" type="name"
 		key="searchTabCloseButton" />
-
-	<style id="downloadSearchTextFieldStyle">
-		<insets top="3" left="36" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/search/downloadSearchTextField.png" sourceInsets="30 30 30 30" />
-			<font name="Dialog" size="14" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="downloadSearchTextFieldStyle" type="name"
-		key="downloadSearchTextField" />
-
-	<style id="downloadClearSearchTextFieldInvisiableStyle">
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/search/downloadClearSearchTextFieldInvisibleEnabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="downloadClearSearchTextFieldInvisiableStyle" type="name"
-		key="downloadClearSearchTextFieldInvisiable" />
-
-	<style id="downloadClearSearchTextFieldVisiableStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/search/downloadClearSearchTextFieldVisiblePressed.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/search/downloadClearSearchTextFieldVisibleEnabled.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="downloadClearSearchTextFieldVisiableStyle" type="name"
-		key="downloadClearSearchTextFieldVisiable" />
-
-	<style id="downloadAllButtonStyle">
-		<property key="Button.textShiftOffset" type="integer" value="1" />
-		<insets top="15" left="20" right="20" bottom="15" />
-		<font idref="defaultFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/downloadAllButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/downloadAllButtonMouseOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/downloads/downloadAllButtonNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="downloadAllButtonStyle" type="name" key="downloadAllButton" />
 
 	<!-- DISCLAIMER PANEL STYLE-->
 	<style id="disclaimerFramePanelBackgroundStyle">
@@ -4529,30 +4333,6 @@
 	<bind style="separatorToolbarPanelStyle" type="name"
 		key="separatorToolbarPanel" />
 
-	<style id="toolbarDownloadsButtonStyle">
-		<font name="Dialog" size="12" style="BOLD" />
-		<state value="SELECTED">
-			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<imagePainter method="toggleButtonBackground"
-				path="/images/toolbar/toolbarMiddleButtonActive.png" sourceInsets="11 11 11 11" />
-		</state>
-		<state value="PRESSED">
-			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<imagePainter method="toggleButtonBackground"
-				path="/images/toolbar/toolbarMiddleButtonPressed.png" sourceInsets="11 11 11 11" />
-		</state>
-		<state value="MOUSE_OVER">
-			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-			<imagePainter method="toggleButtonBackground"
-				path="/images/toolbar/toolbarMiddleButtonOver.png" sourceInsets="11 11 11 11" />
-		</state>
-		<state>
-			<color value="#FFFFFF" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="toolbarDownloadsButtonStyle" type="name"
-		key="toolbarDownloadsButton" />
-	
 	<style id="boldFont16_77_77_77Style">
 		<state>
 			<font name="Dialog" size="16" style="BOLD" />
