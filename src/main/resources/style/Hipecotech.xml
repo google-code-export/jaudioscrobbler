@@ -1763,41 +1763,6 @@
 		</state>
 	</style>
 	<bind style="trashPanelStyle" type="name" key="trashPanel" />
-	<style id="trashButtonStyle">
-		<insets top="2" left="13" right="0" bottom="2" />
-		<imageIcon id="trashIcon" path="/icons/library/RecycleActiveIcon.png" />
-		<property key="ToggleButton.icon" value="trashIcon" />
-		<state>
-			<font name="Dialog" size="11" style="BOLD" />
-			<color idref="gray646464" type="TEXT_FOREGROUND" />
-			<imagePainter method="toggleButtonBackground" path="/images/commons/RecycleBackground.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="trashButtonStyle" type="name" key="trashButton" />
-
-	<style id="trashButtonLinuxStyle">
-		<insets top="2" left="13" right="0" bottom="2" />
-		<property key="ToggleButton.icon" value="trashIcon" />
-		<state>
-			<font name="Dialog" size="11" style="BOLD" />
-			<color idref="gray646464" type="TEXT_FOREGROUND" />
-			<imagePainter method="toggleButtonBackground"
-				path="/images/linux/RecycleLinuxBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="trashButtonLinuxStyle" type="name" key="trashButtonLinux" />
-
-	<style id="trashButtonOverStyle">
-		<insets top="2" left="12" right="0" bottom="2" />
-		<property key="ToggleButton.icon" value="trashIcon" />
-		<state>
-			<imagePainter method="toggleButtonBackground"
-				path="/images/library/RecycleBackgroundPress.png" sourceInsets="0 0 0 0" />
-
-		</state>
-	</style>
-	<bind style="trashButtonOverStyle" type="name" key="trashButtonOver" />
 
 	<style id="boldFont23Purple130_60_165Style">
 		<state>
@@ -2612,14 +2577,6 @@
 		key="editHeaderProfileButton" />
 	<!-- END OF EditProfileButton -->
 
-	<style id="myContactsPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/commons/ContactTreeTopBackground.png" sourceInsets="0 10 0 10" />
-		</state>
-	</style>
-	<bind style="myContactsPanelStyle" type="name" key="myContactsPanel" />
-
 	<style id="myContactsBottomPanelStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -3156,19 +3113,6 @@
 	</style>
 	<bind style="deviceSilderBarStyle" type="name" key="deviceSilderBar" />
 
-	<!--
-		**********************************************************************************
-		* Login Panel
-		**********************************************************************************
-	-->
-	<style id="loginPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/commons/loginPanelBackground.png"
-				sourceInsets="11 11 11 11" />
-		</state>
-	</style>
-	<bind style="loginPanelStyle" type="name" key="loginPanel" />
-
 	<style id="bottomDownloadPanelStyle">
 		<state>
 			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
@@ -3665,28 +3609,6 @@
 	</style>
 	<bind style="boldFont26WhiteStyle" type="name" key="boldFont26White" />
 
-	<style id="addFriendButtonStyle">
-		<state value="PRESSED">
-			<font name="Dialog" size="12" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/buttonAddFriendPress.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="Dialog" size="12" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/buttonAddFriendOver.png" />
-		</state>
-		<state>
-			<font name="Dialog" size="12" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/buttonAddFriendNormal.png" />
-		</state>
-	</style>
-	<bind style="addFriendButtonStyle" type="name" key="addFriendButton" />
-
 	<style id="boldItalicFont15_73_25_73Style">
 		<state>
 			<font name="Dialog" size="15" style="BOLD ITALIC" />
@@ -4034,47 +3956,6 @@
 	<bind style="profileWallSeparatorBackgroundMessageStyle" type="name"
 		key="profileWallSeparatorBackgroundMessage" />
 
-	<style id="nextButtonProfileStyle">
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/nextButtonProfileInactive.png" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/nextButtonProfilePressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/nextButtonProfileOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/nextButtonProfile.png" />
-		</state>
-	</style>
-	<bind style="nextButtonProfileStyle" type="name" key="nextButtonProfile" />
-
-	<style id="previousButtonProfileStyle">
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/previousButtonProfileInactive.png" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/previousButtonProfilePressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/previousButtonProfileOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/commons/previousButtonProfile.png" />
-		</state>
-	</style>
-	<bind style="previousButtonProfileStyle" type="name"
-		key="previousButtonProfile" />
-
 	<style id="profileQuoteBackgroundStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -4177,14 +4058,6 @@
 		</state>
 	</style>
 	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
-
-	<style id="bottomDevicePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/images/commons/RecycleBackground.png" paintCenter="true" stretch="true" />
-		</state>
-	</style>
-	<bind style="bottomDevicePanelStyle" type="name" key="bottomDevicePanel" />
 
 	<style id="footerDevicesTopPanelStyle">
 		<state>
