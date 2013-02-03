@@ -981,21 +981,6 @@
 	</style>
 	<bind style="TableHeaderStyle" type="name" key="tableHeader" />
 
-	<style id="TableSortedHeaderStyle">
-		<state>
-			<imageIcon id="tableAscendingSortIcon" path="/images/table/SortTriangleUp.png" />
-			<defaultsProperty key="Table.ascendingSortIcon"
-				type="idref" value="tableAscendingSortIcon" />
-			<imageIcon id="tableDescendingSortIcon" path="/images/table/SortTriangleDown.png" />
-			<defaultsProperty key="Table.descendingSortIcon"
-				type="idref" value="tableDescendingSortIcon" />
-			<object id="tableHeaderPanelPainter"
-				class="org.jas.laf.painter.TableSelectedHeaderPanelPainter" />
-			<imagePainter method="panelBackground" idref="tableHeaderPanelPainter" />
-		</state>
-	</style>
-	<bind style="TableSortedHeaderStyle" type="name" key="tableSortedHeader" />
-
 	<!-- The style for the list renderer of JComboBox -->
 	<style id="comboBoxListRenderer">
 		<opaque value="true" />
@@ -1940,16 +1925,6 @@
 		</state>
 	</style>
 	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
-
-	<style id="splashWindowBackgroundShadowedStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/splash/splashBackgroundShadowed.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="splashWindowBackgroundShadowedStyle" type="name"
-		key="splashWindowBackgroundShadowed" />
-
 
 	<style id="allIconTaskBarStyle">
 		<imageIcon id="allIconTaskBar" path="/images/taskbar/allTaskBar.png" />
