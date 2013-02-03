@@ -1043,31 +1043,6 @@
 	<bind style="lupaDownloadButtonStyle" type="name"
 		key="lupaDownloadSearchButton" />
 
-	<!--Define Search Buttons-->
-	<style id="searchGenericButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/SearchContactsButtonPressed.png" sourceInsets="0 0 0 0" />
-			<color type="TEXT_FOREGROUND" value="#505050" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/SearchContactsButtonMouseOver.png" sourceInsets="0 0 0 0" />
-			<color type="TEXT_FOREGROUND" value="#969696" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/SearchContactsButtonDisabled.png" sourceInsets="0 0 0 0" />
-			<color type="TEXT_FOREGROUND" value="#B4B4B4" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/contacts/SearchContactsButton.png"
-				sourceInsets="0 0 0 0" />
-			<color type="TEXT_FOREGROUND" value="#333333" />
-		</state>
-	</style>
-	<bind style="searchGenericButtonStyle" type="name" key="searchGenericButton" />
-
 	<style id="clearSearchButtonStyleVisible">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -2545,47 +2520,6 @@
 	</style>
 	<bind style="contactListScrollStyle" key="contactListScroll" type="name" />
 
-	<!-- Contact List Header Panel Background -->
-	<style id="contactListHeaderStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/contacts/ContactListHeaderBackground.png" sourceInsets="10 10 10 10" />
-		</state>
-	</style>
-	<bind style="contactListHeaderStyle" type="name" key="contactListHeader" />
-	<!-- END OF Contact List Header Panel Background -->
-
-	<!-- EditProfileButton -->
-	<style id="editHeaderProfileButtonStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editProfileHeaderPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editProfileHeaderButtonOver.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editProfileHeaderButtonNormal.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="editHeaderProfileButtonStyle" type="name"
-		key="editHeaderProfileButton" />
-	<!-- END OF EditProfileButton -->
-
-	<style id="myContactsBottomPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/contacts/ContactTreeBottomBackground.png" sourceInsets="0 10 0 10" />
-		</state>
-	</style>
-	<bind style="myContactsBottomPanelStyle" type="name"
-		key="myContactsBottomPanel" />
-
 	<style id="sendContentBackgroundPanelStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -2713,35 +2647,6 @@
 	</style>
 	<bind style="plainFont12Gray51_51_51Style" type="name"
 		key="plainFont12Gray51_51_51" />
-
-	<!--
-		**********************************************************************************
-		* Contact User Icons
-		**********************************************************************************
-	-->
-	<style id="editProfileButtonStyle">
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editPencilOverButton.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editPencilButton.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="editProfileButtonStyle" type="name" key="editProfileButton" />
-
-	<style id="tuercaProfileButtonStyle">
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editPencilOverButton.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/editPencilButton.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="tuercaProfileButtonStyle" type="name" key="tuercaProfileButton" />
 
 	<style id="editProfilePanelStyle">
 		<state>
@@ -3988,16 +3893,6 @@
 	<bind style="plainFont14Purple102_45_145Style" type="NAME"
 		key="plainFont14Purple102_45_145" />
 
-	<style id="emoticonFacebookPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/facebook/emoticonFacebookPanelBackground.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="emoticonFacebookPanelStyle" type="name"
-		key="emoticonFacebookPanel" />
-
 	<style id="addAsAFriendPanelProfileStyle">
 		<state>
 			<imagePainter method="panelBackground" path="/images/dialog/addFriendBackground.png"
@@ -4209,37 +4104,6 @@
 	</style>
 	<bind style="twitterActivityButtonStyle" type="name"
 		key="twitterActivityButton" />
-
-	<!--	-->
-	<style id="facebookLoginBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/facebook/facebookLoginBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="facebookLoginBackgroundPanelStyle" type="name"
-		key="facebookLoginBackgroundPanel" />
-
-	<style id="facebookErrorBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/facebook/facebookErrorBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="facebookErrorBackgroundPanelStyle" type="name"
-		key="facebookErrorBackgroundPanel" />
-
-	<style id="facebookUpdateStatusPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/facebook/facebookMessageBackground.png" sourceInsets="0 0 0 0"
-				stretch="true" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="facebookUpdateStatusPanelStyle" type="Name"
-		key="facebookUpdateStatusPanel" />
 
 	<style id="profileTabPanelBackgroundStyle">
 		<state>
@@ -5441,26 +5305,6 @@
 	<bind style="toolbarDownloadsButtonStyle" type="name"
 		key="toolbarDownloadsButton" />
 	
-	<style id="selectedContactPanelBackgroundStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/selectedContactBackgroundONLINE.png" />
-		</state>
-	</style>
-	<bind style="selectedContactPanelBackgroundStyle" type="name"
-		key="selectedContactPanelBackground" />
-
-	<style id="selectedContactPanelBackgroundOfflineStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/selectedContactBackgroundOFFLINE.png" />
-		</state>
-	</style>
-	<bind style="selectedContactPanelBackgroundOfflineStyle" type="name"
-		key="selectedContactPanelBackgroundOffline" />
-
 	<style id="boldFont16_77_77_77Style">
 		<state>
 			<font name="Dialog" size="16" style="BOLD" />
@@ -5477,51 +5321,6 @@
 	</style>
 	<bind style="italicFont11_120_120_120Style" type="NAME"
 		key="italicFont11_120_120_120" />
-
-	<style id="chatSelectedContactButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonCHATPressed.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonCHATOver.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonCHATDisabled.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonCHATNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="chatSelectedContactButtonStyle" type="name"
-		key="chatSelectedContactButton" />
-
-	<style id="musicSelectedContactButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonVIEWLIBRARYPressed.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonVIEWLIBRARYMouseOver.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/contacts/ButtonVIEWLIBRARYNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="musicSelectedContactButtonStyle" type="name"
-		key="musicSelectedContactButton" />
 
 	<style id="boldFont12Gray77_77_77Style">
 		<state>
@@ -5614,60 +5413,7 @@
 	</style>
 	<bind style="panelChatAccountSelectedStyle" type="name"
 		key="panelChatAccountSelected" />
-
-	<style id="allChatPanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/allTreeFolder.png" />
-		</state>
-	</style>
-	<bind style="allChatPanelAccountStyle" type="name" key="allChatPanelAccount" />
-
-	<style id="allChatSelectedPanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/allTreeFolderPressed.png" />
-		</state>
-	</style>
-	<bind style="allChatSelectedPanelAccountStyle" type="name"
-		key="allChatSelectedPanelAccount" />
-
-	<style id="allFacebookPanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/facebookTreeFolder.png" />
-		</state>
-	</style>
-	<bind style="allFacebookPanelAccountStyle" type="name"
-		key="allFacebookPanelAccount" />
-
-	<style id="allFacebookActiveSelectedPanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/facebookTreeFolderPressed.png" />
-		</state>
-	</style>
-	<bind style="allFacebookActiveSelectedPanelAccountStyle" type="name"
-		key="allFacebookActiveSelectedPanelAccount" />
-
-	<style id="allFacebookInactivePanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/facebookTreeFolderInactive.png" />
-		</state>
-	</style>
-	<bind style="allFacebookInactivePanelAccountStyle" type="name"
-		key="allFacebookInactivePanelAccount" />
-
-	<style id="allFacebookInactiveSelectedPanelAccountStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/contacts/facebookTreeFolderInactivePressed.png" />
-		</state>
-	</style>
-	<bind style="allFacebookInactiveSelectedPanelAccountStyle" type="name"
-		key="allFacebookInactiveSelectedPanelAccount" />
-
+	
 	<style id="MessageTextAreaStyle">
 		<font name="Dialog" size="11" style="PLAIN" />
 		<color value="#4D4D4D" type="FOREGROUND" />
