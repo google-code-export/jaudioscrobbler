@@ -1538,20 +1538,6 @@
 	</style>
 	<bind style="textAreaStyle" type="name" key="textArea[A-Za-z0-9]*" />
 
-	<style id="invalidTextFieldStyle">
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/invalidTextfield.png"
-				sourceInsets="2 9 2 9" stretch="true" />
-			<imagePainter method="comboBoxBackground" path="/images/textfield/invalidTextfield.png"
-				sourceInsets="2 9 2 9" stretch="true" />
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color type="TEXT_BACKGROUND" value="#4D4D4D" />
-		</state>
-	</style>
-	<bind style="invalidTextFieldStyle" type="name"
-		key="invalidTextField[A-Za-z0-9]*" />
-
 	<style id="passwordFieldStyle">
 		<insets left="10" right="10" />
 		<state>
@@ -1560,20 +1546,6 @@
 		</state>
 	</style>
 	<bind style="passwordFieldStyle" type="name" key="textField[A-Za-z0-9]*" />
-
-	<style id="invalidPasswordFieldStyle">
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="passwordFieldBackground" path="/images/login/invalidTextfield28.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-			<imagePainter method="comboBoxBackground" path="/images/login/invalidTextfield28.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color type="TEXT_BACKGROUND" value="#4D4D4D" />
-		</state>
-	</style>
-	<bind style="invalidPasswordFieldStyle" type="name"
-		key="invalidTopTextField[A-Za-z0-9]*" />
 
 	<style id="buttonStyle">
 		<state value="PRESSED">
@@ -1850,32 +1822,6 @@
 	<bind style="roundedBlackTransparentBackgroundLabelStyle" type="name"
 		key="roundedBlackTransparentBackgroundLabel" />
 
-	<!-- login dialog email combo box -->
-	<style id="emailComboBoxStyle">
-		<insets top="0" left="9" bottom="0" right="0" />
-		<property key="ComboBox.rendererUseListColors" type="boolean"
-			value="false" />
-		<state value="DISABLED">
-			<font name="Dialog" size="16" style="PLAIN" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-			<imagePainter method="comboBoxBackground" path="/images/login/emailComboBackground.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<font name="Dialog" size="16" style="PLAIN" />
-			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-			<imagePainter method="comboBoxBackground" path="/images/login/emailComboBackground.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="emailComboBoxStyle" type="name" key="emailComboBox" />
-
-
-	<!--
-		**********************************************************************************
-		* Crop panel style
-		**********************************************************************************
-	-->
 	<style id="cropPanelStyle">
 		<state>
 			<imagePainter method="panelBackground" path="/images/dialog/backgroundCrop.png"
@@ -2157,25 +2103,6 @@
 	</style>
 	<bind style="searchTabCloseButtonStyle" type="name"
 		key="searchTabCloseButton" />
-
-	<!-- DISCLAIMER PANEL STYLE-->
-	<style id="disclaimerFramePanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="41 41 41 41"
-				path="/images/login/disclaimerframe.png" />
-		</state>
-	</style>
-	<bind style="disclaimerFramePanelBackgroundStyle" type="name"
-		key="disclaimerFramePanelBackground" />
-
-	<style id="disclaimerTextAreaBackgroundStyle">
-		<state>
-			<imagePainter method="viewportBackground" sourceInsets="0 0 0 0"
-				path="/images/login/disclaimerbackground.jpg" />
-		</state>
-	</style>
-	<bind style="disclaimerTextAreaBackgroundStyle" type="name"
-		key="disclaimerTextAreaBackground" />
 
 	<style id="wizardMacPanelStyle">
 		<state>
@@ -3361,15 +3288,6 @@
 	</style>
 	<bind style="buttonCenterLoginStyle" type="name" key="buttonCenterLogin" />
 		
-	<style id="invalidPasswordLoginFieldStyle">
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="passwordFieldBackground" path="/images/login/invalidTextfield34.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-		</state>
-	</style>
-	<bind style="invalidPasswordLoginFieldStyle" type="name" key="invalidpasswordLoginField[A-Za-z0-9]*" />
-
 	<style id="buttonTopLoginStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -3538,30 +3456,6 @@
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="applyButton" />
 
-	<style id="passwordTopLoginFieldStyle">
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="passwordFieldBackground"
-				path="/images/login/loginTopTextField.png" sourceInsets="0 0 0 0"
-				stretch="true" />
-		</state>
-	</style>
-	<bind style="passwordTopLoginFieldStyle" type="name"
-		key="passwordTopLoginField[A-Za-z0-9]*" />
-
-	<style id="textLoginFieldStyle">
-		<insets left="10" right="10" />
-		<state>
-			<font name="Dialog" size="18" style="PLAIN" />
-			<color value="#646464" type="TEXT_FOREGROUND" />
-			<imagePainter method="textFieldBackground"
-				path="/images/login/loginTopTextField.png" sourceInsets="0 0 0 0"
-				stretch="true" />
-		</state>
-	</style>
-	<bind style="textLoginFieldStyle" type="name"
-		key="textLoginField[A-Za-z0-9]*" />
-
 	<style id="plainFont16Gray100100100Style">
 		<state>
 			<font name="Dialog" size="16" style="PLAIN" />
@@ -3587,125 +3481,6 @@
 		</state>
 	</style>
 	<bind style="plaintFont12WhiteStyle" type="name" key="plaintFont12White" />
-
-	<style id="serverDownPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/serverDownPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="serverDownPanelBackgroundStyle" type="name"
-		key="serverDownPanelBackground" />
-
-	<style id="connectionErrorPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/connectionErrorPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="connectionErrorPanelBackgroundStyle" type="name"
-		key="connectionErrorPanelBackground" />
-
-	<style id="forgotPasswordPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/forgotPasswordPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="forgotPasswordPanelBackgroundStyle" type="name"
-		key="forgotPasswordPanelBackground" />
-
-	<style id="loaderPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/loaderPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="loaderPanelBackgroundStyle" type="name"
-		key="loaderPanelBackground" />
-
-	<style id="wrongEmailPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/wrongEmailPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="wrongEmailPanelBackgroundStyle" type="name"
-		key="wrongEmailPanelBackground" />
-
-	<style id="duplicateEmailPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/duplicateEmailPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="duplicateEmailPanelBackgroundStyle" type="name"
-		key="duplicateEmailPanelBackground" />
-
-	<style id="passwordSentPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/passwordSentPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="passwordSentPanelBackgroundStyle" type="name"
-		key="passwordSentPanelBackground" />
-
-	<style id="handFrame1PanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/AnimatedArmFrame01.png" />
-		</state>
-	</style>
-	<bind style="handFrame1PanelStyle" type="name" key="handFramePanel01" />
-
-	<style id="handFrame2PanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/AnimatedArmFrame02.png" />
-		</state>
-	</style>
-	<bind style="handFrame2PanelStyle" type="name" key="handFramePanel02" />
-
-	<style id="handFrame3PanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/AnimatedArmFrame03.png" />
-		</state>
-	</style>
-	<bind style="handFrame3PanelStyle" type="name" key="handFramePanel03" />
-
-	<style id="handFrame4PanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/login/AnimatedArmFrame02.png" />
-		</state>
-	</style>
-	<bind style="handFrame4PanelStyle" type="name" key="handFramePanel04" />
-
-	<style id="invalidTextField28Style">
-		<insets left="10" right="10" />
-		<state>
-			<font name="Dialog" size="18" style="PLAIN" />
-			<color value="#646464" type="TEXT_FOREGROUND" />
-			<imagePainter method="textFieldBackground" path="/images/login/invalidTextfield28.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-		</state>
-	</style>
-	<bind style="invalidTextField28Style" type="name"
-		key="invalidTextField28[A-Za-z0-9]*" />
-
-	<style id="invalidTextField34Style">
-		<insets left="10" right="10" />
-		<state>
-			<font name="Dialog" size="20" style="PLAIN" />
-			<color value="#646464" type="TEXT_FOREGROUND" />
-			<imagePainter method="textFieldBackground" path="/images/login/invalidTextfield34.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-		</state>
-	</style>
-	<bind style="invalidTextField34Style" type="name"
-		key="invalidTextField34[A-Za-z0-9]*" />
 
 	<style id="boldFont13_51_00_51Style">
 		<state>
