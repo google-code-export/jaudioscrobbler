@@ -3742,44 +3742,6 @@
 	</style>
 	<bind style="boldFont11BlackStyle" type="name" key="boldFont11Black" />
 
-	<!--
-		en_US Top Panel Login
-	-->
-	<style id="en_US_topPanelLoginStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/en_US/topPanelLogin.png" />
-		</state>
-	</style>
-	<bind style="en_US_topPanelLoginStyle" type="name" key="en_US_topPanelLogin" />
-
-	<style id="en_US_signUpPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/en_US/signUpPanel.png" />
-		</state>
-	</style>
-	<bind style="en_US_signUpPanelStyle" type="name" key="en_US_signUpPanel" />
-
-	<!--
-		sp_MX Top Panel Login
-	-->
-	<style id="es_MX_topPanelLoginStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/es_MX/topPanelLogin.png" />
-		</state>
-	</style>
-	<bind style="es_MX_topPanelLoginStyle" type="name" key="es_MX_topPanelLogin" />
-
-	<style id="es_MX_signUpPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/es_MX/signUpPanel.png" />
-		</state>
-	</style>
-	<bind style="es_MX_signUpPanelStyle" type="name" key="es_MX_signUpPanel" />
-
 	<style id="loginTextFieldStyle">
 		<insets left="10" right="10" />
 		<state>
@@ -4092,26 +4054,6 @@
 	</style>
 	<bind style="loaderPanelBackgroundStyle" type="name"
 		key="loaderPanelBackground" />
-
-
-	<style id="en_US_invalidLoginPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/en_US/invalidLoginPanel.png" />
-		</state>
-	</style>
-	<bind style="en_US_invalidLoginPanelBackgroundStyle" type="name"
-		key="en_US_invalidLoginPanelBackground" />
-
-
-	<style id="es_MX_invalidLoginPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/i18n/es_MX/invalidLoginPanel.png" />
-		</state>
-	</style>
-	<bind style="es_MX_invalidLoginPanelBackgroundStyle" type="name"
-		key="es_MX_invalidLoginPanelBackground" />
 
 	<style id="wrongEmailPanelBackgroundStyle">
 		<state>
