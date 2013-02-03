@@ -352,9 +352,6 @@
 	<imageIcon id="iconsFolderGray" path="/images/tree/TreeFolderGray.png" />
 	<imageIcon id="iconsFileGray" path="/images/tree/TreeFileGray.png" />
 
-	<imageIcon id="devicesHdIcon" path="/images/devices/hard_disk_icon.png" />
-	<defaultsProperty key="Devices.hdIcon" type="idref" value="devicesHdIcon" />
-
 	<defaultsProperty key="icons.trackWhite" type="idref"
 		value="iconsTrackIcon" />
 	<defaultsProperty key="icons.playlistWhite" type="idref"
@@ -1171,22 +1168,6 @@
 			value="alertIcon" />
 	</style>
 
-	<style id="ejectDeviceButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/devices/EjectIconPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/devices/EjectIconMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/devices/EjectIconNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="ejectDeviceButtonStyle" type="name" key="ejectDeviceButton" />
-
 	<style id="menuBarStyle">
 		<insets top="0" left="16" bottom="0" right="0" />
 		<state>
@@ -1403,43 +1384,6 @@
 	<bind style="acceptConditionsCheckBoxFocusStyle" type="name"
 		key="acceptConditionsFocusCheckBox" />
 	
-	<style id="deviceButtonStyle">
-		<insets top="1" left="1" right="3" bottom="3" />
-		<font name="Dialog" size="11" style="BOLD" />
-		<opaque value="false" />
-		<state>
-			<color value="DARK_GRAY" type="TEXT_FOREGROUND" />
-			<color value="DARK_GRAY" type="FOREGROUND" />
-		</state>
-	</style>
-	<bind style="deviceButtonStyle" type="name" key="deviceButton" />
-	<style id="collapsablePanelTopBackgroundFlatStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" path="/images/devices/DevicesTop.png"
-				sourceInsets="7 0 7 0" />
-		</state>
-	</style>
-	<bind style="collapsablePanelTopBackgroundFlatStyle" type="name"
-		key="collapsablePanelFlat" />
-
-	<style id="collapsablePanelCollapsedButtonStyle">
-		<insets top="0" left="4" right="0" bottom="0" />
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/devices/Pleca Gris Triangle Closed.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="collapsablePanelCollapsedButtonStyle" type="name"
-		key="collapsablePanelCollapsedButton" />
-	<style id="collapsablePanelExpandedButtonStyle">
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/devices/Pleca Gris Triangle Open.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="collapsablePanelExpandedButtonStyle" type="name"
-		key="collapsablePanelExpandedButton" />
 	<style id="collapsablePanelSeparatorStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -1484,16 +1428,6 @@
 	</style>
 	<bind style="feedDarkBackgroundStyle" type="name"
 		key="feedDarkBackground" />
-
-	<style id="deviceListStyle">
-		<state value="DEFAULT">
-			<color value="#E6E6E6" type="BACKGROUND" />
-		</state>
-		<state value="SELECTED">
-			<color value="#E6E6E6" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="deviceListStyle" type="name" key="deviceList" />
 
 	<!-- DOWNLOAD UPLOAD PANEL STYLE -->
 	<style id="downloadUploadPanelStyle">
@@ -1700,12 +1634,10 @@
 	<!-- Filechooser -->
 	<style id="importTrackFileChooserStyle">
 		<imageIcon id="upFolderIcon" path="/images/filechooser/up_folder.png" />
-		<imageIcon id="hardDriveViewIcon" path="/images/filechooser/hard_disk.png" />
 		<imageIcon id="folderIcon" path="/images/filechooser/Folder.png" />
 		<imageIcon id="fileIcon" path="/images/filechooser/music_file.png" />
 
 		<property key="FileChooser.upFolderIcon" value="upFolderIcon" />
-		<property key="FileView.hardDriveIcon" value="hardDriveViewIcon" />
 		<property key="FileView.fileIcon" value="fileIcon" />
 		<property key="FileView.directoryIcon" value="folderIcon" />
 	</style>
@@ -1955,35 +1887,6 @@
 	</style>
 	<bind style="BubbleRightSideStyle" type="name" key="BubbleRight" />
 
-	<!--  DEVICE ITEMS -->
-	<style id="externalDeviceNormalPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground" path="/images/library/ExternalDeviceNormal.png"
-				sourceInsets="0 0 0 0" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="externalDeviceNormalPanelStyle" type="name"
-		key="externalDeviceNormalPanel" />
-		
-	<style id="externalDeviceSelectedPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/library/ExternalDeviceSelected.png" sourceInsets="0 0 0 0" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="externalDeviceSelectedPanelStyle" type="name"
-		key="externalDeviceSelectedPanel" />
-
-
-	<!--
-		********************************************************************************
-		* Pokeball shortcut Styles
-		********************************************************************************
-	-->
 	<style id="shortcutButton_ContactListStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -2598,19 +2501,6 @@
 		</state>
 	</style>
 	<bind style="commonProgressBarStyle" type="name" key="commonProgressBar" />
-
-	<style id="deviceSilderBarStyle">
-		<property key="Slider.thumbWidth" type="Integer" value="140" />
-		<property key="Slider.thumbHeight" type="Integer" value="10" />
-		<property key="Slider.trackBorder" type="Integer" value="0" />
-		<property key="Slider.paintValue" type="Boolean" value="false" />
-		<state>
-			<object id="progresSliderPainter" class="org.jas.laf.painter.DeviceProgressBarPainter" />
-			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
-			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
-		</state>
-	</style>
-	<bind style="deviceSilderBarStyle" type="name" key="deviceSilderBar" />
 
 	<style id="bottomDownloadPanelStyle">
 		<state>
@@ -3478,45 +3368,6 @@
 	</style>
 	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
 
-	<style id="footerDevicesTopPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/devices/footerDevicesTopPanel.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="footerDevicesTopPanelStyle" type="name"
-		key="footerDevicesTopPanel" />
-
-	<style id="deviceHeaderBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/devices/deviceHeaderBackgroundPanel.png" sourceInsets="0 17 0 17" />
-		</state>
-	</style>
-	<bind style="deviceHeaderBackgroundPanelStyle" type="name"
-		key="deviceHeaderBackgroundPanel" />
-
-	<style id="deviceHeaderBackgroundPanelOverStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/devices/deviceHeaderBackgroundPanelOver.png"
-				sourceInsets="0 17 0 17" />
-		</state>
-	</style>
-	<bind style="deviceHeaderBackgroundPanelOverStyle" type="name"
-		key="deviceHeaderBackgroundPanelOver" />
-
-	<style id="highlightDevicesTreeNodeStyle">
-		<imageIcon id="highlightDevicesTreeNodeIcon" path="/images/dnd/HighlightDevicesDragOver.png" />
-		<defaultsProperty key="Tree.devices.hightlight" type="idref"
-			value="highlightDevicesTreeNodeIcon" />
-	</style>
-
-	<!--
-		**********************************************************************************
-		* Splash Window
-		**********************************************************************************
-	-->
 	<style id="splashWindowBackgroundShadowedStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -5285,15 +5136,6 @@
 	</style>
 	<bind style="socialHeaderPanelBackgroundStyle" type="name"
 		key="socialHeaderPanelBackground" />
-
-	<style id="socialFooterPanelBackgroundStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 10 0 10"
-				path="/images/social/socialFooterPanelBackground.png" />
-		</state>
-	</style>
-	<bind style="socialFooterPanelBackgroundStyle" type="name"
-		key="socialFooterPanelBackground" />
 
 	<style id="separatorSocialPanelBackgroundStyle">
 		<state>
