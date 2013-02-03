@@ -4453,33 +4453,6 @@
 	</style>
 	<bind style="MessageTextAreaStyle" type="name" key="MessageTextArea" />
 
-	<style id="hundredBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/hundred/hundredBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="hundredBackgroundPanelStyle" type="name"
-		key="hundredBackgroundPanel" />
-
-	<style id="hundredContainerBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/hundred/hundredContainerBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="hundredContainerBackgroundPanelStyle" type="name"
-		key="hundredContainerBackgroundPanel" />
-
-	<style id="hundredTableHeaderBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="8 8 8 8"
-				path="/images/hundred/hundredTableHeaderBackgroundPanel.png" />
-		</state>
-	</style>
-	<bind style="hundredTableHeaderBackgroundPanelStyle" type="name"
-		key="hundredTableHeaderBackgroundPanel" />
-
 	<style id="categoriesListStyle">
 		<insets top="0" left="0" bottom="0" right="0" />
 		<property key="List.cellHeight" type="integer" value="20" />
@@ -4510,22 +4483,6 @@
 		</state>
 	</style>
 	<bind style="categoriesListStyle" type="name" key="categoriesList" />
-
-	<style id="hundredHighlightCellStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="blue160200240" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="hundredHighlightCellStyle" type="name"
-		key="hundredHighlightCell" />
-	<style id="hundredSelectedCellStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="mailSelectedColor" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="hundredSelectedCellStyle" type="name" key="hundredSelectedCell" />
 
 	<style id="boldFont10BlackStyle">
 		<state>
