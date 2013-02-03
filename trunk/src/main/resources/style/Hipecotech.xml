@@ -665,206 +665,6 @@
 	<bind style="cancelUploadBottomButtonStyle" type="name"
 		key="cancelUploadBottomButton" />
 
-	<!--
-		**********************************************************************************
-		* Volume
-		**********************************************************************************
-	-->
-
-	<style id="volumeMuteStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeMutePressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeMuteNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="volumeMuteStyle" type="name" key="volumeMute" />
-
-	<style id="volumeMidStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeMidPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeMidNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="volumeMidStyle" type="name" key="volumeMid" />
-
-	<style id="volumeFullStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeFullPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/VolumeFullNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="volumeFullStyle" type="name" key="volumeFull" />
-
-	<!--
-		**********************************************************************************
-		* Music Player
-		**********************************************************************************
-	-->
-	<style id="rewindButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/PreviousButtonPressed.png" sourceInsets="5 5 5 5" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/PreviousButtonDisabled.png" sourceInsets="5 5 5 5" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/PreviousButtonNormal.png" sourceInsets="5 5 5 5" />
-		</state>
-	</style>
-	<bind style="rewindButtonStyle" type="name" key="rewindButton" />
-	<style id="playButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/PlayButtonPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/PlayButtonDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/PlayButtonNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="playButtonStyle" type="name" key="playButton" />
-	<style id="stopButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/StopButtonPressed.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/StopButtonNormal.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<style id="fordwardButtonStyle">
-		<font idref="defaultWhiteFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/NextButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/NextButtonDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/NextButtonNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="fordwardButtonStyle" type="name" key="forwardButton" />
-
-	<style id="repeatButtonStyle">
-		<font idref="defaultWhiteFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatPressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/player/RepeatDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="repeatButtonStyle" type="name" key="repeatButton" />
-	<style id="repeatAllButtonStyle">
-		<font idref="defaultWhiteFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatPressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/player/RepeatNormal.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="repeatAllButtonStyle" type="name" key="repeatAllButton" />
-	<style id="repeatOneButtonStyle">
-		<font idref="defaultWhiteFont" />
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatPressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/RepeatOneTrackActivated.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/player/RepeatDisabled.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/RepeatOneTrackActivated.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="repeatOneButtonStyle" type="name" key="repeatOneButton" />
-
-	<style id="shuffleButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/player/ShufflePressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/ShuffleDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/player/ShuffleDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/player/ShuffleDisabled.png" sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="shuffleButtonStyle" type="name" key="shuffleButton" />
-	<style id="shuffleButtonOnStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/player/ShufflePressed.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground" path="/images/player/ShuffleNormal.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/player/ShuffleNormal.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" path="/images/player/ShuffleNormal.png"
-				sourceInsets="1 1 1 1" />
-		</state>
-	</style>
-	<bind style="shuffleButtonOnStyle" type="name" key="shuffleButtonOn" />
-
 	<!--Define Search Buttons-->
 	<style id="lupaSearchButtonStyle">
 		<state value="PRESSED">
@@ -1006,6 +806,7 @@
 		</state>
 	</style>
 	<bind style="menuBarStyle" type="REGION" key="menuBar" />
+	
 	<style id="loginMenuBarStyle">
 		<insets top="0" left="16" bottom="0" right="0" />
 		<state>
@@ -1068,14 +869,6 @@
 		</state>
 	</style>
 	<bind style="menuAcceleratorStyle" type="REGION" key="MenuItemAccelerator" />
-
-	<style id="toolbarPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/panel/descriptionWindowBackground.png" sourceInsets="0 10 0 10" />
-		</state>
-	</style>
-	<bind style="toolbarPanelStyle" type="NAME" key="toolbarPanel" />
 
 	<style id="progresSliderStyle">
 		<property key="Slider.thumbWidth" type="Integer" value="6" />
@@ -1456,35 +1249,6 @@
 	<bind style="backgroundContentPaneStyle" type="name"
 		key="backgroundContentPane" />
 
-	<!--
-		********************************************************************************
-		* Bubble Panel Styles
-		********************************************************************************
-	-->
-	<style id="BubbleLeftSideStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/player/BubbleLeft.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="BubbleLeftSideStyle" type="name" key="BubbleLeft" />
-
-	<style id="BubbleCenterSideStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/player/BubbleCenter.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="BubbleCenterSideStyle" type="name" key="BubbleCenter" />
-
-	<style id="BubbleRightSideStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/player/BubbleRight.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="BubbleRightSideStyle" type="name" key="BubbleRight" />
-
 	<style id="shortcutButton_ContactListStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -1497,26 +1261,6 @@
 	</style>
 	<bind style="shortcutButton_ContactListStyle" type="name"
 		key="shortcutButton_ContactList" />
-
-	<style id="logoPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground" path="/images/player/LogoBackground.png"
-				sourceInsets="0 0 0 0" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="logoPanelStyle" type="Name" key="logoPanel" />
-	
-	<style id="LogoSidePanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground" path="/images/player/LogoSide.png"
-				sourceInsets="0 0 0 0" stretch="true" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="LogoSidePanelStyle" type="Name" key="logoSidePanel" />
 
 	<style id="textFieldStyle">
 		<insets left="10" right="10" />
@@ -3818,20 +3562,4 @@
     <bind style="colorD5D5D5SeparatorStyle" type="name"
         key="colorD5D5D5Separator" />
     
-    <style id="nowPlayingButtonStyle">
-        <state value="PRESSED">
-            <imagePainter method="buttonBackground"
-                path="/images/player/NowPlayingPressed.png" sourceInsets="0 0 0 0" />
-        </state>
-        <state value="DISABLED">
-            <imagePainter method="buttonBackground"
-                path="/images/player/NowPlayingDisabled.png" sourceInsets="0 0 0 0" />
-        </state>
-        <state value="ENABLED">
-            <imagePainter method="buttonBackground"
-                path="/images/player/NowPlayingNormal.png" sourceInsets="0 0 0 0" />
-        </state>
-    </style>
-    <bind style="nowPlayingButtonStyle" type="name" key="nowPlayingButton" />
-        
 </synth>
