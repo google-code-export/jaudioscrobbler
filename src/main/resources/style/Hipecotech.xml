@@ -1708,71 +1708,6 @@
 	<bind style="plainFont12_107_83_125Style" type="name"
 		key="plainFont12_107_83_125" />
 
-	<style id="wallTextAreaStyle">
-		<state>
-			<imagePainter method="viewportBackground" sourceInsets="18 18 18 18"
-				path="/images/twitter/wallTextArea.png" />
-		</state>
-	</style>
-	<bind style="wallTextAreaStyle" type="name" key="wallTextArea" />
-
-	<style id="invalidWallTextAreaStyle">
-		<state>
-			<imagePainter method="viewportBackground" sourceInsets="18 18 18 18"
-				path="/images/twitter/invalidWallTextArea.png" />
-		</state>
-	</style>
-	<bind style="invalidWallTextAreaStyle" type="name" key="invalidWallTextArea" />
-
-	<!--
-		**********************************************************************************
-		*Twitter Follow Buttons
-		**********************************************************************************
-	-->
-	<style id="followButtonStyle">
-		<state value="PRESSED">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#b4b4b4" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/followButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#662d91" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/followButtonMouseOver.png" />
-		</state>
-		<state>
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#e6e6e6" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/followButtonNormal.png" />
-		</state>
-	</style>
-	<bind style="followButtonStyle" type="name" key="followButton" />
-
-	<style id="unfollowButtonStyle">
-		<state value="PRESSED">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#b4b4b4" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/unfollowButtonPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#662d91" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/unfollowButtonMouseOver.png" />
-		</state>
-		<state>
-			<font name="DIALOG" size="10" style="PLAIN" />
-			<color type="TEXT_FOREGROUND" value="#e6e6e6" />
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/unfollowButtonNormal.png" />
-		</state>
-	</style>
-	<bind style="unfollowButtonStyle" type="name" key="unfollowButton" />
-
 	<style id="plainFont12Gray100_100_100Style">
 		<state>
 			<font name="DIALOG" size="12" style="PLAIN" />
@@ -1808,23 +1743,6 @@
 	</style>
 	<bind style="plainFont12Purple102_45_145Style" type="name"
 		key="plainFont12Purple102_45_145" />
-
-	<style id="twitterLabelStyle">
-		<state>
-			<font name="DIALOG" size="13" style="PLAIN" />
-		</state>
-	</style>
-	<bind style="twitterLabelStyle" type="name" key="twitterLabel" />
-
-	<style id="twitterInputStyle">
-		<insets left="10" right="10" />
-		<state>
-			<font name="DIALOG" size="13" style="PLAIN" />
-			<imagePainter method="textFieldBackground" path="/images/textfield/textfield.png"
-				sourceInsets="2 9 2 9" stretch="true" />
-		</state>
-	</style>
-	<bind style="twitterInputStyle" type="name" key="twitterInput" />
 
 	<style id="boldFont10_180_180_180Style">
 		<state>
@@ -1870,57 +1788,6 @@
 	</style>
 	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
 
-	<style id="twitterLoginBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/twitter/twitterLoginBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="twitterLoginBackgroundPanelStyle" type="name"
-		key="twitterLoginBackgroundPanel" />
-
-	<style id="twitterErrorBackgroundPanelStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/twitter/twitterErrorBackground.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="twitterErrorBackgroundPanelStyle" type="name"
-		key="twitterErrorBackgroundPanel" />
-
-	<style id="twitterUpdateStatusPanelStyle">
-		<opaque value="FALSE" />
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/twitter/twitterMessageBackground.png" sourceInsets="0 0 0 0"
-				stretch="true" />
-			<color idref="defaultBg" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="twitterUpdateStatusPanelStyle" type="Name"
-		key="twitterUpdateStatusPanel" />
-
-	<style id="twitterActivityButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/twitter/activityButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/twitter/activityButtonMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/twitter/activityButtonEnabled.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/twitter/activityButtonDisabled.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="twitterActivityButtonStyle" type="name"
-		key="twitterActivityButton" />
-
 	<style id="boldFont15Purple87_63_106Style">
 		<state>
 			<font name="Dialog" size="15" style="BOLD" />
@@ -1947,58 +1814,6 @@
 	</style>
 	<bind style="plainFont12Purple87_63_106Style" type="name"
 		key="plainFont12Purple87_63_106" />
-
-	<style id="twitterStatusPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterTimeLineStatusBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterStatusPanelStyle" type="name" key="twitterStatusPanel" />
-
-	<style id="twitterStatusOverPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterTimeLineStatusOverBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterStatusOverPanelStyle" type="name"
-		key="twitterStatusOverPanel" />
-
-	<style id="twitterDirectMessagePanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterDirectMessageBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterDirectMessagePanelStyle" type="name"
-		key="twitterDirectMessagePanel" />
-
-	<style id="twitterDirectMessageOverPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterDirectMessageOverBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterDirectMessageOverPanelStyle" type="name"
-		key="twitterDirectMessageOverPanel" />
-
-	<style id="twitterMentionPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterMentionBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterMentionPanelStyle" type="name" key="twitterMentionPanel" />
-
-	<style id="twitterMentionOverPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/twitter/twitterMentionOverBackground.png" />
-		</state>
-	</style>
-	<bind style="twitterMentionOverPanelStyle" type="name"
-		key="twitterMentionOverPanelStyle" />
 
 	<style id="whiteDialogBold12Style">
 		<state>
