@@ -1527,22 +1527,6 @@
 	<bind style="boldFont14Gray100_100_100Style" type="name"
 		key="boldFont14Gray100_100_100" />
 
-	<style id="wizardMacPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/wizardMacPanel.png" />
-		</state>
-	</style>
-	<bind style="wizardMacPanelStyle" type="name" key="wizardMacPanel" />
-
-	<style id="wizardWinPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/wizardWinPanel.png" />
-		</state>
-	</style>
-	<bind style="wizardWinPanelStyle" type="name" key="wizardWinPanel" />
-
 	<style id="checkButtonFont13WizardStyle">
 		<imageIcon id="activeWizardCheck" path="/images/activeWizardCheck.png" />
 		<imageIcon id="inactiveWizardCheck" path="/images/inactiveWizardCheck.png" />
@@ -1572,43 +1556,6 @@
 	</style>
 	<bind style="checkButtonFont15WizardStyle" type="name"
 		key="checkButtonFont15Wizard" />
-
-	<style id="closeButtonWizardStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/closeButtonWizardPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/closeButtonWizardOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/closeButtonWizard.png" />
-		</state>
-	</style>
-	<bind style="closeButtonWizardStyle" type="name" key="closeButtonWizard" />
-
-	<style id="importItunesButtonWizardStyle">
-		<state value="DISABLED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/itunesWizardInactive.png" />
-		</state>
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/itunesWizardPressed.png" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/itunesWizardOver.png" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground" sourceInsets="0 0 0 0"
-				path="/images/wizard/itunesWizard.png" />
-		</state>
-	</style>
-	<bind style="importItunesButtonWizardStyle" type="name"
-		key="importItunesButtonWizard" />
 
 	<style id="boldFont26WhiteStyle">
 		<state>
