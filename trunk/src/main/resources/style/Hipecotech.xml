@@ -615,24 +615,6 @@
 	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME"
 		key="boldItalicFont11Gray77_77_77" />
 
-	<style id="cancelUploadBottomButtonStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/upload/cancelUploadButtonPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="MOUSE_OVER">
-			<imagePainter method="buttonBackground"
-				path="/images/upload/cancelUploadButtonMouseOver.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state value="ENABLED">
-			<imagePainter method="buttonBackground"
-				path="/images/upload/cancelUploadButtonNormal.png" sourceInsets="0 0 0 0"
-				stretch="false" />
-		</state>
-	</style>
-	<bind style="cancelUploadBottomButtonStyle" type="name"
-		key="cancelUploadBottomButton" />
-
 	<style id="searchTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
@@ -2570,16 +2552,6 @@
 		</state>
 	</style>
 	<bind style="comboBoxTextField" type="name" key="ComboBox.textField" />
-
-	<style id="autoUpdatePopupPanelStyle">
-		<insets top="0" left="0" right="0" bottom="0" />
-		<state>
-			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
-				path="/images/update/AutoupdatePopupBackground.png" />
-		</state>
-	</style>
-	<bind style="autoUpdatePopupPanelStyle" type="name"
-		key="autoUpdatePopupPanel" />
 
 	<style id="plainFont13Gray50_50_50Style">
 		<font name="Dialog" size="13" style="PLAIN" />
