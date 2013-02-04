@@ -299,12 +299,6 @@
 	<defaultsProperty key="icons.createAccountBullet"
 		type="idref" value="createAccountBullet" />
 
-	<imageIcon id="iconsTrackIcon" path="/images/tree/iconmusic.png" />
-	<imageIcon id="iconsPlaylistIcon" path="/images/tree/iconplaylist.png" />
-	<imageIcon id="iconsFolderIcon" path="/images/tree/iconfolder.png" />
-	<imageIcon id="iconsFolderBlue" path="/images/tree/Tree.folder.png" />
-	<imageIcon id="iconsTrackBlue" path="/images/filechooser/music_file.png" />
-
 	<imageIcon id="loaderAnimationFrame1" path="/images/loader/loader0001.png" />
 	<imageIcon id="loaderAnimationFrame2" path="/images/loader/loader0002.png" />
 	<imageIcon id="loaderAnimationFrame3" path="/images/loader/loader0003.png" />
@@ -345,20 +339,6 @@
 	<imageIcon id="loaderAnimationFrame38" path="/images/loader/loader0038.png" />
 	<imageIcon id="loaderAnimationFrame39" path="/images/loader/loader0039.png" />
 	<imageIcon id="loaderAnimationFrame40" path="/images/loader/loader0040.png" />
-
-	<imageIcon id="iconsFolderGray" path="/images/tree/TreeFolderGray.png" />
-	<imageIcon id="iconsFileGray" path="/images/tree/TreeFileGray.png" />
-
-	<defaultsProperty key="icons.trackWhite" type="idref"
-		value="iconsTrackIcon" />
-	<defaultsProperty key="icons.playlistWhite" type="idref"
-		value="iconsPlaylistIcon" />
-	<defaultsProperty key="icons.folderWhite" type="idref"
-		value="iconsFolderIcon" />
-	<defaultsProperty key="icons.folderBlue" type="idref"
-		value="iconsFolderBlue" />
-	<defaultsProperty key="icons.trackBlue" type="idref"
-		value="iconsTrackBlue" />
 
 	<defaultsProperty key="icons.loaderAnimationFrame1"
 		type="idref" value="loaderAnimationFrame1" />
@@ -440,11 +420,6 @@
 		type="idref" value="loaderAnimationFrame39" />
 	<defaultsProperty key="icons.loaderAnimationFrame40"
 		type="idref" value="loaderAnimationFrame40" />
-
-	<defaultsProperty key="icons.folderGray" type="idref"
-		value="iconsFolderGray" />
-	<defaultsProperty key="icons.fileGray" type="idref"
-		value="iconsFileGray" />
 
 	<defaultsProperty key="Tree.background" type="idref"
 		value="treeBackgroundColor" />	
@@ -1187,19 +1162,6 @@
 	</style>
 	<bind style="backgroundContentPaneStyle" type="name"
 		key="backgroundContentPane" />
-
-	<style id="shortcutButton_ContactListStyle">
-		<state value="PRESSED">
-			<imagePainter method="buttonBackground"
-				path="/images/toppanel/pokeballContactsPressed.png" sourceInsets="0 0 0 0" />
-		</state>
-		<state>
-			<imagePainter method="buttonBackground"
-				path="/images/toppanel/pokeballContactsNormal.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="shortcutButton_ContactListStyle" type="name"
-		key="shortcutButton_ContactList" />
 
 	<style id="textFieldStyle">
 		<insets left="10" right="10" />
