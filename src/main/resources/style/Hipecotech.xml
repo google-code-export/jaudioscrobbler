@@ -2851,26 +2851,6 @@
 	</style>
 	<bind style="chatTextAreaStyle" type="name" key="chatTextArea" />
 
-	<style id="toolbarBackgroundPanelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/toolbar/toolbarBackgroundPanel.png" sourceInsets="16 16 16 16" />
-		</state>
-	</style>
-	<bind style="toolbarBackgroundPanelStyle" type="name"
-		key="toolbarBackgroundPanel" />
-
-	<style id="separatorToolbarPanelStyle">
-		<!--  opaque value="FALSE" />-->
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/toolbar/separatorToolbarPanel.png" sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="separatorToolbarPanelStyle" type="name"
-		key="separatorToolbarPanel" />
-
 	<style id="boldFont16_77_77_77Style">
 		<state>
 			<font name="Dialog" size="16" style="BOLD" />
