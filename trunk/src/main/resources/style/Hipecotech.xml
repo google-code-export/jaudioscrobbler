@@ -1908,17 +1908,6 @@
 	</style>
 	<bind style="separatorPanelStyle" type="name" key="separatorPanel" />
 
-	<style id="textFieldSearchInvalidStyle">
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensInvalidCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="textFieldSearchInvalidStyle" type="name"
-		key="searchTextFieldInvalid" />
-
 	<style id="twitterLoginBackgroundPanelStyle">
 		<state>
 			<imagePainter method="panelBackground"
