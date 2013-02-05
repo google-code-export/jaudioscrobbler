@@ -1884,34 +1884,6 @@
 	</style>
 	<bind style="buttonCenterLoginStyle" type="name" key="buttonCenterLogin" />
 
-	<style id="buttonTopLoginStyle">
-		<state value="PRESSED">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground"
-				path="/images/login/buttonTopLoginPressed.png" sourceInsets="9 9 9 9" />
-		</state>
-		<state value="MOUSE_OVER">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground"
-				path="/images/login/buttonTopLoginMouseOver.png" sourceInsets="9 9 9 9" />
-		</state>
-		<state value="DISABLED">
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground"
-				path="/images/login/buttonTopLoginDisabled.png" sourceInsets="9 9 9 9" />
-		</state>
-		<state>
-			<font name="Dialog" size="14" style="BOLD" />
-			<color value="#ffffff" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground"
-				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
-		</state>
-	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="buttonTopLogin" />
-
 	<style id="openButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -1938,7 +1910,7 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="openButton" />
+	<bind style="openButtonStyle" type="name" key="openButton" />
 
 	<style id="sendButtonStyle">
 		<state value="PRESSED">
@@ -1966,7 +1938,7 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="sendButton" />
+	<bind style="sendButtonStyle" type="name" key="sendButton" />
 
 	<style id="completeMetadataButtonStyle">
 		<state value="PRESSED">
@@ -1994,7 +1966,7 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="completeMetadataButton" />
+	<bind style="completeMetadataButtonStyle" type="name" key="completeMetadataButton" />
 
 	<style id="exportButtonStyle">
 		<state value="PRESSED">
@@ -2022,7 +1994,7 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="exportButton" />
+	<bind style="exportButtonStyle" type="name" key="exportButton" />
 
 	<style id="applyButtonStyle">
 		<state value="PRESSED">
@@ -2050,7 +2022,7 @@
 				path="/images/login/buttonTopLoginNormal.png" sourceInsets="9 9 9 9" />
 		</state>
 	</style>
-	<bind style="buttonTopLoginStyle" type="name" key="applyButton" />
+	<bind style="applyButtonStyle" type="name" key="applyButton" />
 
 	<style id="plainFont16Gray100100100Style">
 		<state>
