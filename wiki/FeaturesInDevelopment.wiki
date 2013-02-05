@@ -8,17 +8,11 @@ Features in development and those which are still in ready for analysis.
 === Details ===
 
 _Features in Development:_
-  * Multi-selection in rows at description Table
-  * Refactor in Description Table
-  * Video tutorials how to use JAudioScrobbler
+  * Show total tracks loaded after open action
 
 _Features in Ready Analysis:_
-  * Look & Feel
-  * Logo
+  * Windows installation package
   
 _Features ready to sign off_
-  * Expand Description table, so user can see columns widely
-  * Integrate messengine [http://code.google.com/p/messengine/]
-  * When a track doesn't have artist & title, then it wont show in description table, then we need a pop up dialog w/that information.
-  * Drag & Drop functionality adding cover art
-  * Change "&amp;", "&aacute;", "&eacute;", etc. character to written accent
+  * New Look & Feel
+  * Exit functionality added tot the main menu
