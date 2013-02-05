@@ -1024,8 +1024,7 @@
 				sourceInsets="0 0 0 0" />
 		</state>
 	</style>
-	<bind style="backgroundContentPaneStyle" type="name"
-		key="backgroundContentPane" />
+	<bind style="backgroundContentPaneStyle" type="name" key="backgroundContentPane" />
 
 	<style id="textFieldStyle">
 		<insets left="10" right="10" />
@@ -1159,93 +1158,7 @@
 		<int>77</int>
 		<int>77</int>
 	</object>
-	<defaultsProperty key="newAccount.textForegroundColor"
-		type="idref" value="newAccountTextForegroundColor" />
-
-	<style id="contactListScrollStyle">
-		<state>
-			<color type="BACKGROUND" value="#FF3333" />
-		</state>
-	</style>
-	<bind style="contactListScrollStyle" key="contactListScroll" type="name" />
-
-	<style id="joinInvitationtextFieldStyle">
-		<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		<font name="Dialog" size="12" style="PLAIN" />
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/textfield.png"
-				sourceInsets="10 10 10 10" stretch="true" />
-			<imagePainter method="textAreaBackground" path="/images/textfield/textfield.png"
-				sourceInsets="10 10 10 10" stretch="true" />
-		</state>
-	</style>
-	<bind style="joinInvitationtextFieldStyle" type="name" key="joinInvitationtextField" />
-
-	<style id="joinInvitationBoldtextFieldStyle">
-		<color value="#4D4D4D" type="TEXT_FOREGROUND" />
-		<font name="Dialog" size="12" style="BOLD" />
-		<insets left="10" right="10" />
-		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/textfield.png"
-				sourceInsets="10 10 10 10" stretch="true" />
-			<imagePainter method="textAreaBackground" path="/images/textfield/textfield.png"
-				sourceInsets="10 10 10 10" stretch="true" />
-		</state>
-	</style>
-	<bind style="joinInvitationBoldtextFieldStyle" type="name" key="joinInvitationBoldtextField" />
-
-
-	<style id="joinInvitationtextAreaStyle">
-		<font name="Dialog" size="12" style="PLAIN" />
-		<color value="#4D4D4D" type="FOREGROUND" />
-		<insets left="0" right="0" />
-		<state>
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="joinInvitationtextAreaStyle" type="name" key="joinInvitationtextArea" />
-
-	<style id="joinInvitationtextAreaDefaultStyle">
-		<insets left="0" right="0" />
-		<state>
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color value="#4D4D4D" type="FOREGROUND" />
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="joinInvitationtextAreaDefaultStyle" type="name" key="joinInvitationtextAreaDefault" />
-
-	<style id="sendContentTextAreaStyle">
-		<font name="TextArea" size="12" />
-		<insets left="0" right="0" />
-		<state>
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="sendContentTextAreaStyle" type="name" key="sendContentTextArea" />
-
-	<style id="sendContentDefaultTextAreaStyle">
-		<insets left="0" right="0" />
-		<state>
-			<font name="TextArea" size="12" />
-			<color value="#BBBBBB" type="TEXT_FOREGROUND" />
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="sendContentDefaultTextAreaStyle" type="name" key="sendContentDefaultTextArea" />
-
-	<style id="joinInvitationPanelStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/images/textfield/textfield.png"
-				sourceInsets="10 10 10 10" />
-		</state>
-	</style>
-	<bind style="joinInvitationPanelStyle" type="name" key="joinInvitationPanel" />
+	<defaultsProperty key="newAccount.textForegroundColor" type="idref" value="newAccountTextForegroundColor" />
 
 	<style id="plainFont12Gray51_51_51Style">
 		<font name="Dialog" size="12" style="PLAIN" />
@@ -1309,19 +1222,6 @@
 		</state>
 	</style>
 	<bind style="grayRoundedBorderPanelStyle" type="name" key="grayRoundedBorderPanel" />
-
-	<style id="syncMusicProgressBarStyle">
-		<property key="Slider.thumbWidth" type="Integer" value="140" />
-		<property key="Slider.thumbHeight" type="Integer" value="10" />
-		<property key="Slider.trackBorder" type="Integer" value="0" />
-		<property key="Slider.paintValue" type="Boolean" value="false" />
-		<state>
-			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBarPainter" />
-			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
-			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
-		</state>
-	</style>
-	<bind style="syncMusicProgressBarStyle" type="name" key="syncProgressBar" />
 
 	<style id="BigProgressBarStyle">
 		<property key="Slider.thumbWidth" type="Integer" value="140" />
