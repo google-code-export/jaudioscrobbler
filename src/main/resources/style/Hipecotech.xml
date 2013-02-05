@@ -534,14 +534,6 @@
 	</style>
 	<bind style="List" type="region" key="List" />
 
-	<style id="contactEmailNameStyle">
-		<state>
-			<font name="Dialog" size="12" style="BOLD" />
-			<color value="#311331" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="contactEmailNameStyle" type="NAME" key="contactEmailName" />
-
 	<style id="boldItalicFont11Gray77_77_77Style">
 		<state>
 			<font name="Dialog" size="11" style="BOLD ITALIC" />
@@ -640,8 +632,7 @@
 
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
-		<defaultsProperty key="Info.alertIcon" type="idref"
-			value="alertIcon" />
+		<defaultsProperty key="Info.alertIcon" type="idref" value="alertIcon" />
 	</style>
 
 	<style id="menuBarStyle">
@@ -799,8 +790,7 @@
 			<color value="DARK_GRAY" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Dark_GrayStyle" type="name"
-		key="plainFont11Dark_Gray" />
+	<bind style="plainFont11Dark_GrayStyle" type="name" key="plainFont11Dark_Gray" />
 
 	<style id="closeWindowButtonStyle">
 		<state>
@@ -937,43 +927,7 @@
 		<int>171</int>
 		<int>218</int>
 	</object>
-	<defaultsProperty key="contactTreeHiglightFillColor"
-		type="idref" value="contactTreeHiglightFillColor" />
-
-	<!-- ********************************************************************************** 
-		* Drawer 
-	********************************************************************************** -->
-	<style id="headerDrawerStyle">
-		<state>
-			<imagePainter method="panelBackground"
-				path="/images/alerts/DrawerHeaderPanel.png" sourceInsets="1 14 1 14" />
-		</state>
-	</style>
-	<bind style="headerDrawerStyle" type="name" key="headerDrawer" />
-
-	<style id="drawerMessageGrayStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_f5f5f5.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="drawerMessageGrayStyle" type="name" key="drawerMessageGray" />
-
-	<style id="drawerMessageWhiteStyle">
-		<state>
-			<imagePainter method="panelBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="drawerMessageWhiteStyle" type="name" key="drawerMessageWhite" />
-
-	<color id="alertDrawerGrayColor" value="#F5F5F5" />
-	<defaultsProperty key="alertDrawerGrayColor" type="idref" value="alertDrawerGrayColor" />
-
-	<color id="alertDrawerWhiteColor" value="#FFFFFF" />
-	<defaultsProperty key="alertDrawerWhiteColor" type="idref" value="alertDrawerWhiteColor" />
-
-	<!-- END OF Drawer -->
+	<defaultsProperty key="contactTreeHiglightFillColor" type="idref" value="contactTreeHiglightFillColor" />
 
 	<!-- MAIN FRAME Buttons Styles -->
 	<!--style for the close window button -->
