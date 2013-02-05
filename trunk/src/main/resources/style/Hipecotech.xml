@@ -542,17 +542,6 @@
 	</style>
 	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME" key="boldItalicFont11Gray77_77_77" />
 
-	<style id="searchTextFieldStyle">
-		<insets top="3" left="2" right="2" bottom="3" />
-		<state>
-			<imagePainter method="textFieldBackground"
-				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
-			<font idref="defaultFont" />
-			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
-		</state>
-	</style>
-	<bind style="searchTextFieldStyle" type="name" key="searchTextField" />
-
 	<style id="artistTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
@@ -562,7 +551,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="artistTextField" />
+	<bind style="artistTextFieldStyle" type="name" key="artistTextField" />
 
 	<style id="albumTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -573,7 +562,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="albumTextField" />
+	<bind style="albumTextFieldStyle" type="name" key="albumTextField" />
 
 	<style id="genreTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -584,7 +573,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="genreTextField" />
+	<bind style="genreTextFieldStyle" type="name" key="genreTextField" />
 
 	<style id="yearTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -595,7 +584,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="yearTextField" />
+	<bind style="yearTextFieldStyle" type="name" key="yearTextField" />
 
 	<style id="tracksTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -606,7 +595,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="tracksTextField" />
+	<bind style="tracksTextFieldStyle" type="name" key="tracksTextField" />
 
 	<style id="cdTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -617,7 +606,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="cdTextField" />
+	<bind style="cdTextFieldStyle" type="name" key="cdTextField" />
 
 	<style id="cdsTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
@@ -628,7 +617,7 @@
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
-	<bind style="searchTextFieldStyle" type="name" key="cdsTextField" />
+	<bind style="cdsTextFieldStyle" type="name" key="cdsTextField" />
 
 	<style id="infoAlertIcon">
 		<imageIcon id="alertIcon" path="/images/dialog/InfoTriangleIcon.png" />
@@ -1236,33 +1225,6 @@
 	</style>
 	<bind style="BigProgressBarStyle" type="name" key="bigProgressBar" />
 
-	<style id="BigGrayProgressBarStyle">
-		<property key="Slider.thumbWidth" type="Integer" value="140" />
-		<property key="Slider.thumbHeight" type="Integer" value="10" />
-		<property key="Slider.trackBorder" type="Integer" value="0" />
-		<property key="Slider.paintValue" type="Boolean" value="false" />
-		<state>
-			<object id="progresSliderPainter" class="org.jas.laf.painter.ProgressBigBarGrayPainter" />
-			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
-			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
-		</state>
-	</style>
-	<bind style="BigGrayProgressBarStyle" type="name" key="bigGrayProgressBar" />
-
-	<style id="commonProgressBarStyle">
-		<property key="Slider.thumbWidth" type="Integer" value="140" />
-		<property key="Slider.thumbHeight" type="Integer" value="10" />
-		<property key="Slider.trackBorder" type="Integer" value="0" />
-		<property key="Slider.paintValue" type="Boolean" value="false" />
-		<state>
-			<object id="progresSliderPainter"
-				class="org.jas.laf.painter.ProgressBarPainterAlwaysEnabled" />
-			<imagePainter method="sliderThumbBackground" idref="progresSliderPainter" />
-			<imagePainter method="sliderTrackBackground" idref="progresSliderPainter" />
-		</state>
-	</style>
-	<bind style="commonProgressBarStyle" type="name" key="commonProgressBar" />
-
 	<!-- Styles for the flood search. -->
 	<style id="TableSearchSelectedHeaderStyle">
 		<state>
@@ -1296,34 +1258,6 @@
 		</state>
 	</style>
 	<bind style="boldFont14Gray100_100_100Style" type="name" key="boldFont14Gray100_100_100" />
-
-	<style id="checkButtonFont13WizardStyle">
-		<imageIcon id="activeWizardCheck" path="/images/activeWizardCheck.png" />
-		<imageIcon id="inactiveWizardCheck" path="/images/inactiveWizardCheck.png" />
-		<font name="Dialog" size="13" style="PLAIN" />
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeWizardCheck" />
-			<color value="#46285A" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<property key="ToggleButton.icon" value="inactiveWizardCheck" />
-			<color value="#46285A" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="checkButtonFont13WizardStyle" type="name" key="checkButtonFont13Wizard" />
-
-	<style id="checkButtonFont15WizardStyle">
-		<font name="Dialog" size="15" style="PLAIN" />
-		<state value="SELECTED">
-			<property key="ToggleButton.icon" value="activeWizardCheck" />
-			<color value="#46285A" type="TEXT_FOREGROUND" />
-		</state>
-		<state>
-			<property key="ToggleButton.icon" value="inactiveWizardCheck" />
-			<color value="#46285A" type="TEXT_FOREGROUND" />
-		</state>
-	</style>
-	<bind style="checkButtonFont15WizardStyle" type="name" key="checkButtonFont15Wizard" />
 
 	<style id="boldFont26WhiteStyle">
 		<state>
@@ -1861,8 +1795,7 @@
 			<color idref="gray646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Gray727272Style" type="name"
-		key="plainFont11Gray727272" />
+	<bind style="plainFont11Gray727272Style" type="name" key="plainFont11Gray727272" />
 
 	<style id="plainFont11Gray77_77_77Style">
 		<state>
@@ -2234,18 +2167,6 @@
 	</style>
 	<bind style="boldItalicFont16Purple50_15_50Style" type="name" key="boldItalicFont16Purple50_15_50" />
 
-	<!-- Style to the chat window -->
-	<style id="chatTextAreaStyle">
-		<font name="Dialog" size="13" style="PLAIN" />
-		<color value="#464646" type="FOREGROUND" />
-		<insets left="0" right="0" />
-		<state>
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="chatTextAreaStyle" type="name" key="chatTextArea" />
-
 	<style id="boldFont16_77_77_77Style">
 		<state>
 			<font name="Dialog" size="16" style="BOLD" />
@@ -2318,56 +2239,6 @@
 	</style>
 	<bind style="italicFont10Gray150_150_150Style" type="name" key="italicFont10Gray150_150_150" />
 	
-	<style id="portraitWhitePanelStyle">
-		<opaque value="TRUE" />
-		<state>
-			<color idref="white255_255_255" type="BACKGROUND" />
-		</state>
-	</style>
-	<bind style="portraitWhitePanelStyle" type="name" key="portraitWhitePanel" />
-
-	<style id="MessageTextAreaStyle">
-		<font name="Dialog" size="11" style="PLAIN" />
-		<color value="#4D4D4D" type="FOREGROUND" />
-		<insets left="0" right="0" />
-		<state>
-			<imagePainter method="textAreaBackground" path="/colors/color_ffffff.png"
-				sourceInsets="0 0 0 0" />
-		</state>
-	</style>
-	<bind style="MessageTextAreaStyle" type="name" key="MessageTextArea" />
-
-	<style id="categoriesListStyle">
-		<insets top="0" left="0" bottom="0" right="0" />
-		<property key="List.cellHeight" type="integer" value="20" />
-		<property key="List.rendererUseUIBorder" type="boolean"
-			value="false" />
-		<property key="List.rendererUseListColors" type="boolean"
-			value="false" />
-		<font name="Dialog" size="12" style="PLAIN" />
-		<state value="SELECTED">
-			<font name="Dialog" size="12" style="BOLD" />
-			<color type="TEXT_FOREGROUND" value="#000000" />
-			<color idref="mailSelectedColor" type="BACKGROUND" />
-		</state>
-		<state value="ENABLED">
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color type="BACKGROUND" value="#EBF0F5" />
-			<color type="TEXT_FOREGROUND" value="#4D4D4D" />
-		</state>
-		<state value="DISABLED">
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color type="BACKGROUND" value="#EBF0F5" />
-			<color type="TEXT_FOREGROUND" value="#4D4D4D" />
-		</state>
-		<state>
-			<font name="Dialog" size="12" style="PLAIN" />
-			<color type="BACKGROUND" value="#EBF0F5" />
-			<color type="TEXT_FOREGROUND" value="#4D4D4D" />
-		</state>
-	</style>
-	<bind style="categoriesListStyle" type="name" key="categoriesList" />
-
 	<style id="boldFont10BlackStyle">
 		<state>
 			<font name="Dialog" size="10" style="BOLD" />
