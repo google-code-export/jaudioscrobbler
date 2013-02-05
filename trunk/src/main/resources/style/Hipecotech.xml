@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <synth>
-	<!--
-		********************************************************************************
-		* Default Style
-		********************************************************************************
-	-->
+	<!-- ******************************************************************************** 
+		* Default Style 
+	******************************************************************************** -->
 	<style id="defaultStyle">
 		<font id="defaultFont" name="Dialog" size="12" />
 		<font id="defaultWhiteFont" name="Dialog" size="11" style="BOLD">
@@ -293,7 +291,7 @@
 		<int>240</int>
 		<int>245</int>
 	</object>
-		
+
 	<imageIcon id="createAccountBullet" path="/images/login/createAccountBullet.png" />
 
 	<defaultsProperty key="icons.createAccountBullet"
@@ -340,98 +338,56 @@
 	<imageIcon id="loaderAnimationFrame39" path="/images/loader/loader0039.png" />
 	<imageIcon id="loaderAnimationFrame40" path="/images/loader/loader0040.png" />
 
-	<defaultsProperty key="icons.loaderAnimationFrame1"
-		type="idref" value="loaderAnimationFrame1" />
-	<defaultsProperty key="icons.loaderAnimationFrame2"
-		type="idref" value="loaderAnimationFrame2" />
-	<defaultsProperty key="icons.loaderAnimationFrame3"
-		type="idref" value="loaderAnimationFrame3" />
-	<defaultsProperty key="icons.loaderAnimationFrame4"
-		type="idref" value="loaderAnimationFrame4" />
-	<defaultsProperty key="icons.loaderAnimationFrame5"
-		type="idref" value="loaderAnimationFrame5" />
-	<defaultsProperty key="icons.loaderAnimationFrame6"
-		type="idref" value="loaderAnimationFrame6" />
-	<defaultsProperty key="icons.loaderAnimationFrame7"
-		type="idref" value="loaderAnimationFrame7" />
-	<defaultsProperty key="icons.loaderAnimationFrame8"
-		type="idref" value="loaderAnimationFrame8" />
-	<defaultsProperty key="icons.loaderAnimationFrame9"
-		type="idref" value="loaderAnimationFrame9" />
-	<defaultsProperty key="icons.loaderAnimationFrame10"
-		type="idref" value="loaderAnimationFrame10" />
-	<defaultsProperty key="icons.loaderAnimationFrame11"
-		type="idref" value="loaderAnimationFrame11" />
-	<defaultsProperty key="icons.loaderAnimationFrame12"
-		type="idref" value="loaderAnimationFrame12" />
-	<defaultsProperty key="icons.loaderAnimationFrame13"
-		type="idref" value="loaderAnimationFrame13" />
-	<defaultsProperty key="icons.loaderAnimationFrame14"
-		type="idref" value="loaderAnimationFrame14" />
-	<defaultsProperty key="icons.loaderAnimationFrame15"
-		type="idref" value="loaderAnimationFrame15" />
-	<defaultsProperty key="icons.loaderAnimationFrame16"
-		type="idref" value="loaderAnimationFrame16" />
-	<defaultsProperty key="icons.loaderAnimationFrame17"
-		type="idref" value="loaderAnimationFrame17" />
-	<defaultsProperty key="icons.loaderAnimationFrame18"
-		type="idref" value="loaderAnimationFrame18" />
-	<defaultsProperty key="icons.loaderAnimationFrame19"
-		type="idref" value="loaderAnimationFrame19" />
-	<defaultsProperty key="icons.loaderAnimationFrame20"
-		type="idref" value="loaderAnimationFrame20" />
-	<defaultsProperty key="icons.loaderAnimationFrame21"
-		type="idref" value="loaderAnimationFrame21" />
-	<defaultsProperty key="icons.loaderAnimationFrame22"
-		type="idref" value="loaderAnimationFrame22" />
-	<defaultsProperty key="icons.loaderAnimationFrame23"
-		type="idref" value="loaderAnimationFrame23" />
-	<defaultsProperty key="icons.loaderAnimationFrame24"
-		type="idref" value="loaderAnimationFrame24" />
-	<defaultsProperty key="icons.loaderAnimationFrame25"
-		type="idref" value="loaderAnimationFrame25" />
-	<defaultsProperty key="icons.loaderAnimationFrame26"
-		type="idref" value="loaderAnimationFrame26" />
-	<defaultsProperty key="icons.loaderAnimationFrame27"
-		type="idref" value="loaderAnimationFrame27" />
-	<defaultsProperty key="icons.loaderAnimationFrame28"
-		type="idref" value="loaderAnimationFrame28" />
-	<defaultsProperty key="icons.loaderAnimationFrame29"
-		type="idref" value="loaderAnimationFrame29" />
-	<defaultsProperty key="icons.loaderAnimationFrame30"
-		type="idref" value="loaderAnimationFrame30" />
-	<defaultsProperty key="icons.loaderAnimationFrame31"
-		type="idref" value="loaderAnimationFrame31" />
-	<defaultsProperty key="icons.loaderAnimationFrame32"
-		type="idref" value="loaderAnimationFrame32" />
-	<defaultsProperty key="icons.loaderAnimationFrame33"
-		type="idref" value="loaderAnimationFrame33" />
-	<defaultsProperty key="icons.loaderAnimationFrame34"
-		type="idref" value="loaderAnimationFrame34" />
-	<defaultsProperty key="icons.loaderAnimationFrame35"
-		type="idref" value="loaderAnimationFrame35" />
-	<defaultsProperty key="icons.loaderAnimationFrame36"
-		type="idref" value="loaderAnimationFrame36" />
-	<defaultsProperty key="icons.loaderAnimationFrame37"
-		type="idref" value="loaderAnimationFrame37" />
-	<defaultsProperty key="icons.loaderAnimationFrame38"
-		type="idref" value="loaderAnimationFrame38" />
-	<defaultsProperty key="icons.loaderAnimationFrame39"
-		type="idref" value="loaderAnimationFrame39" />
-	<defaultsProperty key="icons.loaderAnimationFrame40"
-		type="idref" value="loaderAnimationFrame40" />
+	<defaultsProperty key="icons.loaderAnimationFrame1" type="idref" value="loaderAnimationFrame1" />
+	<defaultsProperty key="icons.loaderAnimationFrame2" type="idref" value="loaderAnimationFrame2" />
+	<defaultsProperty key="icons.loaderAnimationFrame3" type="idref" value="loaderAnimationFrame3" />
+	<defaultsProperty key="icons.loaderAnimationFrame4" type="idref" value="loaderAnimationFrame4" />
+	<defaultsProperty key="icons.loaderAnimationFrame5" type="idref" value="loaderAnimationFrame5" />
+	<defaultsProperty key="icons.loaderAnimationFrame6" type="idref" value="loaderAnimationFrame6" />
+	<defaultsProperty key="icons.loaderAnimationFrame7" type="idref" value="loaderAnimationFrame7" />
+	<defaultsProperty key="icons.loaderAnimationFrame8" type="idref" value="loaderAnimationFrame8" />
+	<defaultsProperty key="icons.loaderAnimationFrame9" type="idref" value="loaderAnimationFrame9" />
+	<defaultsProperty key="icons.loaderAnimationFrame10" type="idref" value="loaderAnimationFrame10" />
+	<defaultsProperty key="icons.loaderAnimationFrame11" type="idref" value="loaderAnimationFrame11" />
+	<defaultsProperty key="icons.loaderAnimationFrame12" type="idref" value="loaderAnimationFrame12" />
+	<defaultsProperty key="icons.loaderAnimationFrame13" type="idref" value="loaderAnimationFrame13" />
+	<defaultsProperty key="icons.loaderAnimationFrame14" type="idref" value="loaderAnimationFrame14" />
+	<defaultsProperty key="icons.loaderAnimationFrame15" type="idref" value="loaderAnimationFrame15" />
+	<defaultsProperty key="icons.loaderAnimationFrame16" type="idref" value="loaderAnimationFrame16" />
+	<defaultsProperty key="icons.loaderAnimationFrame17" type="idref" value="loaderAnimationFrame17" />
+	<defaultsProperty key="icons.loaderAnimationFrame18" type="idref" value="loaderAnimationFrame18" />
+	<defaultsProperty key="icons.loaderAnimationFrame19" type="idref" value="loaderAnimationFrame19" />
+	<defaultsProperty key="icons.loaderAnimationFrame20" type="idref" value="loaderAnimationFrame20" />
+	<defaultsProperty key="icons.loaderAnimationFrame21" type="idref" value="loaderAnimationFrame21" />
+	<defaultsProperty key="icons.loaderAnimationFrame22" type="idref" value="loaderAnimationFrame22" />
+	<defaultsProperty key="icons.loaderAnimationFrame23" type="idref" value="loaderAnimationFrame23" />
+	<defaultsProperty key="icons.loaderAnimationFrame24" type="idref" value="loaderAnimationFrame24" />
+	<defaultsProperty key="icons.loaderAnimationFrame25" type="idref" value="loaderAnimationFrame25" />
+	<defaultsProperty key="icons.loaderAnimationFrame26" type="idref" value="loaderAnimationFrame26" />
+	<defaultsProperty key="icons.loaderAnimationFrame27" type="idref" value="loaderAnimationFrame27" />
+	<defaultsProperty key="icons.loaderAnimationFrame28" type="idref" value="loaderAnimationFrame28" />
+	<defaultsProperty key="icons.loaderAnimationFrame29" type="idref" value="loaderAnimationFrame29" />
+	<defaultsProperty key="icons.loaderAnimationFrame30" type="idref" value="loaderAnimationFrame30" />
+	<defaultsProperty key="icons.loaderAnimationFrame31" type="idref" value="loaderAnimationFrame31" />
+	<defaultsProperty key="icons.loaderAnimationFrame32" type="idref" value="loaderAnimationFrame32" />
+	<defaultsProperty key="icons.loaderAnimationFrame33" type="idref" value="loaderAnimationFrame33" />
+	<defaultsProperty key="icons.loaderAnimationFrame34" type="idref" value="loaderAnimationFrame34" />
+	<defaultsProperty key="icons.loaderAnimationFrame35" type="idref" value="loaderAnimationFrame35" />
+	<defaultsProperty key="icons.loaderAnimationFrame36" type="idref" value="loaderAnimationFrame36" />
+	<defaultsProperty key="icons.loaderAnimationFrame37" type="idref" value="loaderAnimationFrame37" />
+	<defaultsProperty key="icons.loaderAnimationFrame38" type="idref" value="loaderAnimationFrame38" />
+	<defaultsProperty key="icons.loaderAnimationFrame39" type="idref" value="loaderAnimationFrame39" />
+	<defaultsProperty key="icons.loaderAnimationFrame40" type="idref" value="loaderAnimationFrame40" />
 
-	<defaultsProperty key="Tree.background" type="idref"
-		value="treeBackgroundColor" />	
-		
+	<defaultsProperty key="Tree.background" type="idref" value="treeBackgroundColor" />
+
 	<style id="boldItalicFont12Purple320f32Style">
 		<state>
 			<font name="Dialog" size="12" style="BOLD ITALIC" />
 			<color value="#320f32" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont12Purple320f32Style" type="NAME"
-		key="boldItalicFont12Purple320f32" />
+	<bind style="boldItalicFont12Purple320f32Style" type="NAME" key="boldItalicFont12Purple320f32" />
 
 	<style id="tooltip" clone="defaultStyle">
 		<insets top="2" left="10" bottom="2" right="10" />
@@ -578,26 +534,6 @@
 	</style>
 	<bind style="List" type="region" key="List" />
 
-
-	<style id="ContactListStyle">
-		<insets top="0" left="0" bottom="0" right="0" />
-		<property key="List.rendererUseUIBorder" type="boolean"
-			value="true" />
-		<property key="List.rendererUseListColors" type="boolean"
-			value="true" />
-		<state value="SELECTED">
-			<color type="TEXT_FOREGROUND" value="#000000" />
-			<color type="TEXT_BACKGROUND" value="#CCCCCC" />
-		</state>
-		<state value="ENABLED">
-			<color type="BACKGROUND" value="#e1e1e1" />
-		</state>
-		<state value="DISABLED">
-			<color type="BACKGROUND" value="#e1e1e1" />
-		</state>
-	</style>
-	<bind style="ContactListStyle" type="name" key="ContactList" />
-
 	<style id="contactEmailNameStyle">
 		<state>
 			<font name="Dialog" size="12" style="BOLD" />
@@ -612,91 +548,90 @@
 			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME"
-		key="boldItalicFont11Gray77_77_77" />
+	<bind style="boldItalicFont11Gray77_77_77Style" type="NAME" key="boldItalicFont11Gray77_77_77" />
 
 	<style id="searchTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="searchTextField" />
-	
+
 	<style id="artistTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="artistTextField" />
-	
+
 	<style id="albumTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="albumTextField" />
-	
+
 	<style id="genreTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="genreTextField" />
-	
+
 	<style id="yearTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="yearTextField" />
-	
+
 	<style id="tracksTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="tracksTextField" />
-	
+
 	<style id="cdTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
 	</style>
 	<bind style="searchTextFieldStyle" type="name" key="cdTextField" />
-	
+
 	<style id="cdsTextFieldStyle">
 		<insets top="3" left="2" right="2" bottom="3" />
 		<state>
-			<imagePainter method="textFieldBackground" path="/images/textfield/LocalSearchLensCenter.png"
-				sourceInsets="0 0 0 0" />
+			<imagePainter method="textFieldBackground"
+				path="/images/textfield/LocalSearchLensCenter.png" sourceInsets="0 0 0 0" />
 			<font idref="defaultFont" />
 			<color type="TEXT_BACKGROUND" value="#D2D2D2" />
 		</state>
@@ -717,7 +652,7 @@
 		</state>
 	</style>
 	<bind style="menuBarStyle" type="REGION" key="menuBar" />
-	
+
 	<style id="loginMenuBarStyle">
 		<insets top="0" left="16" bottom="0" right="0" />
 		<state>
@@ -796,7 +731,7 @@
 	<bind style="progresSliderStyle" type="name" key="progresSlider" />
 
 	<style id="dragIconNotAllowedStyle">
-		<!--  opaque value="FALSE" />-->
+		<!-- opaque value="FALSE" /> -->
 		<state>
 			<imagePainter method="labelBackground"
 				path="/images/dnd/drag-not-allowed-icon.png" sourceInsets="0 0 0 0" />
@@ -824,7 +759,7 @@
 		</state>
 	</style>
 	<bind style="trackIconDragStyle" type="name" key="dragTrack" />
-	
+
 	<style id="playlistIconDragStyle">
 		<state>
 			<imagePainter method="panelBackground" path="/images/dnd/drag-playlist.png"
@@ -893,8 +828,7 @@
 			<color value="#823CA5" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont23Purple130_60_165Style" type="name"
-		key="boldFont23Purple130_60_165" />
+	<bind style="boldFont23Purple130_60_165Style" type="name" key="boldFont23Purple130_60_165" />
 
 	<style id="plainFont12Purple130_60_165Style">
 		<state>
@@ -902,8 +836,7 @@
 			<color value="#823CA5" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple130_60_165Style" type="name"
-		key="plainFont12Purple130_60_165" />
+	<bind style="plainFont12Purple130_60_165Style" type="name" key="plainFont12Purple130_60_165" />
 
 	<style id="myMusicDnDPanelStyle">
 		<insets top="0" left="0" right="0" bottom="0" />
@@ -919,8 +852,7 @@
 		value="myMusicDndArrow" />
 
 	<imageIcon id="myMusicDndArrowWhite" path="/images/dnd/flechaBlanca.png" />
-	<defaultsProperty key="icons.myMusicDndArrowWhite"
-		type="idref" value="myMusicDndArrowWhite" />
+	<defaultsProperty key="icons.myMusicDndArrowWhite" type="idref" value="myMusicDndArrowWhite" />
 
 	<style id="headerBlackPanelStyle">
 		<state>
@@ -968,19 +900,19 @@
 		<insets top="3" left="15" right="15" bottom="3" />
 		<font idref="defaultFont" />
 		<state value="DISABLED">
-			<imagePainter method="buttonBackground" path="/images/button/Disabled Button.png"
-				sourceInsets="0 0 0 0" />
-			<!--<color idref="whiteFg" type="FOREGROUND" />-->
+			<imagePainter method="buttonBackground"
+				path="/images/button/Disabled Button.png" sourceInsets="0 0 0 0" />
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
 		</state>
 		<state value="ENABLED">
 			<imagePainter method="buttonBackground" path="/images/button/Gray Button.png"
 				sourceInsets="0 0 0 0" />
-			<!--<color idref="whiteFg" type="FOREGROUND" />-->
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
 		</state>
 		<state value="PRESSED">
-			<imagePainter method="buttonBackground" path="/images/button/Gray Button Pressed.png"
-				sourceInsets="0 0 0 0" />
-			<!--<color idref="whiteFg" type="FOREGROUND" />-->
+			<imagePainter method="buttonBackground"
+				path="/images/button/Gray Button Pressed.png" sourceInsets="0 0 0 0" />
+			<!--<color idref="whiteFg" type="FOREGROUND" /> -->
 			<font idref="defaultFont" />
 		</state>
 	</style>
@@ -1008,11 +940,9 @@
 	<defaultsProperty key="contactTreeHiglightFillColor"
 		type="idref" value="contactTreeHiglightFillColor" />
 
-	<!--
-		**********************************************************************************
-		* Drawer
-		**********************************************************************************
-	-->
+	<!-- ********************************************************************************** 
+		* Drawer 
+	********************************************************************************** -->
 	<style id="headerDrawerStyle">
 		<state>
 			<imagePainter method="panelBackground"
@@ -1038,17 +968,15 @@
 	<bind style="drawerMessageWhiteStyle" type="name" key="drawerMessageWhite" />
 
 	<color id="alertDrawerGrayColor" value="#F5F5F5" />
-	<defaultsProperty key="alertDrawerGrayColor" type="idref"
-		value="alertDrawerGrayColor" />
+	<defaultsProperty key="alertDrawerGrayColor" type="idref" value="alertDrawerGrayColor" />
 
 	<color id="alertDrawerWhiteColor" value="#FFFFFF" />
-	<defaultsProperty key="alertDrawerWhiteColor" type="idref"
-		value="alertDrawerWhiteColor" />
+	<defaultsProperty key="alertDrawerWhiteColor" type="idref" value="alertDrawerWhiteColor" />
 
 	<!-- END OF Drawer -->
 
 	<!-- MAIN FRAME Buttons Styles -->
-	<!--style for the close window button  -->
+	<!--style for the close window button -->
 	<style id="closeMainWindowStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground" path="/images/window/ClosePressed.png"
@@ -1068,9 +996,9 @@
 		</state>
 	</style>
 	<bind style="closeMainWindowStyle" type="name" key="closeWindowButton" />
-	<!--end style for the close window button  -->
+	<!--end style for the close window button -->
 
-	<!--style for the maximize window button  -->
+	<!--style for the maximize window button -->
 	<style id="maximizeMainWindowStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -1090,9 +1018,9 @@
 		</state>
 	</style>
 	<bind style="maximizeMainWindowStyle" type="name" key="maximizeWindowButton" />
-	<!--end style for the maximize window button  -->
+	<!--end style for the maximize window button -->
 
-	<!--style for the minimize window button  -->
+	<!--style for the minimize window button -->
 	<style id="minimizeMainWindowStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground"
@@ -1112,9 +1040,9 @@
 		</state>
 	</style>
 	<bind style="minimizeMainWindowStyle" type="name" key="minimizeWindowButton" />
-	<!--end style for the minimize window button  -->
+	<!--end style for the minimize window button -->
 
-	<!--style for the restore window button  -->
+	<!--style for the restore window button -->
 	<style id="restoreMainWindowStyle">
 		<state value="PRESSED">
 			<imagePainter method="buttonBackground" path="/images/window/RestorePressed.png"
@@ -1134,7 +1062,7 @@
 		</state>
 	</style>
 	<bind style="restoreMainWindowStyle" type="name" key="restoreWindowButton" />
-	<!--end style for the minimize window button  -->
+	<!--end style for the minimize window button -->
 
 	<style id="backgroundContentPaneStyle">
 		<state>
@@ -1202,8 +1130,8 @@
 		<state value="DISABLED">
 			<font name="Dialog" size="11" style="BOLD" />
 			<color value="#B2B2B2" type="TEXT_FOREGROUND" />
-			<imagePainter method="buttonBackground" path="/images/commons/buttonDisabled.png"
-				sourceInsets="0 7 0 7" />
+			<imagePainter method="buttonBackground"
+				path="/images/commons/buttonDisabled.png" sourceInsets="0 7 0 7" />
 		</state>
 		<state>
 			<font name="Dialog" size="11" style="BOLD" />
@@ -1270,8 +1198,7 @@
 			<color type="TEXT_FOREGROUND" idref="searchFontColor" />
 		</state>
 	</style>
-	<bind style="plainFont11_50_15_50Style" type="name"
-		key="plainFont11_50_15_50" />
+	<bind style="plainFont11_50_15_50Style" type="name" key="plainFont11_50_15_50" />
 
 	<object class="javax.swing.plaf.ColorUIResource" id="newAccountTextForegroundColor">
 		<int>77</int>
@@ -1280,7 +1207,7 @@
 	</object>
 	<defaultsProperty key="newAccount.textForegroundColor"
 		type="idref" value="newAccountTextForegroundColor" />
-	
+
 	<style id="contactListScrollStyle">
 		<state>
 			<color type="BACKGROUND" value="#FF3333" />
@@ -1299,8 +1226,7 @@
 				sourceInsets="10 10 10 10" stretch="true" />
 		</state>
 	</style>
-	<bind style="joinInvitationtextFieldStyle" type="name"
-		key="joinInvitationtextField" />
+	<bind style="joinInvitationtextFieldStyle" type="name" key="joinInvitationtextField" />
 
 	<style id="joinInvitationBoldtextFieldStyle">
 		<color value="#4D4D4D" type="TEXT_FOREGROUND" />
@@ -1313,8 +1239,7 @@
 				sourceInsets="10 10 10 10" stretch="true" />
 		</state>
 	</style>
-	<bind style="joinInvitationBoldtextFieldStyle" type="name"
-		key="joinInvitationBoldtextField" />
+	<bind style="joinInvitationBoldtextFieldStyle" type="name" key="joinInvitationBoldtextField" />
 
 
 	<style id="joinInvitationtextAreaStyle">
@@ -1326,8 +1251,7 @@
 				sourceInsets="0 0 0 0" />
 		</state>
 	</style>
-	<bind style="joinInvitationtextAreaStyle" type="name"
-		key="joinInvitationtextArea" />
+	<bind style="joinInvitationtextAreaStyle" type="name" key="joinInvitationtextArea" />
 
 	<style id="joinInvitationtextAreaDefaultStyle">
 		<insets left="0" right="0" />
@@ -1338,8 +1262,7 @@
 				sourceInsets="0 0 0 0" />
 		</state>
 	</style>
-	<bind style="joinInvitationtextAreaDefaultStyle" type="name"
-		key="joinInvitationtextAreaDefault" />
+	<bind style="joinInvitationtextAreaDefaultStyle" type="name" key="joinInvitationtextAreaDefault" />
 
 	<style id="sendContentTextAreaStyle">
 		<font name="TextArea" size="12" />
@@ -1360,8 +1283,7 @@
 				sourceInsets="0 0 0 0" />
 		</state>
 	</style>
-	<bind style="sendContentDefaultTextAreaStyle" type="name"
-		key="sendContentDefaultTextArea" />
+	<bind style="sendContentDefaultTextAreaStyle" type="name" key="sendContentDefaultTextArea" />
 
 	<style id="joinInvitationPanelStyle">
 		<state>
@@ -1376,8 +1298,7 @@
 		<color type="TEXT_FOREGROUND" value="#333333" />
 		<opaque value="FALSE" />
 	</style>
-	<bind style="plainFont12Gray51_51_51Style" type="name"
-		key="plainFont12Gray51_51_51" />
+	<bind style="plainFont12Gray51_51_51Style" type="name" key="plainFont12Gray51_51_51" />
 
 	<style id="roundedBlackTransparentBackgroundLabelStyle">
 		<insets top="5" left="5" right="5" bottom="5" />
@@ -1389,8 +1310,7 @@
 				sourceInsets="10 10 10 10" />
 		</state>
 	</style>
-	<bind style="roundedBlackTransparentBackgroundLabelStyle" type="name"
-		key="roundedBlackTransparentBackgroundLabel" />
+	<bind style="roundedBlackTransparentBackgroundLabelStyle" type="name" key="roundedBlackTransparentBackgroundLabel" />
 
 	<style id="cropPanelStyle">
 		<state>
@@ -1430,12 +1350,11 @@
 
 	<style id="grayRoundedBorderPanelStyle">
 		<state>
-			<imagePainter method="panelBackground" path="/images/dialog/backgroundGris50x50.png"
-				sourceInsets="10 10 10 10" />
+			<imagePainter method="panelBackground"
+				path="/images/dialog/backgroundGris50x50.png" sourceInsets="10 10 10 10" />
 		</state>
 	</style>
-	<bind style="grayRoundedBorderPanelStyle" type="name"
-		key="grayRoundedBorderPanel" />
+	<bind style="grayRoundedBorderPanelStyle" type="name" key="grayRoundedBorderPanel" />
 
 	<style id="syncMusicProgressBarStyle">
 		<property key="Slider.thumbWidth" type="Integer" value="140" />
@@ -1506,8 +1425,7 @@
 			<color value="#646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray100_100_100Style" type="name"
-		key="boldFont12Gray100_100_100" />
+	<bind style="boldFont12Gray100_100_100Style" type="name" key="boldFont12Gray100_100_100" />
 
 	<style id="boldFont12Gray110_110_110Style">
 		<state>
@@ -1515,8 +1433,7 @@
 			<color value="#6E6E6E" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray110_110_110Style" type="name"
-		key="boldFont12Gray110_110_110" />
+	<bind style="boldFont12Gray110_110_110Style" type="name" key="boldFont12Gray110_110_110" />
 
 	<style id="boldFont14Gray100_100_100Style">
 		<state>
@@ -1524,8 +1441,7 @@
 			<color value="#646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Gray100_100_100Style" type="name"
-		key="boldFont14Gray100_100_100" />
+	<bind style="boldFont14Gray100_100_100Style" type="name" key="boldFont14Gray100_100_100" />
 
 	<style id="checkButtonFont13WizardStyle">
 		<imageIcon id="activeWizardCheck" path="/images/activeWizardCheck.png" />
@@ -1540,8 +1456,7 @@
 			<color value="#46285A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="checkButtonFont13WizardStyle" type="name"
-		key="checkButtonFont13Wizard" />
+	<bind style="checkButtonFont13WizardStyle" type="name" key="checkButtonFont13Wizard" />
 
 	<style id="checkButtonFont15WizardStyle">
 		<font name="Dialog" size="15" style="PLAIN" />
@@ -1554,8 +1469,7 @@
 			<color value="#46285A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="checkButtonFont15WizardStyle" type="name"
-		key="checkButtonFont15Wizard" />
+	<bind style="checkButtonFont15WizardStyle" type="name" key="checkButtonFont15Wizard" />
 
 	<style id="boldFont26WhiteStyle">
 		<state>
@@ -1571,8 +1485,7 @@
 			<color value="#491949" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont15_73_25_73Style" type="NAME"
-		key="boldItalicFont15_73_25_73" />
+	<bind style="boldItalicFont15_73_25_73Style" type="NAME" key="boldItalicFont15_73_25_73" />
 
 	<style id="plainFont12_80_80_80Style">
 		<state>
@@ -1580,8 +1493,7 @@
 			<color value="#505050" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12_80_80_80Style" type="NAME"
-		key="plainFont12_80_80_80" />
+	<bind style="plainFont12_80_80_80Style" type="NAME" key="plainFont12_80_80_80" />
 
 	<style id="plainFont12_123_119_130Style">
 		<state>
@@ -1589,8 +1501,7 @@
 			<color value="#7B7782" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12_123_119_130Style" type="name"
-		key="plainFont12_123_119_130" />
+	<bind style="plainFont12_123_119_130Style" type="name" key="plainFont12_123_119_130" />
 
 	<style id="boldFont14Purple87_63_106Style">
 		<state>
@@ -1598,8 +1509,7 @@
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Purple87_63_106Style" type="name"
-		key="boldFont14Purple87_63_106" />
+	<bind style="boldFont14Purple87_63_106Style" type="name" key="boldFont14Purple87_63_106" />
 
 	<style id="plainFont14_87_63_106Style">
 		<state>
@@ -1607,17 +1517,15 @@
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont14_87_63_106Style" type="name"
-		key="plainFont14_87_63_106" />
-		
+	<bind style="plainFont14_87_63_106Style" type="name" key="plainFont14_87_63_106" />
+
 	<style id="plainFont16_87_63_106Style">
 		<state>
 			<font name="Dialog" size="16" style="BOLD" />
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont16_87_63_106Style" type="name"
-		key="plainFont16_87_63_106" />
+	<bind style="plainFont16_87_63_106Style" type="name" key="plainFont16_87_63_106" />
 
 	<style id="plainFont10_107_83_125Style">
 		<state>
@@ -1625,17 +1533,15 @@
 			<color value="#6B537D" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont10_107_83_125Style" type="name"
-		key="plainFont10_107_83_125" />
-		
+	<bind style="plainFont10_107_83_125Style" type="name" key="plainFont10_107_83_125" />
+
 	<style id="plainFont12_107_83_125Style">
 		<state>
 			<font name="Dialog" size="12" style="PLAIN" />
 			<color value="#6B537D" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12_107_83_125Style" type="name"
-		key="plainFont12_107_83_125" />
+	<bind style="plainFont12_107_83_125Style" type="name" key="plainFont12_107_83_125" />
 
 	<style id="plainFont12Gray100_100_100Style">
 		<state>
@@ -1643,8 +1549,7 @@
 			<color type="TEXT_FOREGROUND" value="#646464" />
 		</state>
 	</style>
-	<bind style="plainFont12Gray100_100_100Style" type="name"
-		key="plainFont12Gray100_100_100" />
+	<bind style="plainFont12Gray100_100_100Style" type="name" key="plainFont12Gray100_100_100" />
 
 	<style id="boldItalicFont12Gray100_100_100Style">
 		<state>
@@ -1652,8 +1557,7 @@
 			<color type="TEXT_FOREGROUND" value="#646464" />
 		</state>
 	</style>
-	<bind style="boldItalicFont12Gray100_100_100Style" type="name"
-		key="boldItalicFont12Gray100_100_100" />
+	<bind style="boldItalicFont12Gray100_100_100Style" type="name" key="boldItalicFont12Gray100_100_100" />
 
 	<style id="boldFont12Purple102_45_145Style">
 		<state>
@@ -1661,8 +1565,7 @@
 			<color type="TEXT_FOREGROUND" value="#662d91" />
 		</state>
 	</style>
-	<bind style="boldFont12Purple102_45_145Style" type="name"
-		key="boldFont12Purple102_45_145" />
+	<bind style="boldFont12Purple102_45_145Style" type="name" key="boldFont12Purple102_45_145" />
 
 	<style id="plainFont12Purple102_45_145Style">
 		<state>
@@ -1670,8 +1573,7 @@
 			<color type="TEXT_FOREGROUND" value="#662d91" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple102_45_145Style" type="name"
-		key="plainFont12Purple102_45_145" />
+	<bind style="plainFont12Purple102_45_145Style" type="name" key="plainFont12Purple102_45_145" />
 
 	<style id="boldFont10_180_180_180Style">
 		<state>
@@ -1679,8 +1581,7 @@
 			<color type="TEXT_FOREGROUND" value="#b4b4b4" />
 		</state>
 	</style>
-	<bind style="boldFont10_180_180_180Style" type="name"
-		key="boldFont10_180_180_180" />
+	<bind style="boldFont10_180_180_180Style" type="name" key="boldFont10_180_180_180" />
 
 	<style id="plainFont14Purple102_45_145Style">
 		<state>
@@ -1688,8 +1589,7 @@
 			<color value="#662D91" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont14Purple102_45_145Style" type="NAME"
-		key="plainFont14Purple102_45_145" />
+	<bind style="plainFont14Purple102_45_145Style" type="NAME" key="plainFont14Purple102_45_145" />
 
 	<style id="boldFont12Purple90_74_103Style">
 		<font name="Dialog" size="12" style="BOLD" />
@@ -1697,8 +1597,7 @@
 			<color value="#5A4A67" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Purple90_74_103Style" type="name"
-		key="boldFont12Purple90_74_103" />
+	<bind style="boldFont12Purple90_74_103Style" type="name" key="boldFont12Purple90_74_103" />
 
 	<style id="plainFont11Purple90_74_103Style">
 		<font name="Dialog" size="11" />
@@ -1706,8 +1605,7 @@
 			<color value="#5A4A67" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Purple90_74_103Style" type="name"
-		key="plainFont11Purple90_74_103" />
+	<bind style="plainFont11Purple90_74_103Style" type="name" key="plainFont11Purple90_74_103" />
 
 	<style id="separatorPanelStyle">
 		<state>
@@ -1723,8 +1621,7 @@
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont15Purple87_63_106Style" type="name"
-		key="boldFont15Purple87_63_106" />
+	<bind style="boldFont15Purple87_63_106Style" type="name" key="boldFont15Purple87_63_106" />
 
 	<style id="plainFont18Purple87_63_106Style">
 		<state>
@@ -1732,8 +1629,7 @@
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont18Purple87_63_106Style" type="name"
-		key="plainFont18Purple87_63_106" />
+	<bind style="plainFont18Purple87_63_106Style" type="name" key="plainFont18Purple87_63_106" />
 
 	<style id="plainFont12Purple87_63_106Style">
 		<state>
@@ -1741,8 +1637,7 @@
 			<color value="#573F6A" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple87_63_106Style" type="name"
-		key="plainFont12Purple87_63_106" />
+	<bind style="plainFont12Purple87_63_106Style" type="name" key="plainFont12Purple87_63_106" />
 
 	<style id="whiteDialogBold12Style">
 		<state>
@@ -1758,8 +1653,7 @@
 			<color value="#311331" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont14Purple49_19_49Style" type="name"
-		key="boldItalicFont14Purple49_19_49" />
+	<bind style="boldItalicFont14Purple49_19_49Style" type="name" key="boldItalicFont14Purple49_19_49" />
 
 	<style id="purpleDialogBold12Style">
 		<state>
@@ -1775,8 +1669,7 @@
 			<color value="#311331" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont16Purple49_19_49Style" type="name"
-		key="boldItalicFont16Purple49_19_49" />
+	<bind style="boldItalicFont16Purple49_19_49Style" type="name" key="boldItalicFont16Purple49_19_49" />
 
 	<style id="boldFont32Purple8233117Style">
 		<state>
@@ -1784,8 +1677,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont32Purple8233117Style" type="name"
-		key="boldFont32Purple8233117" />
+	<bind style="boldFont32Purple8233117Style" type="name" key="boldFont32Purple8233117" />
 
 	<style id="boldFont30Purple8233117Style">
 		<state>
@@ -1793,8 +1685,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont30Purple8233117Style" type="name"
-		key="boldFont30Purple8233117" />
+	<bind style="boldFont30Purple8233117Style" type="name" key="boldFont30Purple8233117" />
 
 	<style id="boldFont29Purple8233117Style">
 		<state>
@@ -1802,8 +1693,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont29Purple8233117Style" type="name"
-		key="boldFont29Purple8233117" />
+	<bind style="boldFont29Purple8233117Style" type="name" key="boldFont29Purple8233117" />
 
 	<style id="boldFont37Purple8233117Style">
 		<state>
@@ -1811,8 +1701,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont37Purple8233117Style" type="name"
-		key="boldFont37Purple8233117" />
+	<bind style="boldFont37Purple8233117Style" type="name" key="boldFont37Purple8233117" />
 
 	<style id="boldFont28Purple8233117Style">
 		<state>
@@ -1820,8 +1709,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont28Purple8233117Style" type="name"
-		key="boldFont28Purple8233117" />
+	<bind style="boldFont28Purple8233117Style" type="name" key="boldFont28Purple8233117" />
 
 	<style id="plainFont20Purple8030110Style">
 		<state>
@@ -1829,8 +1717,7 @@
 			<color idref="purple8030110" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont20Purple8030110Style" type="name"
-		key="plainFont20Purple8030110" />
+	<bind style="plainFont20Purple8030110Style" type="name" key="plainFont20Purple8030110" />
 
 
 	<style id="plainFont12Purple8233117Style">
@@ -1839,8 +1726,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple8233117Style" type="name"
-		key="plainFont12Purple8233117" />
+	<bind style="plainFont12Purple8233117Style" type="name" key="plainFont12Purple8233117" />
 
 	<style id="boldFont16Gray909090Style">
 		<state>
@@ -1848,8 +1734,7 @@
 			<color idref="gray909090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont16Gray909090Style" type="name"
-		key="boldFont16Gray909090" />
+	<bind style="boldFont16Gray909090Style" type="name" key="boldFont16Gray909090" />
 
 	<style id="boldFont16Purple8233117Style">
 		<state>
@@ -1857,8 +1742,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont16Purple8233117Style" type="name"
-		key="boldFont16Purple8233117" />
+	<bind style="boldFont16Purple8233117Style" type="name" key="boldFont16Purple8233117" />
 
 	<style id="boldFont16Purple704090Style">
 		<state>
@@ -1866,8 +1750,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont16Purple704090Style" type="name"
-		key="boldFont16Purple704090" />
+	<bind style="boldFont16Purple704090Style" type="name" key="boldFont16Purple704090" />
 
 	<style id="plainFont15Purple70_40_90Style">
 		<state>
@@ -1875,8 +1758,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont15Purple70_40_90Style" type="name"
-		key="plainFont15Purple70_40_90" />
+	<bind style="plainFont15Purple70_40_90Style" type="name" key="plainFont15Purple70_40_90" />
 
 	<style id="plainFont12_240_240_240Style">
 		<state>
@@ -1884,8 +1766,7 @@
 			<color idref="color_240_240_240" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12_240_240_240Style" type="name"
-		key="plainFont12_240_240_240" />
+	<bind style="plainFont12_240_240_240Style" type="name" key="plainFont12_240_240_240" />
 
 	<style id="boldFont16_240_240_240Style">
 		<state>
@@ -1893,8 +1774,7 @@
 			<color idref="color_240_240_240" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont16_240_240_240Style" type="name"
-		key="boldFont16_240_240_240" />
+	<bind style="boldFont16_240_240_240Style" type="name" key="boldFont16_240_240_240" />
 
 	<style id="plainFont16Purple704090Style">
 		<state>
@@ -1902,8 +1782,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont16Purple704090Style" type="name"
-		key="plainFont16Purple704090" />
+	<bind style="plainFont16Purple704090Style" type="name" key="plainFont16Purple704090" />
 
 	<style id="plainFont11Purple70_40_90Style">
 		<state>
@@ -1911,8 +1790,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Purple70_40_90Style" type="name"
-		key="plainFont11Purple70_40_90" />
+	<bind style="plainFont11Purple70_40_90Style" type="name" key="plainFont11Purple70_40_90" />
 
 	<style id="boldFont12Purple143_91_177Style">
 		<state>
@@ -1920,8 +1798,7 @@
 			<color idref="purple143_91_177" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Purple143_91_177Style" type="name"
-		key="boldFont12Purple143_91_177" />
+	<bind style="boldFont12Purple143_91_177Style" type="name" key="boldFont12Purple143_91_177" />
 
 	<style id="plainFont12Purple70_40_90Style">
 		<state>
@@ -1929,8 +1806,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple70_40_90Style" type="name"
-		key="plainFont12Purple70_40_90" />
+	<bind style="plainFont12Purple70_40_90Style" type="name" key="plainFont12Purple70_40_90" />
 
 	<style id="plainFont13Purple70_40_90Style">
 		<state>
@@ -1938,8 +1814,7 @@
 			<color idref="purple704090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont13Purple70_40_90Style" type="name"
-		key="plainFont13Purple70_40_90" />
+	<bind style="plainFont13Purple70_40_90Style" type="name" key="plainFont13Purple70_40_90" />
 
 	<style id="boldFont18Purple8233117Style">
 		<state>
@@ -1947,8 +1822,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont18Purple8233117Style" type="name"
-		key="boldFont18Purple8233117" />
+	<bind style="boldFont18Purple8233117Style" type="name" key="boldFont18Purple8233117" />
 
 	<style id="boldFont14Gray909090Style">
 		<state>
@@ -1956,8 +1830,7 @@
 			<color idref="gray909090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Gray909090Style" type="name"
-		key="boldFont14Gray909090" />
+	<bind style="boldFont14Gray909090Style" type="name" key="boldFont14Gray909090" />
 
 	<style id="boldFont12Gray909090Style">
 		<state>
@@ -1965,8 +1838,7 @@
 			<color idref="gray909090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray909090Style" type="name"
-		key="boldFont12Gray909090" />
+	<bind style="boldFont12Gray909090Style" type="name" key="boldFont12Gray909090" />
 
 	<style id="boldFont11Purple120_40_140Style">
 		<state>
@@ -1974,8 +1846,7 @@
 			<color idref="purple12040140" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont11Purple120_40_140Style" type="name"
-		key="boldFont11Purple120_40_140" />
+	<bind style="boldFont11Purple120_40_140Style" type="name" key="boldFont11Purple120_40_140" />
 
 	<style id="plainFont11Purple120_40_140Style">
 		<state>
@@ -1983,8 +1854,7 @@
 			<color idref="purple12040140" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Purple120_40_140Style" type="name"
-		key="plainFont11Purple120_40_140" />
+	<bind style="plainFont11Purple120_40_140Style" type="name" key="plainFont11Purple120_40_140" />
 
 	<style id="boldFont14Purple12040140Style">
 		<state>
@@ -1992,8 +1862,7 @@
 			<color idref="purple12040140" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Purple12040140Style" type="name"
-		key="boldFont14Purple12040140" />
+	<bind style="boldFont14Purple12040140Style" type="name" key="boldFont14Purple12040140" />
 
 	<style id="plainFont14Purple18030110Style">
 		<state>
@@ -2001,8 +1870,7 @@
 			<color idref="purple8030110" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont14Purple18030110Style" type="name"
-		key="plainFont14Purple18030110" />
+	<bind style="plainFont14Purple18030110Style" type="name" key="plainFont14Purple18030110" />
 
 	<style id="boldFont14Purple18030110Style">
 		<state>
@@ -2010,8 +1878,7 @@
 			<color idref="purple8030110" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Purple18030110Style" type="name"
-		key="boldFont14Purple18030110" />
+	<bind style="boldFont14Purple18030110Style" type="name" key="boldFont14Purple18030110" />
 
 	<style id="boldFont22Purple18030110Style">
 		<state>
@@ -2019,8 +1886,7 @@
 			<color idref="purple8030110" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont22Purple18030110Style" type="name"
-		key="boldFont22Purple18030110" />
+	<bind style="boldFont22Purple18030110Style" type="name" key="boldFont22Purple18030110" />
 
 	<style id="boldFont14Purple8233117Style">
 		<state>
@@ -2028,8 +1894,7 @@
 			<color idref="purple8233117" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont14Purple8233117Style" type="name"
-		key="boldFont14Purple8233117" />
+	<bind style="boldFont14Purple8233117Style" type="name" key="boldFont14Purple8233117" />
 
 	<style id="boldFont14WhiteStyle">
 		<state>
@@ -2053,8 +1918,7 @@
 			<color idref="gray909090" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="italicFont10Gray909090Style" type="name"
-		key="italicFont10Gray909090" />
+	<bind style="italicFont10Gray909090Style" type="name" key="italicFont10Gray909090" />
 
 	<style id="boldItalicFont14_51_17_41Style">
 		<state>
@@ -2062,8 +1926,7 @@
 			<color idref="color_51_17_41" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldItalicFont14_51_17_41Style" type="name"
-		key="boldItalicFont14_51_17_41" />
+	<bind style="boldItalicFont14_51_17_41Style" type="name" key="boldItalicFont14_51_17_41" />
 
 	<style id="plainFont12Purple8030110Style">
 		<state>
@@ -2071,8 +1934,7 @@
 			<color idref="purple8030110" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple8030110Style" type="name"
-		key="plainFont12Purple8030110" />
+	<bind style="plainFont12Purple8030110Style" type="name" key="plainFont12Purple8030110" />
 
 	<style id="plainFont12Purple12040140Style">
 		<state>
@@ -2080,8 +1942,7 @@
 			<color idref="purple12040140" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple12040140Style" type="name"
-		key="plainFont12Purple12040140" />
+	<bind style="plainFont12Purple12040140Style" type="name" key="plainFont12Purple12040140" />
 
 	<style id="boldFont12WhiteStyle">
 		<state>
@@ -2097,8 +1958,7 @@
 			<color idref="gray505050" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray505050Style" type="name"
-		key="boldFont12Gray505050" />
+	<bind style="boldFont12Gray505050Style" type="name" key="boldFont12Gray505050" />
 
 	<style id="boldFont12Gray646464Style">
 		<state>
@@ -2106,8 +1966,7 @@
 			<color idref="gray646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray646464Style" type="name"
-		key="boldFont12Gray646464" />
+	<bind style="boldFont12Gray646464Style" type="name" key="boldFont12Gray646464" />
 
 	<style id="boldFont11Gray646464Style">
 		<state>
@@ -2115,8 +1974,7 @@
 			<color idref="gray646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont11Gray646464Style" type="name"
-		key="boldFont11Gray646464" />
+	<bind style="boldFont11Gray646464Style" type="name" key="boldFont11Gray646464" />
 
 	<style id="boldFont11WhiteStyle">
 		<state>
@@ -2133,8 +1991,7 @@
 			<color idref="gray646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont10Gray646464Style" type="name"
-		key="plainFont10Gray646464" />
+	<bind style="plainFont10Gray646464Style" type="name" key="plainFont10Gray646464" />
 
 	<style id="boldFont11Gray727272Style">
 		<state>
@@ -2142,8 +1999,7 @@
 			<color idref="gray646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont11Gray727272Style" type="name"
-		key="boldFont11Gray727272" />
+	<bind style="boldFont11Gray727272Style" type="name" key="boldFont11Gray727272" />
 
 	<style id="plainFont11Gray727272Style">
 		<state>
@@ -2160,8 +2016,7 @@
 			<color idref="tableGridColor" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Gray77_77_77Style" type="name"
-		key="plainFont11Gray77_77_77" />
+	<bind style="plainFont11Gray77_77_77Style" type="name" key="plainFont11Gray77_77_77" />
 
 	<style id="plainFont11Gray170_170_170Style">
 		<state>
@@ -2169,8 +2024,7 @@
 			<color value="#AAAAAA" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="plainFont11Gray170_170_170Style" type="name"
-		key="plainFont11Gray170_170_170" />
+	<bind style="plainFont11Gray170_170_170Style" type="name" key="plainFont11Gray170_170_170" />
 
 	<style id="boldFont11Gray170_170_170Style">
 		<state>
@@ -2178,8 +2032,7 @@
 			<color value="#AAAAAA" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont11Gray170_170_170Style" type="name"
-		key="boldFont11Gray170_170_170" />
+	<bind style="boldFont11Gray170_170_170Style" type="name" key="boldFont11Gray170_170_170" />
 
 	<style id="plainFont11BlackStyle">
 		<state>
@@ -2205,8 +2058,7 @@
 				sourceInsets="2 9 2 9" stretch="true" />
 		</state>
 	</style>
-	<bind style="loginTextFieldStyle" type="name"
-		key="loginTextField[A-Za-z0-9]*" />
+	<bind style="loginTextFieldStyle" type="name" key="loginTextField[A-Za-z0-9]*" />
 
 	<style id="passwordLoginFieldStyle">
 		<insets left="10" right="10" />
@@ -2215,8 +2067,7 @@
 				sourceInsets="2 9 2 9" stretch="true" />
 		</state>
 	</style>
-	<bind style="passwordLoginFieldStyle" type="name"
-		key="passwordLoginField[A-Za-z0-9]*" />
+	<bind style="passwordLoginFieldStyle" type="name" key="passwordLoginField[A-Za-z0-9]*" />
 
 	<style id="buttonCenterLoginStyle">
 		<state value="PRESSED">
@@ -2245,7 +2096,7 @@
 		</state>
 	</style>
 	<bind style="buttonCenterLoginStyle" type="name" key="buttonCenterLogin" />
-		
+
 	<style id="buttonTopLoginStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2273,7 +2124,7 @@
 		</state>
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="buttonTopLogin" />
-	
+
 	<style id="openButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2301,7 +2152,7 @@
 		</state>
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="openButton" />
-	
+
 	<style id="sendButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2329,7 +2180,7 @@
 		</state>
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="sendButton" />
-	
+
 	<style id="completeMetadataButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2357,7 +2208,7 @@
 		</state>
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="completeMetadataButton" />
-	
+
 	<style id="exportButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2385,7 +2236,7 @@
 		</state>
 	</style>
 	<bind style="buttonTopLoginStyle" type="name" key="exportButton" />
-	
+
 	<style id="applyButtonStyle">
 		<state value="PRESSED">
 			<font name="Dialog" size="14" style="BOLD" />
@@ -2447,15 +2298,14 @@
 		</state>
 	</style>
 	<bind style="boldFont13_51_00_51Style" type="name" key="boldFont13_51_00_51" />
-	
+
 	<style id="boldFont12_100_45_145Style">
 		<state>
 			<font name="Dialog" size="12" style="BOLD" />
 			<color type="TEXT_FOREGROUND" value="#642D91" />
 		</state>
 	</style>
-	<bind style="boldFont12_100_45_145Style" type="name"
-		key="boldFont12_100_45_145" />
+	<bind style="boldFont12_100_45_145Style" type="name" key="boldFont12_100_45_145" />
 
 	<style id="plainFont11_51_51_51Style">
 		<state>
@@ -2463,8 +2313,7 @@
 			<color type="TEXT_FOREGROUND" idref="black515151" />
 		</state>
 	</style>
-	<bind style="plainFont11_51_51_51Style" type="name"
-		key="plainFont11_51_51_51" />
+	<bind style="plainFont11_51_51_51Style" type="name" key="plainFont11_51_51_51" />
 
 	<style id="boldFont16_50_15_50Style">
 		<state>
@@ -2480,16 +2329,15 @@
 			<color type="TEXT_FOREGROUND" value="#320F32" />
 		</state>
 	</style>
-	<bind style="plainFont12Purple50_15_50Style" type="name"
-		key="plainFont12Purple50_15_50" />
+	<bind style="plainFont12Purple50_15_50Style" type="name" key="plainFont12Purple50_15_50" />
+
 	<style id="boldFont14Purple50_15_50Style">
 		<state>
 			<font name="Dialog" size="14" style="BOLD" />
 			<color type="TEXT_FOREGROUND" value="#320F32" />
 		</state>
 	</style>
-	<bind style="boldFont14Purple50_15_50Style" type="name"
-		key="boldFont14Purple50_15_50" />
+	<bind style="boldFont14Purple50_15_50Style" type="name" key="boldFont14Purple50_15_50" />
 
 
 	<!-- The style for the list renderer of JComboBox -->
@@ -2513,8 +2361,7 @@
 		<color type="TEXT_FOREGROUND" value="#646464" />
 		<opaque value="FALSE" />
 	</style>
-	<bind style="plainFont10Gray100_100_100Style" type="name"
-		key="plainFont10Gray100_100_100" />
+	<bind style="plainFont10Gray100_100_100Style" type="name" key="plainFont10Gray100_100_100" />
 
 	<style id="plainFont10Gray120_120_120Style">
 		<state>
@@ -2523,8 +2370,7 @@
 			<opaque value="FALSE" />
 		</state>
 	</style>
-	<bind style="plainFont10Gray120_120_120Style" type="name"
-		key="plainFont10Gray120_120_120" />
+	<bind style="plainFont10Gray120_120_120Style" type="name" key="plainFont10Gray120_120_120" />
 
 	<style id="boldItalicFont16Purple50_15_50Style">
 		<state>
@@ -2532,8 +2378,7 @@
 			<color type="TEXT_FOREGROUND" value="#320F32" />
 		</state>
 	</style>
-	<bind style="boldItalicFont16Purple50_15_50Style" type="name"
-		key="boldItalicFont16Purple50_15_50" />
+	<bind style="boldItalicFont16Purple50_15_50Style" type="name" key="boldItalicFont16Purple50_15_50" />
 
 	<!-- Style to the chat window -->
 	<style id="chatTextAreaStyle">
@@ -2561,8 +2406,7 @@
 			<color value="#787878" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="italicFont11_120_120_120Style" type="NAME"
-		key="italicFont11_120_120_120" />
+	<bind style="italicFont11_120_120_120Style" type="NAME" key="italicFont11_120_120_120" />
 
 	<style id="boldFont12Gray77_77_77Style">
 		<state>
@@ -2570,8 +2414,7 @@
 			<color value="#4D4D4D" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray77_77_77Style" type="name"
-		key="boldFont12Gray77_77_77" />
+	<bind style="boldFont12Gray77_77_77Style" type="name" key="boldFont12Gray77_77_77" />
 
 	<style id="boldFont20Gray51_51_51Style">
 		<state>
@@ -2579,8 +2422,7 @@
 			<color value="#333333" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont20Gray51_51_51Style" type="name"
-		key="boldFont20Gray51_51_51" />
+	<bind style="boldFont20Gray51_51_51Style" type="name" key="boldFont20Gray51_51_51" />
 
 	<style id="boldFont20RedStyle">
 		<state>
@@ -2596,8 +2438,7 @@
 			<color value="#646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="italicFont10Gray100_100_100Style" type="name"
-		key="italicFont10Gray100_100_100" />
+	<bind style="italicFont10Gray100_100_100Style" type="name" key="italicFont10Gray100_100_100" />
 
 	<style id="italicFont12Gray100_100_100Style">
 		<state>
@@ -2605,8 +2446,7 @@
 			<color value="#646464" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="italicFont12Gray100_100_100Style" type="name"
-		key="italicFont12Gray100_100_100" />
+	<bind style="italicFont12Gray100_100_100Style" type="name" key="italicFont12Gray100_100_100" />
 
 	<style id="boldFont12Gray150_150_150Style">
 		<state>
@@ -2614,16 +2454,16 @@
 			<color value="#969696" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont12Gray150_150_150Style" type="name"
-		key="boldFont12Gray150_150_150" />
+	<bind style="boldFont12Gray150_150_150Style" type="name" key="boldFont12Gray150_150_150" />
+	
 	<style id="italicFont10Gray150_150_150Style">
 		<state>
 			<font name="Dialog" size="10" style="ITALIC" />
 			<color value="#969696" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="italicFont10Gray150_150_150Style" type="name"
-		key="italicFont10Gray150_150_150" />
+	<bind style="italicFont10Gray150_150_150Style" type="name" key="italicFont10Gray150_150_150" />
+	
 	<style id="portraitWhitePanelStyle">
 		<opaque value="TRUE" />
 		<state>
@@ -2692,24 +2532,22 @@
 			<color value="#781E8B" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont13Gray12039139Style" type="name"
-		key="boldFont13Gray12039139" />
+	<bind style="boldFont13Gray12039139Style" type="name" key="boldFont13Gray12039139" />
+	
 	<style id="boldFont11Blue17520525Style">
 		<state>
 			<font name="Dialog" size="11" style="BOLD" />
 			<color value="#AFCDE1" type="TEXT_FOREGROUND" />
 		</state>
 	</style>
-	<bind style="boldFont11Blue17520525Style" type="name"
-		key="boldFont11Blue17520525" />
+	<bind style="boldFont11Blue17520525Style" type="name" key="boldFont11Blue17520525" />
 
-	 <style id="colorD5D5D5SeparatorStyle">
-        <state>
-            <imagePainter method="panelBackground"
-                path="/colors/color_D5D5D5.png" sourceInsets="0 0 0 0" />
-        </state>
-    </style>
-    <bind style="colorD5D5D5SeparatorStyle" type="name"
-        key="colorD5D5D5Separator" />
-    
+	<style id="colorD5D5D5SeparatorStyle">
+		<state>
+			<imagePainter method="panelBackground" path="/colors/color_D5D5D5.png"
+				sourceInsets="0 0 0 0" />
+		</state>
+	</style>
+	<bind style="colorD5D5D5SeparatorStyle" type="name" key="colorD5D5D5Separator" />
+
 </synth>
