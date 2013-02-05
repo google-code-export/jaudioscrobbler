@@ -26,7 +26,7 @@ export LIB_PATH="`pwd`/System/Lib"
 
 export CP="./System:`buildClassPath $JAR_DIR`"
 
-export ALL_CLIENT_LAUNCHER="-Xmx1024m -Xms128m -Djava.library.path=$LIB_PATH -Djna.library.path=$LIB_PATH -cp $CP org.lastfm.Launcher"
+export ALL_CLIENT_LAUNCHER="-Xmx1024m -Xms128m -Djava.library.path=$LIB_PATH -Djna.library.path=$LIB_PATH -cp $CP org.jas.Launcher"
 
 if [ ! -n "$JAVA_HOME" ]; then
    echo "Please set JAVA_HOME environment variable to point to a supported Java Virtual Machine home directory"
