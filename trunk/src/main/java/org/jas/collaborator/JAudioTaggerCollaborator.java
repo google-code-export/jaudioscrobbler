@@ -200,95 +200,24 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
-package org.jas.service;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
-import org.jas.exception.InvalidId3VersionException;
-import org.jas.helper.MetadataHelper;
-import org.jas.metadata.MetadataException;
-import org.jas.metadata.MetadataReader;
-import org.jas.metadata.Mp4Reader;
-import org.jas.model.Metadata;
-import org.jas.model.Model;
-import org.jas.util.FileUtils;
-import org.jaudiotagger.audio.exceptions.CannotReadException;
-import org.jaudiotagger.audio.exceptions.InvalidAudioFrameException;
-import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
-import org.jaudiotagger.tag.TagException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-/**
- * @understands A class who know how extract metadata from files using a root directory
  */
 
-@Service
-public class MetadataService {
-	private List<Metadata> metadataList;
-	private Set<File> filesWithoutMinimumMetadata;
-	private FileUtils fileUtils = new FileUtils();
-	private Log log = LogFactory.getLog(this.getClass());
-	
-	@Autowired
-	private ControlEngineConfigurator configurator;
-	@Autowired
-	private MetadataHelper metadataHelper;
-	@Autowired
-	private ExtractService extractService;
+package org.jas.collaborator;
 
-	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
-		metadataList = new ArrayList<Metadata>();
-		filesWithoutMinimumMetadata = metadataHelper.createHashSet();
-		List<File> fileList = fileUtils.getFileList(root);
-		configurator.getControlEngine().set(Model.FILES_WITHOUT_MINIMUM_METADATA, filesWithoutMinimumMetadata, null);
-		return getMetadataList(fileList);
-	}
+import org.jaudiotagger.audio.AudioHeader;
+import org.jaudiotagger.tag.Tag;
 
-	private List<Metadata> getMetadataList(List<File> fileList) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
-			InvalidId3VersionException, MetadataException {
 
-		for (File file : fileList) {
-			log.info("Reading file: " + file.getName());
-			Metadata metadata = null;
-			if (fileUtils.isMp3File(file)) {
-				MetadataReader mp3Reader = metadataHelper.createMp3Reader();
-				mp3Reader.setControlEngine(configurator);
-				metadata = mp3Reader.getMetadata(file);
-			} else if (fileUtils.isM4aFile(file)) {
-				Mp4Reader mp4Reader = metadataHelper.createMp4Reader();
-				mp4Reader.setControlEngine(configurator);
-				metadata = mp4Reader.getMetadata(file);
-			}
+/**
+ * 
+ * @understands A class who validates tag and header from mp3
+ *
+ */
 
-			if (metadata == null) {
-				log.info(file.getAbsoluteFile() + " is not a valid Audio File");
-			} else if (StringUtils.isNotEmpty(metadata.getArtist()) && StringUtils.isNotEmpty(metadata.getTitle())) {
-				metadataList.add(metadata);
-			} else {
-				metadataList.add(extractService.extractFromFileName(metadata));
-				filesWithoutMinimumMetadata.add(file);
-			}
-		}
-		return metadataList;
+public class JAudioTaggerCollaborator {
+
+	public boolean isValid(Tag tag, AudioHeader header) {
+		return tag != null && header!= null ? true : false;
 	}
 	
-	public boolean isSameAlbum(List<Metadata> metadatas) {
-		for(int i = 0 ; i < metadatas.size() - 1  ; i++){
-			if(!metadatas.get(i).getAlbum().equals(metadatas.get(i+1).getAlbum())){
-				return false;
-			}
-		}
-		return true;
-	}
-
 }

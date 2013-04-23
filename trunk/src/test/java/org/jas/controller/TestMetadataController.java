@@ -256,8 +256,13 @@ public class TestMetadataController {
 	private ControlEngine controlEngine;
 	@Mock
 	private Metadata metadata;
+	@Mock
+	private File firstTrackFile;
+	@Mock
+	private File secondTrackFile;
 
 	private List<Metadata> metadataList = new ArrayList<Metadata>();
+
 
 	@Before
 	public void setup() throws Exception {
@@ -288,9 +293,11 @@ public class TestMetadataController {
 		setFileChooserExpectations();
 		
 		Metadata firstTrack = new Metadata();
+		firstTrack.setOrderByFile(false);
 		firstTrack.setTrackNumber("1");
 		
 		Metadata secondTrack = new Metadata();
+		secondTrack.setOrderByFile(false);
 		secondTrack.setTrackNumber("2");
 		
 		metadataList.add(secondTrack);
@@ -301,9 +308,35 @@ public class TestMetadataController {
 		assertEquals("1", metadataList.get(0).getTrackNumber());
 		assertEquals("2", metadataList.get(1).getTrackNumber());
 	}
+	
+	@Test
+	public void shouldGetAnOrderListByName() throws Exception {
+		setFileChooserExpectations();
+		when(firstTrackFile.getName()).thenReturn("B");
+		when(secondTrackFile.getName()).thenReturn("A");
+		
+		Metadata firstTrack = new Metadata();
+		firstTrack.setOrderByFile(true);
+		firstTrack.setFile(firstTrackFile);
+		firstTrack.setTrackNumber("1");
+		
+		Metadata secondTrack = new Metadata();
+		secondTrack.setOrderByFile(true);
+		secondTrack.setFile(secondTrackFile);
+		secondTrack.setTrackNumber("2");
+		
+		metadataList.add(secondTrack);
+		metadataList.add(firstTrack);
+		
+		controller.getMetadata();
+		
+		assertEquals("2", metadataList.get(0).getTrackNumber());
+		assertEquals("1", metadataList.get(1).getTrackNumber());
+	}
 
 	private void setFileChooserExpectations() throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException,
 			InvalidId3VersionException, MetadataException {
+		when(root.exists()).thenReturn(true);
 		when(fileChooser.showOpenDialog(null)).thenReturn(JFileChooser.APPROVE_OPTION);
 		when(fileChooser.getSelectedFile()).thenReturn(root);
 		when(metadataExtractor.extractMetadata(root)).thenReturn(metadataList);
@@ -339,6 +372,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnIOException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new IOException());
 		
 		controller.getMetadata();
@@ -348,6 +382,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnTagException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new TagException());
 		
 		controller.getMetadata();
@@ -357,6 +392,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnReadOnlyFileException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new ReadOnlyFileException());
 		
 		controller.getMetadata();
@@ -366,6 +402,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnInvalidAudioFrameException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidAudioFrameException(null));
 		
 		controller.getMetadata();
@@ -375,6 +412,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnInvalidId3VersionException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new InvalidId3VersionException());
 		
 		controller.getMetadata();
@@ -384,6 +422,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnInterruptedException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new InterruptedException());
 		
 		controller.getMetadata();
@@ -393,6 +432,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnCannotReadException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new CannotReadException());
 		
 		controller.getMetadata();
@@ -402,6 +442,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnMetadataException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new MetadataException(null));
 		
 		controller.getMetadata();
@@ -411,6 +452,7 @@ public class TestMetadataController {
 	
 	@Test
 	public void shouldCatchAnIllegalArgumentException() throws Exception {
+		when(root.exists()).thenReturn(true);
 		when(metadataExtractor.extractMetadata(root)).thenThrow(new IllegalArgumentException());
 		
 		controller.getMetadata();
