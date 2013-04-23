@@ -207,7 +207,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.asmatron.messengine.event.ValueEvent;
+import org.jas.collaborator.JAudioTaggerCollaborator;
 import org.jas.event.Events;
 import org.jas.helper.AudioFileHelper;
 import org.jas.helper.ReaderHelper;
@@ -232,6 +234,7 @@ public class Mp3Reader extends MetadataReader {
 	private AudioFile audioFile;
 	private AudioFileHelper audioFileHelper = new AudioFileHelper();
 	private ReaderHelper readerHelper = new ReaderHelper();
+	private JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();
 
 	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
 		try{
@@ -257,7 +260,11 @@ public class Mp3Reader extends MetadataReader {
 			}
 			tag = audioFile.getTag();
 			header = audioFile.getAudioHeader();
-			return generateMetadata(file);
+			log.info("tag: " + ToStringBuilder.reflectionToString(tag));
+			log.info("header: " + ToStringBuilder.reflectionToString(header));
+			if(jAudioTaggerCollaborator.isValid(tag, header)){
+				return generateMetadata(file);
+			}
 		}
 		return new Metadata();
 	}
