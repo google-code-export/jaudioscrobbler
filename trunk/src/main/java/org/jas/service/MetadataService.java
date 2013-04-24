@@ -217,7 +217,6 @@ import org.jas.exception.InvalidId3VersionException;
 import org.jas.helper.MetadataHelper;
 import org.jas.metadata.MetadataException;
 import org.jas.metadata.MetadataReader;
-import org.jas.metadata.Mp4Reader;
 import org.jas.model.Metadata;
 import org.jas.model.Model;
 import org.jas.util.FileUtils;
@@ -234,17 +233,22 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class MetadataService {
-	private List<Metadata> metadataList;
-	private Set<File> filesWithoutMinimumMetadata;
-	private FileUtils fileUtils = new FileUtils();
-	private Log log = LogFactory.getLog(this.getClass());
-	
+
 	@Autowired
 	private ControlEngineConfigurator configurator;
 	@Autowired
 	private MetadataHelper metadataHelper;
 	@Autowired
 	private ExtractService extractService;
+	@Autowired
+	private MetadataReader mp3Reader;
+	@Autowired
+	private MetadataReader mp4Reader;
+	
+	private List<Metadata> metadataList;
+	private Set<File> filesWithoutMinimumMetadata;
+	private FileUtils fileUtils = new FileUtils();
+	private Log log = LogFactory.getLog(this.getClass());
 
 	public List<Metadata> extractMetadata(File root) throws InterruptedException, IOException, CannotReadException, TagException, ReadOnlyFileException, InvalidAudioFrameException, InvalidId3VersionException, MetadataException {
 		metadataList = new ArrayList<Metadata>();
@@ -261,12 +265,8 @@ public class MetadataService {
 			log.info("Reading file: " + file.getName());
 			Metadata metadata = null;
 			if (fileUtils.isMp3File(file)) {
-				MetadataReader mp3Reader = metadataHelper.createMp3Reader();
-				mp3Reader.setControlEngine(configurator);
 				metadata = mp3Reader.getMetadata(file);
 			} else if (fileUtils.isM4aFile(file)) {
-				Mp4Reader mp4Reader = metadataHelper.createMp4Reader();
-				mp4Reader.setControlEngine(configurator);
 				metadata = mp4Reader.getMetadata(file);
 			}
 

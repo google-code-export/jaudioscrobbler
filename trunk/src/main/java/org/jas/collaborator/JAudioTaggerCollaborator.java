@@ -206,6 +206,7 @@ package org.jas.collaborator;
 
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.tag.Tag;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -214,6 +215,7 @@ import org.jaudiotagger.tag.Tag;
  *
  */
 
+@Service
 public class JAudioTaggerCollaborator {
 
 	public boolean isValid(Tag tag, AudioHeader header) {

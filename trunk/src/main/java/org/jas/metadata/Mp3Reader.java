@@ -225,16 +225,23 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.id3.AbstractID3v2Tag;
 import org.jaudiotagger.tag.id3.ID3v24Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @undestands This class knows how to read metadata from a mp3 file
  */
 
+@Service
 public class Mp3Reader extends MetadataReader {
+	@Autowired
+	private AudioFileHelper audioFileHelper;
+	@Autowired
+	private ReaderHelper readerHelper;
+	@Autowired
+	private JAudioTaggerCollaborator jAudioTaggerCollaborator;
+
 	private AudioFile audioFile;
-	private AudioFileHelper audioFileHelper = new AudioFileHelper();
-	private ReaderHelper readerHelper = new ReaderHelper();
-	private JAudioTaggerCollaborator jAudioTaggerCollaborator = new JAudioTaggerCollaborator();
 
 	public Metadata getMetadata(File file) throws CannotReadException, IOException, TagException, ReadOnlyFileException, MetadataException {
 		try{
