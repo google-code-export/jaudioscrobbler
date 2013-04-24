@@ -203,9 +203,11 @@
 */
 
 package org.jas.metadata;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -499,6 +501,16 @@ public class TestMp3Reader{
 		when(tag.getFirst(FieldKey.GENRE)).thenReturn(genre);
 		reader.getMetadata(file);
 		verify(readerHelper).getGenre(tag, genre);
+	}
+	
+	@Test
+	public void shouldReturnNewMetadataWhenNoTagOrNoHeader() throws Exception {
+		when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(false);
+		
+		reader.getMetadata(file);
+		
+		verify(tag, never()).getFirst(FieldKey.TITLE);
+		verify(header, never()).getTrackLength();
 	}
 	
 }
