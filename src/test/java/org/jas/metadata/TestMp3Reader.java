@@ -206,7 +206,6 @@ package org.jas.metadata;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -217,10 +216,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.asmatron.messengine.ControlEngine;
 import org.asmatron.messengine.engines.support.ControlEngineConfigurator;
 import org.asmatron.messengine.event.ValueEvent;
+import org.jas.collaborator.JAudioTaggerCollaborator;
 import org.jas.event.Events;
 import org.jas.helper.AudioFileHelper;
 import org.jas.helper.ReaderHelper;
-import org.jas.metadata.Mp3Reader;
 import org.jas.model.Metadata;
 import org.jaudiotagger.audio.AudioHeader;
 import org.jaudiotagger.audio.mp3.MP3File;
@@ -263,6 +262,8 @@ public class TestMp3Reader{
 	private ControlEngine controlEngine;
 	@Mock
 	private ReaderHelper readerHelper;
+	@Mock
+	private JAudioTaggerCollaborator jAudioTaggerCollaborator;
 	
 	@Before
 	public void setup() throws Exception {
@@ -275,7 +276,7 @@ public class TestMp3Reader{
 		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		when(header.getBitRate()).thenReturn("64");
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
-		reader.setControlEngine(configurator);
+		when(jAudioTaggerCollaborator.isValid(tag, header)).thenReturn(true);
 	}
 	
 	@Test
@@ -428,11 +429,11 @@ public class TestMp3Reader{
 	@Test
 	public void shouldGetLength() throws Exception {
 		int length = 325;
-		AudioHeader header = mock(AudioHeader.class);
 		when(header.getBitRate()).thenReturn("64");
 		when(audioFile.hasID3v2Tag()).thenReturn(true);
 		when(header.getTrackLength()).thenReturn(length);
 		when(audioFile.getAudioHeader()).thenReturn(header);
+		
 		Metadata metadata = reader.getMetadata(file);
 		
 		assertEquals(length, metadata.getLength());

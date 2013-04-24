@@ -281,8 +281,6 @@ public class TestMetadataService {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
 		fileList = new ArrayList<File>();
-		when(metadataHelper.createMp3Reader()).thenReturn(mp3Reader);
-		when(metadataHelper.createMp4Reader()).thenReturn(mp4Reader);
 	}
 
 	@Test
@@ -294,7 +292,6 @@ public class TestMetadataService {
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
-		verify(mp3Reader).setControlEngine(configurator);
 	}
 
 	@Test
@@ -306,7 +303,6 @@ public class TestMetadataService {
 		Metadata metadata = metadatas.get(FIRST_ELEMENT);
 
 		verifyExpectations(metadatas, metadata);
-		verify(mp4Reader).setControlEngine(configurator);
 	}
 
 	@Test

@@ -225,17 +225,22 @@ import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.Tag;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.datatype.Artwork;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
  * @undestands A class who gather all common methods getting Metadata
  */
 
+@Service
 public abstract class MetadataReader {
 	private static final String NULL = "null";
 	protected Tag tag;
 	protected AudioHeader header;
 	protected Log log = LogFactory.getLog(this.getClass());
+	
+	@Autowired
 	protected ControlEngineConfigurator configurator;
 	
 	public abstract String getGenre();
@@ -362,7 +367,4 @@ public abstract class MetadataReader {
 		return metadata;
 	}
 	
-	public void setControlEngine(ControlEngineConfigurator configurator) {
-		this.configurator = configurator;
-	}
 }

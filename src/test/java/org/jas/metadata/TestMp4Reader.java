@@ -264,7 +264,6 @@ public class TestMp4Reader{
 		when(tag.getFirstArtwork()).thenReturn(artwork);
 		when(header.getBitRate()).thenReturn("64");
 		when(configurator.getControlEngine()).thenReturn(controlEngine);
-		reader.setControlEngine(configurator);
 	}
 	
 	@Test

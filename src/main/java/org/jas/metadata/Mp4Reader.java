@@ -215,14 +215,19 @@ import org.jaudiotagger.audio.exceptions.ReadOnlyFileException;
 import org.jaudiotagger.tag.FieldKey;
 import org.jaudiotagger.tag.TagException;
 import org.jaudiotagger.tag.mp4.Mp4Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * @author josdem (joseluis.delacruz@gmail.com)
  * @undestands This class knows how to read metadata from a m4a file
  */
 
+@Service
 public class Mp4Reader extends MetadataReader {
-	private AudioFileHelper audioFileHelper = new AudioFileHelper();
+	
+	@Autowired
+	private AudioFileHelper audioFileHelper;
 
 	public Metadata getMetadata(File file) throws IOException, TagException, ReadOnlyFileException, InvalidAudioFrameException, MetadataException {
 		try{
