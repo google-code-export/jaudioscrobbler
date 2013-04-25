@@ -337,7 +337,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldOpen() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			window.button(OPEN_BUTTON_NAME).click();
 			
 			verify(viewEngine).send(Actions.METADATA);
@@ -361,7 +361,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldSend() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			setSendExpectations();
 			
 			window.button(SEND_BUTTON_NAME).click();
@@ -375,7 +375,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldSendAndGetALoggedOutActionResult() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			setSendExpectations();
 			
 			window.button(SEND_BUTTON_NAME).click();
@@ -389,7 +389,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldSendAndGetASessionlessActionResult() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			setSendExpectations();
 			
 			window.button(SEND_BUTTON_NAME).click();
@@ -403,7 +403,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldSendAndGetAErrorActionResult() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			setSendExpectations();
 			
 			window.button(SEND_BUTTON_NAME).click();
@@ -430,7 +430,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldComplete() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			setMetadataExpectations();
 			
 			mainWindow.getCompleteMetadataButton().setEnabled(true);
@@ -503,7 +503,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldKnowWhenRowChanged() throws Exception {
 		// Bug FEST in Linux at KeyEvent.VK_ENTER is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 
 			mainWindow.getDescriptionTable().setEnabled(true);
@@ -780,7 +780,7 @@ public class TestMainWindow {
 	@Test
 	public void shouldExport() throws Exception {
 		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		if (Environment.isWindows()) {
 			window.button(EXPORT_BUTTON_NAME).target.setEnabled(true);
 			when(fileChooserHelper.getDirectory()).thenReturn(root);
 			when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
