@@ -663,9 +663,9 @@ public class TestFormatterService {
 	}
 	
 	@Test
-	public void shouldDetectßFormatInTitle() throws Exception {
-		String title = "Sü&szlig;stoff";
-		String expectedTitle = "Süßstoff";
+	public void shouldDetectUzligFormatInTitle() throws Exception {
+		String title = "Su&szlig;stoff";
+		String expectedTitle = "Su�stoff";
 		
 		metadata.setTitle(title);
 		
@@ -674,9 +674,9 @@ public class TestFormatterService {
 	}
 	
 	@Test
-	public void shouldDetectßFormatInArtist() throws Exception {
-		String artist = "Sü&szlig;stoff";
-		String expectedArtist = "Süßstoff";
+	public void shouldDetectUzligFormatInArtist() throws Exception {
+		String artist = "Su&szlig;stoff";
+		String expectedArtist = "Su�stoff";
 		
 		metadata.setArtist(artist);
 		
@@ -685,9 +685,9 @@ public class TestFormatterService {
 	}
 	
 	@Test
-	public void shouldDetectßFormatInAlbum() throws Exception {
-		String album = "Sü&szlig;stoff";
-		String expectedAlbum = "Süßstoff";
+	public void shouldDetectUzligFormatInAlbum() throws Exception {
+		String album = "Su&szlig;stoff";
+		String expectedAlbum = "Su�stoff";
 		
 		metadata.setAlbum(album);
 		
