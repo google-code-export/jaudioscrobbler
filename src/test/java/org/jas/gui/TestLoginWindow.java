@@ -250,8 +250,8 @@ public class TestLoginWindow {
 
 	@Test
 	public void shouldLoginByActionListener() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
-		if (!Environment.isLinux()) {
+		//Bug FEST in Linux and Mac at clickButton is not working property
+		if (Environment.isWindows()) {
 			setUsernameAndPassword();
 			window.button(SEND_BUTTON_NAME).click();
 			
