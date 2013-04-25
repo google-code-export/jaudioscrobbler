@@ -30,12 +30,12 @@ public class FormatterService {
 				|| metadata.getArtist().contains("&auml;") || metadata.getAlbum().contains("&auml;")) {
 			String title = metadata.getTitle().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
 					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö")
-					.replace("&szlig;", "ß").replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä");
+					.replace("&szlig;", "�").replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä");
 			String artist = metadata.getArtist().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
 					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&egrave;", "è").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&uuml;", "ü")
-					.replace("&ouml;", "ö").replace("&szlig;", "ß").replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä");
+					.replace("&ouml;", "ö").replace("&szlig;", "�").replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä");
 			String album = metadata.getAlbum().replace("&amp;", "&").replace("`", "'").replace("&eacute;", "é").replace("&aacute;", "á").replace("&iacute;", "í").replace("&oacute;", "ó")
-					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö").replace("&szlig;", "ß")
+					.replace("&uacute;", "ú").replace("&acute;", "'").replace("&Eacute;", "É").replace("&ecirc;", "ê").replace("&uuml;", "ü").replace("&ouml;", "ö").replace("&szlig;", "�")
 					.replace("&agrave;", "à").replace("&deg;", "°").replace("&ntilde;", "ñ").replace("&auml;", "ä");
 			metadata.setTitle(title);
 			metadata.setArtist(artist);
