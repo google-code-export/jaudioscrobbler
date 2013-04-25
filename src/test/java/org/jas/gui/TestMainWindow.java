@@ -336,7 +336,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldOpen() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			window.button(OPEN_BUTTON_NAME).click();
 			
@@ -360,7 +360,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldSend() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setSendExpectations();
 			
@@ -374,7 +374,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldSendAndGetALoggedOutActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setSendExpectations();
 			
@@ -388,7 +388,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldSendAndGetASessionlessActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setSendExpectations();
 			
@@ -402,7 +402,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldSendAndGetAErrorActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setSendExpectations();
 			
@@ -429,7 +429,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldComplete() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setMetadataExpectations();
 			
@@ -502,7 +502,7 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldKnowWhenRowChanged() throws Exception {
-		// Bug FEST in Linux at KeyEvent.VK_ENTER is not working property
+		// Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
 		if (Environment.isWindows()) {
 			when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 
@@ -779,7 +779,7 @@ public class TestMainWindow {
 	
 	@Test
 	public void shouldExport() throws Exception {
-		//Bug FEST in Linux at clickButton is not working property
+		//Bug FEST in Linux at clickButton is not working properly
 		if (Environment.isWindows()) {
 			window.button(EXPORT_BUTTON_NAME).target.setEnabled(true);
 			when(fileChooserHelper.getDirectory()).thenReturn(root);

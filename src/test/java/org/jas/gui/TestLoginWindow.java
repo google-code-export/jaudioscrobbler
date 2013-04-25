@@ -250,7 +250,7 @@ public class TestLoginWindow {
 
 	@Test
 	public void shouldLoginByActionListener() throws Exception {
-		//Bug FEST in Linux and Mac at clickButton is not working property
+		//Bug FEST in Linux and Mac at clickButton is not working properly
 		if (Environment.isWindows()) {
 			setUsernameAndPassword();
 			window.button(SEND_BUTTON_NAME).click();
@@ -266,7 +266,7 @@ public class TestLoginWindow {
 
 	@Test
 	public void shouldLoginByKeyListenerInSendButton() throws Exception {
-		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working property
+		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
 		if (!Environment.isLinux()) {
 
 			setUsernameAndPassword();
@@ -278,7 +278,7 @@ public class TestLoginWindow {
 
 	@Test
 	public void shouldLoginByKeyListenerInPasswordField() throws Exception {
-		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working property
+		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
 		if (!Environment.isLinux()) {
 			setUsernameAndPassword();
 			window.textBox(PASSWORD_TEXTFIELD_NAME).pressKey(KeyEvent.VK_ENTER);
