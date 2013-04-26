@@ -663,39 +663,6 @@ public class TestFormatterService {
 	}
 	
 	@Test
-	public void shouldDetectUzligFormatInTitle() throws Exception {
-		String title = "Su&szlig;stoff";
-		String expectedTitle = "Sußstoff";
-		
-		metadata.setTitle(title);
-		
-		assertTrue(formatter.isABadFormat(metadata));
-		assertEquals(expectedTitle , metadata.getTitle());
-	}
-	
-	@Test
-	public void shouldDetectUzligFormatInArtist() throws Exception {
-		String artist = "Su&szlig;stoff";
-		String expectedArtist = "Sußstoff";
-		
-		metadata.setArtist(artist);
-		
-		assertTrue(formatter.isABadFormat(metadata));
-		assertEquals(expectedArtist , metadata.getArtist());
-	}
-	
-	@Test
-	public void shouldDetectUzligFormatInAlbum() throws Exception {
-		String album = "Su&szlig;stoff";
-		String expectedAlbum = "Sußstoff";
-		
-		metadata.setAlbum(album);
-		
-		assertTrue(formatter.isABadFormat(metadata));
-		assertEquals(expectedAlbum , metadata.getAlbum());
-	}
-	
-	@Test
 	public void shouldDetectAGraveFormatInTitle() throws Exception {
 		String title = "D√©j&agrave; Vu";
 		String expectedTitle = "D√©j√† Vu";
