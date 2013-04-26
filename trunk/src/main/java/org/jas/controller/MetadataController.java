@@ -235,18 +235,17 @@ import org.springframework.stereotype.Controller;
 
 @Controller
 public class MetadataController {
+	private JFileChooser fileChooser = new JFileChooser();
+	private Log log = LogFactory.getLog(this.getClass());
 
 	@Autowired
 	private ControlEngineConfigurator configurator;
 	@Autowired
 	private MetadataService metadataExtractor;
-	
 	private List<Metadata> metadataList;
-	private Log log = LogFactory.getLog(this.getClass());
 
 	@ActionMethod(Actions.GET_METADATA)
 	public void getMetadata() {
-		JFileChooser fileChooser = new JFileChooser();
 		fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 		int selection = fileChooser.showOpenDialog(null);
 		if (selection == JFileChooser.APPROVE_OPTION) {
