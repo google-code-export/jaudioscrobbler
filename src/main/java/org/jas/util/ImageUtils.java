@@ -212,8 +212,6 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.ImageIcon;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.jas.ApplicationState;
@@ -225,7 +223,6 @@ import org.jas.service.ImageService;
 
 public class ImageUtils {
 	private Log log = LogFactory.getLog(this.getClass());
-	private ImageIcon imageIcon;
 	private ImageService imageHelper = new ImageService();
 	private FileUtils fileUtils = new FileUtils();
 	private static final int THREE_HUNDRED = 300;
@@ -246,16 +243,6 @@ public class ImageUtils {
 		g.drawImage(image, 0, 0, width, height, null);
 		g.dispose();
 		return resizedImage;
-	}
-
-	public ImageIcon getDefaultImage() {
-		return imageIcon == null ? getDeafaultIcon() : imageIcon;
-	}
-
-	private ImageIcon getDeafaultIcon() {
-		ImageIconBase imageIconBase = new DefaultImageIcon();
-		imageIcon = imageIconBase.getImageIcon();
-		return imageIcon;
 	}
 
 	private void write(Image bufferedImage, File file) throws IOException {

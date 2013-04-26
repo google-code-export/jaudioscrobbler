@@ -203,7 +203,6 @@
 */
 package org.jas.util;
 
-import static org.junit.Assert.assertSame;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -213,19 +212,14 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import java.io.File;
 
-import javax.swing.ImageIcon;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jas.ApplicationState;
 import org.jas.service.ImageService;
-import org.jas.util.FileUtils;
-import org.jas.util.ImageUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
 
 public class TestImageUtils {
 	private static final Integer THREE_HUNDRED = 300;
@@ -249,13 +243,6 @@ public class TestImageUtils {
 	public void setup() throws Exception {
 		MockitoAnnotations.initMocks(this);
 		when(imageHelper.readDefaultImage()).thenReturn(image);
-	}
-	
-	@Test
-	public void shouldGetSameDefaultImage() throws Exception {
-		ImageIcon defaultImage_one = imageUtils.getDefaultImage();
-		ImageIcon defaultImage_two = imageUtils.getDefaultImage();
-		assertSame(defaultImage_one, defaultImage_two);
 	}
 	
 	@Test

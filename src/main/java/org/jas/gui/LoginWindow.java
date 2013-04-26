@@ -297,7 +297,7 @@ public class LoginWindow {
 	}
 	
 	@EventMethod(Events.USER_LOGGED)
-	private void onUserLogged(){
+	public void onUserLogged(){
 		this.getFrame().dispose();
 	}
 	
