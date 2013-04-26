@@ -304,6 +304,7 @@ public class MainWindow extends JFrame {
 	private static final String STATUS_LABEL_NAME = "statusLabel";
 	private static final String IMAGE_LABEL_NAME = "imageLabelName";
 	private static final String MAIN_MENU_NAME = "mainMenuName";
+	private static final String IMAGE_PANEL_NAME = "bigDnDImagePanel";
 	
 	/**
 	 * 	Default button style
@@ -487,14 +488,10 @@ public class MainWindow extends JFrame {
 
 	private void resetStatus() {
 		log.info("Trying to reset to the default image");
-		getImagePanel().removeAll();
-		getImagePanel().add(new JLabel(imageUtils.getDefaultImage()));
 		getCompleteMetadataButton().setEnabled(true);
 		getExportButton().setEnabled(true);
 		getOpenButton().setEnabled(true);
 		getLabel().setText(ApplicationState.DONE);
-		getImagePanel().invalidate();
-		getImagePanel().revalidate();
 	}
 
 	@EventMethod(Events.TRACKS_LOADED)
@@ -729,8 +726,8 @@ public class MainWindow extends JFrame {
 	private JPanel getImagePanel() {
 		if (imagePanel == null) {
 			imagePanel = new JPanel();
+			imagePanel.setName(IMAGE_PANEL_NAME);
 			imagePanel.setBounds(IMAGE_PANEL_BOUNDS);
-			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 		}
 		return imagePanel;
 	}
@@ -988,11 +985,11 @@ public class MainWindow extends JFrame {
 			}
 			imageLabel.setText(ApplicationState.COVER_ART_FROM_FILE);
 		} else {
-			imagePanel.add(new JLabel(imageUtils.getDefaultImage()));
 			imageLabel.setText(ApplicationState.COVER_ART_DEFAULT);
 		}
 		imagePanel.invalidate();
 		imagePanel.revalidate();
+		imagePanel.repaint();
 	}
 
 	private class WriteWorker {
