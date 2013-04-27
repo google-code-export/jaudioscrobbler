@@ -236,8 +236,6 @@ import org.jas.model.MetadataAlbumValues;
 import org.jas.model.Model;
 import org.jas.observer.ObservValue;
 import org.jas.observer.Observer;
-import org.jas.util.DragImageIcon;
-import org.jas.util.ImageIconBase;
 import org.jas.util.ImageUtils;
 
 public class MetadataDialog extends AllDialog {
@@ -273,6 +271,7 @@ public class MetadataDialog extends AllDialog {
 	private static final String CDS_TEXT_FIELD = "cdsTextField";
 	
 	private static final String IMAGE_LABEL = "imageLabel";
+	private static final String IMAGE_NAME = "smallDnDImagePanel";
 	private static final String ARTIST_LABEL = "artistLabel";
 	private static final String ALBUM_LABEL = "albumLabel";
 	private static final String GENRE_LABEL = "genreLabel";
@@ -460,9 +459,8 @@ public class MetadataDialog extends AllDialog {
 	private JPanel getImagePanel() {
 		if(imagePanel == null){
 			imagePanel = new JPanel();
+			imagePanel.setName(IMAGE_NAME);
 			imagePanel.setBounds(IMAGE_BOUNDS);
-			ImageIconBase imageIconBase = new DragImageIcon();
-			imagePanel.add(new JLabel(imageIconBase.getImageIcon()));
 		}
 		return imagePanel;
 	}
