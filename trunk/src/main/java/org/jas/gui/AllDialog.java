@@ -222,9 +222,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.jas.util.CloseImageIcon;
-import org.jas.util.ImageIconBase;
-
 /**
  * @understands
  * This class decorates the dialog borders avoiding code duplication in every
@@ -355,8 +352,6 @@ public abstract class AllDialog extends JDialog {
 			exitButton.setMinimumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMaximumSize(EXIT_BUTTON_SIZE);
 			exitButton.setMnemonic(KeyEvent.VK_UNDEFINED);
-			ImageIconBase imageIconBase = new CloseImageIcon();
-			exitButton.setIcon(imageIconBase.getImageIcon());
 			exitButton.addActionListener(new CloseListener());
 		}
 		return exitButton;

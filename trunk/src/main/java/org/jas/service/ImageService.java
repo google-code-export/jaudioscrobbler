@@ -219,10 +219,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ImageService {
 
-	public Image readDefaultImage() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.DEFAULT_IMAGE));
-	}
-
 	public File createTempFile(String prefix) throws IOException {
 		return (prefix == StringUtils.EMPTY) ? File.createTempFile(ApplicationState.PREFIX, ApplicationState.IMAGE_EXT) : File.createTempFile(prefix, ApplicationState.IMAGE_EXT);
 	}
@@ -231,14 +227,6 @@ public class ImageService {
 		ImageIO.write((BufferedImage) bufferedImage, ApplicationState.IMAGE_EXT, file);
 	}
 
-	public Image readDragImage() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.DRAG_IMAGE));
-	}
-
-	public Image readCloseImage() throws MalformedURLException, IOException {
-		return ImageIO.read(new File(ApplicationState.CLOSE_IMAGE));
-	}
-	
 	public Image readImage(String imageURL) throws MalformedURLException, IOException {
 		return ImageIO.read(new URL(imageURL));
 	}

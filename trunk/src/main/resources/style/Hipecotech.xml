@@ -834,6 +834,15 @@
 		</state>
 	</style>
 	<bind style="bigDnDImageStyle" type="name" key="bigDnDImagePanel" />
+	
+	<style id="smallDnDImageStyle">
+		<insets top="0" left="0" right="0" bottom="0" />
+		<state>
+			<imagePainter method="panelBackground" sourceInsets="0 0 0 0"
+				path="/images/dnd/drag_150.png" />
+		</state>
+	</style>
+	<bind style="smallDnDImageStyle" type="name" key="smallDnDImagePanel" />
 
 	<imageIcon id="myMusicDndArrow" path="/images/dnd/flechaMorada.png" />
 	<defaultsProperty key="icons.myMusicDndArrow" type="idref"
