@@ -200,7 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.jas.gui;
 
 import static org.junit.Assert.assertEquals;
@@ -231,8 +231,6 @@ import org.fest.swing.fixture.FrameFixture;
 import org.jas.ApplicationState;
 import org.jas.action.ActionResult;
 import org.jas.action.Actions;
-import org.jas.gui.LoginWindow;
-import org.jas.gui.MainWindow;
 import org.jas.helper.DialogHelper;
 import org.jas.helper.FileChooserHelper;
 import org.jas.model.CoverArt;
@@ -242,7 +240,6 @@ import org.jas.model.Metadata;
 import org.jas.model.MetadataAlbumValues;
 import org.jas.model.Model;
 import org.jas.model.User;
-import org.jas.util.Environment;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -253,7 +250,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 public class TestMainWindow {
-	
+
 	@InjectMocks
 	private MainWindow mainWindow = new MainWindow();
 
@@ -315,7 +312,7 @@ public class TestMainWindow {
 
 	@Captor
 	private ArgumentCaptor<ResponseCallback<ActionResult>> responseCaptor;
-	
+
 	private List<Metadata> metadatas = new ArrayList<Metadata>();;
 	private Set<Metadata> metadatasWaitingForMetadata = new HashSet<Metadata>();
 	private Set<File> filesWithoutMinimumMetadata = new HashSet<File>();
@@ -328,7 +325,6 @@ public class TestMainWindow {
 		when(viewEngineConfigurator.getViewEngine()).thenReturn(viewEngine);
 		when(controlEngineConfigurator.getControlEngine()).thenReturn(controlEngine);
 		window = new FrameFixture(mainWindow);
-		window.show();
 		metadatas.add(metadata);
 		metadatasWaitingForMetadata.add(metadata);
 		when(metadata.getTitle()).thenReturn(TRACK_TITLE);
@@ -336,20 +332,17 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldOpen() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			window.button(OPEN_BUTTON_NAME).click();
-			
-			verify(viewEngine).send(Actions.METADATA);
-			assertFalse(mainWindow.getSendButton().isEnabled());
-			assertFalse(mainWindow.getCompleteMetadataButton().isEnabled());
-			assertFalse(mainWindow.getApplyButton().isEnabled());
-		}
+		window.button(OPEN_BUTTON_NAME).click();
+
+		verify(viewEngine).send(Actions.METADATA);
+		assertFalse(mainWindow.getSendButton().isEnabled());
+		assertFalse(mainWindow.getCompleteMetadataButton().isEnabled());
+		assertFalse(mainWindow.getApplyButton().isEnabled());
 	}
 
 	private void setSendExpectations() {
-		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 		mainWindow.getSendButton().setEnabled(true);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
 
 	private ResponseCallback<ActionResult> verifySendExpectations() {
@@ -360,60 +353,48 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldSend() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setSendExpectations();
-			
-			window.button(SEND_BUTTON_NAME).click();
-			
-			ResponseCallback<ActionResult> callback = verifySendExpectations();
-			callback.onResponse(ActionResult.Sent);
-			assertEquals(ActionResult.Sent, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		setSendExpectations();
+
+		window.button(SEND_BUTTON_NAME).click();
+
+		ResponseCallback<ActionResult> callback = verifySendExpectations();
+		callback.onResponse(ActionResult.Sent);
+		assertEquals(ActionResult.Sent, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
 	public void shouldSendAndGetALoggedOutActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setSendExpectations();
-			
-			window.button(SEND_BUTTON_NAME).click();
-			
-			ResponseCallback<ActionResult> callback = verifySendExpectations();
-			callback.onResponse(ActionResult.NotLogged);
-			assertEquals(ActionResult.NotLogged, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		setSendExpectations();
+
+		window.button(SEND_BUTTON_NAME).click();
+
+		ResponseCallback<ActionResult> callback = verifySendExpectations();
+		callback.onResponse(ActionResult.NotLogged);
+		assertEquals(ActionResult.NotLogged, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
 	public void shouldSendAndGetASessionlessActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setSendExpectations();
-			
-			window.button(SEND_BUTTON_NAME).click();
-			
-			ResponseCallback<ActionResult> callback = verifySendExpectations();
-			callback.onResponse(ActionResult.Sessionless);
-			assertEquals(ActionResult.Sessionless, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		setSendExpectations();
+
+		window.button(SEND_BUTTON_NAME).click();
+
+		ResponseCallback<ActionResult> callback = verifySendExpectations();
+		callback.onResponse(ActionResult.Sessionless);
+		assertEquals(ActionResult.Sessionless, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
 
 	@Test
 	public void shouldSendAndGetAErrorActionResult() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setSendExpectations();
-			
-			window.button(SEND_BUTTON_NAME).click();
-			
-			ResponseCallback<ActionResult> callback = verifySendExpectations();
-			callback.onResponse(ActionResult.Error);
-			assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		setSendExpectations();
+
+		window.button(SEND_BUTTON_NAME).click();
+
+		ResponseCallback<ActionResult> callback = verifySendExpectations();
+		callback.onResponse(ActionResult.Error);
+		assertEquals(ActionResult.Error, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-	
+
 	private void setMetadataExpectations() {
 		when(metadata.getArtist()).thenReturn(ARTIST);
 		when(metadata.getTitle()).thenReturn(TITLE);
@@ -429,41 +410,38 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldComplete() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setMetadataExpectations();
-			
-			mainWindow.getCompleteMetadataButton().setEnabled(true);
-			window.button(COMPLETE_BUTTON_NAME).click();
-			
-			verify(viewEngine).request(eq(Actions.COMPLETE_MUSICBRAINZ), eq(metadata), responseCaptor.capture());
-			ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-			callback.onResponse(ActionResult.New);
-			
-			verifyCompleteMusicbrainzAssertions();
-			
-			verify(viewEngine).request(eq(Actions.COMPLETE_FORMATTER), eq(metadata), responseCaptor.capture());
-			callback = responseCaptor.getValue();
-			callback.onResponse(ActionResult.New);
-			
-			verifyCompleteFormatterAssertions();
-			
-			verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
-			callback = responseCaptor.getValue();
-			callback.onResponse(ActionResult.New);
-			
-			verifyCompleteLastfmAssertions();
-			
-			verify(viewEngine).request(eq(Actions.COMPLETE_DEFAULT), eq(metadatas), responseCaptor.capture());
-			callback = responseCaptor.getValue();
-			callback.onResponse(ActionResult.New);
-			
-			verifyCompleteDefaultAssertions();
-			
-			verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
-			assertTrue(mainWindow.getApplyButton().isEnabled());
-			verifyButtonsAssertions();
-		}
+		setMetadataExpectations();
+
+		mainWindow.getCompleteMetadataButton().setEnabled(true);
+		window.button(COMPLETE_BUTTON_NAME).click();
+
+		verify(viewEngine).request(eq(Actions.COMPLETE_MUSICBRAINZ), eq(metadata), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.New);
+
+		verifyCompleteMusicbrainzAssertions();
+
+		verify(viewEngine).request(eq(Actions.COMPLETE_FORMATTER), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.New);
+
+		verifyCompleteFormatterAssertions();
+
+		verify(viewEngine).request(eq(Actions.COMPLETE_LAST_FM), eq(metadata), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.New);
+
+		verifyCompleteLastfmAssertions();
+
+		verify(viewEngine).request(eq(Actions.COMPLETE_DEFAULT), eq(metadatas), responseCaptor.capture());
+		callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.New);
+
+		verifyCompleteDefaultAssertions();
+
+		verify(controlEngine).set(Model.METADATA_ARTIST, metadataWithAlbum, null);
+		assertTrue(mainWindow.getApplyButton().isEnabled());
+		verifyButtonsAssertions();
 	}
 
 	private void verifyCompleteDefaultAssertions() {
@@ -492,7 +470,7 @@ public class TestMainWindow {
 		assertEquals(TOTAL_TRACKS_NUMBER, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.TOTAL_TRACKS_NUMBER_COLUMN));
 		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-	
+
 	private void verifyButtonsAssertions() {
 		assertEquals(ApplicationState.DONE, mainWindow.getLabel().getText());
 		assertTrue(mainWindow.getCompleteMetadataButton().isEnabled());
@@ -502,34 +480,31 @@ public class TestMainWindow {
 
 	@Test
 	public void shouldKnowWhenRowChanged() throws Exception {
-		// Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
-		if (Environment.isWindows()) {
-			when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 
-			mainWindow.getDescriptionTable().setEnabled(true);
-			window.robot.doubleClick(mainWindow.getDescriptionTable());
-			window.robot.enterText(ALBUM);
-			mainWindow.tableLoaded = true;
-			window.robot.pressKey(KeyEvent.VK_ENTER);
+		mainWindow.getDescriptionTable().setEnabled(true);
+		window.robot.doubleClick(mainWindow.getDescriptionTable());
+		window.robot.enterText(ALBUM);
+		mainWindow.tableLoaded = true;
+		window.robot.pressKey(KeyEvent.VK_ENTER);
 
-			assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-	
+
 	@Test
 	public void shouldRespondOnUserLogged() throws Exception {
 		StringBuilder sb = new StringBuilder();
 		sb.append(ApplicationState.LOGGED_AS);
 		sb.append(USERNAME);
-		
+
 		when(currentUser.getUsername()).thenReturn(USERNAME);
-		
+
 		mainWindow.onUserLogged(currentUser);
-		
+
 		assertEquals(sb.toString(), window.label(LOGIN_LABEL_NAME).text());
 		assertTrue(window.button(SEND_BUTTON_NAME).target.isEnabled());
 	}
-	
+
 	@Test
 	public void shouldShowDialogWhenCoverArtCorrupted() throws Exception {
 		StringBuilder sb = createStringBuilder();
@@ -537,38 +512,38 @@ public class TestMainWindow {
 		mainWindow.onCovertArtFailed(TITLE);
 		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
 	}
-	
+
 	@Test
 	public void shouldRespondAMusicDirectorySelected() throws Exception {
 		mainWindow.getDescriptionTable().setEnabled(true);
 		mainWindow.getDescriptionTable().setValueAt(ALBUM, 0, ApplicationState.ARTIST_COLUMN);
 		assertEquals(1, mainWindow.getDescriptionTable().getModel().getRowCount());
-		
+
 		mainWindow.onMusicDirectorySelected(PATH);
-		
+
 		assertEquals(ApplicationState.WORKING, window.label(STATUS_LABEL_NAME).text());
 		assertEquals(0, mainWindow.getDescriptionTable().getModel().getRowCount());
 		assertEquals(PATH, window.textBox(DIRECTORY_SELECTED_TEXTFIELD_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldLetUserKnowLoginFailed() throws Exception {
 		mainWindow.onUserLoginFailed();
 		assertEquals(ApplicationState.LOGIN_FAIL, window.label(LOGIN_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldKnowWhenMusicDirectorySelectedCanceled() throws Exception {
 		mainWindow.onMusicDirectorySelectedCancel();
 		assertTrue(window.button(OPEN_BUTTON_NAME).target.isEnabled());
 	}
-	
+
 	@Test
 	public void shouldResetstatusWhenTrackLoaded() throws Exception {
 		setControlAndViewEngineExpectations();
-		
+
 		mainWindow.onTracksLoaded();
-		
+
 		verifyResetStatus();
 	}
 
@@ -578,64 +553,64 @@ public class TestMainWindow {
 		assertTrue(window.button(OPEN_BUTTON_NAME).target.isEnabled());
 		assertEquals(ApplicationState.DONE, window.label(STATUS_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldUpdateImageWhenCoverArtAddedFromDandD() throws Exception {
 		CoverArt newCoverArt = new CoverArt(imageIcon.getImage(), CoverArtType.DRAG_AND_DROP);
 		when(metadata.getNewCoverArt()).thenReturn(newCoverArt);
 		setControlAndViewEngineExpectations();
-		
+
 		mainWindow.onTracksLoaded();
 		Thread.sleep(500);
-		
+
 		assertEquals(ApplicationState.COVER_ART_FROM_DRAG_AND_DROP, window.label(IMAGE_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldUpdateImageWhenCoverArtAddedFromLastFM() throws Exception {
 		CoverArt newCoverArt = new CoverArt(imageIcon.getImage(), CoverArtType.LAST_FM);
 		when(metadata.getNewCoverArt()).thenReturn(newCoverArt);
 		setControlAndViewEngineExpectations();
-		
+
 		mainWindow.onTracksLoaded();
 		Thread.sleep(500);
-		
+
 		assertEquals(ApplicationState.COVER_ART_FROM_LASTFM, window.label(IMAGE_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldUpdateImageWhenCoverArtAddedFromFile() throws Exception {
 		when(metadata.getCoverArt()).thenReturn(imageIcon.getImage());
 		setControlAndViewEngineExpectations();
-		
+
 		mainWindow.onTracksLoaded();
 		Thread.sleep(500);
-		
+
 		assertEquals(ApplicationState.COVER_ART_FROM_FILE, window.label(IMAGE_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldUpdateImageWhenCoverArtIsDefault() throws Exception {
 		setControlAndViewEngineExpectations();
-		
+
 		mainWindow.onTracksLoaded();
 		Thread.sleep(500);
-		
+
 		assertEquals(ApplicationState.COVER_ART_DEFAULT, window.label(IMAGE_LABEL_NAME).text());
 	}
-	
+
 	@Test
 	public void shouldAlertOnlyOneFileHasMetadataFromFilename() throws Exception {
 		when(file.getName()).thenReturn(TITLE);
 		filesWithoutMinimumMetadata.add(file);
 		setControlAndViewEngineExpectations();
 		StringBuilder sb = setStringBuilderExpectations();
-		
+
 		mainWindow.onTracksLoaded();
-		
+
 		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
 	}
-	
+
 	@Test
 	public void shouldAlertTwoFileHasMetadataFromFilename() throws Exception {
 		when(file.getName()).thenReturn(TITLE);
@@ -644,9 +619,9 @@ public class TestMainWindow {
 		filesWithoutMinimumMetadata.add(anotherfile);
 		setControlAndViewEngineExpectations();
 		StringBuilder sb = setSeveralFilesStringBuilderExpectations();
-		
+
 		mainWindow.onTracksLoaded();
-		
+
 		verify(dialogHelper).showMessageDialog(mainWindow, sb.toString());
 	}
 
@@ -655,11 +630,11 @@ public class TestMainWindow {
 		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
 		return sb;
 	}
-	
+
 	private StringBuilder setSeveralFilesStringBuilderExpectations() {
 		StringBuilder sb = createStringBuilder();
 		sb.append(ApplicationState.AND_ANOTHER);
-		sb.append(filesWithoutMinimumMetadata.size()-1);
+		sb.append(filesWithoutMinimumMetadata.size() - 1);
 		sb.append(ApplicationState.METADATA_FROM_FILE_LABEL);
 		return sb;
 	}
@@ -674,14 +649,14 @@ public class TestMainWindow {
 		when(controlEngine.get(Model.FILES_WITHOUT_MINIMUM_METADATA)).thenReturn(filesWithoutMinimumMetadata);
 		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
 	}
-	
+
 	@Test
 	public void shouldInformWhenADirectoryIsEmpty() throws Exception {
 		mainWindow.onDirectoryEmpty();
 		verify(dialogHelper).showMessageDialog(mainWindow, ApplicationState.DIRECTORY_EMPTY);
 		verifyResetStatus();
 	}
-	
+
 	@Test
 	public void shouldKnowWhenLoadMetadata() throws Exception {
 		when(metadata.getArtist()).thenReturn(ARTIST);
@@ -693,9 +668,9 @@ public class TestMainWindow {
 		when(metadata.getTotalTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
 		when(metadata.getCdNumber()).thenReturn(CD_NUMBER);
 		when(metadata.getTotalCds()).thenReturn(TOTAL_CD_NUMBER);
-		
+
 		mainWindow.onLoadMetadata(metadatas);
-		
+
 		assertEquals(ARTIST, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.ARTIST_COLUMN));
 		assertEquals(TITLE, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TITLE_COLUMN));
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.ALBUM_COLUMN));
@@ -707,16 +682,16 @@ public class TestMainWindow {
 		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
 		assertEquals(ApplicationState.READY, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
 	}
-	
+
 	@Test
 	public void shouldNotAssingValuesWhenEmptyOnReadyToApplyMetadata() throws Exception {
 		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
-		
+
 		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
 		assertEquals(StringUtils.EMPTY, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 	}
-	
+
 	@Test
 	public void shouldAssignValuesOnReadyToApplyMetadata() throws Exception {
 		when(metadataAlbumValues.getArtist()).thenReturn(ARTIST);
@@ -726,10 +701,10 @@ public class TestMainWindow {
 		when(metadataAlbumValues.getTracks()).thenReturn(TOTAL_TRACKS_NUMBER);
 		when(metadataAlbumValues.getCd()).thenReturn(CD_NUMBER);
 		when(metadataAlbumValues.getCds()).thenReturn(TOTAL_CD_NUMBER);
-		
+
 		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
-		
+
 		assertEquals(ARTIST, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ARTIST_COLUMN));
 		assertEquals(ALBUM, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.ALBUM_COLUMN));
 		assertEquals(GENRE, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.GENRE_COLUMN));
@@ -738,20 +713,20 @@ public class TestMainWindow {
 		assertEquals(CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.CD_NUMBER_COLUMN));
 		assertEquals(TOTAL_CD_NUMBER, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.TOTAL_CDS_NUMBER_COLUMN));
 	}
-	
+
 	@Test
 	public void shouldDetectWhenNewCoverArtOnReadyToApplyMetadata() throws Exception {
 		when(metadataAlbumValues.getCoverArt()).thenReturn(imageIcon.getImage());
 		when(controlEngine.get(Model.METADATA)).thenReturn(metadatas);
 		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
-		
+
 		mainWindow.onReadyToApplyMetadata(metadataAlbumValues);
-		
+
 		verify(metadata).setNewCoverArt(isA(CoverArt.class));
 		assertEquals(ActionResult.New, mainWindow.getDescriptionTable().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 		assertTrue(window.button(APPLY_BUTTON_NAME).target.isEnabled());
 	}
-	
+
 	@Test
 	public void shouldKnowWhenMetadataIsFromFile() throws Exception {
 		when(metadata.isMetadataFromFile()).thenReturn(true);
@@ -759,7 +734,7 @@ public class TestMainWindow {
 		assertEquals(ApplicationState.NEW, mainWindow.getDescriptionTable().getValueAt(SECOND_ROW, ApplicationState.STATUS_COLUMN));
 		assertTrue(window.button(APPLY_BUTTON_NAME).target.isEnabled());
 	}
-	
+
 	@Test
 	public void shouldKnowWhenErrorInOpen() throws Exception {
 		mainWindow.onOpenError();
@@ -771,30 +746,27 @@ public class TestMainWindow {
 		when(loginWindow.getFrame()).thenReturn(frame);
 
 		assertFalse(frame.isVisible());
-		
+
 		window.menuItem(LOGIN_MENU_ITEM).click();
-		
+
 		assertTrue(frame.isVisible());
 	}
-	
+
 	@Test
 	public void shouldExport() throws Exception {
-		//Bug FEST in Linux at clickButton is not working properly
-		if (Environment.isWindows()) {
-			window.button(EXPORT_BUTTON_NAME).target.setEnabled(true);
-			when(fileChooserHelper.getDirectory()).thenReturn(root);
-			when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
-			
-			window.button(EXPORT_BUTTON_NAME).click();
-			
-			verify(fileChooserHelper).getDirectory();
-			verify(viewEngine).request(eq(Actions.EXPORT), isA(ExportPackage.class), responseCaptor.capture());
-			ResponseCallback<ActionResult> callback = responseCaptor.getValue();
-			callback.onResponse(ActionResult.Exported);
-			assertEquals(ActionResult.Exported, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
-		}
+		window.button(EXPORT_BUTTON_NAME).target.setEnabled(true);
+		when(fileChooserHelper.getDirectory()).thenReturn(root);
+		when(viewEngine.get(Model.METADATA)).thenReturn(metadatas);
+
+		window.button(EXPORT_BUTTON_NAME).click();
+
+		verify(fileChooserHelper).getDirectory();
+		verify(viewEngine).request(eq(Actions.EXPORT), isA(ExportPackage.class), responseCaptor.capture());
+		ResponseCallback<ActionResult> callback = responseCaptor.getValue();
+		callback.onResponse(ActionResult.Exported);
+		assertEquals(ActionResult.Exported, mainWindow.getDescriptionTable().getModel().getValueAt(FIRST_ROW, ApplicationState.STATUS_COLUMN));
 	}
-	
+
 	@After
 	public void tearDown() throws Exception {
 		window.cleanUp();

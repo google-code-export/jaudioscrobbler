@@ -200,7 +200,7 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-*/
+ */
 package org.jas.gui;
 
 import static org.mockito.Matchers.eq;
@@ -208,15 +208,14 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 
 import org.asmatron.messengine.ViewEngine;
 import org.asmatron.messengine.engines.support.ViewEngineConfigurator;
 import org.fest.swing.fixture.FrameFixture;
 import org.jas.action.Actions;
-import org.jas.gui.LoginWindow;
 import org.jas.model.User;
-import org.jas.util.Environment;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -230,7 +229,8 @@ public class TestLoginWindow {
 
 	private static final String USERNAME_TEXTFIELD_NAME = "loginTextField";
 	private static final String PASSWORD_TEXTFIELD_NAME = "passwordLoginField";
-	private static final String SEND_BUTTON_NAME = "buttonCenterLogin";
+	private static final String SIGN_UP_BUTTON_NAME = "buttonCenterLogin";
+	private static final Dimension FRAME_DIMENSION = new Dimension(390, 180);
 	private FrameFixture window;
 	private String user = "josdem";
 	private String password = "password";
@@ -245,18 +245,15 @@ public class TestLoginWindow {
 		MockitoAnnotations.initMocks(this);
 		when(configurator.getViewEngine()).thenReturn(viewEngine);
 		window = new FrameFixture(loginWindow.getFrame());
-		window.show();
+		window.show(FRAME_DIMENSION);
 	}
 
 	@Test
 	public void shouldLoginByActionListener() throws Exception {
-		//Bug FEST in Linux and Mac at clickButton is not working properly
-		if (Environment.isWindows()) {
-			setUsernameAndPassword();
-			window.button(SEND_BUTTON_NAME).click();
-			
-			verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
-		}
+		setUsernameAndPassword();
+		window.button(SIGN_UP_BUTTON_NAME).click();
+
+		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
 	}
 
 	private void setUsernameAndPassword() {
@@ -266,25 +263,18 @@ public class TestLoginWindow {
 
 	@Test
 	public void shouldLoginByKeyListenerInSendButton() throws Exception {
-		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
-		if (!Environment.isLinux()) {
+		setUsernameAndPassword();
+		window.button(SIGN_UP_BUTTON_NAME).pressKey(KeyEvent.VK_ENTER);
 
-			setUsernameAndPassword();
-			window.button(SEND_BUTTON_NAME).pressKey(KeyEvent.VK_ENTER);
-
-			verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
-		}
+		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
 	}
 
 	@Test
 	public void shouldLoginByKeyListenerInPasswordField() throws Exception {
-		//Bug FEST in Linux at KeyEvent.VK_ENTER is not working properly
-		if (!Environment.isLinux()) {
-			setUsernameAndPassword();
-			window.textBox(PASSWORD_TEXTFIELD_NAME).pressKey(KeyEvent.VK_ENTER);
+		setUsernameAndPassword();
+		window.textBox(PASSWORD_TEXTFIELD_NAME).pressKey(KeyEvent.VK_ENTER);
 
-			verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
-		}
+		verify(viewEngine).sendValueAction(eq(Actions.LOGIN), isA(User.class));
 	}
 
 	@After
