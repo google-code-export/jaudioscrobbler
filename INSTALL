@@ -14,7 +14,7 @@ debian-DEBIAN-control
 2. In debian directory level type the command below
 dpkg --build debian
 
-3. mv debian.deb JAudioScrobbler_Installer.deb
+3. mv debian.deb JAudioScrobbler-Installer.deb
 
 
 *********************
@@ -66,6 +66,25 @@ NSIS
 1. Install NSIS http://nsis.sourceforge.net/
 2. Installer based on ZIP file
 3. Select JAudioScrobbler.zip
-4. Installer Name > JAudioScrobbler_Installer
-5. Output EXE File > JAudioScrobbler_Installer.exe
+4. Installer Name > JAudioScrobbler-Installer
+5. Output EXE File > JAudioScrobbler-Installer.exe
 6. Click on Generate.
+
+--------------------------------------------------------------------------------
+*********************
+* MAC INSTALLER *
+*********************
+
+Jar Bundler
+1. Open Jar Bundler
+2. Classpath and files > Select *.jar
+3. Build Information > Choose Main Class (JAudioScrobbler-0.0.1-SNAPSHOT.jar) > Choose Icon.
+4. Properties > Version 1.0.0
+5. Create Application
+
+Package Manager
+1. Open Package Manager
+2. Organization > org.jas > Minimum Target > Mac OS X v10.5 Leopard
+3. Drop contents here > Drag Jar Bundler result
+4. Configuration > Title > JAudioScrobbler-Installer.pkg
+5. Build and Run.
