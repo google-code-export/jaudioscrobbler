@@ -48,5 +48,24 @@ StartupNotify=true
 *********************
 * WINDOWS INSTALLER *
 *********************
-
+JSmooth 
 1. Install JSmooth http://jsmooth.sourceforge.net/
+2. Skeleton: Windowed Wrapper
+3. Executable: 
+Executable Binary > JAudioScrobbler.exe
+Executable Icon > jas.png
+4. Application:
+Main Class > org.jas.Launcher
+Classpath > *.jar
+5. JVM Selection
+Minimum JVM Version > 1.5.0
+Maximum JVM Version > 1.8.0
+
+
+NSIS
+1. Install NSIS http://nsis.sourceforge.net/
+2. Installer based on ZIP file
+3. Select JAudioScrobbler.zip
+4. Installer Name > JAudioScrobbler_Installer
+5. Output EXE File > JAudioScrobbler_Installer.exe
+6. Click on Generate.
