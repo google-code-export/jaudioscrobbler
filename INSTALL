@@ -45,3 +45,8 @@ Categories=GNOME;Application;Music
 StartupNotify=true
  
 --------------------------------------------------------------------------------
+*********************
+* WINDOWS INSTALLER *
+*********************
+
+1. Install JSmooth http://jsmooth.sourceforge.net/
