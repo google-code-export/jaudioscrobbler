@@ -1,0 +1,47 @@
+----------------------------------------------------------------------------
+*********************
+*  UBUNTU INSTALLER *
+*********************
+
+1. Create the following file system structure: 
+
+debian-DEBIAN-control
+		 -usr-bin-JAudioScrobbler
+		 	 -lib-JAudioScrobbler-*.jar
+		 	 -share-applications-JAudioScrobbler.desktop
+		 	 	   -JAudioScrobbler-jas.png
+		 	 	   
+2. In debian directory level type the command below
+dpkg --build debian
+
+3. mv debian.deb JAudioScrobbler_Installer.deb
+
+
+*********************
+* 	   control		*
+*********************
+
+Package: JAudioScrobbler
+Version: 1.0.0
+Section: music
+Priority: optional
+Architecture: all
+Maintainer: Jose Luis De la Cruz
+Description: Complete their metadata with MusicBrainz, LastFM or manually.
+
+***************************
+* JAudioScrobbler.desktop *
+***************************
+
+[Desktop Entry]
+Encoding=UTF-8
+Name=JAudioScrobbler
+Comment=Complete their metadata with MusicBrainz, LastFM or manually
+Exec=/usr/bin/JAudioScrobbler
+Icon=/usr/share/JAudioScrobbler/jas.png
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Music
+StartupNotify=true
+ 
+--------------------------------------------------------------------------------
